@@ -1,0 +1,9 @@
+---
+
+- hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+    - include_vars: ./vars/user.yml
+    - include_tasks: ./tasks/fonts.yml

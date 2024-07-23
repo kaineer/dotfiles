@@ -1,0 +1,10 @@
+---
+- name: Install fira nerd
+  include_role:
+    name: "ansible-role-nerdfonts"
+  vars:
+    nf_user: "{{ user.name }}"
+    nf_group: "{{ user.name }}"
+    nf_single_fonts:
+      - "FiraCode/Medium/FiraCodeNerdFont-Medium.ttf"
+      - "FiraCode/Regular/FiraCodeNerdFont-Regular.ttf"
