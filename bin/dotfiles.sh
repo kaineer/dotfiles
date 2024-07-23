@@ -54,12 +54,17 @@ play_ansible_playbook() {
     ansible-playbook local.yml
 }
 
+dconf_settings() {
+  dconf write "/org/gnome/terminal/legacy/default-show-menubar" false
+}
+
 main() {
   ensure_git
   ensure_ansible
   ensure_ssh_keys
   install_ansible_roles
   play_ansible_playbook
+  dconf_settings
 }
 
 main
