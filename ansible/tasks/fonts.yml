@@ -1,10 +1,14 @@
 ---
+# Nerd fonts for terminal
+#  * link: https://github.com/ctorgalson/ansible-role-nerdfonts
+#
 - name: Install fira nerd
   include_role:
     name: "ansible-role-nerdfonts"
   vars:
     nf_user: "{{ user.name }}"
     nf_group: "{{ user.name }}"
+    nf_linux_fonts_dir: "/home/{{ user.name }}/.fonts"
     nf_single_fonts:
       - "FiraCode/Medium/FiraCodeNerdFont-Medium.ttf"
       - "FiraCode/Regular/FiraCodeNerdFont-Regular.ttf"
