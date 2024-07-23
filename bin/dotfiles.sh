@@ -31,13 +31,14 @@ build_ssh_keys() {
 }
 
 ensure_ssh_keys() {
-  if ! [[ -f "$SSH_DIR/id_rsa" ]]; then
+  if ! [ -f "$SSH_DIR/id_rsa" ]; then
     mkdir -p "$SSH_DIR" && chmod 700 "$SSH_DIR" && build_ssh_keys
   fi
 }
 
 install_ansible_roles() {
-  if [[ -f "DOTFILES_DIR/requirements.yml" ]]; then
+  if [ -f "$DOTFILES_DIR/requirements.yml" ]; then
+    echo "[DEBUG] found requirements file"
     cd "$DOTFILES_DIR"
 
     ansible-galaxy install -r requirements.yml

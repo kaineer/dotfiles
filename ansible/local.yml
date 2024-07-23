@@ -7,3 +7,4 @@
   tasks:
     - include_vars: ./vars/user.yml
     - include_tasks: ./tasks/fonts.yml
+    - include_tasks: ./tasks/gnome.yml
