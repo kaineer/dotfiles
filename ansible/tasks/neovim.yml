@@ -1,0 +1,20 @@
+---
+
+- name: Mkdir for bin scripts
+  file:
+    path: "/home/{{ user.name }}/bin"
+    recurse: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    mode: "755"
+
+- name: Install neovim as github release
+  include_role:
+    name: "ansible-role-github-release"
+  vars:
+    ghr_install_dir: "/home/{{ user.name }}/bin"
+    ghr_releases:
+    - url: https://github.com/neovim/neovim/releases/download/v0.10.0/nvim.appimage
+      copy_src: "{{ ghr_tmp_dir }}/nvim.appimage"
+      copy_dest: "{{ ghr_install_dir}}/nvim"
