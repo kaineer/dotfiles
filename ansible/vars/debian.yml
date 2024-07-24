@@ -1,0 +1,25 @@
+system_packages:
+ - baobab
+ - curl
+ - cmake
+ - direnv
+ - dmenu
+ - gpg
+ - htop
+ - inxi
+ - lf
+ - make
+ - moc
+ - neofetch
+ - pass
+ - p7zip
+ - p7zip-full
+ - rofi
+ - tmux
+ - unzip
+ - webp
+ - wget
+ - xdotool
+ - xsel
+ - zathura
+ - zip
