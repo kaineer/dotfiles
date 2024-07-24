@@ -2,3 +2,4 @@ tmp/
 dump/
 settings.txt
 .*
+secret.lua
