@@ -1,2 +1,7 @@
+# Шрифты с иконками
+#
 - src: https://github.com/ctorgalson/ansible-role-nerdfonts
+
+# Устанавливаем релизы из github
+#
 - src: https://github.com/ctorgalson/ansible-role-github-release
