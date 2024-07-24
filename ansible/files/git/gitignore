@@ -1,0 +1,36 @@
+# Global ignore file
+#
+
+# Node version for directory
+.node-version
+.pm
+
+# TMUX configuration and directory name file
+.tmux.conf
+.tmux.json
+
+# Projections file
+#   link: https://github.com/tpope/vim-projectionist
+#
+.projections.json
+
+# NPM logs
+#
+*-debug.log
+tmp/
+
+# This directory goes into npm package
+#   but does not go into repository
+dist/
+
+# Script tmp files
+sh
+now
+
+log.md
+
+node_modules
+pnpm-lock.yaml
+bun.lockb
+
+.eslintcache

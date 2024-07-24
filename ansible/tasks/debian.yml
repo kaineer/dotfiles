@@ -3,4 +3,5 @@
   package:
     name: "{{ system_packages }}"
 
+- include_tasks: ./git.yml
 - include_tasks: ./lf.yml

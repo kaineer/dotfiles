@@ -1,0 +1,22 @@
+---
+# git settings
+#  * config
+#  * global ignore
+#
+- name: Copy git config
+  copy:
+    src: ../files/git/gitconfig
+    dest: "/home/{{ user.name }}/.gitconfig"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "644"
+
+- name: Copy git global ignore
+  copy:
+    src: ../files/git/gitignore
+    dest: "/home/{{ user.name }}/.gitignore"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "644"
+
+

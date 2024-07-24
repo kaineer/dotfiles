@@ -1,0 +1,29 @@
+# User configuration
+#
+[user]
+  email = kaineer@gmail.com
+  name = Sergey Kluchkovsky
+
+# User aliases
+#
+[alias]
+  co = checkout
+  st = status
+  ci = commit
+  lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
+
+# Core user configuration
+#
+[core]
+  excludesFile = ~/.gitignore
+  editor = vi
+
+[diff]
+  colorMoved = default
+
+# Yep, still master, not main
+#
+[init]
+  defaultBranch = master
+[github]
+	user = kaineer
