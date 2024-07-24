@@ -1,4 +1,9 @@
 ---
+# LF settings
+#   * settings rc
+#   * colors
+#   * icons
+#
 - name: Mkdir for lf rc
   file:
     path: "/home/{{ user.name }}/.config/lf"
