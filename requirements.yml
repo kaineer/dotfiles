@@ -1,2 +1,2 @@
 - src: https://github.com/ctorgalson/ansible-role-nerdfonts
-- src: https://github.com/QueraTeam/ansible-github
+- src: https://github.com/ctorgalson/ansible-role-github-release

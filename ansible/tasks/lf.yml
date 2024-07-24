@@ -50,3 +50,13 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
 
+- name: Install lf as github release
+  include_role:
+    name: "ansible-role-github-release"
+  vars:
+    ghr_install_dir: "/home/{{ user.name }}/bin"
+    ghr_releases:
+    - url: https://github.com/gokcehan/lf/releases/download/r32/lf-linux-amd64.tar.gz
+      copy_src: "{{ ghr_tmp_dir }}/lf"
+      copy_dest: "{{ ghr_install_dir}}/lf"
+      extract_dir: ""
