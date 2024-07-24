@@ -1,0 +1,35 @@
+---
+- name: Mkdir for lf rc
+  file:
+    path: "/home/{{ user.name }}/.config/lf"
+    recurse: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    mode: "755"
+    
+- name: Copy LF rc file
+  copy: 
+    src: ../files/lf/rc
+    dest: "/home/{{ user.name }}/.config/lf/lfrc"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "644"
+
+- name: Mkdir for bin scripts
+  file:
+    path: "/home/{{ user.name }}/bin"
+    recurse: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    mode: "755"
+
+- name: Copy LF previewer
+  copy: 
+    src: ../files/lf/previewer.sh
+    dest: "/home/{{ user.name }}/bin/lf-preview.sh"
+    mode: "644"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+

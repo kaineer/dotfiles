@@ -2,3 +2,5 @@
 - name: Install missing packages
   package:
     name: "{{ system_packages }}"
+
+- include_tasks: ./lf.yml

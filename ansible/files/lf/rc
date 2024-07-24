@@ -1,0 +1,46 @@
+## lf config
+#
+
+set previewer ~/bin/lf-preview.sh
+
+set icons true
+
+# execute current file (must be executable)
+# map x $$f
+map X !$f
+map x xx
+
+map R delete
+map m meta
+
+map o rr
+
+map <enter> nemo
+
+cmd meta ${{
+  $EDITOR "$f.meta.yml"
+}}
+
+cmd nemo ${{
+  nemo "$f" &
+}}
+
+cmd rr ${{
+  rr
+}}
+
+cmd xx ${{
+  /home/kaineer/bin/x
+}}
+
+cmd open ${{
+  case $(file --mime-type "$f" -b) in
+    text/*) $EDITOR $fx ;;
+    image/*) eog -fw "$f" ;;
+    audio/*) mplayer "$f" ;;
+    video/*) mm "$f" 2>&1 >/dev/null ;;
+    application/json) jl "$f" --mode line ;;
+    # video/*) mplayer "$f" -fs ;;
+    *) for f in $fx; do setsid $OPENER "$f" > /dev/null 2> /dev/null & done;;
+  esac
+}}
