@@ -15,3 +15,15 @@
   dconf:
     key: "/org/gnome/terminal/legacy/default-show-menubar"
     value: "false"
+
+- name: Disable terminal check
+  become_user: kaineer
+  dconf:
+    key: "/org/gnome/terminal/legacy/always-check-default-terminal"
+    value: "false"
+
+- name: Set nord palette
+  become_user: kaineer
+  dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/palette"
+    value: "['#3B3B42425252', '#BFBF61616A6A', '#A3A3BEBE8C8C', '#EBEBCBCB8B8B', '#8181A1A1C1C1', '#B4B48E8EADAD', '#8888C0C0D0D0', '#E5E5E9E9F0F0', '#4C4C56566A6A', '#BFBF61616A6A', '#A3A3BEBE8C8C', '#EBEBCBCB8B8B', '#8181A1A1C1C1', '#B4B48E8EADAD', '#8F8FBCBCBBBB', '#ECECEFEFF4F4']"

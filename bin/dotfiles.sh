@@ -68,7 +68,7 @@ main() {
   ensure_ssh_keys
   install_ansible_roles
   play_ansible_playbook
-  dconf_settings
+  # dconf_settings
 }
 
 main
