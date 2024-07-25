@@ -27,7 +27,7 @@
 
 - name: Set neovim config link
   file:
-    src: "/home/kaineer/git/config/dotfiles/ansible/files/nvim/"
+    src: "{{ playbook_dir }}/files/nvim/"
     dest: "/home/{{ user.name }}/.config/nvim"
     state: link
     owner: "{{ user.name }}"
