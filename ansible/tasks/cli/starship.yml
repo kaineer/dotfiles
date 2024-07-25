@@ -2,3 +2,24 @@
 # * starship
 #   * конфигурация в files
 #   * скрипт для получения иконки в ~/bin
+
+- name: Mkdir for bin scripts
+  file:
+    path: "/home/{{ user.name }}/bin"
+    recurse: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    mode: "755"
+
+- name: Install lf as github release
+  include_role:
+    name: "ansible-role-github-release"
+  vars:
+    ghr_install_dir: "/home/{{ user.name }}/bin"
+    ghr_releases:
+      - url: https://github.com/starship/starship/releases/download/v1.19.0/starship-i686-unknown-linux-musl.tar.gz
+        copy_src: "{{ ghr_tmp_dir }}/starship"
+        copy_dest: "{{ ghr_install_dir }}/starship"
+        extract_dir: ""
+
