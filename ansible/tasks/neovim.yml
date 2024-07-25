@@ -19,8 +19,16 @@
       copy_src: "{{ ghr_tmp_dir }}/nvim.appimage"
       copy_dest: "{{ ghr_install_dir}}/nvim"
 
+- name: Install packer.nvim
+  become_user: "{{ user.name }}"
+  git:
+    repo: https://github.com/wbthomason/packer.nvim
+    dest: "/home/{{ user.name }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+
 - name: Set neovim config link
   file:
-    src: ../files/nvim
+    src: "/home/kaineer/git/config/dotfiles/ansible/files/nvim/"
     dest: "/home/{{ user.name }}/.config/nvim"
     state: link
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
