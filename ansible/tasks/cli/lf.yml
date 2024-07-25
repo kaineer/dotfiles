@@ -50,7 +50,8 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
 
-- name: Install lf as github release
+-
+name: Install lf as github release
   include_role:
     name: "ansible-role-github-release"
   vars:
