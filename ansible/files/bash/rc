@@ -46,7 +46,8 @@ EDITOR=nvim
 
 alias ls=exa
 
-eval "$(starship init bash)"
-
 # Build path
 PATH="$HOME/bin:$PATH"
+
+# Initialize prompt AFTER setting path
+eval "$(starship init bash)"
