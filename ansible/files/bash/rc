@@ -44,5 +44,9 @@ PROFILE_PATH="$HOME/bin/load-profile"
 
 EDITOR=nvim
 
+alias ls=exa
+
+eval "$(starship init bash)"
+
 # Build path
 PATH="$HOME/bin:$PATH"

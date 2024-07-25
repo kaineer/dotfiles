@@ -23,3 +23,12 @@
         copy_dest: "{{ ghr_install_dir }}/starship"
         extract_dir: ""
 
+- name: Copy starship config
+  copy:
+    src: ../../files/starship/starship.toml
+    dest: "/home/{{ user.name }}/.config/starship.toml"
+
+- name: Copy icon script
+  copy:
+    src: ../../files/starship/icon
+    dest: "/home/{{ user.name }}/bin/icon"
