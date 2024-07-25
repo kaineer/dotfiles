@@ -7,6 +7,13 @@ local packer_bootstrap = kp.ensure_packer()
 
 local packer = require("packer")
 
+packer.init({
+  luarocks = {
+    python_cmd = 'python3'
+  },
+  autoremove = true,
+})
+
 return packer.startup(function(use)
   local handle = kp.create_handle(use)
 
