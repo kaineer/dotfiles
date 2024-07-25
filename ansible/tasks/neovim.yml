@@ -18,3 +18,9 @@
     - url: https://github.com/neovim/neovim/releases/download/v0.10.0/nvim.appimage
       copy_src: "{{ ghr_tmp_dir }}/nvim.appimage"
       copy_dest: "{{ ghr_install_dir}}/nvim"
+
+- name: Set neovim config link
+  file:
+    src: ../files/nvim
+    dest: "/home/{{ user.name }}/.config/nvim"
+    state: link
