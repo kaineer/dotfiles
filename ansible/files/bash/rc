@@ -42,5 +42,7 @@ fi
 PROFILE_PATH="$HOME/bin/load-profile"
 [ -f $PROFILE_PATH ] && source $PROFILE_PATH $(readlink -f $PROFILE_PATH)
 
+EDITOR=nvim
+
 # Build path
 PATH="$HOME/bin:$PATH"
