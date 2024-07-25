@@ -1,7 +1,7 @@
 ---
 - name: Copy bashrc
   copy:
-    src: ../files/bash/rc
+    src: ../../files/bash/rc
     dest: "/home/{{ user.name }}/.bashrc"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
