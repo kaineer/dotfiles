@@ -3,7 +3,7 @@
   package:
     name: "{{ system_packages }}"
 
-- include_tasks: ./bash.yml
+- include_tasks: ./cli/bash.yml
 - include_tasks: ./git.yml
 - include_tasks: ./lf.yml
 - include_tasks: ./neovim.yml
