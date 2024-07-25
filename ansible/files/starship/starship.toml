@@ -1,0 +1,75 @@
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# Theme for starship
+#   imported from oh-my-zsh theme "afowler"
+#
+# 13.02.2021, kaineer@gmail.com
+#
+# SEEALSO: https://starship.rs/config/
+
+add_newline = false
+format = "$hostname${custom.linux}$directory$docker_context$git_branch$git_status$nodejs$package\n$character$shell"
+
+[shell]
+### symbols:  ν ζ β
+disabled = false
+bash_indicator = "β"
+zsh_indicator = "ζ"
+nu_indicator = "ν"
+# format = "[${indicator}]($style) "
+format = "[ ${indicator}]($style) "
+
+[custom.linux]
+# needs script "icon"
+# ~~~~~~~~~~~~~~~~~~~
+shell = ["icon", "linux"]
+style = "blue bold"
+format = " [$output]($style)  "
+os = "linux"
+when = true
+
+[character]
+#### symbols: ❯ ✔ ✖
+success_symbol="[✔](bold green)"
+error_symbol="[✖](bold red)"
+
+[hostname]
+ssh_only = false
+format = "[$hostname]($style)"
+style = "white bold"
+
+[directory]
+format = "[$path]($style)"
+truncation_length = 3
+truncate_to_repo = true
+style = "green"
+truncation_symbol = '…/'
+
+[docker_context]
+format="via [$symbol$context]($style)"
+symbol="🐳 "
+detect_extensions=[]
+style="blue bold"
+disabled=false
+
+[git_branch]
+symbol = " "
+style = "yellow"
+format = " [$symbol$branch]($style)"
+
+[git_status]
+style = "214"
+format = "[$all_status]($style)"
+
+[nodejs]
+format = " [$symbol$version]($style)"
+not_capable_style = "bold red"
+symbol = "⬢ "
+
+[package]
+format = " [$symbol$version]($style)"
+style = "bold 202"

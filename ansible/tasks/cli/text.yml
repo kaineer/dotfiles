@@ -17,7 +17,7 @@
   package:
     name: "ripgrep"
 
-- name: Install fd
+- name: Install releases
   include_role:
     name: "ansible-role-github-release"
   vars:
@@ -26,5 +26,9 @@
       - url: https://github.com/sharkdp/fd/releases/download/v10.1.0/fd-v10.1.0-i686-unknown-linux-musl.tar.gz
         copy_src: "{{ ghr_tmp_dir }}/fd-v10.1.0-i686-unknown-linux-musl/fd"
         copy_dest: "{{ ghr_install_dir }}/fd"
+        extract_dir: ""
+      - url: https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-musl-v0.10.1.zip
+        copy_src: "{{ ghr_tmp_dir }}/bin/exa"
+        copy_dest: "{{ ghr_install_dir }}/exa"
         extract_dir: ""
 

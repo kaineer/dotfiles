@@ -1,0 +1,60 @@
+#!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: get utf-8 icon
+#
+# Dependencies:
+#   * /etc/issue
+#   * sed
+#
+# See also:
+#   * Nerdfonts cheatsheet: https://www.nerdfonts.com/cheat-sheet
+#
+
+ICON_FOX="🦊"
+ICON_LINUX_MINT=""
+ICON_LINUX_UBUNTU=""
+ICON_LINUX_DEBIAN=""
+ICON_LINUX_UNKNOWN=""
+
+__linux_is() {
+  COUNT=$(cat /etc/issue | grep "$1" | wc -l)
+  [[ "$COUNT" == "1" ]]
+}
+
+__linux_release() {
+  if [ -f /etc/issue ]; then
+    if __linux_is "Mint"; then
+      echo "linuxmint"
+    elif __linux_is "Ubuntu"; then
+      echo "ubuntu"
+    elif __linux_is "Debian"; then
+      echo "debian"
+    else
+      echo "unknown"
+    fi
+  else
+    echo "unknown"
+  fi
+}
+
+# Icon for linux distribution
+#
+linux_icon() {
+  RELEASE=$(__linux_release)
+  case "$RELEASE" in
+    "linuxmint")  echo "$ICON_LINUX_MINT" ;;
+    "ubuntu")     echo "$ICON_LINUX_UBUNTU" ;;
+    "debian")     echo "$ICON_LINUX_DEBIAN" ;;
+    *)            echo "$ICON_LINUX_UNKNOWN" ;;
+  esac
+}
+
+case "$1" in
+  "linux") linux_icon ;;
+  *) linux_icon ;;
+esac
