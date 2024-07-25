@@ -5,5 +5,6 @@
 
 - include_tasks: ./cli/bash.yml
 - include_tasks: ./cli/git.yml
+- include_tasks: ./cli/text.yml
 - include_tasks: ./cli/lf.yml
 - include_tasks: ./cli/neovim.yml
