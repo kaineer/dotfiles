@@ -3,3 +3,4 @@ dump/
 settings.txt
 .*
 secret.lua
+ansible/files/nvim/plugin/
