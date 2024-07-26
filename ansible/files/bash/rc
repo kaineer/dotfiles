@@ -45,6 +45,7 @@ PROFILE_PATH="$HOME/bin/load-profile"
 EDITOR=nvim
 
 alias ls=exa
+alias cat='bat --style=plain'
 
 # Build path
 PATH="$HOME/bin:$PATH"
