@@ -28,7 +28,7 @@ format = "[ ${indicator}]($style) "
 # ~~~~~~~~~~~~~~~~~~~
 shell = ["icon", "linux"]
 style = "blue bold"
-format = " [$output]($style)  "
+format = " [$output]($style) "
 os = "linux"
 when = true
 

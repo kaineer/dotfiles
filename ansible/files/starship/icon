@@ -16,10 +16,10 @@
 #
 
 ICON_FOX="🦊"
-ICON_LINUX_MINT=""
-ICON_LINUX_UBUNTU=""
+ICON_LINUX_MINT=" "
+ICON_LINUX_UBUNTU=" "
 ICON_LINUX_DEBIAN=""
-ICON_LINUX_UNKNOWN=""
+ICON_LINUX_UNKNOWN=" "
 
 __linux_is() {
   COUNT=$(cat /etc/issue | grep "$1" | wc -l)
