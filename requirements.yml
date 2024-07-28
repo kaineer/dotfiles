@@ -5,3 +5,7 @@
 # Устанавливаем релизы из github
 #
 - src: https://github.com/ctorgalson/ansible-role-github-release
+
+# Устанавливаем fnm
+#
+- src: https://github.com/hurricanehrndz/ansible-fnm
