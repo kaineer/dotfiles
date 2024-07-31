@@ -8,12 +8,13 @@ return {
     local failMessage = "Could not find projectionist alternate"
     local mkcmd = require("kaineer.cmd").buildMkcmd(failMessage)
 
-    require("which-key").register({
-      a = {
-        a = { mkcmd("A"), "Projectionist alternate" },
-        s = { mkcmd("AS"), "Projectionist alternate split" },
-        v = { mkcmd("AV"), "Projectionist alternate vsplit" },
-      }
-    })
+    -- TODO: fix which-key bindings
+--     require("which-key").register({
+--       a = {
+--         a = { mkcmd("A"), "Projectionist alternate" },
+--         s = { mkcmd("AS"), "Projectionist alternate split" },
+--         v = { mkcmd("AV"), "Projectionist alternate vsplit" },
+--       }
+--     })
   end,
 }

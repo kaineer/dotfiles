@@ -1,7 +1,7 @@
 -- lua/plugins/navigation/init.lua
 
 local packages = {
-  -- "autosave",
+  "autosave",
   "tmux",
   -- "oil",
   "dirvish",

@@ -7,13 +7,6 @@ local packer_bootstrap = kp.ensure_packer()
 
 local packer = require("packer")
 
-packer.init({
-  luarocks = {
-    python_cmd = 'python3'
-  },
-  autoremove = true,
-})
-
 return packer.startup(function(use)
   local handle = kp.create_handle(use)
 
@@ -36,7 +29,7 @@ return packer.startup(function(use)
     "gist",            -- making gists
     "telekasten",      -- telekasten notes
     "lsp",             -- language server protocol
-    -- "treesitter",
+    "treesitter",
     "comments",        -- commenting
     "languages",       -- programming languages
     "markup",          -- markup-related packages

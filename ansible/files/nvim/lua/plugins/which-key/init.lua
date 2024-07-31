@@ -9,11 +9,18 @@ return {
     })
 
     require("which-key").setup {
-      key_labels = {
-        ["<space>"] = "SPC",
-        ["<cr>"] = "CR",
-        ["<tab>"] = "TAB",
+      replace = {
+        key = {
+          { "<space>", "SPC" },
+          { "<cr>", "CR" },
+          { "<tab>", "TAB" },
+        },
       },
+--       key_labels = {
+--         ["<space>"] = "SPC",
+--         ["<cr>"] = "CR",
+--         ["<tab>"] = "TAB",
+--       },
       plugins = {
         registers = false,
       },
