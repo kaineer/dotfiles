@@ -39,8 +39,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
-PROFILE_PATH="$HOME/bin/load-profile"
-[ -f $PROFILE_PATH ] && source $PROFILE_PATH $(readlink -f $PROFILE_PATH)
+for SRC in $(ls -1 "$HOME/.config/profile.d/*"); do
+  source $SRC
+done
 
 EDITOR=nvim
 
