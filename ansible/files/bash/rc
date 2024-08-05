@@ -50,5 +50,7 @@ alias cat='bat --style=plain'
 # Build path
 PATH="$HOME/bin:$PATH"
 
+export FZF_DEFAULT_OPTS="-x --cycle --bind=ctrl-j:accept,tab:toggle-down --info=inline-right"
+
 # Initialize prompt AFTER setting path
 eval "$(starship init bash)"

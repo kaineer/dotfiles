@@ -8,4 +8,5 @@
 - include_tasks: ./cli/text.yml
 - include_tasks: ./cli/starship.yml
 - include_tasks: ./cli/lf.yml
+- include_tasks: ./cli/fzf.yml
 - include_tasks: ./cli/neovim.yml

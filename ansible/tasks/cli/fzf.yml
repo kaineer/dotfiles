@@ -4,3 +4,24 @@
 #   * fzf на таб
 #     * получение скрипта из репозитория
 #     * обновление в случае чего
+
+- name: Mkdir for bin scripts
+  file:
+    path: "/home/{{ user.name }}/bin"
+    recurse: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    mode: "755"
+
+- name: Install fzf as github release
+  include_role:
+    name: "ansible-role-github-release"
+  vars:
+    ghr_install_dir: "/home/{{ user.name }}/bin"
+    ghr_releases:
+    - url: "https://github.com/junegunn/fzf/releases/download/v0.54.3/fzf-0.54.3-linux_amd64.tar.gz"
+      copy_src: "{{ ghr_tmp_dir }}/fzf"
+      copy_dest: "{{ ghr_install_dir}}/fzf"
+      extract_dir: ""
+
