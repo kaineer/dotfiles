@@ -1,5 +1,6 @@
 --
 -- plugins/languages/markdown.lua
+-- gh:jakewvincent/mkdnflow.nvim
 --
 
 return {
@@ -10,6 +11,7 @@ return {
       silent = true,
       modules = {
         folds = true,
+        tables = true,
       },
       links = {
         conceal = true,
@@ -23,7 +25,7 @@ return {
         -- (I need it for dirvish navigation, you know)
         MkdnIncreaseHeading = false,
         MkdnDecreaseHeading = false,
-        MkdnEnter = {{'n', 'v', 'i'}, '<CR>'},
+        MkdnEnter = {{'n', 'v', 'i'}, '<c-j>'},
         MkdnTableFormat = {{'n'}, '<leader>mf' },
       }
     }

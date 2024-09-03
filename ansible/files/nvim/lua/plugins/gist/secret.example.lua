@@ -1,7 +1,7 @@
 -- lua/plugins/gist/secret.lua
 
 -- Regenerate it here:
---   https://github.com/settings/tokens/663167203
+--   https://github.com/settings/tokens
 --
 return 'ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 

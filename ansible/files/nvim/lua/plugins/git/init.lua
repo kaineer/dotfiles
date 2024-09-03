@@ -41,16 +41,11 @@ local gitMessenger = function(use)
       }
 
       local mkcmd = require("kaineer.cmd").buildMkcmd("WTF")
-      -- TODO: fix which-key bindings
---       require("which-key").register({
---         [" "] = {
---           g = {
---             s = { mkcmd("G"), "Git status" },
---             l = { mkcmd("GV"), "Git log" },
---             m = { mkcmd("GitMessenger"), "Git annotate current line" },
---           }
---         }
---       })
+      require("which-key").add({
+        { " gs", mkcmd("G"), desc = "Git status" },
+        { " gl", mkcmd("GV"), desc = "Git log" },
+        { " gm", mkcmd("GitMessenger"), desc = "Annotate current line" },
+      });
 
       require('kaineer.map').visual({
         { '<c-o>', ':GBrowse<cr>' },

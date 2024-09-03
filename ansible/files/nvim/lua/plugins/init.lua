@@ -23,6 +23,7 @@ return packer.startup(function(use)
     "cmp",             -- completion
     "status",          -- status line
     "eyeliner",
+    "http",
     -- "neorg",
     "which-key",
     "git",             -- git
