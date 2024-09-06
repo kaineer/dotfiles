@@ -14,7 +14,7 @@ local configTelescope = function()
   end
 
   local extensionsToLoad = {
-    'project', 'ui-select', 'file_browser',
+    'project', 'ui-select', 
   }
 
   local load_extension = function(name)
