@@ -19,7 +19,8 @@ return {
         "ruby",
         "rust",
         "make",
-        "javascript"
+        "javascript",
+        "vimdoc"
       }
     }
   end,
