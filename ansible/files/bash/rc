@@ -23,11 +23,6 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -39,10 +34,16 @@ if ! shopt -oq posix; then
   fi
 fi
 
-for SRC in $(ls -1 "$HOME/.config/profile.d/*"); do
+# tag: config-profile
+DIR="$HOME/.config/profile.d"
+[ ! -d "$DIR" ] && mkdir -p "$DIR"
+for SRC in $(ls -1 "$DIR/*" >/dev/null 2>&1); do
   source $SRC
 done
+# tag: /config-profile
 
+# TODO: move code below into settings for programs
+#   that should be put into ~/.config/profile.d
 EDITOR=nvim
 
 alias ls=exa
