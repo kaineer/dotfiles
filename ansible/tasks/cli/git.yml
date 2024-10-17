@@ -3,10 +3,19 @@
 #  * config
 #  * global ignore
 #
+- name: Create git config directory
+  file:
+    path: "/home/{{ user.name }}/.config/git"
+    recurse: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    mode: "755"
+
 - name: Copy git config
   copy:
     src: ../../files/git/gitconfig
-    dest: "/home/{{ user.name }}/.gitconfig"
+    dest: "/home/{{ user.name }}/.config/git/config"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "644"
@@ -14,7 +23,7 @@
 - name: Copy git global ignore
   copy:
     src: ../../files/git/gitignore
-    dest: "/home/{{ user.name }}/.gitignore"
+    dest: "/home/{{ user.name }}/.config/git/ignore"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "644"
