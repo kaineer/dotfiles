@@ -38,6 +38,11 @@ local tmux = {
 }
 
 map.normal({
+  { '<leader>td', ':colorscheme shine<cr>' },
+  { '<leader>tn', ':colorscheme nord<cr>' },
+})
+
+map.normal({
   -- emacs way window bindings
   { '<c-x>0', window.close },
   { '<c-x>1', window.only },

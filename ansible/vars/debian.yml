@@ -22,3 +22,4 @@ system_packages:
  - xsel
  - zathura
  - zip
+ - xxd

@@ -24,7 +24,6 @@ return packer.startup(function(use)
     "status",          -- status line
     "eyeliner",
     "http",
-    -- "neorg",
     "which-key",
     "git",             -- git
     "gist",            -- making gists

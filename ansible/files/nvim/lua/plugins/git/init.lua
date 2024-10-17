@@ -43,6 +43,7 @@ local gitMessenger = function(use)
       local mkcmd = require("kaineer.cmd").buildMkcmd("WTF")
       require("which-key").add({
         { " gs", mkcmd("G"), desc = "Git status" },
+        { " ga", mkcmd("Git add ."), desc = "Git add current file" },
         { " gl", mkcmd("GV"), desc = "Git log" },
         { " gm", mkcmd("GitMessenger"), desc = "Annotate current line" },
       });

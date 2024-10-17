@@ -12,13 +12,16 @@
     state: directory
     mode: "755"
 
-- name: Install lf as github release
+- name: Install starship as github release
   include_role:
     name: "ansible-role-github-release"
   vars:
+    starship_version: "1.19.0"
+    starship_repository: "https://github.com/starship/starship"
+    starship_arch: "i686-unknown-linux-musl"
     ghr_install_dir: "/home/{{ user.name }}/bin"
     ghr_releases:
-      - url: https://github.com/starship/starship/releases/download/v1.19.0/starship-i686-unknown-linux-musl.tar.gz
+      - url: "{{ starship_repository }}/releases/download/v{{ starship_version }}/starship-{{ starship_arch }}.tar.gz"
         copy_src: "{{ ghr_tmp_dir }}/starship"
         copy_dest: "{{ ghr_install_dir }}/starship"
         extract_dir: ""

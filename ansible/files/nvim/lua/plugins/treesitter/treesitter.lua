@@ -10,6 +10,9 @@ return {
   end,
   config = function()
     require("nvim-treesitter.configs").setup {
+      indent = {
+        enable = true,
+      },
       ensure_installed = {
         "yaml",
         "lua",
@@ -19,6 +22,7 @@ return {
         "ruby",
         "rust",
         "make",
+        "tsx",
         "javascript",
         "vimdoc"
       }
