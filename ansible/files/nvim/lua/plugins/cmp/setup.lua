@@ -28,10 +28,10 @@ return function()
         vim.fn["vsnip#anonymous"](args.body)
       end,
     },
-    window = {
-      completion = cmp.config.window.bordered(),
-      documentation = cmp.config.window.bordered(),
-    },
+--     window = {
+--       completion = cmp.config.window.bordered(),
+--       documentation = cmp.config.window.bordered(),
+--     },
     mapping = {
       ['<c-n>'] = cmp_map.select_next_item(),
       ['<c-p>'] = cmp_map.select_prev_item(),

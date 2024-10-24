@@ -20,6 +20,7 @@ return packer.startup(function(use)
     "colorscheme",     -- color scheme
     "telescope",       -- fuzzy search system
     "navigation",      -- fs, tmux navigation
+    "editing",
     "cmp",             -- completion
     "status",          -- status line
     "eyeliner",
