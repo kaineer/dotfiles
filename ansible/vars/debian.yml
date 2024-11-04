@@ -9,6 +9,7 @@ system_packages:
  - inxi
  - make
  - moc
+ - mplayer
  - neofetch
  - pass
  - p7zip
