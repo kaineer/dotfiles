@@ -16,11 +16,6 @@ return {
           { "<tab>", "TAB" },
         },
       },
---       key_labels = {
---         ["<space>"] = "SPC",
---         ["<cr>"] = "CR",
---         ["<tab>"] = "TAB",
---       },
       plugins = {
         registers = false,
       },

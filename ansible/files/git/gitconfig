@@ -17,6 +17,12 @@
 [core]
   excludesFile = ~/.gitignore
   editor = vi
+  pager = delta
+
+[delta]
+  navigate = true
+  side-by-side = true
+  syntax-theme = Nord
 
 [diff]
   colorMoved = default

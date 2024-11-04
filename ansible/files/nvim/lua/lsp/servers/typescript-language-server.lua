@@ -22,7 +22,7 @@ end
 --
 return function(on_attach)
   return {
-    name = 'tsserver',
+    name = 'ts_ls',
     on_attach = create_on_attach(on_attach),
   }
 end

@@ -13,5 +13,7 @@ end
 
 applyCmd("whitespaces")
 applyCmd("direnv")
+applyCmd("javascript")
 applyCmd("opls")
 applyCmd("term")
+applyCmd("http")

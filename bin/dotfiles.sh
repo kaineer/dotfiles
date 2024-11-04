@@ -55,6 +55,10 @@ play_ansible_playbook() {
 }
 
 restart_x_server() {
+  if [[ "$RESTART_X" == "" ]]; then
+    return
+  fi
+
   DM=$(cat /etc/X11/default-display-manager)
   DN=$(basename ${DM})
 

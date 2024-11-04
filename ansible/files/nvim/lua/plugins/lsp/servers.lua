@@ -75,7 +75,10 @@ end
 local load_servers = function()
   tap(require('lspconfig'), function(nvim_lsp)
     forEach(servers, function(lsp)
-      nvim_lsp[get_name(lsp)].setup(merge_with_defaults(lsp))
+      local nvimLSP = nvim_lsp[get_name(lsp)];
+      if (nvimLSP and nvimLSP.setup) then
+        nvimLSP.setup(merge_with_defaults(lsp))
+      end
     end)
   end)
 end
