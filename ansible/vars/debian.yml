@@ -13,6 +13,7 @@ system_packages:
  - pass
  - p7zip
  - p7zip-full
+ - python3-pip
  - rofi
  - tmux
  - unzip
