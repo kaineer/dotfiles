@@ -12,6 +12,7 @@ system_packages:
  - mplayer
  - neofetch
  - pass
+ - python3-pip
  - p7zip
  - p7zip-full
  - rofi
@@ -24,3 +25,9 @@ system_packages:
  - zathura
  - zip
  - xxd
+unnecessary:
+ - hexchat
+ - pidgin
+ - thunderbird
+
+

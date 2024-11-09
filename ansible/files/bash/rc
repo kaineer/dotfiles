@@ -38,6 +38,7 @@ fi
 DIR="$HOME/.config/profile.d"
 [ ! -d "$DIR" ] && mkdir -p "$DIR"
 for SRC in $(ls -1 "$DIR/*" >/dev/null 2>&1); do
+  [[ "$DEBUG" == "true" ]] && echo " [DEBUG] Loading ${SRC}.."
   source $SRC
 done
 # tag: /config-profile
