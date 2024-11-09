@@ -37,7 +37,7 @@ fi
 # tag: config-profile
 DIR="$HOME/.config/profile.d"
 [ ! -d "$DIR" ] && mkdir -p "$DIR"
-for SRC in $(ls -1 "$DIR/*" >/dev/null 2>&1); do
+for SRC in $(ls -1 $DIR/* 2>&1); do
   [[ "$DEBUG" == "true" ]] && echo " [DEBUG] Loading ${SRC}.."
   source $SRC
 done
@@ -54,6 +54,3 @@ alias cat='bat --style=plain'
 PATH="$HOME/bin:$PATH"
 
 export FZF_DEFAULT_OPTS="-x --cycle --bind=ctrl-j:accept,tab:toggle-down --info=inline-right"
-
-# Initialize prompt AFTER setting path
-eval "$(starship init bash)"

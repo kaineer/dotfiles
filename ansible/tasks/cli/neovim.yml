@@ -15,7 +15,8 @@
   vars:
     ghr_install_dir: "/home/{{ user.name }}/bin"
     ghr_releases:
-    - url: https://github.com/neovim/neovim/releases/download/v0.10.1/nvim.appimage
+    - url: https://github.com/neovim/neovim/releases/download/v0.10.2/nvim.appimage
+      owner: "{{ user.name }}"
       copy_src: "{{ ghr_tmp_dir }}/nvim.appimage"
       copy_dest: "{{ ghr_install_dir}}/nvim"
 

@@ -1,0 +1,9 @@
+- name: Install fnm
+  include_role:
+    name: "ansible-fnm"
+  vars:
+    fnm_user: "{{ user.name }}"
+    fnm_root_suffix: ".fnm"
+    fnm_skip_shell: true
+    fnm_nodejs_versions: [ 20 ]
+    fnm_npm_global_packages: []
