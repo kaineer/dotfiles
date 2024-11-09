@@ -15,6 +15,7 @@ system_packages:
  - python3-pip
  - p7zip
  - p7zip-full
+ - python3-pip
  - rofi
  - tmux
  - unzip
