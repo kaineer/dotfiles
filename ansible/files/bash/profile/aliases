@@ -2,7 +2,6 @@
 
 exa_aliases() {
   alias ls=exa
-  alias tree="exa -T"
 }
 
 [ -x $HOME/bin/exa ] && exa_aliases

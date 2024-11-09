@@ -8,6 +8,7 @@ system_packages:
  - htop
  - inxi
  - make
+ - mediainfo
  - moc
  - mplayer
  - neofetch
@@ -26,7 +27,29 @@ system_packages:
  - zathura
  - zip
  - xxd
-unnecessary:
+
+obsolete_packages:
+ - aisleriot
+ - gnome-2048
+ - gnome-chess
+ - gnome-games
+ - gnome-klotski
+ - gnome-mahjongg
+ - gnome-mines
+ - gnome-nibbles
+ - gnome-robots
+ - gnome-sudoku
+ - gnome-taquin
+ - gnome-tetravex
+ - swell-foop
+ - iagno
+ - hitori
+ - lightsoff
+ - quadrapassel
+ - four-in-a-row
+ - five-or-more
+ - tali
  - hexchat
  - pidgin
+ - shotwell
  - thunderbird

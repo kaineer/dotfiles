@@ -2,6 +2,12 @@
 - name: Install missing packages
   package:
     name: "{{ system_packages }}"
+    state: "present"
+
+- name: Remove unnecessary packages
+  package:
+    name: "{{ obsolete_packages }}"
+    state: "absent"
 
 - name: Create bin directory
   ansible.builtin.file:
