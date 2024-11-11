@@ -11,6 +11,7 @@
    * Downloading and aliasing bat
    * Downloading ripgrep and fd
    * Downloading and installing nerd font
+   * Downloading and installing fzf
    * Some gnome preferences
 
 # TODO

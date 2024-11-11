@@ -2,6 +2,19 @@
 - name: Install missing packages
   package:
     name: "{{ system_packages }}"
+    state: "present"
+
+- name: Remove unnecessary packages
+  package:
+    name: "{{ obsolete_packages }}"
+    state: "absent"
+
+- name: Create bin directory
+  ansible.builtin.file:
+    owner: '{{ user.name }}'
+    group: '{{ user.name }}'
+    path: '/home/{{ user.name }}/bin'
+    state: 'directory'
 
 - include_tasks: ./cli/bash.yml
 - include_tasks: ./cli/git.yml
@@ -10,3 +23,4 @@
 - include_tasks: ./cli/lf.yml
 - include_tasks: ./cli/fzf.yml
 - include_tasks: ./cli/neovim.yml
+- include_tasks: ./cli/node.yml

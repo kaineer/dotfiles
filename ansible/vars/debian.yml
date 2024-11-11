@@ -8,9 +8,12 @@ system_packages:
  - htop
  - inxi
  - make
+ - mediainfo
  - moc
+ - mplayer
  - neofetch
  - pass
+ - python3-pip
  - p7zip
  - p7zip-full
  - python3-pip
@@ -25,3 +28,30 @@ system_packages:
  - zathura
  - zip
  - xxd
+
+obsolete_packages:
+ - aisleriot
+ - gnome-2048
+ - gnome-chess
+ - gnome-games
+ - gnome-klotski
+ - gnome-mahjongg
+ - gnome-mines
+ - gnome-nibbles
+ - gnome-robots
+ - gnome-sudoku
+ - gnome-taquin
+ - gnome-tetravex
+ - swell-foop
+ - iagno
+ - hitori
+ - lightsoff
+ - quadrapassel
+ - four-in-a-row
+ - five-or-more
+ - tali
+ - brasero
+ - hexchat
+ - pidgin
+ - shotwell
+ - thunderbird

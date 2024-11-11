@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+exa_aliases() {
+  alias ls=exa
+}
+
+[ -x $HOME/bin/exa ] && exa_aliases

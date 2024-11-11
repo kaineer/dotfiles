@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+export FNM_PATH=$HOME/.fnm
+export PATH=$HOME/.local/bin:$PATH
+
+eval "$(fnm env)"

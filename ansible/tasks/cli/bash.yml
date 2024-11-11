@@ -6,3 +6,16 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "644"
+
+- name: Link profile files
+  file:
+    src: "{{ playbook_dir }}/files/bash/profile/{{ item }}"
+    dest: "/home/{{ user.name }}/.config/profile.d/{{ item }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: "link"
+  with_items:
+    - fzf
+    - aliases
+    - bat
+    - node

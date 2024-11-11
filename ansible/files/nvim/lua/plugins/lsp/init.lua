@@ -14,7 +14,6 @@ local lspConfig = {
 }
 
 local lspUtils = {
-  'jose-elias-alvarez/nvim-lsp-ts-utils',
   'williamboman/mason.nvim',
 }
 
