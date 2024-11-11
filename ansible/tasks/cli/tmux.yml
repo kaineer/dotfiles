@@ -1,0 +1,25 @@
+---
+- name: Copy .tmux.conf
+  copy:
+    src: "{{ playbook_dir }}/files/tmux/tmux.conf"
+    dest: "/home/{{ user.name }}/.tmux.conf"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "644"
+
+- name: Set tmux config link
+  file:
+    src: "{{ playbook_dir }}/files/tmux/config/"
+    dest: "/home/{{ user.name }}/.config/tmux"
+    state: link
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
+- name: Set profile link
+  file:
+    src: "{{ playbook_dir }}/files/tmux/profile/tmux"
+    dest: "/home/{{ user.name }}/.config/profile.d/tmux"
+    state: link
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
