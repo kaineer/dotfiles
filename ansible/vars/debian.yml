@@ -2,6 +2,7 @@ system_packages:
  - baobab
  - curl
  - cmake
+ - dconf-cli
  - direnv
  - dmenu
  - gpg
