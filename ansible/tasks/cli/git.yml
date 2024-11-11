@@ -28,10 +28,17 @@
     group: "{{ user.name }}"
     mode: "644"
 
+- name: Set profile link
+  file:
+    src: "{{ playbook_dir }}/files/git/profile"
+    dest: "/home/{{ user.name }}/.config/profile.d/git"
+    state: "link"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
 - name: Install github executable
   package:
     name: gh
-
 
 - name: Install delta diff viewer
   include_role:
