@@ -17,3 +17,4 @@
 
  * Ansible tasks for
    * fzf
+   * tmux config

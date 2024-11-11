@@ -25,7 +25,7 @@ return function()
     },
     snippet = {
       expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
+        vim.snippet.expand(args.body)
       end,
     },
 --     window = {
@@ -40,7 +40,7 @@ return function()
       ['<cr>'] = cmp_map.confirm({ select = true }),
     },
     sources = cmp_src(
-      as_names('nvim_lsp', 'vsnip', 'buffer', 'path', 'tmux'),
+      as_names('nvim_lsp', 'snippets', 'buffer', 'path', 'tmux'),
       as_names('buffer')
     ),
     formatting = {
