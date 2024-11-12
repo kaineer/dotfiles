@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+
+git_current_branch() {
+  git_list_branches | \
+    grep '*' | \
+    cut -f2 -d" "
+}
+
+git_list_branches() {
+  git branch -l
+}
+
+git_list_branches_but_current() {
+  git_list_branches | \
+    grep -v '*' | cut -c3-
+}
+
+ggpull() {
+  git pull origin $(git_current_branch)
+}
+
+ggpush() {
+  git push origin $(git_current_branch)
+}
+
+add() {
+  if [[ "$(which fzf)" == "" ]]; then
+    git add "$@"
+  elif [[ "$#" != "0" ]]; then
+    git add "$@"
+  else
+    git status -s | cut -f2 -d" " | fzf -m | xargs git add
+  fi
+}
+
+ci() {
+  git commit "$@"
+}
+
+git_co_reverse_changes() {
+  shift
+  if [[ "$1" == "" ]]; then
+    git checkout -- .
+  else
+    git checkout "$@"
+  fi
+}
+
+git_co_new_branch() {
+  shift
+  if [[ "$#" == "1" ]]; then
+    git checkout "$@"
+  else
+    echo " » You should specify a branch to create"
+  fi
+}
+
+git_co_branch() {
+  if [[ "$1" == "" ]]; then
+    # $ co
+    NEW_BRANCH=$(git_list_branches_but_current | fzf)
+  else
+    # # co <branch-name-fragment>
+    NEW_BRANCH=$(git_list_branches_but_current | fzf -1 -q "$1")
+  fi
+  if [[ "$NEW_BRANCH" != "" ]]; then
+    git checkout $NEW_BRANCH
+  fi
+}
+
+co() {
+  case "$1" in
+    "--") git_co_reverse_changes $@ ;;
+    "-b") git_co_new_branch $@ ;;
+    *)    git_co_branch $@ ;;
+  esac
+}
+
+st() {
+  git status "$@"
+}
