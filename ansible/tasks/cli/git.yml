@@ -40,15 +40,24 @@
   package:
     name: gh
 
+- name: Check if delta viewer installed
+  stat:
+    path: "/home/{{ user.name }}/bin/delta"
+  register: "delta_binary"
+
 - name: Install delta diff viewer
+  when: "not delta_binary.stat.exists"
   include_role:
     name: "ansible-role-github-release"
   vars:
     owner: "{{ user.name }}"
+    delta_version: "0.18.2"
+    delta_architecture: "x86_64-unknown-linux-gnu"
+    delta_repository: "https://github.com/dandavison/delta"
     ghr_install_dir: "/home/{{ user.name }}/bin"
     ghr_releases:
-      - url: https://github.com/dandavison/delta/releases/download/0.18.2/delta-0.18.2-x86_64-unknown-linux-gnu.tar.gz
+      - url: "{{ delta_repository }}/releases/download/{{ delta_version }}/delta-{{ delta_version }}-{{ delta_architecture }}.tar.gz"
         extract_dir: "{{ ghr_tmp_dir }}/delta"
-        copy_src: "{{ ghr_tmp_dir }}/tmp/delta/delta-0.18.2-x86_64-unknown-linux-gnu/delta"
+        copy_src: "{{ ghr_tmp_dir }}/tmp/delta/delta-{{ delta_version }}-{{ delta_architecture }}/delta"
         copy_dest: "{{ ghr_install_dir }}/delta"
 

@@ -18,9 +18,13 @@
   include_role:
     name: "ansible-role-github-release"
   vars:
+    owner: "{{ user.name }}"
+    fzf_version: "0.54.3"
+    fzf_repository: "https://github.com/junegunn/fzf"
+    fzf_architecture: "linux_amd64"
     ghr_install_dir: "/home/{{ user.name }}/bin"
     ghr_releases:
-    - url: "https://github.com/junegunn/fzf/releases/download/v0.54.3/fzf-0.54.3-linux_amd64.tar.gz"
+    - url: "{{ fzf_repository }}/releases/download/v{{ fzf_version }}/fzf-{{ fzf_version }}-{{ fzf_architecture }}.tar.gz"
       copy_src: "{{ ghr_tmp_dir }}/fzf"
       copy_dest: "{{ ghr_install_dir}}/fzf"
       extract_dir: ""

@@ -50,13 +50,23 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
 
+- name: Check if lf is installed
+  stat:
+    path: "/home/{{ user.name }}/bin/lf"
+  register: "lf_binary"
+
 - name: Install lf as github release
+  when: "not lf_binary.stat.exists"
   include_role:
     name: "ansible-role-github-release"
   vars:
+    lf_version: "r33"
+    lf_architecture: "linux-amd64"
+    lf_repository: "https://github.com/gokcehan/lf"
+    owner: "{{ user.name }}"
     ghr_install_dir: "/home/{{ user.name }}/bin"
     ghr_releases:
-    - url: https://github.com/gokcehan/lf/releases/download/r32/lf-linux-amd64.tar.gz
+    - url: "{{ lf_repository }}/releases/download/{{ lf_version }}/lf-{{ lf_architecture }}.tar.gz"
       copy_src: "{{ ghr_tmp_dir }}/lf"
       copy_dest: "{{ ghr_install_dir}}/lf"
       extract_dir: ""

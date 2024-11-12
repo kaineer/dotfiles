@@ -9,14 +9,22 @@
     state: directory
     mode: "755"
 
+- name: Check if neovim installed
+  stat:
+    path: "/home/{{ user.name }}/bin/nvim"
+  register: "nvim_binary"
+
 - name: Install neovim as github release
+  when: "not nvim_binary.stat.exists"
   include_role:
     name: "ansible-role-github-release"
   vars:
+    owner: "{{ user.name }}"
+    nvim_version: "0.10.2"
+    nvim_repository: "https://github.com/neovim/neovim"
     ghr_install_dir: "/home/{{ user.name }}/bin"
     ghr_releases:
-    - url: https://github.com/neovim/neovim/releases/download/v0.10.2/nvim.appimage
-      owner: "{{ user.name }}"
+    - url: "{{ nvim_repository }}/releases/download/{{ nvim_version }}/nvim.appimage"
       copy_src: "{{ ghr_tmp_dir }}/nvim.appimage"
       copy_dest: "{{ ghr_install_dir}}/nvim"
 
