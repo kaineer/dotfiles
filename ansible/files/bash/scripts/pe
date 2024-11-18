@@ -1,0 +1,78 @@
+#!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: Project environment script
+#
+# Dependencies:
+#  * direnv
+#  * EDITOR environment variable
+#
+
+## bootstrap
+BIN=$(readlink -f $0)
+DIR=$(dirname $BIN)
+## bootstrap
+
+echo_envrc() {
+  echo "#!/usr/bin/env bash"
+  echo ""
+  echo "[ -d bin ] && export PATH=$(pwd)/bin:\$PATH"
+  echo "[ -d node_modules/.bin ] && export PATH=$(pwd)/node_modules/.bin:\$PATH"
+  echo "export PROJECT_PATH=$(pwd)"
+  echo "export PROJECT_BIN=$(pwd)/bin"
+  echo "export PROJECT_NAME=$(basename $(pwd))"
+  echo "export PROJECT_CREATED=\"$(date +%d.%m.%Y)\""
+}
+
+edit_script() {
+  F=$PROJECT_BIN/$1
+  if [ -f $F ]; then
+    $EDITOR $F
+  else
+    $EDITOR $F
+    chmod 755 $F
+  fi
+}
+
+list_in_bin() {
+  if [[ "$PROJECT_BIN" != "" ]]; then
+    if [ -d $PROJECT_BIN ]; then
+      cd $PROJECT_BIN && ls $@ && cd - >/dev/null 2>&1
+    fi
+  fi
+}
+
+case "$1" in
+  "reinit")
+    rm ./.envrc
+    $0 init
+    ;;
+  "init")
+    mkdir -p bin
+    [ ! -f ./.envrc ] && echo_envrc >./.envrc
+    direnv allow .
+
+    [[ "$DEBUG" == "true" ]] && echo_envrc
+    ;;
+  "erc") # FOR DEBUGGING
+    echo_envrc
+    ;;
+  "e"|"edit")
+    $EDITOR ./.envrc
+    ;;
+  "ls"|"list")
+    shift
+    list_in_bin
+    ;;
+  *)
+    if [[ "$1" != "" ]]; then
+      edit_script $1
+    else
+      echo_envrc
+    fi
+    ;;
+esac

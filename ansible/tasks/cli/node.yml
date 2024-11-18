@@ -1,4 +1,10 @@
+- name: Check if fnm is installed
+  stat:
+    path: "/home/{{ user.name }}/.local/bin/fnm"
+  register: "fnm_binary"
+
 - name: Install fnm
+  when: "not fnm_binary.stat.exists"
   include_role:
     name: "ansible-fnm"
   vars:

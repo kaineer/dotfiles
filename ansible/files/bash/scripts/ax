@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+## bootstrap
+BIN=$(readlink -f $0)
+DIR=$(dirname $BIN)
+DF_DIR=$DIR/../../../..
+## bootstrap
+
+edit_ansible_config() {
+  $EDITOR $DIR/../../../ansible.cfg
+}
+
+edit_script() {
+  $EDITOR $DIR/$1
+}
+
+edit_script_list() {
+  $EDITOR $DIR/../../../tasks/cli/scripts.yml
+}
+
+apply_dotfiles() {
+  cd $DIR/../../../..
+  ./bin/dotfiles.sh
+}
+
+case "$1" in
+  "ce")
+    edit_ansible_config
+    ;;
+  "se")
+    shift
+    edit_script $1
+    ;;
+  "sel")
+    edit_script_list
+    ;;
+  "sync")
+    cd $DF_DIR
+    git add .
+    git commit -m "Sync on $(date +'%Y.%m.%d')"
+    git pull origin master
+    git push origin master
+    ;;
+  "")
+    apply_dotfiles
+    ;;
+esac

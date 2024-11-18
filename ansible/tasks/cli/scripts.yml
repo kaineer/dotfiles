@@ -1,0 +1,18 @@
+- name: Create scripts directory
+  file:
+    path: "/home/{{ user.name }}/bin/"
+    state: "directory"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "755"
+
+- name: Link scripts
+  file:
+    src: "{{ playbook_dir }}/files/bash/scripts/{{ item }}"
+    dest: "/home/{{ user.name }}/bin/{{ item }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: "link"
+  with_items:
+    - ax
+    - pe

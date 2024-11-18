@@ -18,6 +18,7 @@
 
 - include_tasks: ./cli/bash.yml
 - include_tasks: ./cli/profile.yml
+- include_tasks: ./cli/scripts.yml
 - include_tasks: ./cli/git.yml
 - include_tasks: ./cli/text.yml
 - include_tasks: ./cli/tmux.yml

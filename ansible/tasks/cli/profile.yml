@@ -14,8 +14,9 @@
     group: "{{ user.name }}"
     state: "link"
   with_items:
-    - fzf
     - aliases
     - bat
-    - node
     - bind
+    - direnv
+    - fzf
+    - node
