@@ -25,11 +25,11 @@ edit_script() {
 }
 
 edit_script_list() {
-  $EDITOR $DIR/../../../tasks/cli/scripts.yml
+  $EDITOR $DF_DIR/ansible/tasks/cli/scripts.yml
 }
 
 apply_dotfiles() {
-  cd $DIR/../../../..
+  cd $DF_DIR
   ./bin/dotfiles.sh
 }
 
