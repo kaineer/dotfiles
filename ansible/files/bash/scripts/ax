@@ -7,6 +7,8 @@ DF_DIR=$DIR/../../../..
 ## bootstrap
 
 usage() {
+  echo "## ansible config runner"
+  echo ""
   echo " $ ax ce              # edit ansible.cfg"
   echo " $ ax se [scriptname] # edit script in bash/script"
   echo " $ ax sel             # edit list of scripts to install"
