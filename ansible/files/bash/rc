@@ -43,10 +43,6 @@ for SRC in $(ls -1 $DIR/* 2>&1); do
 done
 # tag: /config-profile
 
-# TODO: move code below into settings for programs
-#   that should be put into ~/.config/profile.d
-export EDITOR=nvim
-
 # Build path
 PATH="$HOME/bin:$PATH"
 
