@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
+eval "$(fzf --bash)"
+
 export FZF_DEFAULT_OPTS="-x --cycle --bind=ctrl-j:accept,tab:toggle-down --info=inline-right"
