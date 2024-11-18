@@ -4,6 +4,8 @@
 BIN=$(readlink -f $0)
 DIR=$(dirname $BIN)
 DF_DIR=$DIR/../../../..
+EDITOR=${EDITOR:-vi}
+[ -x $HOME/bin/nvim ] && EDITOR=nvim
 ## bootstrap
 
 usage() {
