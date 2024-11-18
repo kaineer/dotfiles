@@ -35,9 +35,17 @@ apply_dotfiles() {
   ./bin/dotfiles.sh
 }
 
+edit_debian_vars() {
+  cd $DF_DIR
+  $EDITOR ./ansible/vars/
+}
+
 case "$1" in
   "ce")
     edit_ansible_config
+    ;;
+  "v"|"vars")
+    edit_debian_vars
     ;;
   "se")
     shift
