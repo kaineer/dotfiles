@@ -15,4 +15,5 @@
     state: "link"
   with_items:
     - ax
+    - gd
     - pe

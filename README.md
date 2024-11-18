@@ -17,5 +17,6 @@
 # TODO
 
  * Ansible tasks for
-   * fzf
-   * tmux config
+   * wezterm install
+   * wezterm config
+   * copy wezterm config into ansible/files

@@ -16,7 +16,7 @@ add_newline = false
 format = "$hostname${custom.linux}$directory$docker_context$git_branch$git_status$nodejs$package\n$character$shell"
 
 [shell]
-### symbols:  ν ζ β
+# symbols:  ν ζ β
 disabled = false
 bash_indicator = "β"
 zsh_indicator = "ζ"

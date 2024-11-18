@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: proj replacement
+#
+# Dependencies:
+#  * fzf
+#  * jq
+#
+
+CONFIG_FILE=$HOME/var/dir.json
+EDITOR=nvim
+
+usage() {
+  echo " » Go to Dir"
+  echo ""
+  echo " $ gd .                      # add current dir to list"
+  echo " $ gd add nemo               # add current dir with command"
+  echo " $ gd <name fragment>        # find dir and open with command"
+  echo " $ gd e[dit]                 # edit directories file"
+  echo " $ gd                        # display full list and select with fzf"
+  echo " $ gd h[elp]                 # show this text"
+}
+
+add_directory() {
+  DIR=$1
+  BIN=${2:-${EDITOR}}
+  NAME=$(basename $DIR)
+
+  cat $CONFIG_FILE | \
+    jq -M ".[\"$NAME\"].dir=\"$DIR\"|.[\"$NAME\"].bin=\"$BIN\"" \
+    > $CONFIG_FILE.new
+  # Otherwise jq will remove all file content
+  mv $CONFIG_FILE.new $CONFIG_FILE
+}
+
+edit_config_file() {
+  echo "[DEBUG] Editor: $EDITOR, Config: $CONFIG_FILE"
+  $EDITOR $CONFIG_FILE
+}
+
+create_config_file() {
+  mkdir -p $(dirname $CONFIG_FILE)
+  echo "{}" > $CONFIG_FILE
+}
+
+ensure_config_file() {
+  [ ! -f $CONFIG_FILE ] && create_config_file
+}
+
+list_titles() {
+  cat $CONFIG_FILE | jq -r 'keys | join("\n")'
+}
+
+fzf_directory() {
+  if [[ "$@" != "" ]]; then
+    TARGET=$(list_titles | fzf -1 -q $@)
+  else
+    TARGET=$(list_titles | fzf)
+  fi
+
+  if [[ "$TARGET" != "" ]]; then
+    DIR=$(cat $CONFIG_FILE | jq -r ".[\"${TARGET}\"].dir")
+    BIN=$(cat $CONFIG_FILE | jq -r ".[\"${TARGET}\"].bin")
+
+    if [ -d $DIR ]; then
+      cd $DIR && n && eval "$BIN ." && cd - >/dev/null && n
+    elif [ -f $DIR ]; then
+      eval "$BIN $DIR"
+    fi
+  fi
+}
+
+ensure_config_file
+
+case "$1" in
+  "h"|"help") usage ;;
+  "e"|"edit") edit_config_file ;;
+  "f") cat $CONFIG_FILE ;;
+  "."|"add") add_directory $PWD $2 ;;
+  "") fzf_directory ;;
+  *) fzf_directory $@ ;;
+esac
