@@ -4,4 +4,9 @@ exa_aliases() {
   alias ls=exa
 }
 
+bat_aliases() {
+  alias cat='bat --style=plain'
+}
+
 [ -x $HOME/bin/exa ] && exa_aliases
+[ -x $HOME/bin/bat ] && bat_aliases

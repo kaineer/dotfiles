@@ -45,10 +45,7 @@ done
 
 # TODO: move code below into settings for programs
 #   that should be put into ~/.config/profile.d
-EDITOR=nvim
-
-alias ls=exa
-alias cat='bat --style=plain'
+export EDITOR=nvim
 
 # Build path
 PATH="$HOME/bin:$PATH"
