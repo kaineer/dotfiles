@@ -1,4 +1,4 @@
--- lua/plugins/gist/secret.lua
+-- lua/plugins/gist/secret.example.lua
 
 -- Regenerate it here:
 --   https://github.com/settings/tokens
