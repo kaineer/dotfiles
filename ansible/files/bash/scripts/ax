@@ -56,10 +56,15 @@ case "$1" in
     ;;
   "sync")
     cd $DF_DIR
-    git add .
-    git commit -m "Sync on $(date +'%Y.%m.%d')"
-    git pull origin master
-    git push origin master
+    DF_NOTHING_TO_COMMIT=$(git status . | grep "nothing to commit" | wc -l)
+    if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
+      git add .
+      git commit -m "Sync on $(date +'%Y.%m.%d')"
+      git pull origin master
+      git push origin master
+    else
+      git pull origin master
+    fi
     ;;
   "h"|"help")
     usage
