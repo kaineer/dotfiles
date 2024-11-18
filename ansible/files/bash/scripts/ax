@@ -40,6 +40,10 @@ edit_debian_vars() {
   $EDITOR ./ansible/vars/
 }
 
+nothing_to_commit() {
+  git status . | grep "nothing to commit" | wc -l
+}
+
 case "$1" in
   "ce")
     edit_ansible_config
@@ -56,15 +60,13 @@ case "$1" in
     ;;
   "sync")
     cd $DF_DIR
-    DF_NOTHING_TO_COMMIT=$(git status . | grep "nothing to commit" | wc -l)
+    DF_NOTHING_TO_COMMIT=$(nothing_to_commit)
     if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
       git add .
       git commit -m "Sync on $(date +'%Y.%m.%d')"
-      git pull origin master
-      git push origin master
-    else
-      git pull origin master
     fi
+    git pull origin master
+    git push origin master
     ;;
   "h"|"help")
     usage
