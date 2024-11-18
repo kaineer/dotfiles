@@ -10,5 +10,7 @@
     nf_group: "{{ user.name }}"
     nf_linux_fonts_dir: "/home/{{ user.name }}/.fonts"
     nf_single_fonts:
+      - "FiraCode/Bold/FiraCodeNerdFont-Bold.ttf"
       - "FiraCode/Medium/FiraCodeNerdFont-Medium.ttf"
       - "FiraCode/Regular/FiraCodeNerdFont-Regular.ttf"
+      - "FiraCode/Light/FiraCodeNerdFont-Light.ttf"
