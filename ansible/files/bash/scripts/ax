@@ -4,6 +4,8 @@
 BIN=$(readlink -f $0)
 DIR=$(dirname $BIN)
 DF_DIR=$DIR/../../../..
+EDITOR=${EDITOR:-vi}
+[ -x $HOME/bin/nvim ] && EDITOR=nvim
 ## bootstrap
 
 usage() {
@@ -33,9 +35,21 @@ apply_dotfiles() {
   ./bin/dotfiles.sh
 }
 
+edit_debian_vars() {
+  cd $DF_DIR
+  $EDITOR ./ansible/vars/
+}
+
+nothing_to_commit() {
+  git status . | grep "nothing to commit" | wc -l
+}
+
 case "$1" in
   "ce")
     edit_ansible_config
+    ;;
+  "v"|"vars")
+    edit_debian_vars
     ;;
   "se")
     shift
@@ -46,8 +60,11 @@ case "$1" in
     ;;
   "sync")
     cd $DF_DIR
-    git add .
-    git commit -m "Sync on $(date +'%Y.%m.%d')"
+    DF_NOTHING_TO_COMMIT=$(nothing_to_commit)
+    if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
+      git add .
+      git commit -m "Sync on $(date +'%Y.%m.%d')"
+    fi
     git pull origin master
     git push origin master
     ;;

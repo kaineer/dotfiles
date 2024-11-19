@@ -69,7 +69,8 @@ fzf_directory() {
     BIN=$(cat $CONFIG_FILE | jq -r ".[\"${TARGET}\"].bin")
 
     if [ -d $DIR ]; then
-      cd $DIR && n && eval "$BIN ." && cd - >/dev/null && n
+      # cd $DIR && n && eval "$BIN ." && cd - >/dev/null && n
+      cd $DIR && eval "$BIN ." && cd - >/dev/null
     elif [ -f $DIR ]; then
       eval "$BIN $DIR"
     fi

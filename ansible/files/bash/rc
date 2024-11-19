@@ -43,14 +43,6 @@ for SRC in $(ls -1 $DIR/* 2>&1); do
 done
 # tag: /config-profile
 
-# TODO: move code below into settings for programs
-#   that should be put into ~/.config/profile.d
-EDITOR=nvim
-
-alias ls=exa
-alias cat='bat --style=plain'
-
 # Build path
 PATH="$HOME/bin:$PATH"
 
-export FZF_DEFAULT_OPTS="-x --cycle --bind=ctrl-j:accept,tab:toggle-down --info=inline-right"
