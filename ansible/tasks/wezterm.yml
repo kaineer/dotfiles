@@ -30,3 +30,12 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     state: "link"
+
+- name: Link wezterm config
+  when: "not wezterm_binary.stat.exists"
+  file:
+    src: "{{ playbook_dir }}/files/wezterm/"
+    dest: "/home/{{ user.name }}/.config/wezterm"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: "link"

@@ -44,6 +44,25 @@ nothing_to_commit() {
   git status . | grep "nothing to commit" | wc -l
 }
 
+export_secrets() {
+  DF_TARGET=$1
+  [ ! -d $DF_TARGET ] && mkdir -p $DF_TARGET
+  if [ -d $DF_TARGET ]; then
+    echo " [DEBUG] Exporing keys to $DF_TARGET..."
+    # Export gpg private key
+    #
+    gpg --output $DF_TARGET/private.pgp --armor --export-secret-key
+  fi
+}
+
+import_secrets() {
+  DF_TARGET=$1
+  if [ -f $DF_TARGET/private.pgp ]; then
+    echo " [DEBUG] Importing keys from $DF_TARGET..."
+    gpg --import $DF_TARGET/private.pgp
+  fi
+}
+
 case "$1" in
   "ce")
     edit_ansible_config
@@ -57,6 +76,14 @@ case "$1" in
     ;;
   "sel")
     edit_script_list
+    ;;
+  "export")
+    shift
+    export_secrets $@
+    ;;
+  "import")
+    shift
+    import_secrets $@
     ;;
   "sync")
     cd $DF_DIR
