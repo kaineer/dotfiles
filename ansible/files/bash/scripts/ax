@@ -8,6 +8,10 @@ EDITOR=${EDITOR:-vi}
 [ -x $HOME/bin/nvim ] && EDITOR=nvim
 ## bootstrap
 
+debug() {
+  [[ "$DEBUG" == "true" ]] && echo " [DEBUG] " $@
+}
+
 usage() {
   echo "## ansible config runner"
   echo ""
@@ -53,7 +57,7 @@ export_secrets() {
   DF_TARGET=$1
   [ ! -d $DF_TARGET ] && mkdir -p $DF_TARGET
   if [ -d $DF_TARGET ]; then
-    echo " [DEBUG] Exporing keys to $DF_TARGET..."
+    debug "Exporing keys to $DF_TARGET..."
     # Export gpg private key
     #
     gpg --output $DF_TARGET/private.pgp --armor --export-secret-key
@@ -63,7 +67,7 @@ export_secrets() {
 import_secrets() {
   DF_TARGET=$1
   if [ -f $DF_TARGET/private.pgp ]; then
-    echo " [DEBUG] Importing keys from $DF_TARGET..."
+    debug "Importing keys from $DF_TARGET..."
     gpg --import $DF_TARGET/private.pgp
   fi
 }
