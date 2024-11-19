@@ -15,6 +15,11 @@ usage() {
   echo " $ ax se [scriptname] # edit script in bash/script"
   echo " $ ax sel             # edit list of scripts to install"
   echo " $ ax sync            # sync repo with remote on github"
+  echo " $ ax v[ars]          # edit debian packages list"
+  echo " $ ax export <dir>    # export pgp private key"
+  echo " $ ax import <dir>    # import pgp private key"
+  echo " $ ax key github      # copy public ssh, open github settings"
+  echo " $ ax key gitlab      # copy public ssh, open gitlab settings"
   echo " $ ax                 # run dotfiles.sh to update config"
 }
 
@@ -63,6 +68,39 @@ import_secrets() {
   fi
 }
 
+pass_ops_clone() {
+  DF_PASS_DIR=$HOME/.password-store
+  DF_PASS_REPO=git@gitlab.com:kaineer/pass-store.git
+
+  if [ ! -d $DF_PASS_DIR ]; then
+    git clone $DF_PASS_REPO $DF_PASS_DIR
+  fi
+}
+
+pass_ops() {
+  case "$1" in
+    "clone") pass_ops_clone ;;
+  esac
+}
+
+ssh_key_copy() {
+  cat $HOME/.ssh/id_rsa.pub | xsel -b
+  notify-send "Ax" "SSH key is copied"
+}
+
+key_ops() {
+  case "$1" in
+    "gh"|"github")
+      ssh_key_copy
+      open "https://github.com/settings/keys"
+      ;;
+    "gl"|"gitlab")
+      ssh_key_copy
+      open "https://gitlab.com/-/user_settings/ssh_keys"
+      ;;
+  esac
+}
+
 case "$1" in
   "ce")
     edit_ansible_config
@@ -84,6 +122,14 @@ case "$1" in
   "import")
     shift
     import_secrets $@
+    ;;
+  "key")
+    shift
+    key_ops $@
+    ;;
+  "pass")
+    shift
+    pass_ops $@
     ;;
   "sync")
     cd $DF_DIR
