@@ -1,0 +1,32 @@
+- name: Create appimages dir
+  file:
+    path: "/home/{{ user.name }}/bin/appimages"
+    state: "directory"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "755"
+
+- name: Check if wezterm is installed
+  stat:
+    path: "/home/{{ user.name }}/bin/wezterm"
+  register: "wezterm_binary"
+
+- name: Download wezterm appimage
+  when: "not wezterm_binary.stat.exists"
+  vars:
+    image_name: "WezTerm-20240203-110809-5046fc22-Ubuntu20.04.AppImage"
+  get_url:
+    url: "https://github.com/wez/wezterm/releases/download/20240203-110809-5046fc22/{{ image_name }}"
+    dest: "/home/{{ user.name }}/bin/appimages/wezterm.AppImage"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "755"
+
+- name: Link wezterm appimage
+  when: "not wezterm_binary.stat.exists"
+  file:
+    src: "/home/{{ user.name }}/bin/appimages/wezterm.AppImage"
+    dest: "/home/{{ user.name }}/bin/wezterm"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: "link"
