@@ -13,7 +13,4 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     state: "link"
-  with_items:
-    - ax
-    - gd
-    - pe
+  with_items: "{{ scripts }}"

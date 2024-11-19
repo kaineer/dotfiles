@@ -32,7 +32,7 @@ edit_script() {
 }
 
 edit_script_list() {
-  $EDITOR $DF_DIR/ansible/tasks/cli/scripts.yml
+  $EDITOR $DF_DIR/ansible/vars/scripts.yml
 }
 
 apply_dotfiles() {
