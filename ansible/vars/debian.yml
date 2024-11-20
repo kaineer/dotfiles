@@ -9,6 +9,7 @@ system_packages:
  - gpg
  - htop
  - inxi
+ - libnotify-bin
  - make
  - mediainfo
  - moc

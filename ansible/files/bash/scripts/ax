@@ -8,6 +8,10 @@ EDITOR=${EDITOR:-vi}
 [ -x $HOME/bin/nvim ] && EDITOR=nvim
 ## bootstrap
 
+debug() {
+  [[ "$DEBUG" == "true" ]] && echo " [DEBUG] " $@
+}
+
 usage() {
   echo "## ansible config runner"
   echo ""
@@ -15,6 +19,11 @@ usage() {
   echo " $ ax se [scriptname] # edit script in bash/script"
   echo " $ ax sel             # edit list of scripts to install"
   echo " $ ax sync            # sync repo with remote on github"
+  echo " $ ax v[ars]          # edit debian packages list"
+  echo " $ ax export <dir>    # export pgp private key"
+  echo " $ ax import <dir>    # import pgp private key"
+  echo " $ ax key github      # copy public ssh, open github settings"
+  echo " $ ax key gitlab      # copy public ssh, open gitlab settings"
   echo " $ ax                 # run dotfiles.sh to update config"
 }
 
@@ -27,7 +36,7 @@ edit_script() {
 }
 
 edit_script_list() {
-  $EDITOR $DF_DIR/ansible/tasks/cli/scripts.yml
+  $EDITOR $DF_DIR/ansible/vars/scripts.yml
 }
 
 apply_dotfiles() {
@@ -48,7 +57,7 @@ export_secrets() {
   DF_TARGET=$1
   [ ! -d $DF_TARGET ] && mkdir -p $DF_TARGET
   if [ -d $DF_TARGET ]; then
-    echo " [DEBUG] Exporing keys to $DF_TARGET..."
+    debug "Exporing keys to $DF_TARGET..."
     # Export gpg private key
     #
     gpg --output $DF_TARGET/private.pgp --armor --export-secret-key
@@ -58,9 +67,42 @@ export_secrets() {
 import_secrets() {
   DF_TARGET=$1
   if [ -f $DF_TARGET/private.pgp ]; then
-    echo " [DEBUG] Importing keys from $DF_TARGET..."
+    debug "Importing keys from $DF_TARGET..."
     gpg --import $DF_TARGET/private.pgp
   fi
+}
+
+pass_ops_clone() {
+  DF_PASS_DIR=$HOME/.password-store
+  DF_PASS_REPO=git@gitlab.com:kaineer/pass-store.git
+
+  if [ ! -d $DF_PASS_DIR ]; then
+    git clone $DF_PASS_REPO $DF_PASS_DIR
+  fi
+}
+
+pass_ops() {
+  case "$1" in
+    "clone") pass_ops_clone ;;
+  esac
+}
+
+ssh_key_copy() {
+  cat $HOME/.ssh/id_rsa.pub | xsel -b
+  notify-send "Ax" "SSH key is copied"
+}
+
+key_ops() {
+  case "$1" in
+    "gh"|"github")
+      ssh_key_copy
+      open "https://github.com/settings/keys"
+      ;;
+    "gl"|"gitlab")
+      ssh_key_copy
+      open "https://gitlab.com/-/user_settings/ssh_keys"
+      ;;
+  esac
 }
 
 case "$1" in
@@ -84,6 +126,14 @@ case "$1" in
   "import")
     shift
     import_secrets $@
+    ;;
+  "key")
+    shift
+    key_ops $@
+    ;;
+  "pass")
+    shift
+    pass_ops $@
     ;;
   "sync")
     cd $DF_DIR
