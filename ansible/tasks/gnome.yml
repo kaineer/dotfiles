@@ -4,6 +4,18 @@
     name:
       - python3-psutil
 
+- name: Set keyboard options
+  become_user: "{{ user.name }}"
+  dconf:
+    key: "/org/gnome/libgnomekbd/keyboard/options"
+    value: "['lv3\tlv3:switch', 'compat\tmisc:typo', 'grp\tgrp:caps_toggle']"
+
+- name: Set keyboard layouts
+  become_user: "{{ user.name }}"
+  dconf:
+    key: "/org/gnome/libgnomekbd/keyboard/layouts"
+    value: "['us', 'ru']"
+
 - name: Set terminal font
   become_user: kaineer
   dconf:
