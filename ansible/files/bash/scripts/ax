@@ -24,6 +24,7 @@ usage() {
   echo " $ ax import <dir>    # import pgp private key"
   echo " $ ax key github      # copy public ssh, open github settings"
   echo " $ ax key gitlab      # copy public ssh, open gitlab settings"
+  echo " $ ax pass clone      # clone password repo"
   echo " $ ax                 # run dotfiles.sh to update config"
 }
 
@@ -51,6 +52,17 @@ edit_debian_vars() {
 
 nothing_to_commit() {
   git status . | grep "nothing to commit" | wc -l
+}
+
+sync_repository() {
+  cd $DF_DIR
+  DF_NOTHING_TO_COMMIT=$(nothing_to_commit)
+  if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
+    git add .
+    git commit -m "Sync on $(date +'%Y.%m.%d')"
+  fi
+  git pull origin master
+  git push origin master
 }
 
 export_secrets() {
@@ -106,49 +118,15 @@ key_ops() {
 }
 
 case "$1" in
-  "ce")
-    edit_ansible_config
-    ;;
-  "v"|"vars")
-    edit_debian_vars
-    ;;
-  "se")
-    shift
-    edit_script $1
-    ;;
-  "sel")
-    edit_script_list
-    ;;
-  "export")
-    shift
-    export_secrets $@
-    ;;
-  "import")
-    shift
-    import_secrets $@
-    ;;
-  "key")
-    shift
-    key_ops $@
-    ;;
-  "pass")
-    shift
-    pass_ops $@
-    ;;
-  "sync")
-    cd $DF_DIR
-    DF_NOTHING_TO_COMMIT=$(nothing_to_commit)
-    if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
-      git add .
-      git commit -m "Sync on $(date +'%Y.%m.%d')"
-    fi
-    git pull origin master
-    git push origin master
-    ;;
-  "h"|"help")
-    usage
-    ;;
-  "")
-    apply_dotfiles
-    ;;
+  "ce")        edit_ansible_config ;;
+  "v"|"vars")  edit_debian_vars ;;
+  "se")        shift; edit_script $1 ;;
+  "sel")       edit_script_list ;;
+  "export")    shift; export_secrets $@ ;;
+  "import")    shift; import_secrets $@ ;;
+  "key")       shift; key_ops $@ ;;
+  "pass")      shift; pass_ops $@ ;;
+  "sync")      sync_repository ;;
+  "h"|"help")  usage ;;
+  "")          apply_dotfiles ;;
 esac
