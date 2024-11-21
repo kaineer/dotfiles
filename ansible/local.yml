@@ -7,6 +7,6 @@
     - include_vars: ./vars/user.yml
     - include_vars: ./vars/debian.yml
     - include_vars: ./vars/scripts.yml
-#     - include_tasks: ./tasks/debian.yml
-#     - include_tasks: ./tasks/fonts.yml
+    - include_tasks: ./tasks/debian.yml
+    - include_tasks: ./tasks/fonts.yml
     - include_tasks: ./tasks/gnome.yml
