@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+cd $DF_DIR
+DF_NOTHING_TO_COMMIT=$(nothing_to_commit)
+if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
+  git add .
+  git commit -m "Sync on $(date +'%Y.%m.%d')"
+fi
+git pull origin master
+git push origin master
+

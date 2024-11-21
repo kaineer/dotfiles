@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+DF_TARGET=$1
+[ ! -d $DF_TARGET ] && mkdir -p $DF_TARGET
+if [ -d $DF_TARGET ]; then
+  debug "Exporing keys to $DF_TARGET..."
+  # Export gpg private key
+  #
+  gpg --output $DF_TARGET/private.pgp --armor --export-secret-key
+fi

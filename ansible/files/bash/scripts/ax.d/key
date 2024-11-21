@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+case "$1" in
+  "gh"|"github")
+    ssh_key_copy
+    open "https://github.com/settings/keys"
+    ;;
+  "gl"|"gitlab")
+    ssh_key_copy
+    open "https://gitlab.com/-/user_settings/ssh_keys"
+    ;;
+esac

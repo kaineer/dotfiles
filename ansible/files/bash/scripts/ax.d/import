@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+DF_TARGET=$1
+if [ -f $DF_TARGET/private.pgp ]; then
+  debug "Importing keys from $DF_TARGET..."
+  gpg --import $DF_TARGET/private.pgp
+fi

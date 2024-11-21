@@ -6,26 +6,13 @@ DIR=$(dirname $BIN)
 DF_DIR=$DIR/../../../..
 EDITOR=${EDITOR:-vi}
 [ -x $HOME/bin/nvim ] && EDITOR=nvim
+
+DF_PASS_DIR=$HOME/.password-store
+DF_PASS_REPO=git@gitlab.com:kaineer/pass-store.git
 ## bootstrap
 
 debug() {
   [[ "$DEBUG" == "true" ]] && echo " [DEBUG] " $@
-}
-
-usage() {
-  echo "## ansible config runner"
-  echo ""
-  echo " $ ax ce              # edit ansible.cfg"
-  echo " $ ax se [scriptname] # edit script in bash/script"
-  echo " $ ax sel             # edit list of scripts to install"
-  echo " $ ax sync            # sync repo with remote on github"
-  echo " $ ax v[ars]          # edit debian packages list"
-  echo " $ ax export <dir>    # export pgp private key"
-  echo " $ ax import <dir>    # import pgp private key"
-  echo " $ ax key github      # copy public ssh, open github settings"
-  echo " $ ax key gitlab      # copy public ssh, open gitlab settings"
-  echo " $ ax pass clone      # clone password repo"
-  echo " $ ax                 # run dotfiles.sh to update config"
 }
 
 edit_ansible_config() {
@@ -54,40 +41,7 @@ nothing_to_commit() {
   git status . | grep "nothing to commit" | wc -l
 }
 
-sync_repository() {
-  cd $DF_DIR
-  DF_NOTHING_TO_COMMIT=$(nothing_to_commit)
-  if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
-    git add .
-    git commit -m "Sync on $(date +'%Y.%m.%d')"
-  fi
-  git pull origin master
-  git push origin master
-}
-
-export_secrets() {
-  DF_TARGET=$1
-  [ ! -d $DF_TARGET ] && mkdir -p $DF_TARGET
-  if [ -d $DF_TARGET ]; then
-    debug "Exporing keys to $DF_TARGET..."
-    # Export gpg private key
-    #
-    gpg --output $DF_TARGET/private.pgp --armor --export-secret-key
-  fi
-}
-
-import_secrets() {
-  DF_TARGET=$1
-  if [ -f $DF_TARGET/private.pgp ]; then
-    debug "Importing keys from $DF_TARGET..."
-    gpg --import $DF_TARGET/private.pgp
-  fi
-}
-
 pass_ops_clone() {
-  DF_PASS_DIR=$HOME/.password-store
-  DF_PASS_REPO=git@gitlab.com:kaineer/pass-store.git
-
   if [ ! -d $DF_PASS_DIR ]; then
     git clone $DF_PASS_REPO $DF_PASS_DIR
   fi
@@ -122,11 +76,11 @@ case "$1" in
   "v"|"vars")  edit_debian_vars ;;
   "se")        shift; edit_script $1 ;;
   "sel")       edit_script_list ;;
-  "export")    shift; export_secrets $@ ;;
-  "import")    shift; import_secrets $@ ;;
-  "key")       shift; key_ops $@ ;;
   "pass")      shift; pass_ops $@ ;;
-  "sync")      sync_repository ;;
-  "h"|"help")  usage ;;
   "")          apply_dotfiles ;;
+  *)
+    F=$DIR/ax.d/$1
+    shift
+    [[ -f $F ]] && source $F $@
+    ;;
 esac

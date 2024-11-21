@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+echo "## ansible config runner"
+echo ""
+echo " $ ax ce              # edit ansible.cfg"
+echo " $ ax se [scriptname] # edit script in bash/script"
+echo " $ ax sel             # edit list of scripts to install"
+echo " $ ax sync            # sync repo with remote on github"
+echo " $ ax v[ars]          # edit debian packages list"
+echo " $ ax export <dir>    # export pgp private key"
+echo " $ ax import <dir>    # import pgp private key"
+echo " $ ax key github      # copy public ssh, open github settings"
+echo " $ ax key gitlab      # copy public ssh, open gitlab settings"
+echo " $ ax pass clone      # clone password repo"
+echo " $ ax                 # run dotfiles.sh to update config"
+echo ""
+
