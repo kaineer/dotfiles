@@ -11,6 +11,11 @@
     path: "/home/{{ user.name }}/bin/wezterm"
   register: "wezterm_binary"
 
+- name: Check wezterm config directory
+  stat:
+    path: "/home/{{ user.name }}/.config/wezterm"
+  register: "wezterm_config_directory"
+
 - name: Download wezterm appimage
   when: "not wezterm_binary.stat.exists"
   vars:
@@ -32,7 +37,7 @@
     state: "link"
 
 - name: Link wezterm config
-  when: "not wezterm_binary.stat.exists"
+  when: "not wezterm_config_directory.stat.exists"
   file:
     src: "{{ playbook_dir }}/files/wezterm/"
     dest: "/home/{{ user.name }}/.config/wezterm"
