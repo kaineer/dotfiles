@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
 ## bootstrap
-BIN=$(readlink -f $0)
-DIR=$(dirname $BIN)
-DF_DIR=$DIR/../../../..
-EDITOR=${EDITOR:-vi}
+export BIN=$(readlink -f $0)
+export DIR=$(dirname $BIN)
+export DF_DIR=$DIR/../../../..
+export EDITOR=${EDITOR:-vi}
 [ -x $HOME/bin/nvim ] && EDITOR=nvim
 
-DF_PASS_DIR=$HOME/.password-store
-DF_PASS_REPO=git@gitlab.com:kaineer/pass-store.git
+export DF_PASS_DIR=$HOME/.password-store
+export DF_PASS_REPO=git@gitlab.com:kaineer/pass-store.git
 ## bootstrap
 
 debug() {
-  [[ "$DEBUG" == "true" ]] && echo " [DEBUG] " $@
+  [[ "$DEBUG" == "true" ]] && echo " » " $@
 }
 
 edit_ansible_config() {
