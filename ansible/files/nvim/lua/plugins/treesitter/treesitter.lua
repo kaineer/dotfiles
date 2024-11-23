@@ -14,6 +14,7 @@ return {
         enable = true,
       },
       ensure_installed = {
+        "bash",
         "yaml",
         "lua",
         "http",
@@ -24,7 +25,7 @@ return {
         "make",
         "tsx",
         "javascript",
-        "vimdoc"
+        "vimdoc",
       }
     }
   end,
