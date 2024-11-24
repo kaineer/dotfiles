@@ -13,6 +13,7 @@
    * Downloading and installing nerd font
    * Downloading and installing fzf
    * Some gnome preferences
+   * Downloading, installing and configuring wezterm
 
 # TODO
 
