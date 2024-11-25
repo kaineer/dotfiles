@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export TELEGRAM_BINARY=$(which telegram-desktop)
+
+start_or_activate_by_classname "$TELEGRAM_BINARY" "Telegram"

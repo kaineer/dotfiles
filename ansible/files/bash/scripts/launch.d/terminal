@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export WEZTERM_BINARY=$(which wezterm)
+
+start_or_activate_by_classname "$WEZTERM_BINARY" "org.wezfurlong.wezterm"

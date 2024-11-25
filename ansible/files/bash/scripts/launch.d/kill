@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+list_titles() {
+  wmctrl -l | sed "s/ \+/ /" | cut -f 4- -d" "
+}
+
+WIN=$(list_titles | rofi -dmenu -i -p "kill" -matching fuzzy)
+
+if [[ "$WIN" != "" ]]; then
+  wmctrl -c $WIN
+fi

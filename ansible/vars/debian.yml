@@ -28,6 +28,7 @@ system_packages:
  - unzip
  - webp
  - wget
+ - wmctrl
  - xdotool
  - xsel
  - zathura

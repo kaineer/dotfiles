@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export BRAVE_BINARY=$(which brave-browser)
+
+start_or_activate_by_classname "$BRAVE_BINARY" "brave-browser"

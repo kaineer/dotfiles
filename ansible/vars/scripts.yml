@@ -1,4 +1,5 @@
 scripts:
  - ax
  - gd
+ - launch
  - pe

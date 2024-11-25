@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: launcher
+#
+# Dependencies:
+#  * xdotool
+#  * fzf
+#
+
+## bootstrap
+export BIN=$(readlink -f $0)
+export DIR=$(dirname $BIN)
+
+export LAUNCH_DIR=$DIR/launch.d
+## bootstrap
+
+start_or_activate_by_classname() {
+  BINARY=$1
+  CLASSNAME=$2
+
+  WINID=$(xdotool search --classname $CLASSNAME | tail -n1)
+
+  if [[ "$WINID" == "" ]]; then
+    $BINARY &
+  else
+    xdotool windowactivate $WINID
+  fi
+}
+
+list_commands() {
+  cd $LAUNCH_DIR && ls -1 && cd - >/dev/null
+}
+
+case "$1" in
+  "ls"|"list")
+    list_commands ;;
+  "")
+    CMD=$(list_commands | fzf -dmenu)
+    [[ "$CMD" != "" ]] && . $LAUNCH_DIR/$CMD
+    ;;
+  *)
+    [ -f $LAUNCH_DIR/$1 ] && . $LAUNCH_DIR/$1
+esac

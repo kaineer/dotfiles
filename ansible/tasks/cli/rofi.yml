@@ -1,0 +1,7 @@
+- name: Link config for rofi
+  file:
+    src: "{{ playbook_dir }}/files/rofi"
+    dest: "/home/{{ user.name }}/.config/rofi"
+    state: "link"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
