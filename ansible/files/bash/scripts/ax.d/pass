@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+export DF_PASS_DIR=$HOME/.password-store
+export DF_PASS_REPO=git@gitlab.com:kaineer/pass-store.git
+
+pass_ops_clone() {
+  if [ ! -d $DF_PASS_DIR ]; then
+    git clone $DF_PASS_REPO $DF_PASS_DIR
+  fi
+}
+
 case "$1" in
   "clone") pass_ops_clone ;;
 esac

@@ -52,19 +52,6 @@ ssh_key_copy() {
   notify-send "Ax" "SSH key is copied"
 }
 
-key_ops() {
-  case "$1" in
-    "gh"|"github")
-      ssh_key_copy
-      open "https://github.com/settings/keys"
-      ;;
-    "gl"|"gitlab")
-      ssh_key_copy
-      open "https://gitlab.com/-/user_settings/ssh_keys"
-      ;;
-  esac
-}
-
 case "$1" in
   "ce")        edit_ansible_config ;;
   "v"|"vars")  edit_debian_vars ;;

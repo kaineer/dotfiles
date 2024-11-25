@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+ssh_key_copy() {
+  cat $HOME/.ssh/id_rsa.pub | xsel -b
+  notify-send "Ax" "SSH key is copied"
+}
+
 case "$1" in
   "gh"|"github")
     ssh_key_copy
