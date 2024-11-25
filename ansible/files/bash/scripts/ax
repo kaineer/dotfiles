@@ -5,7 +5,7 @@ export BIN=$(readlink -f $0)
 export DIR=$(dirname $BIN)
 export DF_DIR=$DIR/../../../..
 export EDITOR=${EDITOR:-vi}
-[ -x $HOME/bin/nvim ] && EDITOR=nvim
+[ -x $HOME/bin/nvim ] && EDITOR=$HOME/bin/nvim
 
 export DF_PASS_DIR=$HOME/.password-store
 export DF_PASS_REPO=git@gitlab.com:kaineer/pass-store.git
@@ -47,12 +47,6 @@ pass_ops_clone() {
   fi
 }
 
-pass_ops() {
-  case "$1" in
-    "clone") pass_ops_clone ;;
-  esac
-}
-
 ssh_key_copy() {
   cat $HOME/.ssh/id_rsa.pub | xsel -b
   notify-send "Ax" "SSH key is copied"
@@ -76,7 +70,6 @@ case "$1" in
   "v"|"vars")  edit_debian_vars ;;
   "se")        shift; edit_script $1 ;;
   "sel")       edit_script_list ;;
-  "pass")      shift; pass_ops $@ ;;
   "")          apply_dotfiles ;;
   *)
     F=$DIR/ax.d/$1

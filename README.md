@@ -13,10 +13,10 @@
    * Downloading and installing nerd font
    * Downloading and installing fzf
    * Some gnome preferences
+   * Downloading, installing and configuring wezterm
 
 # TODO
 
- * Ansible tasks for
-   * wezterm install
-   * wezterm config
-   * copy wezterm config into ansible/files
+ * Fixes
+   * Remove recreating dir for git config
+   * Remove copying for lfrc, lf-preview

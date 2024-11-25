@@ -23,6 +23,7 @@ system_packages:
  - python3-venv
  - rofi
  - telegram-desktop
+ - tldr
  - tmux
  - unzip
  - webp
