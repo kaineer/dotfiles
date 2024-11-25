@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export OUTLINE_BINARY=$HOME/bin/outline
+
+start_or_activate_by_classname "$OUTLINE_BINARY" "Outline"
