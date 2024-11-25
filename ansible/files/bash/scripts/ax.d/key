@@ -2,7 +2,7 @@
 
 ssh_key_copy() {
   cat $HOME/.ssh/id_rsa.pub | xsel -b
-  notify-send "Ax" "SSH key is copied"
+  notify "SSH key is copied"
 }
 
 case "$1" in

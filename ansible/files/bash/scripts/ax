@@ -6,14 +6,28 @@ export DIR=$(dirname $BIN)
 export DF_DIR=$DIR/../../../..
 export EDITOR=${EDITOR:-vi}
 [ -x $HOME/bin/nvim ] && EDITOR=$HOME/bin/nvim
-
-export DF_PASS_DIR=$HOME/.password-store
-export DF_PASS_REPO=git@gitlab.com:kaineer/pass-store.git
 ## bootstrap
 
 debug() {
   [[ "$DEBUG" == "true" ]] && echo " » " $@
 }
+
+export DF_NOTIFY=$(which notify-sendx)
+export DF_NOTIFY_WARNING="false"
+
+if [[ "$DF_NOTIFY" != "" ]]; then
+  notify() {
+    notify-send "Ax" "$@"
+  }
+else
+  notify() {
+    if [[ "$DF_NOTIFY_WARNING" == "false" ]]; then
+      echo " [WARN :Ax] Please, install libnotify"
+      export DF_NOTIFY_WARNING="true"
+    fi
+    echo " [DEBUG:Ax]" $@
+  }
+fi
 
 edit_ansible_config() {
   $EDITOR $DIR/../../../ansible.cfg
@@ -39,17 +53,6 @@ edit_debian_vars() {
 
 nothing_to_commit() {
   git status . | grep "nothing to commit" | wc -l
-}
-
-pass_ops_clone() {
-  if [ ! -d $DF_PASS_DIR ]; then
-    git clone $DF_PASS_REPO $DF_PASS_DIR
-  fi
-}
-
-ssh_key_copy() {
-  cat $HOME/.ssh/id_rsa.pub | xsel -b
-  notify-send "Ax" "SSH key is copied"
 }
 
 case "$1" in
