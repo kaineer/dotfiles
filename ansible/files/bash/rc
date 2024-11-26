@@ -2,6 +2,18 @@
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
+# tag: config-profile
+DIR="$HOME/.config/profile.d"
+[ ! -d "$DIR" ] && mkdir -p "$DIR"
+for SRC in $(ls -1 $DIR/* 2>&1); do
+  [[ "$DEBUG" == "true" ]] && echo " [DEBUG] Loading ${SRC}.."
+  source $SRC
+done
+# tag: /config-profile
+
+# Build path
+PATH="$HOME/bin:$PATH"
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -33,16 +45,4 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-
-# tag: config-profile
-DIR="$HOME/.config/profile.d"
-[ ! -d "$DIR" ] && mkdir -p "$DIR"
-for SRC in $(ls -1 $DIR/* 2>&1); do
-  [[ "$DEBUG" == "true" ]] && echo " [DEBUG] Loading ${SRC}.."
-  source $SRC
-done
-# tag: /config-profile
-
-# Build path
-PATH="$HOME/bin:$PATH"
 
