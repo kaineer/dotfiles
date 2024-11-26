@@ -1,37 +1,39 @@
-system_packages:
- - age
+gui_packages:
  - baobab
- - curl
- - cmake
- - dconf-cli
- - direnv
  - dmenu
- - gpg
- - htop
- - inxi
  - libnotify-bin
- - make
  - mediainfo
  - moc
  - mplayer
- - neofetch
- - pass
- - python3-pip
  - p7zip
  - p7zip-full
- - python3-pip
- - python3-venv
  - rofi
  - telegram-desktop
- - tldr
- - tmux
- - unzip
  - webp
- - wget
  - wmctrl
  - xdotool
  - xsel
  - zathura
+
+system_packages:
+ - age
+ - curl
+ - cmake
+ - dconf-cli
+ - direnv
+ - gpg
+ - htop
+ - inxi
+ - make
+ - neofetch
+ - pass
+ - python3-pip
+ - python3-pip
+ - python3-venv
+ - tldr
+ - tmux
+ - unzip
+ - wget
  - zip
  - xxd
 

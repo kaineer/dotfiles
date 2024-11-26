@@ -1,0 +1,6 @@
+---
+- name: Debug
+  debug:
+    msg: "Host: {{ ansible_nodename }}"
+  when: "ansible_nodename in gui_workstations"
+

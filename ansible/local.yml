@@ -8,6 +8,7 @@
     #
     - include_vars: ./vars/user.yml
     - include_vars: ./vars/debian.yml
+    - include_vars: ./vars/workstations.yml
     - include_vars: ./vars/scripts.yml
 
     # --- tasks

@@ -4,6 +4,12 @@
     name: "{{ system_packages }}"
     state: "present"
 
+- name: Install gui packages
+  package:
+    name: "{{ gui_packages }}"
+    state: "present"
+  when: "ansible_nodename in gui_workstations"
+
 - name: Remove unnecessary packages
   package:
     name: "{{ obsolete_packages }}"
