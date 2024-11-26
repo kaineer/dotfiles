@@ -33,10 +33,13 @@
         copy_dest: "{{ ghr_install_dir }}/starship"
         extract_dir: ""
 
-- name: Copy starship config
-  copy:
-    src: "../../files/starship/starship.toml"
+- name: Link starship config
+  file:
+    src: "{{ playbook_dir }}/files/starship/starship.toml"
     dest: "/home/{{ user.name }}/.config/starship.toml"
+    state: "link"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
 
 - name: Copy starship profile
   copy:
