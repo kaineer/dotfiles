@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+export BROWSER=/usr/bin/brave-browser
+export BROWSER_CLASS="brave-browser"

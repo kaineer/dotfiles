@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+cd $DF_DIR
+FILE=$(fd -tf | fzf)
+[[ "$FILE" != "" ]] && $EDITOR $FILE
