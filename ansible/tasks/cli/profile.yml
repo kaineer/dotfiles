@@ -16,6 +16,7 @@
   with_items:
     - aliases
     - bat
+    - browser
     - bind
     - direnv
     - editor
