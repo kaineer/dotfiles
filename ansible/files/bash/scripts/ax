@@ -56,7 +56,7 @@ nothing_to_commit() {
 }
 
 case "$1" in
-  "ce")        edit_ansible_config ;;
+  "ce"|"config")        edit_ansible_config ;;
   "v"|"vars")  edit_debian_vars ;;
   "se")        shift; edit_script $1 ;;
   "sel")       edit_script_list ;;
