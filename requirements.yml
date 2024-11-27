@@ -1,6 +1,6 @@
 # Шрифты с иконками
 #
-- src: https://github.com/ctorgalson/ansible-role-nerdfonts
+- src: https://github.com/kaineer/ansible-role-nerdfonts
 
 # Устанавливаем релизы из github
 #
