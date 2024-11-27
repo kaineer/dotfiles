@@ -1,5 +1,20 @@
 #!/usr/bin/env bash
 
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: ansible dotfiles launcher
+#
+# Dependencies:
+#  * git
+#  * fzf
+#  * ansible
+#  * ? notify-send
+#
+
 ## bootstrap
 export BIN=$(readlink -f $0)
 export DIR=$(dirname $BIN)
