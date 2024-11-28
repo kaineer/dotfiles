@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 #  _____  ___
 # /__   \/ __\  Tangerine Cat, kaineer@gmail.com
 #   / /\/ /
@@ -8,37 +8,37 @@
 
 # Console key bindings
 
-bind_usage() {
-  echo "----------------------------------------"
-  echo " Ctrl+h     show bindings list"
-  echo ""
-  if [ "${TMUX}" != "" ]; then
-    echo " C+S+Space  start vi-mode"
-    echo ""
+export __BIND_USAGE=""
+
+append_command() {
+  local key=$1
+  local action=$2
+  local description=$3
+
+  if [[ "$description" == "" ]]; then
+    description=$action
   fi
-  echo " Ctrl+l     clear screen by scrolling"
-  echo " Ctrl+u     cd -"
-  echo " Ctrl+o     lf"
-  echo " Alt+O      nemo ."
-  echo " Alt+g      search in dir history and go"
-  echo " Alt+H      cd ~"
-  echo " Alt+e      vim ."
-  echo " Alt+p      select configured project"
-  echo " Alt+E      edit projects configuration"
-  echo " Alt+b      edit bindings"
-  echo " Alt+x      x"
-  echo " Alt+t      t"
-  echo " Alt+a      t j"
-  echo " Alt+n      start nushell"
-  echo " Alt+c      t clock"
-  echo "----------------------------------------"
+
+  line=$(printf " » %-10s %s" "$1" "$description")
+  export __BIND_USAGE="$__BIND_USAGE${line}\n"
 }
 
-# TODO: Make those two to modify some bindings_help.sh file
+if [ "${TMUX}" != "" ]; then
+  append_command "C+S+Space" "start vi-mode"
+fi
+
+bind_usage() {
+  echo "----------------------------------------"
+  echo -ne "$__BIND_USAGE"
+  echo "----------------------------------------"
+}
 
 __alt_() {
   local key="$1"
   local action="$2"
+  local description="$3"
+  append_command "Alt+${key}" "$action" "$description"
+
   local LINE="bind '\"\\e$1\":\"$action\\n\"'"
   eval "$LINE"
 }
@@ -46,6 +46,9 @@ __alt_() {
 __ctrl_() {
   local key="$1"
   local action="$2"
+  local description="$3"
+  append_command "Ctrl+${key}" "$action" "$description"
+
   local LINE="bind '\"\\C-$1\":\"$action\\n\"'"
   eval "$LINE"
 }
@@ -61,7 +64,7 @@ __ctrl_ "x" "exit"  "exit"
 __alt_  "O" "fo ."  "open gui filemanager"
 __alt_  "g" "jj"    "select dir from history and go"
 __alt_  "H" "cd"    "open home directory"
-__alt_  "e" "vim ."
+__alt_  "e" "nvim ."
 __alt_  "p" "gd"    "open preconfigured project"
 __alt_  "E" "gd e"  "edit gd configuration"
 __alt_  "b" "profile mod bind" "edit keyboard bindings"
@@ -69,6 +72,8 @@ __ctrl_ "h" "bind_usage" "display binded keys"
 __alt_  "x" "x"     "list actions, select and run"
 __alt_  "t" "t"     "list tmux actions, select and run"
 __alt_  "a" "t j"   "list sessions and select"
-__alt_  "n" "nu"    "start nushell"
+
+[[ "$(which nu)" != "" ]] && __alt_  "n" "nu"    "start nushell"
+
 __alt_  "c" "t clock" "show clock"
 
