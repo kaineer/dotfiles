@@ -20,5 +20,6 @@
     - bind
     - direnv
     - editor
+    - fasd
     - fzf
     - node

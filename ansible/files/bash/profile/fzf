@@ -8,6 +8,7 @@ eval "$(fzf --bash)"
 
 export FZF_DEFAULT_OPTS="-x --bind=ctrl-j:accept,tab:toggle-down --info=inline-right --ellipsis=…"
 
+# My nordtheme colors
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
     --color=fg:#e5e9f0,bg:#2e3440,hl:#81a1c1,gutter:#2e3440
     --color=fg+:#e5e9f0,bg+:#3b4252,hl+:#81a1c1,separator:#3b4252

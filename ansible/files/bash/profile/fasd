@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+eval "$(fasd --init posix-alias bash-hook)"
+
+alias j='fasd_cd -d'
+alias jj='fasd_cd -d -i'
