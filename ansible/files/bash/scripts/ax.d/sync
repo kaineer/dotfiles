@@ -12,4 +12,3 @@ if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
 fi
 git pull origin master
 git push origin master
-
