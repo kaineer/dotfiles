@@ -7,7 +7,11 @@ if [ -d $DF_TARGET ]; then
   # Export gpg private key
   #
   gpg --output $DF_TARGET/private.pgp --armor --export-secret-key
-fi
 
-# TODO: store jino's ssh keys (both public and private)
-# TODO: store jino's host config from ~/.ssh/hosts/
+  debug "Copy jino host config"
+  cp $HOME/.ssh/hosts/jino $DF_TARGET/jino.host
+
+  debug "Try to copy jino ssh keys"
+  [ -f $HOME/.ssh/jino.pub ] && cp $HOME/.ssh/jino.pub $DF_TARGET/jino.pub
+  [ -f $HOME/.ssh/jino ] && cp $HOME/.ssh/jino $DF_TARGET/jino.pri
+fi

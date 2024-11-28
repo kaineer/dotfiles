@@ -4,7 +4,10 @@ DF_TARGET=$1
 if [ -f $DF_TARGET/private.pgp ]; then
   debug "Importing keys from $DF_TARGET..."
   gpg --import $DF_TARGET/private.pgp
-fi
 
-# TODO: copy jino's ssh keys (both public and private) to ~/.ssh/
-# TODO: copy jino's host config to ~/.ssh/hosts/
+  debug "Importing jino config"
+  mkdir -p $HOME/.ssh/hosts
+  cp $DF_TARGET/jino.host $HOME/.ssh/hosts/jino
+  [ -f $DF_TARGET/jino.pub ] && cp $DF_TARGET/jino.pub $HOME/.ssh/jino.pub
+  [ -f $DF_TARGET/jino.pri ] && cp $DF_TARGET/jino.pri $HOME/.ssh/jino
+fi
