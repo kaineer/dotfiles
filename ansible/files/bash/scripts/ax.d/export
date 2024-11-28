@@ -8,3 +8,6 @@ if [ -d $DF_TARGET ]; then
   #
   gpg --output $DF_TARGET/private.pgp --armor --export-secret-key
 fi
+
+# TODO: store jino's ssh keys (both public and private)
+# TODO: store jino's host config from ~/.ssh/hosts/

@@ -11,7 +11,10 @@
 # Dependencies:
 #  * git
 #  * fzf
+#  * python3
 #  * ansible
+#  * xsel
+#  * gpg
 #  * ? notify-send
 #
 

@@ -5,3 +5,6 @@ if [ -f $DF_TARGET/private.pgp ]; then
   debug "Importing keys from $DF_TARGET..."
   gpg --import $DF_TARGET/private.pgp
 fi
+
+# TODO: copy jino's ssh keys (both public and private) to ~/.ssh/
+# TODO: copy jino's host config to ~/.ssh/hosts/
