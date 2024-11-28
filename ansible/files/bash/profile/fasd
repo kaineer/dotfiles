@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-eval "$(fasd --init posix-alias bash-hook)"
+# @link: https://github.com/clvv/fasd
+
+eval "$(fasd --init auto)"
 
 alias j='fasd_cd -d'
 alias jj='fasd_cd -d -i'
