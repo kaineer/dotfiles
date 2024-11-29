@@ -17,7 +17,7 @@ CONFIG_FILE=$HOME/var/dir.json
 EDITOR=nvim
 
 usage() {
-  echo " » Go to Dir"
+  echo " » Go to Dir and..."
   echo ""
   echo " $ gd .                      # add current dir to list"
   echo " $ gd add nemo               # add current dir with command"
