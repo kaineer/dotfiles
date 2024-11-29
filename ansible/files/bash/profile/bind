@@ -23,10 +23,6 @@ append_command() {
   export __BIND_USAGE="$__BIND_USAGE${line}\n"
 }
 
-if [ "${TMUX}" != "" ]; then
-  append_command "C+S+Space" "start vi-mode"
-fi
-
 bind_usage() {
   echo "----------------------------------------"
   echo -ne "$__BIND_USAGE"
@@ -56,6 +52,11 @@ __ctrl_() {
 ### BINDINGS ###
 #
 
+if [ "${TMUX}" != "" ]; then ## TMUX bindings
+  append_command "C+S+Space" "start vi-mode"
+  __alt_  "c" "t clock" "show clock"
+fi
+
 # __ctrl_ "i" "cdd\n"   "move directory down"
 __ctrl_ "O" "lf ."    "open lf filemanager"
 __ctrl_ "u" "cd -"  "move directory back"
@@ -67,13 +68,9 @@ __alt_  "H" "cd"    "open home directory"
 __alt_  "e" "nvim ."
 __alt_  "p" "gd"    "open preconfigured project"
 __alt_  "E" "gd e"  "edit gd configuration"
-__alt_  "b" "profile mod bind" "edit keyboard bindings"
 __ctrl_ "h" "bind_usage" "display binded keys"
 __alt_  "x" "x"     "list actions, select and run"
 __alt_  "t" "t"     "list tmux actions, select and run"
 __alt_  "a" "t j"   "list sessions and select"
 
 [[ "$(which nu)" != "" ]] && __alt_  "n" "nu"    "start nushell"
-
-__alt_  "c" "t clock" "show clock"
-
