@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# @link: https://github.com/clvv/fasd
+
+eval "$(fasd --init auto)"
+
+alias j='fasd_cd -d'
+alias jj='fasd_cd -d -i'

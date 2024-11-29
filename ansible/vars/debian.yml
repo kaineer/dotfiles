@@ -21,6 +21,7 @@ system_packages:
  - cmake
  - dconf-cli
  - direnv
+ - fasd
  - gpg
  - htop
  - inxi
