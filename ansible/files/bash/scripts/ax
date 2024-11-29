@@ -69,10 +69,6 @@ edit_debian_vars() {
   $EDITOR ./ansible/vars/
 }
 
-nothing_to_commit() {
-  git status . | grep "nothing to commit" | wc -l
-}
-
 case "$1" in
   "ce"|"config")        edit_ansible_config ;;
   "v"|"vars")  edit_debian_vars ;;
