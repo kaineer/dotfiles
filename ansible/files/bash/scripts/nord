@@ -6,7 +6,10 @@
 #  \/  \____/   twitter: https://twitter.com/kaineer
 #
 
+URL="https://www.nordtheme.com/"
+
 from sys import argv
+from webbrowser import open
 
 hex_colors = {
     "background": "#3b4252",
@@ -85,11 +88,23 @@ def display_color(args):
         else:
             display_color_highlighted(rgb)
 
+def display_usage():
+    print(" $ nord help         # print this message")
+    print(" $ nord [ls]         # list all colors")
+    print(" $ nord keys         # list color names")
+    print(" $ nord color dec    # display decimal color")
+    print(" $ nord color [ansi] # display color highlighted")
+    print(" $ nord color -c     # display bare hex color")
+
 if __name__ == "__main__":
     args = argv[1:]
     if len(args) == 0 or args[0] == "ls":
         show_all(args[1:])
     elif args[0] == "keys":
         list_keys()
+    elif args[0] == "help":
+        display_usage()
+    elif args[0] == "browse":
+        open(URL)
     else:
         display_color(args)

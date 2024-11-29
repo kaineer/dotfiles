@@ -2,7 +2,7 @@
 
 # @link: https://github.com/clvv/fasd
 
-eval "$(fasd --init posix-alias bash-hook)"
+eval "$(fasd --init bash-hook)"
 
 alias j='fasd_cd -d'
 
