@@ -2,7 +2,11 @@
 
 # @link: https://github.com/clvv/fasd
 
-eval "$(fasd --init auto)"
+eval "$(fasd --init posix-alias bash-hook)"
 
 alias j='fasd_cd -d'
-alias jj='fasd_cd -d -i'
+
+jj() {
+  TARGET=$(fasd -l | fzf)
+  [[ "$TARGET" != "" ]] && cd $TARGET
+}
