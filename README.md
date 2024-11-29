@@ -15,8 +15,3 @@
    * Some gnome preferences
    * Downloading, installing and configuring wezterm
 
-# TODO
-
- * Fixes
-   * Remove recreating dir for git config
-   * Remove copying for lfrc, lf-preview

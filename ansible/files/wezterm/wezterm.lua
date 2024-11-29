@@ -1,4 +1,7 @@
--- https://youtu.be/I3ipo8NxsjY
+-- wezterm.lua
+--
+-- @link: https://youtu.be/I3ipo8NxsjY
+--
 
 local wezterm = require("wezterm")
 local config = require("./config")(wezterm)
