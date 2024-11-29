@@ -2,7 +2,9 @@
 
 # @link: https://github.com/clvv/fasd
 
-eval "$(fasd --init auto)"
+eval "$(fasd --init bash-hook)"
 
 alias j='fasd_cd -d'
 alias jj='fasd_cd -d -i'
+
+unalias z zz
