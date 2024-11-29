@@ -7,6 +7,10 @@
 eval "$(fzf --bash)"
 
 export FZF_DEFAULT_OPTS="-x --bind=ctrl-j:accept,tab:toggle-down --info=inline-right --ellipsis=…"
+
+# Brave Leo generated answer:
+# @link: https://search.brave.com/search?q=fzf+history+without+numbers&source=web&summary=1&conversation=cff978e1012acaccd52ee5&summary_og=5b67409c3ff676e826bb83
+#
 export FZF_CTRL_R_OPTS="--with-nth 2.."
 
 # My nordtheme colors
