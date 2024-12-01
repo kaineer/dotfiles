@@ -2,6 +2,8 @@
 
 # @link: https://github.com/clvv/fasd
 
+[[ "$1" != "-i" ]] && return
+
 eval "$(fasd --init bash-hook)"
 
 alias j='fasd_cd -d'

@@ -4,6 +4,8 @@
 # * Nord theme: https://www.nordtheme.com/
 #
 
+[[ "$1" != "-i" ]] && return
+
 eval "$(fzf --bash)"
 
 export FZF_DEFAULT_OPTS="-x --bind=ctrl-j:accept,tab:toggle-down --info=inline-right --ellipsis=…"

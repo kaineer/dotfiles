@@ -46,3 +46,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# tag: config-profile-interactive
+for SRC in $(ls -1 $DIR/* 2>&1); do
+  [[ "$DEBUG" == "true" ]] && echo " [DEBUG] Loading ${SRC}.."
+  source $SRC -i
+done
+# tag: /config-profile
