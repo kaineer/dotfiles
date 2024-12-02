@@ -1,6 +1,3 @@
-## To copy
+# LF
 
- * `rc` --> `~/.config/lf/lfrc`
- * `previewer.sh` --> `~/bin/lf-preview.sh`
- * `icons.example` --> `~/.config/lf/icons`
- * `colors.example` --> `~/.config/lf/colors`
+`lf` (as in "list files") is a terminal file manager written in Go with a heavy inspiration from ranger file manager.
