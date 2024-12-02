@@ -3,4 +3,6 @@
 export FNM_PATH=$HOME/.fnm
 export PATH=$HOME/.local/bin:$PATH
 
+[[ "$1" != "-i" ]] && return
+
 eval "$(fnm env)"

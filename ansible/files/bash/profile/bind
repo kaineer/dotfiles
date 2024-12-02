@@ -6,6 +6,8 @@
 #  \/  \____/   twitter: https://twitter.com/kaineer
 #
 
+[[ "$1" != "-i" ]] && return
+
 # Console key bindings
 
 export __BIND_USAGE=""

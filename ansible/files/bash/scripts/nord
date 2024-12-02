@@ -22,7 +22,8 @@ hex_colors = {
     "yellow": "#ebcb8b",
     "green": "#a3be8c",
     "aqua": "#88c0d0",
-    "blue": "#5e81ac",
+    "blue": "#81a1c1",
+    "navy": "#5e81ac",
     "purple": "#b48ead"
 }
 

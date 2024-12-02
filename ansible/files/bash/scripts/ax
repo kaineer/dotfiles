@@ -74,7 +74,10 @@ case "$1" in
   "v"|"vars")  edit_debian_vars ;;
   "se")        shift; edit_script $1 ;;
   "sel")       edit_script_list ;;
-  "")          apply_dotfiles ;;
+  "update")          apply_dotfiles ;;
+  "")
+    source $DIR/ax.d/help
+    ;;
   *)
     F=$DIR/ax.d/$1
     shift
