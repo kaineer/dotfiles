@@ -57,12 +57,11 @@ if [ "${TMUX}" != "" ]; then ## TMUX bindings
   __alt_  "c" "t clock" "show clock"
 fi
 
-# __ctrl_ "i" "cdd\n"   "move directory down"
-__ctrl_ "O" "lf ."    "open lf filemanager"
+__ctrl_ "o" "lf ."    "open lf filemanager"
 __ctrl_ "u" "cd -"  "move directory back"
 __ctrl_ "x" "exit"  "exit"
 
-__alt_  "O" "fo ."  "open gui filemanager"
+__alt_  "O" "nemo . >/dev/null 2>&1"  "open gui filemanager"
 __alt_  "g" "jj"    "select dir from history and go"
 __alt_  "H" "cd"    "open home directory"
 __alt_  "u" "exa -l" "list current directory"

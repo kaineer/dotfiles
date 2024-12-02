@@ -15,3 +15,5 @@
    * Some gnome preferences
    * Downloading, installing and configuring wezterm
 
+## TODO
+ * Add colors to bind output
