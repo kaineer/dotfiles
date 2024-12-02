@@ -5,7 +5,10 @@
 # tag: config-profile
 DIR="$HOME/.config/profile.d"
 [ ! -d "$DIR" ] && mkdir -p "$DIR"
-for SRC in $(ls -1 $DIR/* 2>&1); do
+
+PROFILE_ITEMS=$(ls -1 $DIR/* 2>/dev/null)
+
+for SRC in $PROFILE_ITEMS; do
   [[ "$DEBUG" == "true" ]] && echo " [DEBUG] Loading ${SRC}.."
   source $SRC
 done
@@ -47,7 +50,7 @@ if ! shopt -oq posix; then
 fi
 
 # tag: config-profile-interactive
-for SRC in $(ls -1 $DIR/* 2>&1); do
+for SRC in $PROFILE_ITEMS; do
   [[ "$DEBUG" == "true" ]] && echo " [DEBUG] Loading ${SRC}.."
   source $SRC -i
 done
