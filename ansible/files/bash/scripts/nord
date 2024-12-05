@@ -12,19 +12,25 @@ from sys import argv
 from webbrowser import open
 
 hex_colors = {
-    "background": "#3b4252",
-    "current_line": "#434c5e",
-    "selection": "#4c566a",
-    "foreground": "#eceff4",
-    "comment": "#8fbcbb",
-    "red": "#bf616a",
-    "orange": "#d08770",
-    "yellow": "#ebcb8b",
-    "green": "#a3be8c",
-    "aqua": "#88c0d0",
-    "blue": "#81a1c1",
-    "navy": "#5e81ac",
-    "purple": "#b48ead"
+    "night.400": "#2e3440",
+    "night.300": "#3b4252",
+    "night.200": "#434c5e",
+    "night.100": "#4c566a",
+
+    "snow.100": "#d8dee9",
+    "snow.200": "#e5e9f0",
+    "snow.300": "#eceff4",
+
+    "frost.100": "#8fbcbb",
+    "frost.200": "#88c0d0",
+    "frost.300": "#81a1c1",
+    "frost.400": "#5e81ac",
+
+    "aurora.red":    "#bf616a",
+    "aurora.orange": "#d08770",
+    "aurora.yellow": "#ebcb8b",
+    "aurora.green":  "#a3be8c",
+    "aurora.purple": "#b48ead",
 }
 
 def parse_hex_color(hcs):
@@ -41,7 +47,7 @@ def show_all(args):
     for k in hex_colors:
         if f is None or f in k:
             [r, g, b] = parse_hex_color(hex_colors[k])
-            print(f"{k:>12}: {ansi_color(r, g, b)}{hex_colors[k]}{ansi_reset()}")
+            print(f"{k:>15}: {ansi_color(r, g, b)}{hex_colors[k]}{ansi_reset()}")
 
 def find_key(key):
     color = next(x for x in hex_colors.keys() if key in x)
