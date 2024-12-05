@@ -33,6 +33,7 @@ system_packages:
  - python3-venv
  - tldr
  - tmux
+ - vivid
  - unzip
  - wget
  - zip
