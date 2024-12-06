@@ -28,6 +28,7 @@
 - include_tasks: ./cli/scripts.yml
 - include_tasks: ./cli/git.yml
 - include_tasks: ./cli/text.yml
+- include_tasks: ./cli/ytdl.yml
 - include_tasks: ./cli/tmux.yml
 - include_tasks: ./cli/rofi.yml
 - include_tasks: ./cli/starship.yml
