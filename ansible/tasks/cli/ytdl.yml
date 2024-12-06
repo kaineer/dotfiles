@@ -1,0 +1,31 @@
+---
+# youtube download binary
+- name: Mkdir for releases
+  when: "ansible_nodename in gui_workstations"
+  file:
+    path: "/home/{{user.name}}/bin/releases"
+    recurse: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    mode: "755"
+- name: Install ytdl release
+  when: "ansible_nodename in gui_workstations"
+  include_role:
+    name: "ansible-role-github-release"
+  vars:
+    owner: "{{user.name}}"
+    ghr_install_dir: "/home/{{user.name}}/bin/releases"
+    ghr_releases:
+      - url: "https://github.com/yt-dlp/yt-dlp/releases/download/2024.08.06/yt-dlp_linux"
+        owner: "{{user.name}}"
+        copy_src: "{{ghr_tmp_dir}}/yt-dlp_linux"
+        copy_dest: "{{ghr_install_dir}}/ytdl"
+- name: Link from bin to bin/release
+  when: "ansible_nodename in gui_workstations"
+  file:
+    src: "/home/{{user.name}}/bin/releases/ytdl"
+    dest: "/home/{{user.name}}/bin/ytdl"
+    owner: "{{user.name}}"
+    group: "{{user.name}}"
+    state: "link"

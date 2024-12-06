@@ -14,6 +14,7 @@ gui_packages:
  - xdotool
  - xsel
  - zathura
+ - ffmpeg
 
 system_packages:
  - age
