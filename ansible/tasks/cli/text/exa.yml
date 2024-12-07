@@ -26,3 +26,5 @@
         copy_src: "{{ghr_tmp_dir}}/bin/exa"
         copy_dest: "{{ghr_install_dir}}/exa"
         extract_dir: ""
+
+# TODO: add profile for exa with aliases

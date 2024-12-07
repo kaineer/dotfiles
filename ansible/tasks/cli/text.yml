@@ -24,6 +24,7 @@
 
 - include_tasks: ./text/ripgrep.yml
 - include_tasks: ./text/fd.yml
+- include_tasks: ./text/exa.yml
 
 - name: Install releases
   include_role:
