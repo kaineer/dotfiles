@@ -14,6 +14,8 @@
    * Downloading and installing fzf
    * Some gnome preferences
    * Downloading, installing and configuring wezterm
+   * Installing and configuring rofi
+   * Installing vivid and configuring LS\_COLORS
 
 ## TODO
  * Add colors to bind output

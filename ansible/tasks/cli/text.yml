@@ -3,6 +3,13 @@
 #
 #  * fd
 #  * ripgrep
+#  * exa
+#  * bat
+#
+#  TODO: move each tool into separate text/{toolname}.yml
+#    * task to check whether tool is installed
+#    * first task to install tool
+#    * second task to configure tool
 #
 - name: Mkdir for bin scripts
   file:
