@@ -1,8 +1,8 @@
 ---
 # text utilities
 #
-#  * fd
-#  * ripgrep
+#  * DONE: fd
+#  * DONE: ripgrep
 #  * exa
 #  * bat
 #
@@ -10,6 +10,8 @@
 #    * task to check whether tool is installed
 #    * first task to install tool
 #    * second task to configure tool
+#
+#  TODO: replace exa with eza, 'cause first one is unmantained
 #
 - name: Mkdir for bin scripts
   file:
@@ -21,9 +23,7 @@
     mode: "755"
 
 - include_tasks: ./text/ripgrep.yml
-# - name: Install ripgrep
-#   package:
-#     name: "ripgrep"
+- include_tasks: ./text/fd.yml
 
 - name: Install releases
   include_role:
@@ -32,18 +32,12 @@
     owner: "{{ user.name }}"
     ghr_install_dir: "/home/{{ user.name }}/bin"
     ghr_releases:
-      # fd
-      - url: https://github.com/sharkdp/fd/releases/download/v10.1.0/fd-v10.1.0-i686-unknown-linux-musl.tar.gz
-        owner: "{{ user.name }}"
-        copy_src: "{{ ghr_tmp_dir }}/fd-v10.1.0-i686-unknown-linux-musl/fd"
-        copy_dest: "{{ ghr_install_dir }}/fd"
-        extract_dir: ""
-      # exa
-      - url: https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-musl-v0.10.1.zip
-        owner: "{{ user.name }}"
-        copy_src: "{{ ghr_tmp_dir }}/bin/exa"
-        copy_dest: "{{ ghr_install_dir }}/exa"
-        extract_dir: ""
+#       # exa
+#       - url: https://github.com/ogham/exa/releases/download/v0.10.1/exa-linux-x86_64-musl-v0.10.1.zip
+#         owner: "{{ user.name }}"
+#         copy_src: "{{ ghr_tmp_dir }}/bin/exa"
+#         copy_dest: "{{ ghr_install_dir }}/exa"
+#         extract_dir: ""
       # bat
       - url: https://github.com/sharkdp/bat/releases/download/v0.24.0/bat-v0.24.0-i686-unknown-linux-musl.tar.gz
         owner: "{{ user.name }}"

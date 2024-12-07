@@ -1,1 +1,28 @@
+# FD to search files in directory recursively
 #
+# Get from releases page, config, set env
+#
+# @link: https://github.com/sharkdp/fd
+#
+# Colorization from vivid and LS_COLORS
+
+- name: Check if fd is installed
+  stat:
+    path: "/home/{{user.name}}/bin/fd"
+  register: "fd_binary"
+
+- name: Install fd release
+  when: "not fd_binary.stat.exists"
+  include_role:
+    name: "ansible-role-github-release"
+  vars:
+    owner: "{{user.name}}"
+    fd_version: "10.1.0"
+    fd_arch: "i686-unknown-linux-musl"
+    fd_repo: "https://github.com/sharkdp/fd"
+    ghr_install_dir: "/home/{{user.name}}/bin"
+    ghr_releases:
+      - url: "{{fd_repo}}/releases/download/v{{fd_version}}/fd-v{{fd_version}}-{{fd_arch}}.tar.gz"
+        copy_src: "{{ghr_tmp_dir}}/fd-v{{fd_version}}-{{fd_arch}}/fd"
+        copy_dest: "{{ghr_install_dir}}/fd"
+        extract_dir: ""
