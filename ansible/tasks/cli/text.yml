@@ -20,9 +20,10 @@
     state: directory
     mode: "755"
 
-- name: Install ripgrep
-  package:
-    name: "ripgrep"
+- include_tasks: ./text/ripgrep.yml
+# - name: Install ripgrep
+#   package:
+#     name: "ripgrep"
 
 - name: Install releases
   include_role:

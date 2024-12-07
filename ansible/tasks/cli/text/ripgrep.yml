@@ -1,1 +1,33 @@
+# Ripgrep to search for text in files
 #
+# It is already in debian package, so we do not
+# download it from github
+
+- name: Install ripgrep
+  package:
+    name: "ripgrep"
+
+- name: Configurate ripgrep through profile
+  file:
+    src: "{{playbook_dir}}/files/ripgrep/profile"
+    dest: "/home/{{user.name}}/.config/profile.d/ripgrep"
+    owner: "{{user.name}}"
+    group: "{{user.name}}"
+    state: "link"
+
+- name: Create config file dir
+  file:
+    path: "/home/{{user.name}}/.config/ripgrep/"
+    state: "directory"
+    owner: "{{user.name}}"
+    group: "{{user.name}}"
+    mode: "755"
+  register: "ripgrep_config"
+
+- name: Set link to ripgrep config
+  file:
+    src: "{{playbook_dir}}/files/ripgrep/config"
+    dest: "{{ripgrep_config.path}}/config"
+    state: "link"
+    owner: "{{user.name}}"
+    group: "{{user.name}}"
