@@ -12,6 +12,6 @@ if [ -d $DF_TARGET ]; then
   cp $HOME/.ssh/hosts/jino $DF_TARGET/jino.host
 
   debug "Try to copy jino ssh keys"
-  [ -f $HOME/.ssh/jino.pub ] && cp $HOME/.ssh/jino.pub $DF_TARGET/jino.pub
-  [ -f $HOME/.ssh/jino ] && cp $HOME/.ssh/jino $DF_TARGET/jino.pri
+  [ -f $HOME/.ssh/jino_rsa.pub ] && cp $HOME/.ssh/jino_rsa.pub $DF_TARGET/jino.pub
+  [ -f $HOME/.ssh/jino_rsa ] && cp $HOME/.ssh/jino_rsa $DF_TARGET/jino.pri
 fi

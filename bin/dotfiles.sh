@@ -22,6 +22,9 @@ ensure_ansible() {
 }
 
 build_ssh_keys() {
+  SSH_HOSTS_DIR="$$SSH_DIR/hosts"
+  mkdir -p $SSH_HOSTS_DIR
+
   ssh-keygen -b 4096 -t rsa -t "$SSH_DIR/id_rsa" -N "" \
     -C "$USER@$HOSTNAME"
 
