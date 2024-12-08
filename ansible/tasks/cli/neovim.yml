@@ -24,7 +24,7 @@
     nvim_repository: "https://github.com/neovim/neovim"
     ghr_install_dir: "/home/{{ user.name }}/bin"
     ghr_releases:
-    - url: "{{ nvim_repository }}/releases/download/{{ nvim_version }}/nvim.appimage"
+    - url: "{{ nvim_repository }}/releases/download/v{{ nvim_version }}/nvim.appimage"
       copy_src: "{{ ghr_tmp_dir }}/nvim.appimage"
       copy_dest: "{{ ghr_install_dir}}/nvim"
 

@@ -22,7 +22,7 @@
     exa_repo: "https://github.com/ogham/exa"
     ghr_install_dir: "/home/{{user.name}}/bin"
     ghr_releases:
-      - url: "{{fd_repo}}/releases/download/v{{exa_version}}/exa-{{exa_arch}}-v{{fd_version}}.zip"
+      - url: "{{exa_repo}}/releases/download/v{{exa_version}}/exa-{{exa_arch}}-v{{exa_version}}.zip"
         copy_src: "{{ghr_tmp_dir}}/bin/exa"
         copy_dest: "{{ghr_install_dir}}/exa"
         extract_dir: ""
