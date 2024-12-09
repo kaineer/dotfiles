@@ -1,17 +1,10 @@
 ---
 # text utilities
 #
-#  * DONE: fd
-#  * DONE: ripgrep
-#  * exa
-#  * bat
-#
 #  TODO: move each tool into separate text/{toolname}.yml
 #    * task to check whether tool is installed
 #    * first task to install tool
 #    * second task to configure tool
-#
-#  TODO: replace exa with eza, 'cause first one is unmantained
 #
 - name: Mkdir for bin scripts
   file:
@@ -24,19 +17,5 @@
 
 - include_tasks: ./text/ripgrep.yml
 - include_tasks: ./text/fd.yml
-- include_tasks: ./text/exa.yml
 - include_tasks: ./text/eza.yml
-
-- name: Install releases
-  include_role:
-    name: "ansible-role-github-release"
-  vars:
-    owner: "{{ user.name }}"
-    ghr_install_dir: "/home/{{ user.name }}/bin"
-    ghr_releases:
-      # bat
-      - url: https://github.com/sharkdp/bat/releases/download/v0.24.0/bat-v0.24.0-i686-unknown-linux-musl.tar.gz
-        owner: "{{ user.name }}"
-        copy_src: "{{ ghr_tmp_dir }}/bat-v0.24.0-i686-unknown-linux-musl/bat"
-        copy_dest: "{{ ghr_install_dir }}/bat"
-        extract_dir: ""
+- include_tasks: ./text/bat.yml

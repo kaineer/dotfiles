@@ -9,8 +9,12 @@
     group: "{{ user.name }}"
     state: directory
     mode: "755"
+- name: Check if ytdl already installed
+  stat:
+    path: "/home/{{user.name}}/bin/releases/ytdl"
+  register: "ytdl_binary"
 - name: Install ytdl release
-  when: "ansible_nodename in gui_workstations"
+  when: "ansible_nodename in gui_workstations and not ytdl_binary.stat.exists"
   include_role:
     name: "ansible-role-github-release"
   vars:

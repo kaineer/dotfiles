@@ -1,2 +1,31 @@
+# BAT to show code with highlight
 #
-# TODO: move copy setting profile link here
+# Get from releases page, config, set env
+#
+# @link: https://github.com/sharkdp/bat
+#
+# Colorization theme nord
+
+- name: Check if bat is installed
+  stat:
+    path: "/home/{{user.name}}/bin/bat"
+  register: "bat_binary"
+
+- name: Install bat release
+  when: "not bat_binary.stat.exists"
+  include_role:
+    name: "ansible-role-github-release"
+  vars:
+    owner: "{{user.name}}"
+    exa_version: "0.24.0"
+    exa_arch: "i686-unknown-linux-musl"
+    exa_repo: "https://github.com/sharkdp/bat"
+    ghr_install_dir: "/home/{{user.name}}/bin"
+    ghr_releases:
+      - url: "{{bat_repo}}/releases/download/v{{bat_version}}/bat-v{{bat_arch}}.tar.gz"
+        copy_src: "{{ghr_tmp_dir}}/bat-v{{bat_version}}/bat"
+        copy_dest: "{{ghr_install_dir}}/bat"
+        extract_dir: ""
+
+# TODO: move bat profile to bat files
+#   and use it

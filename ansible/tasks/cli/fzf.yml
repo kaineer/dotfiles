@@ -14,7 +14,13 @@
     state: directory
     mode: "755"
 
+- name: Check if fzf is installed
+  stat:
+    path: "/home/{{user.name}}/bin/fzf"
+  register: "fzf_binary"
+
 - name: Install fzf as github release
+  when: "not fzf_binary.stat.exists"
   include_role:
     name: "ansible-role-github-release"
   vars:
