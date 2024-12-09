@@ -19,10 +19,6 @@ return packer.startup(function(use)
 
   use "wbthomason/packer.nvim"
 
-  use {
-    "gpanders/editorconfig.nvim"
-  }
-
   kf.forEach(kf.prefix("plugins.", {
     "colorscheme",     -- color scheme
     "telescope",       -- fuzzy search system
