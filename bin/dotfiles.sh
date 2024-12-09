@@ -51,10 +51,13 @@ install_ansible_roles() {
 play_ansible_playbook() {
   cd "$DOTFILES_DIR/ansible"
 
+  VERBOSITY=""
+  [[ "$DEBUG" == "true" ]] && VERBOSITY="-vvv"
+
   sudo \
     LC_ALL="C.UTF-8" \
     ANSIBLE_ROLES_PATH="$ROLE_PATH:$ANSIBLE_ROLES_PATH" \
-    ansible-playbook local.yml
+    ansible-playbook $VERBOSITY local.yml
 }
 
 restart_x_server() {

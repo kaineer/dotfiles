@@ -3,6 +3,8 @@
 echo "## ansible config runner"
 echo ""
 echo " $ ax update          # run dotfiles.sh to update config"
+echo " $ DEBUG=true ax update"
+echo "                      # run update with maximum verbosity"
 echo " $ ax ce              # edit ansible.cfg"
 echo " $ ax f[zf]           # choose file to edit in dotfiles"
 echo " $ ax git             # run git command"

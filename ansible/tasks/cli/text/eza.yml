@@ -1,0 +1,38 @@
+# EZA to show directory content with colors
+#
+# Get from releases page, config, set env
+#
+# @link: https://github.com/eza-community/eza
+# @link: https://eza.rocks/
+#
+# Colorization from vivid and LS_COLORS
+
+- name: Check if eza is installed
+  stat:
+    path: "/home/{{user.name}}/bin/eza"
+  register: "eza_binary"
+
+- name: Install eza release
+  when: "not eza_binary.stat.exists"
+  include_role:
+    name: "ansible-role-github-release"
+  vars:
+    owner: "{{user.name}}"
+    eza_version: "0.20.11"
+    eza_arch: "x86_64-unknown-linux-musl"
+    eza_repo: "https://github.com/eza-community/eza"
+    ghr_install_dir: "/home/{{user.name}}/bin"
+    ghr_releases:
+      - url: "{{eza_repo}}/releases/download/v{{eza_version}}/eza_{{eza_arch}}.tar.gz"
+        owner: "{{user.name}}"
+        copy_src: "{{ghr_tmp_dir}}/eza"
+        copy_dest: "{{ghr_install_dir}}/eza"
+        extract_dir: ""
+
+- name: Set link to eza profile
+  file:
+    src: "{{playbook_dir}}/files/eza/profile"
+    dest: "/home/{{user.name}}/.config/profile.d/eza"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: "link"

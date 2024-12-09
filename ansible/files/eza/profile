@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+__eza_aliases() {
+  alias ls="eza"
+  alias ll="eza -l --icons"
+  alias tree="eza -T"
+}
+
+[ -x "$(command -v eza)" ] && __eza_aliases

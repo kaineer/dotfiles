@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-exa_aliases() {
-  alias ls=exa
-}
+# exa_aliases() {
+#   alias ls=exa
+# }
 
 bat_aliases() {
   alias cat='bat --style=plain'
@@ -12,6 +12,6 @@ clip_aliases() {
   alias clip='xsel -b'
 }
 
-[ -x $HOME/bin/exa ] && exa_aliases
+# [ -x $HOME/bin/exa ] && exa_aliases
 [ -x $HOME/bin/bat ] && bat_aliases
 [ -x /usr/bin/xsel ] && clip_aliases
