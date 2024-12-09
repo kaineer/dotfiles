@@ -1,0 +1,30 @@
+# EXA to show directory content with colors
+#
+# Get from releases page, config, set env
+#
+# @link: https://https://github.com/ogham/exa
+#
+# Colorization from vivid and LS_COLORS
+
+- name: Check if exa is installed
+  stat:
+    path: "/home/{{user.name}}/bin/exa"
+  register: "exa_binary"
+
+- name: Install exa release
+  when: "not exa_binary.stat.exists"
+  include_role:
+    name: "ansible-role-github-release"
+  vars:
+    owner: "{{user.name}}"
+    exa_version: "0.10.1"
+    exa_arch: "linux-x86_64-musl"
+    exa_repo: "https://github.com/ogham/exa"
+    ghr_install_dir: "/home/{{user.name}}/bin"
+    ghr_releases:
+      - url: "{{exa_repo}}/releases/download/v{{exa_version}}/exa-{{exa_arch}}-v{{exa_version}}.zip"
+        copy_src: "{{ghr_tmp_dir}}/bin/exa"
+        copy_dest: "{{ghr_install_dir}}/exa"
+        extract_dir: ""
+
+# TODO: add profile for exa with aliases

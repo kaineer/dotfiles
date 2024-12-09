@@ -26,6 +26,8 @@ system_packages:
  - gpg
  - htop
  - inxi
+ - lua5.1
+ - luarocks
  - make
  - neofetch
  - pass

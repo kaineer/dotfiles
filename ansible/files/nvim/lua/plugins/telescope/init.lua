@@ -14,7 +14,7 @@ local configTelescope = function()
   end
 
   local extensionsToLoad = {
-    'project', 'ui-select', 
+    'project', 'ui-select',
   }
 
   local load_extension = function(name)
@@ -38,17 +38,12 @@ local configTelescope = function()
       ["ui-select"] = {
         require('telescope.themes').get_cursor {}
       },
-      file_browser = {
-        theme = "ivy",
-        hijack_netrw = false,
-      },
     },
   }
 
   map.normal({
     { '<leader>of', telescope_cmd('find_files') },
     { '<leader>ob', telescope_cmd('buffers') },
-    { '<leader>ot', telescope_cmd('file_browser') },
     { '<leader>oh', telescope_cmd('oldfiles') },
     { '<leader>og', telescope_cmd('git_files') },
     { '<leader>om', telescope_cmd('keymaps') },
@@ -76,7 +71,6 @@ local telescopeRequires = {
   'nvim-telescope/telescope-github.nvim',
   'nvim-telescope/telescope-project.nvim',
   'nvim-telescope/telescope-ui-select.nvim',
-  'nvim-telescope/telescope-file-browser.nvim',
 }
 
 local telescopeData = {

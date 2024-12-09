@@ -8,6 +8,6 @@ if [ -f $DF_TARGET/private.pgp ]; then
   debug "Importing jino config"
   mkdir -p $HOME/.ssh/hosts
   cp $DF_TARGET/jino.host $HOME/.ssh/hosts/jino
-  [ -f $DF_TARGET/jino.pub ] && cp $DF_TARGET/jino.pub $HOME/.ssh/jino.pub
-  [ -f $DF_TARGET/jino.pri ] && cp $DF_TARGET/jino.pri $HOME/.ssh/jino
+  [ -f $DF_TARGET/jino.pub ] && cp $DF_TARGET/jino.pub $HOME/.ssh/jino_rsa.pub
+  [ -f $DF_TARGET/jino.pri ] && cp $DF_TARGET/jino.pri $HOME/.ssh/jino_rsa
 fi

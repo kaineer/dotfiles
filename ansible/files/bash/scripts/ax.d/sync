@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 commit_message() {
-  echo "Sync from $HOSTNAME at $(date +'%y.%m.%d -- %H:%M')"
+  echo "Sync from $HOSTNAME at $(date +'%d.%m.%Y -- %H:%M')"
   if [[ "$1" != "" ]]; then
     echo ""
     echo "$@"
