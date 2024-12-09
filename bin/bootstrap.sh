@@ -26,7 +26,7 @@ fi
 #
 #
 if ! [[ -f "$SSH_DIR/id_rsa" ]]; then
-  mkdir -p "$SSH_DIR"
+  [ ! -d "$SSH_DIR" ] && mkdir -p "$SSH_DIR"
 
   chmod 700 "$SSH_DIR"
 
@@ -38,10 +38,15 @@ if ! [[ -f "$SSH_DIR/id_rsa" ]]; then
      -f "$SSH_DIR/id_rsa" \
      -N "" -C "$USER@$HOSTNAME"
 
+  # so we can run ansible on localhost
+  #
   cat "$SSH_DIR/id_rsa.pub" >> "$SSH_DIR/authorized_keys"
 
   chmod 600 "$SSH_DIR/authorized_keys"
 fi
+
+[ ! -d $DOTFILES_DIR ] && git clone \
+  https://github.com/kaineer/dotfiles "$DOTFILES_DIR"
 
 if [[ -f "$DOTFILES_DIR/requirements.yml" ]]; then
   cd "$DOTFILES_DIR"
@@ -49,3 +54,7 @@ if [[ -f "$DOTFILES_DIR/requirements.yml" ]]; then
   ansible-galaxy install -r requirements.yml
 fi
 
+if [[ -f "$DOTFILES_DIR/bin/dotfiles.sh" ]]; then
+  cd "$DOTFILES_DIR"
+  . ./bin/dotfiles.sh
+fi
