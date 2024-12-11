@@ -3,6 +3,7 @@
 # Get from releases page, config, set env
 #
 # @link: https://github.com/sharkdp/bat
+# @link: https://github.com/sharkdp/bat/releases/latest
 #
 # Colorization theme nord
 
@@ -31,3 +32,11 @@
         copy_src: "{{ghr_tmp_dir}}/bat-v{{bat_version}}-{{bat_arch}}/bat"
         copy_dest: "{{ghr_install_dir}}/bat"
         extract_dir: ""
+
+- name: Link bat profile
+  file:
+    src: "{{playbook_dir}}/files/bat/profile"
+    dest: "/home/{{user.name}}/.config/profile.d/bat"
+    owner: "{{user.name}}"
+    group: "{{user.name}}"
+    state: "link"
