@@ -27,5 +27,3 @@
         copy_dest: "{{ghr_install_dir}}/bat"
         extract_dir: ""
 
-# TODO: move bat profile to bat files
-#   and use it
