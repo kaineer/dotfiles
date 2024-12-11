@@ -18,10 +18,3 @@
     bat_version: "0.24.0"
     bat_arch: "i686-unknown-linux-musl"
     bat_repo: "https://github.com/sharkdp/bat"
-    ghr_install_dir: "/home/{{user.name}}/bin"
-    ghr_releases:
-      - url: "{{bat_repo}}/releases/download/v{{bat_version}}/bat-v{{bat_version}}-{{bat_arch}}.tar.gz"
-        owner: "{{user.name}}"
-        copy_src: "{{ghr_tmp_dir}}/bat-v{{bat_version}}-{{bat_arch}}/bat"
-        copy_dest: "{{ghr_install_dir}}/bat"
-        extract_dir: ""

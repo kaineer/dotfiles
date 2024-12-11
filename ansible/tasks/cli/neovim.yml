@@ -36,8 +36,16 @@
 
 - name: Set neovim config link
   file:
-    src: "{{ playbook_dir }}/files/nvim/"
+    src: "{{ playbook_dir }}/files/nvim/config/"
     dest: "/home/{{ user.name }}/.config/nvim"
+    state: link
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
+- name: Set neovim profile and aliases
+  file:
+    src: "{{ playbook_dir }}/files/nvim/profile"
+    dest: "/home/{{ user.name }}/.config/profile.d/nvim"
     state: link
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
