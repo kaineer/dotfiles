@@ -1,11 +1,6 @@
 ---
 # text utilities
 #
-#  * DONE: fd
-#  * DONE: ripgrep
-#  * exa
-#  * bat
-#
 #  TODO: move each tool into separate text/{toolname}.yml
 #    * task to check whether tool is installed
 #    * first task to install tool
