@@ -44,6 +44,7 @@ install_ansible_roles() {
     echo "[DEBUG] found requirements file"
     cd "$DOTFILES_DIR"
 
+    ansible-galaxy collection install ansible.posix
     ansible-galaxy install -r requirements.yml
   fi
 }

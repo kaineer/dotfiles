@@ -9,9 +9,16 @@ if [ -d $DF_TARGET ]; then
   gpg --output $DF_TARGET/private.pgp --armor --export-secret-key
 
   debug "Copy jino host config"
-  cp $HOME/.ssh/hosts/jino $DF_TARGET/jino.host
+  [ -f $HOME/.ssh/hosts/jino ] && cp $HOME/.ssh/hosts/jino $DF_TARGET/jino.host
 
   debug "Try to copy jino ssh keys"
   [ -f $HOME/.ssh/jino_rsa.pub ] && cp $HOME/.ssh/jino_rsa.pub $DF_TARGET/jino.pub
   [ -f $HOME/.ssh/jino_rsa ] && cp $HOME/.ssh/jino_rsa $DF_TARGET/jino.pri
+
+  debug "Copy github host config"
+  [ -f $HOME/.ssh/hosts/github ] && cp $HOME/.ssh/hosts/github $DF_TARGET/github.host
+
+  debug "Try to copy github ssh keys"
+  [ -f $HOME/.ssh/github_rsa.pub ] && cp $HOME/.ssh/github_rsa.pub $DF_TARGET/github.pub
+  [ -f $HOME/.ssh/github_rsa ] && cp $HOME/.ssh/github_rsa $DF_TARGET/github.pri
 fi

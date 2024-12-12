@@ -1,6 +1,8 @@
 gui_packages:
  - baobab
  - dmenu
+ - gnome-tweaks
+ - gnome-text-editor
  - libnotify-bin
  - mediainfo
  - moc
