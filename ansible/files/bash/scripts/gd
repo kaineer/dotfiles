@@ -84,6 +84,7 @@ case "$1" in
   "e"|"edit") edit_config_file ;;
   "f") cat $CONFIG_FILE ;;
   "."|"add") add_directory $PWD $2 ;;
+  "ls"|"list") list_titles ;;
   "") fzf_directory ;;
   *) fzf_directory $@ ;;
 esac

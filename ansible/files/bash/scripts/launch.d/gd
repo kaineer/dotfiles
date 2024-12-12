@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+CONFIG_FILE=$HOME/var/dir.json
+
+list_titles() {
+  /home/kaineer/bin/gd ls
+}
+
+TARGET=$(list_titles | rofi -dmenu -i -p "gd" -matching fuzzy)
+
+if [[ "$TARGET" != "" ]]; then
+  DIR=$(cat $CONFIG_FILE | jq -r ".[\"${TARGET}\"].dir")
+  nemo "$DIR"
+fi
