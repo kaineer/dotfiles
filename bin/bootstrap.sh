@@ -73,7 +73,7 @@ fi
 # After successful run
 #
 #  * Send ssh keys to github
-#  * Send ssh keys to gitlab
+#  * Send ssh keys to gitlab (need it to get password storage)
 #  * Clone password storage from gitlab
-#  * Change remote in dotfiles repo
+#  * Change remote "origin" in dotfiles repo
 #
