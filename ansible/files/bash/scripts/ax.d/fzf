@@ -1,5 +1,18 @@
 #!/usr/bin/env bash
 
+# Choose a file from ax repository
+# and then edit it
+
 cd $DF_DIR
-FILE=$(fd -tf | fzf)
+
+if [[ "$1" == "" ]]; then
+  # Select from all ax files
+  #
+  FILE=$(fd -tf | fzf)
+else
+  # Start with $1 query
+  #
+  FILE=$(fd -tf | fzf -1 -q $1)
+fi
+
 [[ "$FILE" != "" ]] && $EDITOR $FILE
