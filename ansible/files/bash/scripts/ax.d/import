@@ -1,19 +1,28 @@
 #!/usr/bin/env bash
 
 DF_TARGET=$1
+
+import_host_and_keys() {
+  NAME=$1
+  if [ -f $DF_TARGET/$NAME.host ]; then
+    debug "Importing $NAME host config"
+    cp $DF_TARGET/jino.host $HOME/.ssh/hosts/jino
+
+    debug "Copying keys for $NAME"
+    PUB=$DF_TARGET/$NAME.pub
+    PRI=$DF_TARGET/$NAME.pri
+    [ -f $PUB ] && cp $PUB $HOME/.ssh/$NAME_rsa.pub
+    [ -f $PRI ] && cp $PRI $HOME/.ssh/$NAME_rsa
+  fi
+}
+
 if [ -f $DF_TARGET/private.pgp ]; then
   debug "Importing keys from $DF_TARGET..."
   gpg --import $DF_TARGET/private.pgp
-
-  debug "Importing jino config"
-  mkdir -p $HOME/.ssh/hosts
-  cp $DF_TARGET/jino.host $HOME/.ssh/hosts/jino
-  [ -f $DF_TARGET/jino.pub ] && cp $DF_TARGET/jino.pub $HOME/.ssh/jino_rsa.pub
-  [ -f $DF_TARGET/jino.pri ] && cp $DF_TARGET/jino.pri $HOME/.ssh/jino_rsa
-
-  debug "Importing github config"
-  mkdir -p $HOME/.ssh/hosts
-  cp $DF_TARGET/github.host $HOME/.ssh/hosts/github
-  [ -f $DF_TARGET/github.pub ] && cp $DF_TARGET/github.pub $HOME/.ssh/github_rsa.pub
-  [ -f $DF_TARGET/github.pri ] && cp $DF_TARGET/github.pri $HOME/.ssh/github_rsa
 fi
+
+mkdir -p $HOME/.ssh/hosts
+
+import_host_and_keys "jino"
+import_host_and_keys "github"
+import_host_and_keys "gitlab"
