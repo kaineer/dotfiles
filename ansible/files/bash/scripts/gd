@@ -35,6 +35,7 @@ add_directory() {
   cat $CONFIG_FILE | \
     jq -M ".[\"$NAME\"].dir=\"$DIR\"|.[\"$NAME\"].bin=\"$BIN\"" \
     > $CONFIG_FILE.new
+
   # Otherwise jq will remove all file content
   mv $CONFIG_FILE.new $CONFIG_FILE
 }
@@ -69,7 +70,6 @@ fzf_directory() {
     BIN=$(cat $CONFIG_FILE | jq -r ".[\"${TARGET}\"].bin")
 
     if [ -d $DIR ]; then
-      # cd $DIR && n && eval "$BIN ." && cd - >/dev/null && n
       cd $DIR && eval "$BIN ." && cd - >/dev/null
     elif [ -f $DIR ]; then
       eval "$BIN $DIR"
