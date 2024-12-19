@@ -1,0 +1,77 @@
+#!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: runner
+#
+# Dependencies:
+#  * fzf
+
+if [[ "$DEBUG" == "" ]]; then
+  x() { echo -n ""; }; i() { echo -n ""; }
+else
+  x () { echo " : $@"; }; i () { echo " » $@"; }
+fi
+
+## Load functions
+#
+BIN=$(readlink -f $0)
+DIR=$(dirname $BIN)
+SCRIPT_DIR=$(dirname $DIR)
+SCRIPT_ROOT=$(dirname $SCRIPT_DIR)
+
+source $SCRIPT_ROOT/fn/fn
+#
+
+prefix() {
+  sed "s/^/$1:/"
+}
+
+list_mods() {
+  for file in $(ls -1 $DIR/actions/*-actions); do
+    base=$(basename $file)
+    prefix=$(echo $base | sed "s/-actions$//")
+    echo $prefix
+  done
+}
+
+list_actions() {
+  for file in $(ls -1 $DIR/actions/*-actions); do
+    base=$(basename $file)
+    prefix=$(echo $base | sed "s/-actions$//")
+    "$file" list | prefix "${prefix}"
+  done
+}
+
+list_aliases() {
+  FN="${DIR}/aliases"
+  shift
+  if [[ "$1" == "edit" ]]; then
+    $EDITOR $FN
+  elif [[ "$1" != "" ]]; then
+    CMD=$(cat $FN | grep "^$1=" | sed "s/.*=//")
+    $BIN $CMD
+  fi
+}
+
+if [[ "$1" == "ls" ]]; then
+  list_actions
+elif [[ "$1" == "aliases" ]]; then
+  list_aliases $@
+else
+  TARGET="$(list_actions | fzf -1 -q "$1")"
+
+  if [[ "$TARGET" != "" ]]; then
+    MOD=$(echo $TARGET | cut -f1 -d:)
+    ACTION=$(echo $TARGET | sed "s/[^:]*://")
+
+    if [[ "$X_CLEAR" == "true" ]]; then
+      clear
+      echo "$ execute ${MOD} with ${ACTION}"
+    fi
+    "$DIR/actions/${MOD}-actions" $ACTION
+  fi
+fi
