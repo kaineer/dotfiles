@@ -1,10 +1,13 @@
-# url: https://github.com/mkasberg/ghostty-ubuntu/releases/download/1.0.1-0-ppa1/ghostty_1.0.1-0.ppa1_amd64_24.10.deb
-# Steps:
-#  * download file
-#  * dpkg deb file
+# Ghostty
 #
 
+- name: Check if ghostty exists
+  command: "which ghostty"
+  ignore_errors: true
+  register: "ghostty_binary"
+
 - name: Install ghostty from deb release
+  when: "ghostty_binary == ''"
   vars:
     gtty_repo: "github.com/mkasberg/ghostty-ubuntu"
     gtty_version: "1.0.1-0"
