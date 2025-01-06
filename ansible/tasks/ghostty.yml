@@ -20,3 +20,18 @@
     gtty_ubuntu_version: "22.04"
   apt:
     deb: "https://{{gtty_repo}}/releases/download/{{gtty_version}}-ppa1/ghostty_{{gtty_version}}.ppa1_{{gtty_arch}}_{{gtty_ubuntu_version}}.deb"
+
+- name: Check ghostty config directory
+  stat:
+    path: "/home/{{user.name}}/.config/ghostty"
+  register: "ghostty_config_directory"
+
+- name: Link ghostty config
+  when: "not ghostty_config_directory.stat.exists"
+  file:
+    src: "{{ playbook_dir }}/files/ghostty/"
+    dest: "/home/{{ user.name }}/.config/ghostty"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: "link"
+
