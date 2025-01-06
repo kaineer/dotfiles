@@ -1,0 +1,14 @@
+# url: https://github.com/mkasberg/ghostty-ubuntu/releases/download/1.0.1-0-ppa1/ghostty_1.0.1-0.ppa1_amd64_24.10.deb
+# Steps:
+#  * download file
+#  * dpkg deb file
+#
+
+- name: Install ghostty from deb release
+  vars:
+    gtty_repo: "github.com/mkasberg/ghostty-ubuntu"
+    gtty_version: "1.0.1-0"
+    gtty_arch: "amd64"
+    gtty_ubuntu_version: "22.04"
+  apt:
+    deb: "https://{{gtty_repo}}/releases/download/{{gtty_version}}-ppa1/ghostty_{{gtty_version}}.ppa1_{{gtty_arch}}_{{gtty_ubuntu_version}}.deb"
