@@ -1,4 +1,9 @@
 # Ghostty
+#   download: https://ghostty.org/docs/install/binary
+#     (just in case that debian pkg will be available)
+#   ansible:
+#     command: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html
+#     apt: https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html
 #
 
 - name: Check if ghostty exists
