@@ -12,9 +12,9 @@ auto-update-channel = stable
 # font-family-bold = 'FiraCode Nerd Font Bold'
 # font-family-italic = 'FiraCode Nerd Font Reg'
 # font-family-bold-italic = 'FiraCode Nerd Font Bold'
-#
+
 font-size = 16
-#
+
 fullscreen = true
 window-decoration = false
 

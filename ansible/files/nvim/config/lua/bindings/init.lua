@@ -91,6 +91,7 @@ map.normal({
   { '<space>tj',
     ':!browse "https://translate.google.com/?sl=ja&tl=ru&text=<c-r>""<cr>' },
   { '<m-n>', ':set number!<cr>' },
+  { '<m-m>', ':set relativenumber!<cr>' },
 })
 
 map.normal({
