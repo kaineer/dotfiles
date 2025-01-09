@@ -74,5 +74,6 @@ __ctrl_ "h" "bind_usage" "display binded keys"
 __alt_  "x" "x"     "list actions, select and run"
 __alt_  "t" "t"     "list tmux actions, select and run"
 __alt_  "a" "t j"   "list sessions and select"
+__alt_  "s" "serve" "serve directory"
 
 [[ "$(which nu)" != "" ]] && __alt_  "n" "nu"    "start nushell"
