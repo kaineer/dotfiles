@@ -9,6 +9,7 @@ local config = require("./config")(wezterm)
 local files = {
   "options",        -- options
   "ligature",
+  "shell",
   "color_scheme",   -- nord color scheme
   "font",           -- fira code nerd
   "hyperlink",      -- custom hyperlinks

@@ -6,6 +6,6 @@ return function(config)
   config.window_decorations = "NONE"
   config.scrollback_lines = 3000
   config.default_workspace = "home" -- ???
-  config.bold_brightens_ansi_colors = "BrightAndBold"
+  config.bold_brightens_ansi_colors = "BrightOnly" -- "BrightAndBold"
   config.check_for_updates = false
 end
