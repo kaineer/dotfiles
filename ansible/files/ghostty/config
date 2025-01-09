@@ -8,18 +8,18 @@ auto-update-channel = stable
 
 ### Font
 #
-font-family = 'FiraCode Nerd Font Reg'
-font-family-bold = 'FiraCode Nerd Font Bold'
-font-family-italic = 'FiraCode Nerd Font Reg'
-font-family-bold-italic = 'FiraCode Nerd Font Bold'
-
+# font-family = 'FiraCode Nerd Font'
+# font-family-bold = 'FiraCode Nerd Font Bold'
+# font-family-italic = 'FiraCode Nerd Font Reg'
+# font-family-bold-italic = 'FiraCode Nerd Font Bold'
+#
 font-size = 16
-
+#
 fullscreen = true
 window-decoration = false
 
 confirm-close-surface = false
-
+#
 theme = nord
 
 cursor-style = block
