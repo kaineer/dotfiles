@@ -15,6 +15,7 @@ local configTelescope = function()
 
   local extensionsToLoad = {
     'project', 'ui-select',
+    'changes',
   }
 
   local load_extension = function(name)
@@ -71,6 +72,7 @@ local telescopeRequires = {
   'nvim-telescope/telescope-github.nvim',
   'nvim-telescope/telescope-project.nvim',
   'nvim-telescope/telescope-ui-select.nvim',
+  'LinArcX/telescope-changes.nvim',
 }
 
 local telescopeData = {
