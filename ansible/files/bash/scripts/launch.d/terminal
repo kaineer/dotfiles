@@ -4,4 +4,4 @@
 # start_or_activate_by_classname "$WEZTERM_BINARY" "org.wezfurlong.wezterm"
 
 export GHOSTTY_BINARY=/usr/bin/ghostty
-start_or_activate_by_classname "$GHOSTTY_BINARY" "com.mitchellh.ghostty"
+start_or_activate_by_classname "$GHOSTTY_BINARY" "ghostty"

@@ -8,10 +8,15 @@ auto-update-channel = stable
 
 ### Font
 #
-# font-family = 'FiraCode Nerd Font'
+# font-family = 'FiraCode Nerd Font Reg'
 # font-family-bold = 'FiraCode Nerd Font Bold'
 # font-family-italic = 'FiraCode Nerd Font Reg'
 # font-family-bold-italic = 'FiraCode Nerd Font Bold'
+
+# =>, -->
+font-feature = "dlig"
+font-feature = "liga"
+font-feature = "calt"
 
 font-size = 16
 
