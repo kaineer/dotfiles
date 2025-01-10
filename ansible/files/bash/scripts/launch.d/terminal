@@ -1,7 +1,20 @@
 #!/usr/bin/env bash
 
-# export WEZTERM_BINARY=$HOME/bin/wezterm
-# start_or_activate_by_classname "$WEZTERM_BINARY" "org.wezfurlong.wezterm"
+if [[ "$LAUNCH_TERMINAL" == "" ]]; then
+  if [[ "$(which ghostty)" != "" ]]; then
+    export LAUNCH_TERMINAL="ghostty"
+  elif [[ "$(which wezterm)" != "" ]]; then
+    export LAUNCH_TERMINAL="wezterm"
+  fi
+fi
 
-export GHOSTTY_BINARY=/usr/bin/ghostty
-start_or_activate_by_classname "$GHOSTTY_BINARY" "ghostty"
+case "${LAUNCH_TERMINAL}" in
+  "ghostty")
+     export GHOSTTY_BINARY=/usr/bin/ghostty
+     start_or_activate_by_classname "$GHOSTTY_BINARY" "ghostty"
+     ;;
+  "wezterm")
+     export WEZTERM_BINARY=$HOME/bin/wezterm
+     start_or_activate_by_classname "$WEZTERM_BINARY" "org.wezfurlong.wezterm"
+     ;;
+esac
