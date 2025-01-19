@@ -24,8 +24,8 @@ font-size = 16
 # font-feature = "clig"
 # font-feature = "liga"
 
-fullscreen = true
-window-decoration = false
+fullscreen = false
+window-decoration = true
 
 confirm-close-surface = false
 #
