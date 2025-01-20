@@ -7,7 +7,6 @@ click-repeat-interval = 500
 auto-update-channel = stable
 
 ### Font
-#
 # font-family = 'FiraCode Nerd Font Reg'
 # font-family-bold = 'FiraCode Nerd Font Bold'
 # font-family-italic = 'FiraCode Nerd Font Reg'
@@ -20,8 +19,13 @@ font-feature = "calt"
 
 font-size = 16
 
-fullscreen = true
-window-decoration = false
+# ---, ..., =>, <>, ===
+# font-feature = "calt"
+# font-feature = "clig"
+# font-feature = "liga"
+
+fullscreen = false
+window-decoration = true
 
 confirm-close-surface = false
 #
