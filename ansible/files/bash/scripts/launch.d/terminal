@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+LAUNCH_TERMINAL="wezterm"
+
 if [[ "$LAUNCH_TERMINAL" == "" ]]; then
   if [[ "$(which ghostty)" != "" ]]; then
     export LAUNCH_TERMINAL="ghostty"

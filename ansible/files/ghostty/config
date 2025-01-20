@@ -29,3 +29,6 @@ theme = nord
 
 cursor-style = block
 cursor-style-blink = false
+
+#
+link-url = true
