@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+list_media_disks() {
+  ls -1 /media/$USER
+}
+
+list_locations() {
+  echo home
+  list_media_disks
+}
+
+DIR=$(list_locations | rofi -dmenu -matching fuzzy -p locations)
+
+if [[ "$DIR" != "" ]]; then
+  if [[ "$DIR" == "home" ]]; then
+    nemo $HOME
+  else
+    nemo "/media/$USER/$DIR"
+  fi
+fi
