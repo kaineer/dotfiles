@@ -1,6 +1,6 @@
 -- color_scheme.lua
 --
--- @link: https://wezfurlong.org/wezterm/colorschemes/index.html
+-- @link: https://wezfurlong.org/wezterm/colorschemes/
 --
 
 return function(config)
