@@ -9,10 +9,6 @@
 
 - name: Check if bat is installed
   stat:
-    path: "/home{{user.name}}/bin/bat"
-
-- name: Check if bat is installed
-  stat:
     path: "/home/{{user.name}}/bin/bat"
   register: "bat_binary"
 

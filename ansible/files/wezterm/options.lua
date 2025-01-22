@@ -2,7 +2,7 @@
 
 return function(config)
   config.hide_tab_bar_if_only_one_tab = true
-  config.window_background_opacity = 1.0
+  config.window_background_opacity = 1
   config.window_decorations = "NONE"
   config.scrollback_lines = 3000
   config.default_workspace = "home" -- ???
