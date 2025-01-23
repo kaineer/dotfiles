@@ -1,11 +1,8 @@
+local extensions = { "css", "javascript", "jsx", "tsx" }
+
 return {
 	"norcalli/nvim-colorizer.lua",
 	config = function()
-		require("colorizer").setup({
-			"css",
-			"javascript",
-			"tsx",
-			"jsx",
-		})
+		require("colorizer").setup(extensions)
 	end,
 }
