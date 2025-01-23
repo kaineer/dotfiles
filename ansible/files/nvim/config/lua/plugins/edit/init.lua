@@ -8,4 +8,5 @@ return requireAll("plugins.edit.", {
 	"hurl",
 	"colorizer",
 	"todo",
+	"trouble",
 })

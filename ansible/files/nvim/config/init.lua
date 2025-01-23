@@ -9,7 +9,7 @@ require("lazy").setup({
 	require("plugins.colors.nordic"),
 	require("plugins.telescope"),
 	require("plugins.navigation"),
-	-- require("plugins.treesitter"),
+	require("plugins.treesitter"),
 	require("plugins.git"),
 	require("plugins.completion"),
 	require("plugins.edit"),

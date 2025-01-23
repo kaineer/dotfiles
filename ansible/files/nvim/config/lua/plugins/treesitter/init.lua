@@ -1,20 +1,6 @@
 -- plugins/treesitter/init.lua
 
-local languages = {
-	"bash",
-	"yaml",
-	"lua",
-	"http",
-	"hurl",
-	"cpp",
-	"python",
-	"ruby",
-	"rust",
-	"make",
-	"tsx",
-	"javascript",
-	"vimdoc",
-}
+local languages = require("plugins.treesitter.languages")
 
 return {
 	"nvim-treesitter/nvim-treesitter",
