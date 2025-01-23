@@ -19,9 +19,11 @@
     name: "ansible-role-github-release"
   vars:
     owner: "{{user.name}}"
+    ytdl_repo: "https://github.com/yt-dlp/yt-dlp"
+    ytdl_version: "2025.01.15"
     ghr_install_dir: "/home/{{user.name}}/bin/releases"
     ghr_releases:
-      - url: "https://github.com/yt-dlp/yt-dlp/releases/download/2024.08.06/yt-dlp_linux"
+      - url: "{{ytdl_repo}}/releases/download/{{ytdl_version}}/yt-dlp_linux"
         owner: "{{user.name}}"
         copy_src: "{{ghr_tmp_dir}}/yt-dlp_linux"
         copy_dest: "{{ghr_install_dir}}/ytdl"
