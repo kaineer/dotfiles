@@ -1,13 +1,11 @@
--- lua/plugins/navigation/tmux.lua
-
--- DONE: bind alt-hjkl to switching between windows/tmux panes
--- DONE: bind alt-o to switch to previous pane
--- DONE: prepend escape sequence for normal, insert and terminal modes
-
+-- Navigation between nvim and tmux
+--
+-- gh link: https://github.com/christoomey/vim-tmux-navigator 
+--
 return {
   "christoomey/vim-tmux-navigator",
   setup = function()
-    local assign = require("kaineer.fn").assign
+    local assign = require("core.utils").assign
     assign(vim.g, {
       -- 1 - use your own mappings
       tmux_navigator_no_mappings = 1,
@@ -19,7 +17,7 @@ return {
     })
   end,
   config = function()
-    local map = require("kaineer.map")
+    local map = require("core.map")
 
     local makeKey = function(key)
       return "<m-" .. key .. ">"

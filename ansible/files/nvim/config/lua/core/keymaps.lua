@@ -44,6 +44,11 @@ local tmux = {
 }
 
 map.normal({
+  { '<leader>td', ':colorscheme shine<cr>' },
+  { '<leader>tn', ':colorscheme nord<cr>' },
+})
+
+map.normal({
   -- emacs way window bindings
   { '<c-x>0', window.close },
   { '<c-x>1', window.only },
@@ -69,8 +74,8 @@ map.normal({
   { '<leader>3',  window.splitv },
   { '<leader>k',  diagnostics.next },
   { '<leader>j',  diagnostics.prev },
-  -- { '<leader>xx', troubles.toggle },
-  -- { '<leader>xr', troubles.refresh },
+  { '<leader>xx', troubles.toggle },
+  { '<leader>xr', troubles.refresh },
   { '<leader>tc', tabs.new },
   { '<leader>tx', tabs.close },
   { '<leader>tl', tabs.next },
@@ -98,4 +103,3 @@ map.normal({
 map.normal({
   { '<space>mf', ':MkdnTableFormat<cr>' },
 })
-
