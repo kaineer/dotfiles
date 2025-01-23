@@ -1,3 +1,0 @@
-- name: Check if hurl is installed
-  stat:
-    path: "/home/{{user.name}}/bin/hurl"
