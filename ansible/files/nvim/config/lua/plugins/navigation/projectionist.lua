@@ -1,17 +1,17 @@
--- lua/plugins/navigation/projectionist.lua
-
--- DONE: add commands to switch between alternatives
-
+-- plugins/navigation/projectionist.lua
+--
+-- gh link: https://github.com/tpope/vim-projectionist 
+--
 return {
   "tpope/vim-projectionist",
   config = function()
-    local failMessage = "Could not find projectionist alternate"
-    local mkcmd = require("kaineer.cmd").buildMkcmd(failMessage)
+    local wk = require('which-key')
 
-    require("which-key").add({
-      { " aa", mkcmd("A"), desc = "Projectionist alternate" },
-      { " as", mkcmd("AS"), desc = "Projectionist alternate split" },
-      { " av", mkcmd("AV"), desc = "Projectionist alternate vsplit" },
+    wk.add({
+      { "<leader>aa", "<cmd>A<cr>", desc = "Projectionist alternate" },
+      { "<leader>as", "<cmd>AS<cr>", desc = "Projectionist alternate split" },
+      { "<leader>av", "<cmd>AV<cr>", desc = "Projectionist alternate vsplit" },
     })
   end,
 }
+

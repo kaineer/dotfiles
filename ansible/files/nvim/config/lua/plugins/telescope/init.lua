@@ -1,87 +1,58 @@
--- lua/plugins/telescope/init.lua
+--
 
-local configTelescope = function()
-  local forEach = require('kaineer.fn').forEach
-  local telescope = require('telescope')
-  local map = require('kaineer.map')
+return {
+	"nvim-telescope/telescope.nvim",
+	event = "VimEnter",
+	branch = "0.1.x",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		{ "nvim-telescope/telescope-ui-select.nvim" },
+		{ "nvim-telescope/telescope-project.nvim" },
+		{ "nvim-telescope/telescope-ui-select.nvim" },
 
-  local cmd = function(value)
-    return ":" .. value .. "<cr>"
-  end
+		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
+	},
 
-  local telescope_cmd = function(name)
-    return cmd("Telescope " .. name)
-  end
+	config = function()
+		local theme = require("telescope.themes").get_ivy()
+		local pkg = require("telescope")
+		local each = require("core.utils").each
+		local load_extension = pkg.load_extension
 
-  local extensionsToLoad = {
-    'project', 'ui-select',
-    'changes',
-  }
+		local settings = {
+			defaults = theme,
+			borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
+			extensions = {
+				project = {
+					base_dirs = {
+						{ path = "/home/kaineer/git", max_depth = 3 },
+						{ path = "/home/kaineer/devel/itc", max_depth = 3 },
+						{ path = "/home/kaineer/devel/kaineer", max_depth = 3 },
+					},
+					theme = "ivy",
+				},
+				["ui-select"] = {
+					require("telescope.themes").get_dropdown({}),
+				},
+			},
+		}
 
-  local load_extension = function(name)
-    telescope.load_extension(name)
-  end
+		pkg.setup(settings)
 
-  local theme = require('telescope.themes').get_ivy()
+		each({ "project", "ui-select" }, load_extension)
 
-  forEach(extensionsToLoad, load_extension)
+		local builtin = require("telescope.builtin")
+		local extensions = pkg.extensions
 
-  telescope.setup {
-    defaults = theme,
-    extensions = {
-      project = {
-        base_dirs = {
-          { path = '/home/kaineer/git', max_depth = 3 },
-          { path = '/home/kaineer/devel/htmlacademy', max_depth = 3 },
-        },
-        theme = 'ivy',
-      },
-      ["ui-select"] = {
-        require('telescope.themes').get_cursor {}
-      },
-    },
-  }
+		local wk = require("which-key")
 
-  map.normal({
-    { '<leader>of', telescope_cmd('find_files') },
-    { '<leader>ob', telescope_cmd('buffers') },
-    { '<leader>oh', telescope_cmd('oldfiles') },
-    { '<leader>og', telescope_cmd('git_files') },
-    { '<leader>om', telescope_cmd('keymaps') },
-    { '<leader>or', telescope_cmd('registers') },
-    { '<leader>ol', telescope_cmd('current_buffer_fuzzy_find') },
-    { '<leader>/',  telescope_cmd('current_buffer_fuzzy_find') },
-    { '<leader>od', telescope_cmd('diagnostics') },
-    { '<leader>rg', telescope_cmd('live_grep') },
-    { '<leader>op', telescope_cmd('project') },
-
-    { '<leader>ouu', ":UrlView<cr>" },
-    { '<leader>oup', ":UrlView packer<cr>" },
-    -- { '<leader>gi', cmd('gh issues') },
-    -- { '<leader>gr', cmd('gh run') },
-    -- { '<leader>gg', cmd('gh gist') },
-    -- { '<leader>gp', cmd('gh pull_requests') },
-
-    -- notifications
-    -- { '<leader>on', cmd('notify') },
-  })
-end
-
-local telescopeRequires = {
-  'nvim-lua/plenary.nvim',
-  'nvim-telescope/telescope-github.nvim',
-  'nvim-telescope/telescope-project.nvim',
-  'nvim-telescope/telescope-ui-select.nvim',
-  'LinArcX/telescope-changes.nvim',
+		wk.add({
+			{ "<leader>of", builtin.find_files, desc = "Open file" },
+			{ "<leader>og", builtin.git_files, desc = "Open from git" },
+			{ "<leader>od", builtin.diagnostics, desc = "Open diagnostics" },
+			{ "<leader>oh", builtin.oldfiles, desc = "Open history" },
+			{ "<leader>op", extensions.project.project, desc = "Select project" },
+			{ "<leader>rg", builtin.live_grep, desc = "RG in files" },
+		})
+	end,
 }
-
-local telescopeData = {
-  'nvim-telescope/telescope.nvim',
-  requires = telescopeRequires,
-  config = configTelescope,
-}
-
-return function(use)
-  use(telescopeRequires)
-  use(telescopeData)
-end
