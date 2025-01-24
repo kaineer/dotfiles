@@ -18,10 +18,12 @@ return {
 		local pkg = require("telescope")
 		local each = require("core.utils").each
 		local load_extension = pkg.load_extension
+		local merge = require("core.utils").merge
+
+		local defaults = merge({}, theme, { borderchars = { " ", " " } })
 
 		local settings = {
-			defaults = theme,
-			borderchars = { " ", " ", " ", " ", " ", " ", " ", " " },
+			defaults = defaults,
 			extensions = {
 				project = {
 					base_dirs = {
