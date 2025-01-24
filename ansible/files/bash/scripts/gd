@@ -23,8 +23,13 @@ usage() {
   echo " $ gd add nemo               # add current dir with command"
   echo " $ gd <name fragment>        # find dir and open with command"
   echo " $ gd e[dit]                 # edit directories file"
+  echo " $ gd f                      # output config file"
   echo " $ gd                        # display full list and select with fzf"
   echo " $ gd h[elp]                 # show this text"
+}
+
+output_config() {
+  cat $CONFIG_FILE
 }
 
 add_directory() {
@@ -32,7 +37,7 @@ add_directory() {
   BIN=${2:-${EDITOR}}
   NAME=$(basename $DIR)
 
-  cat $CONFIG_FILE | \
+  output_config | \
     jq -M ".[\"$NAME\"].dir=\"$DIR\"|.[\"$NAME\"].bin=\"$BIN\"" \
     > $CONFIG_FILE.new
 
@@ -55,7 +60,7 @@ ensure_config_file() {
 }
 
 list_titles() {
-  cat $CONFIG_FILE | jq -r 'keys | join("\n")'
+  output_config | jq -r 'keys | join("\n")'
 }
 
 fzf_directory() {
@@ -66,8 +71,8 @@ fzf_directory() {
   fi
 
   if [[ "$TARGET" != "" ]]; then
-    DIR=$(cat $CONFIG_FILE | jq -r ".[\"${TARGET}\"].dir")
-    BIN=$(cat $CONFIG_FILE | jq -r ".[\"${TARGET}\"].bin")
+    DIR=$(output_config | jq -r ".[\"${TARGET}\"].dir")
+    BIN=$(output_config | jq -r ".[\"${TARGET}\"].bin")
 
     if [ -d $DIR ]; then
       cd $DIR && eval "$BIN ." && cd - >/dev/null
@@ -82,7 +87,7 @@ ensure_config_file
 case "$1" in
   "h"|"help") usage ;;
   "e"|"edit") edit_config_file ;;
-  "f") cat $CONFIG_FILE ;;
+  "f") output_config ;;
   "."|"add") add_directory $PWD $2 ;;
   "ls"|"list") list_titles ;;
   "") fzf_directory ;;
