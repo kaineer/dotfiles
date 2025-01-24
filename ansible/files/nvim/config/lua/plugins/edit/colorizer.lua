@@ -1,4 +1,5 @@
-local extensions = { "css", "javascript", "jsx", "tsx" }
+-- local extensions = { "css", "javascript", "jsx", "tsx" }
+local extensions = { "*" }
 
 return {
 	"norcalli/nvim-colorizer.lua",
