@@ -1,0 +1,42 @@
+#!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+
+__get_git_root() {
+  git rev-parse --show-toplevel 2>/dev/null
+}
+
+__has_husky_dir() {
+  if __get_git_root > /dev/null; then
+    root=$(__get_git_root)
+    [ -d "${root}/.husky" ]
+  else
+    return 1
+  fi
+}
+
+__list_actions() {
+  if __has_husky_dir; then
+    root=$(__get_git_root)
+    cd "${root}/.husky"
+    ls -1 | grep -v "_"
+    cd - >/dev/null
+  fi
+}
+
+__run_action() {
+  if [[ "$1" != "" ]]; then
+    root=$(__get_git_root)
+    cd "${root}"
+    ./.husky/$1
+    cd - >/dev/null
+  fi
+}
+
+case "$1" in
+  "list") __list_actions ;;
+  *) __run_action $1 ;;
+esac

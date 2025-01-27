@@ -1,0 +1,53 @@
+#!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+
+PKGFILE="package.json"
+
+__has_package_json() {
+  [ -f $PKGFILE ]
+}
+
+__list_scripts_from_package_json() {
+  if [ -d node_modules ]; then
+    cat "$PKGFILE" | jq -r ".scripts | keys | join(\"\\n\")"
+  fi
+}
+
+__list_npm_actions() {
+  if [ -d node_modules ]; then
+    echo "install"
+    echo "publish"
+    echo "version-patch"
+    echo "purge"
+  else
+    echo "install"
+  fi
+}
+
+__list_actions() {
+  if __has_package_json; then
+    __list_scripts_from_package_json
+    __list_npm_actions
+  else
+    echo "init"
+  fi
+}
+
+__run_action() {
+  case "$1" in
+    "init") npm init --yes && $EDITOR package.json ;;
+    "start"|"install"|"publish"|"test") npm $1 ;;
+    "purge") rm -rf node_modules ;;
+    "version-patch") npm version patch ;;
+    *) npm run $1 ;;
+  esac
+}
+
+case "$1" in
+  "list") __list_actions ;;
+  *) __run_action $1 ;;
+esac

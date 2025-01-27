@@ -1,0 +1,24 @@
+#!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+
+__list_actions() {
+  if [ -f Makefile ]; then
+    cat Makefile | \
+      grep -v ".PHONY" | \
+      grep ":" | \
+      sed "s/:.*$//"
+  fi
+}
+
+__run_action() {
+  [ -f Makefile ] && make -s $1
+}
+
+case "$1" in
+  "list") __list_actions ;;
+  *) __run_action $1 ;;
+esac

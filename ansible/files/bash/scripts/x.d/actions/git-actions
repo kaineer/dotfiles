@@ -1,0 +1,65 @@
+#!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+
+__inside_work_tree() {
+  [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" == "true" ]]
+}
+
+__list_actions() {
+  if __inside_work_tree; then
+    echo "commit"
+    echo "commit-all"
+    echo "amend"
+    echo "status"
+    echo "diff"
+    echo "log"
+    echo "log-patch"
+    echo "diff-cached"
+  else
+    echo "init"
+  fi
+}
+
+__pretty_log() {
+  LOG_FORMAT="%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"
+
+  git log \
+    --color --graph \
+    --pretty=format:"$LOG_FORMAT" \
+    --abbrev-commit --
+}
+
+__pretty_p_log() {
+  LOG_FORMAT="%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"
+
+  git log \
+    -p \
+    --color --graph \
+    --pretty=format:"$LOG_FORMAT" \
+    --abbrev-commit --
+}
+
+
+__run_action() {
+  LOG_FORMAT="%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset"
+  case "$1" in
+    "init") git init --quiet ;;
+    "commit") git commit --edit ;;
+    "commit-all") git add . && git commit --edit ;;
+    "amend") git commit --amend --edit ;;
+    "diff") git diff ;;
+    "diff-cached") git diff --cached ;;
+    "status") git status ;;
+    "log") __pretty_log ;;
+    "log-patch") __pretty_p_log ;;
+  esac
+}
+
+case "$1" in
+  "list") __list_actions ;;
+  *) __run_action $1 ;;
+esac

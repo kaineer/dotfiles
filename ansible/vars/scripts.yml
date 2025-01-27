@@ -1,6 +1,7 @@
 scripts:
- - ax
- - gd
- - launch
- - nord
- - pe
+  - ax
+  - gd
+  - launch
+  - nord
+  - pe
+  - x

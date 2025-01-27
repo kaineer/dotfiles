@@ -1,0 +1,21 @@
+#!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+
+__list_actions() {
+  [ -f pnpm-workspace.yaml ] && echo "pnpm-workspace.yaml"
+  [ -f package.json ] && echo "package.json"
+  [ -f lerna.json ] && echo "lerna.json"
+}
+
+__run_action() {
+  [[ "$1" != "" ]] && $EDITOR $1
+}
+
+case "$1" in
+  "list") __list_actions ;;
+  *) __run_action $1 ;;
+esac

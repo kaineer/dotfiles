@@ -9,5 +9,6 @@ return requireAll("plugins.edit.", {
 	"colorizer",
 	"todo",
 	"trouble",
+	"emmet",
 	"snippets",
 })
