@@ -15,11 +15,9 @@
 - [nvim] eyeliner
 - [nvim] hurl.nvim to run http requests
 - [nvim-cmp] add digraphs and emojis
-
 * [nvim] git
-
   - fugitive-git
   - gitlab
   - git messenger
-
 * [nvim] lualine
+* [nvim] snippets

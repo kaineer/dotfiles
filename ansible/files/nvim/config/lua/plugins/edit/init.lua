@@ -10,4 +10,5 @@ return requireAll("plugins.edit.", {
 	"todo",
 	"trouble",
 	"emmet",
+	"snippets",
 })

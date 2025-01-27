@@ -1,6 +1,9 @@
---
 return {
 	"garymjr/nvim-snippets",
+
+	dependencies = {
+		"rafamadriz/friendly-snippets",
+	},
 
 	config = function()
 		require("snippets").setup({
