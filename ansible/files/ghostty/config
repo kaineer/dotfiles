@@ -7,7 +7,7 @@ click-repeat-interval = 500
 auto-update-channel = stable
 
 ### Font
-# font-family = 'FiraCode Nerd Font Reg'
+# font-family = 'FiraCode Nerd Font Light'
 # font-family-bold = 'FiraCode Nerd Font Bold'
 # font-family-italic = 'FiraCode Nerd Font Reg'
 # font-family-bold-italic = 'FiraCode Nerd Font Bold'

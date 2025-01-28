@@ -16,10 +16,11 @@
   vars:
     gtty_repo: "github.com/mkasberg/ghostty-ubuntu"
     gtty_version: "1.0.1-0"
+    gtty_ppa: "ppa4"
     gtty_arch: "amd64"
     gtty_debian_version: "bookworm"
   apt:
-    deb: "https://{{gtty_repo}}/releases/download/{{gtty_version}}-ppa4/ghostty_{{gtty_version}}.ppa4_{{gtty_arch}}_{{gtty_debian_version}}.deb"
+    deb: "https://{{gtty_repo}}/releases/download/{{gtty_version}}-{{gtty_ppa}}/ghostty_{{gtty_version}}.{{gtty_ppa}}_{{gtty_arch}}_{{gtty_debian_version}}.deb"
 
 - name: Check ghostty config directory
   stat:

@@ -4,4 +4,4 @@ settings.txt
 .*
 secret.lua
 ansible/files/nvim/plugin/
-lua-rocks.json
+lua-rock.json
