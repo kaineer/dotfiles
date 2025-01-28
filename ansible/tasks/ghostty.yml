@@ -9,17 +9,17 @@
 - name: Check if ghostty exists
   command: "which ghostty"
   ignore_errors: true
-  register: "ghostty_binary"
+  register: "ghostty_which"
 
 - name: Install ghostty from deb release
-  when: "ghostty_binary == ''"
+  when: "ghostty_which.stdout == ''"
   vars:
     gtty_repo: "github.com/mkasberg/ghostty-ubuntu"
     gtty_version: "1.0.1-0"
     gtty_arch: "amd64"
-    gtty_ubuntu_version: "22.04"
+    gtty_debian_version: "bookworm"
   apt:
-    deb: "https://{{gtty_repo}}/releases/download/{{gtty_version}}-ppa1/ghostty_{{gtty_version}}.ppa1_{{gtty_arch}}_{{gtty_ubuntu_version}}.deb"
+    deb: "https://{{gtty_repo}}/releases/download/{{gtty_version}}-ppa4/ghostty_{{gtty_version}}.ppa4_{{gtty_arch}}_{{gtty_debian_version}}.deb"
 
 - name: Check ghostty config directory
   stat:
@@ -34,4 +34,3 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     state: "link"
-

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LAUNCH_TERMINAL="wezterm"
+LAUNCH_TERMINAL="weztern"
 
 if [[ "$LAUNCH_TERMINAL" == "" ]]; then
   if [[ "$(which ghostty)" != "" ]]; then
@@ -11,12 +11,12 @@ if [[ "$LAUNCH_TERMINAL" == "" ]]; then
 fi
 
 case "${LAUNCH_TERMINAL}" in
-  "ghostty")
-     export GHOSTTY_BINARY=/usr/bin/ghostty
-     start_or_activate_by_classname "$GHOSTTY_BINARY" "ghostty"
-     ;;
-  "wezterm")
-     export WEZTERM_BINARY=$HOME/bin/wezterm
-     start_or_activate_by_classname "$WEZTERM_BINARY" "org.wezfurlong.wezterm"
-     ;;
+"ghostty")
+  export GHOSTTY_BINARY=/usr/bin/ghostty
+  start_or_activate_by_classname "$GHOSTTY_BINARY" "ghostty"
+  ;;
+"wezterm")
+  export WEZTERM_BINARY=$HOME/bin/wezterm
+  start_or_activate_by_classname "$WEZTERM_BINARY" "org.wezfurlong.wezterm"
+  ;;
 esac
