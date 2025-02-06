@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+MPLAYER_HOME=$HOME/.config/mplayer

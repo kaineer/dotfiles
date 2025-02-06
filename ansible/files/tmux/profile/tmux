@@ -7,156 +7,168 @@
 #
 
 __tmux_usage() {
-  echo " $ t h  -- help"
-  echo " $ t d  -- tmux detach"
-  echo " $ t x  -- tmux kill-server"
-  echo " $ t s  -- tmux rename-session ..."
-  echo " $ t w  -- tmux rename-window ..."
-  echo " $ t wk -- tmux kill-window"
-  echo " $ t j  -- select window and switch to it"
-  echo " $ t a <session-name> -- tmux attach -t <session-name>"
-  echo " $ t ks <session-name> -- tmux kill-session -t <session-name>"
-  echo " $ t <tmux-command>… -- execute tmux command"
+    echo " $ t h  -- help"
+    echo " $ t d  -- tmux detach"
+    echo " $ t x  -- tmux kill-server"
+    echo " $ t s  -- tmux rename-session ..."
+    echo " $ t w  -- tmux rename-window ..."
+    echo " $ t wk -- tmux kill-window"
+    echo " $ t j  -- select window and switch to it"
+    echo " $ t a <session-name> -- tmux attach -t <session-name>"
+    echo " $ t ks <session-name> -- tmux kill-session -t <session-name>"
+    echo " $ t <tmux-command>… -- execute tmux command"
 }
 
 __jump() {
-  TARGET=$(tmux lsw -a -F"#S:#W:#I" | fzf)
-  if [[ "$TARGET" != "" ]]; then
-    T_SESSION=$(echo $TARGET | cut -f1 -d:)
-    T_WINDOW_ID=$(echo $TARGET | cut -f3 -d:)
-    tmux switch-client -t "$T_SESSION:$T_WINDOW_ID"
-  fi
+    TARGET=$(tmux lsw -a -F"#S:#W:#I" | fzf)
+    if [[ "$TARGET" != "" ]]; then
+        T_SESSION=$(echo $TARGET | cut -f1 -d:)
+        T_WINDOW_ID=$(echo $TARGET | cut -f3 -d:)
+        tmux switch-client -t "$T_SESSION:$T_WINDOW_ID"
+    fi
 }
 
 __jump_session() {
-  TARGET=$(tmux ls -F"#S" | fzf -1)
-  if [[ "$TARGET" != "" ]]; then
-    if [[ "$TMUX" == "" ]]; then
-      tmux attach -t $TARGET
-    else
-      tmux switch-client -t "$TARGET"
+    TARGET=$(tmux ls -F"#S" | fzf -1)
+    if [[ "$TARGET" != "" ]]; then
+        if [[ "$TMUX" == "" ]]; then
+            tmux attach -t $TARGET
+        else
+            tmux switch-client -t "$TARGET"
+        fi
     fi
-  fi
 }
 
 __list_commands() {
-  echo "help"
-  echo "detach"
-  echo "jump"
-  echo "quit"
-  echo "dev"
-  echo "teach"
-  echo "media"
-  echo "learn"
+    echo "help"
+    echo "detach"
+    echo "jump"
+    echo "quit"
+    echo "dev"
+    echo "teach"
+    echo "media"
+    echo "learn"
 }
 
 complete -W "help jump detach quit dev teach media rename-session rename-window" t
 
 __fzf_command() {
-  CMD=$(__list_commands | fzf)
-  if [[ "$CMD" != "" ]]; then
-    t $CMD
-  fi
+    CMD=$(__list_commands | fzf)
+    if [[ "$CMD" != "" ]]; then
+        t $CMD
+    fi
 }
 
 __outside_tmux() {
-  [[ "$TMUX" == "" ]]
+    [[ "$TMUX" == "" ]]
 }
 
 __session_exists() {
-  tmux has -t "$1" &>/dev/null
+    tmux has -t "$1" &>/dev/null
 }
 
 ta() {
-  # $ ta <session-name> - attach to session, even if it does not exist
-  #
-  if [[ "$1" != "" ]]; then
-    # there should be a session name
-    SESSION="$1"
+    # $ ta <session-name> - attach to session, even if it does not exist
+    #
+    if [[ "$1" != "" ]]; then
+        # there should be a session name
+        SESSION="$1"
 
-    if __session_exists "$SESSION"; then
-      # session exists
-      if __outside_tmux; then
-        # > attach to session
-        tmux attach -t "$SESSION"
-      else
-        # > switch to session
-        tmux switch-client -t "$SESSION"
-      fi
+        if __session_exists "$SESSION"; then
+            # session exists
+            if __outside_tmux; then
+                # > attach to session
+                tmux attach -t "$SESSION"
+            else
+                # > switch to session
+                tmux switch-client -t "$SESSION"
+            fi
+        else
+            # no session created
+            if __outside_tmux; then
+                # > create session and join it
+                tmux new -s "$SESSION"
+            else
+                # > create detached session
+                # > switch to it
+                tmux new -d -s "$SESSION"
+                tmux switch-client -t "$SESSION"
+            fi
+        fi
     else
-      # no session created
-      if __outside_tmux; then
-        # > create session and join it
-        tmux new -s "$SESSION"
-      else
-        # > create detached session
-        # > switch to it
-        tmux new -d -s "$SESSION"
-        tmux switch-client -t "$SESSION"
-      fi
+        __jump_session
     fi
-  else
-    __jump_session
-  fi
 }
 
 __kill_sessions() {
-  if [[ "$1" != "" ]]; then
-    ERR_COUNT=$(tmux kill-session -t $1 2>&1 | grep "find session" | wc -l)
-    if [[ "$ERR_COUNT" == "1" ]]; then
-      echo " ! There is no session [${1}]"
-    else
-      echo " * Session [${1}] is terminated"
-    fi
-    shift
     if [[ "$1" != "" ]]; then
-      __kill_sessions $@
+        ERR_COUNT=$(tmux kill-session -t $1 2>&1 | grep "find session" | wc -l)
+        if [[ "$ERR_COUNT" == "1" ]]; then
+            echo " ! There is no session [${1}]"
+        else
+            echo " * Session [${1}] is terminated"
+        fi
+        shift
+        if [[ "$1" != "" ]]; then
+            __kill_sessions $@
+        fi
+    else
+        for name in $(tmux ls -F"#S" | fzf -m); do
+            tmux kill-session -t $name
+        done
     fi
-  else
-    for name in $(tmux ls -F"#S" | fzf -m); do
-      tmux kill-session -t $name
-    done
-  fi
 }
 
 __list_windows() {
-  tmux list-windows -F "#I -> #W"
+    tmux list-windows -F "#I -> #W"
 }
 
 __list_all_windows() {
-  tmux list-windows -a -F "#S: #I -> #W"
+    tmux list-windows -a -F "#S: #I -> #W"
 }
 
 t() {
-  case "$1" in
-    "h"|"help") __tmux_usage ;;
-    "d"|"detach") tmux detach ;;
-    "s"|"rename-session") shift; tmux rename-session $@ ;;
-    "w"|"rename-window") shift; tmux rename-window $@ ;;
-    "wk"|"kw") tmux kill-window ;;
-    "a"|"attach") shift; tmux attach -t $@ ;;
-    "ks") shift; __kill_sessions $@ ;;
+    case "$1" in
+    "h" | "help") __tmux_usage ;;
+    "d" | "detach") tmux detach ;;
+    "s" | "rename-session")
+        shift
+        tmux rename-session $@
+        ;;
+    "w" | "rename-window")
+        shift
+        tmux rename-window $@
+        ;;
+    "wk" | "kw") tmux kill-window ;;
+    "a" | "attach")
+        shift
+        tmux attach -t $@
+        ;;
+    "ks")
+        shift
+        __kill_sessions $@
+        ;;
     "lsw") __list_windows ;;
     "lswa") __list_all_windows ;;
-    "x"|"q"|"exit"|"quit") tmux kill-server ;;
-    "j"|"jump") __jump ;;
+    "x" | "q" | "exit" | "quit") tmux kill-server ;;
+    "j" | "jump") __jump ;;
     "dev") ta dev ;;
     "teach") ta teach ;;
     "media") ta media ;;
     "learn") ta learn ;;
     "") __fzf_command ;;
     *) tmux "$@" ;;
-  esac
+    esac
 }
 
 tw() {
-  tmux select-window -t "$1"
+    tmux select-window -t "$1"
 }
 
 th() {
-  tmux split-window -h "$@"
+    tmux split-window -h "$@"
 }
 
 tv() {
-  tmux split-window -v "$@"
+    tmux split-window -v "$@"
 }
