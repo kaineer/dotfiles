@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export OBSIDIAN_BINARY=$(which obsidian)
+
+start_or_activate_by_classname "$TELEGRAM_BINARY" "obsidian"
