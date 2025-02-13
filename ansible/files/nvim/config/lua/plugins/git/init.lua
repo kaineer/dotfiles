@@ -6,5 +6,5 @@ return requireAll("plugins.git.", {
 	"fugitive",
 	"gitlab",
 	"messenger",
-	"gist",
+	"gist2",
 })

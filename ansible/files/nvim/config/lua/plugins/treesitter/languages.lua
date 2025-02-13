@@ -2,15 +2,16 @@
 
 return {
 	"bash",
+	"json",
 	"yaml",
 	"lua",
-	"http",
 	"hurl",
 	"cpp",
 	"python",
-	"ruby",
-	"rust",
+	-- "ruby",
+	-- "rust",
 	"make",
+	-- "jsx", -- there's no such syntax
 	"tsx",
 	"javascript",
 	"vimdoc",
