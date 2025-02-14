@@ -35,11 +35,9 @@ return function()
 			["<c-e>"] = cmp_map.abort(),
 			["<c-.>"] = cmp_map.complete(),
 			["<cr>"] = cmp_map.confirm({ select = true }),
+			["<c-j>"] = cmp_map.confirm({ select = true }),
 		},
-		sources = cmp_src(
-			as_names("nvim_lsp", "snippets", "buffer", "path", "tmux", "digraphs", "emoji"),
-			as_names("buffer")
-		),
+		sources = cmp_src(as_names("nvim_lsp", "snippets", "buffer", "path", "tmux"), as_names("buffer")),
 		formatting = {
 			format = require("lspkind").cmp_format({
 				with_text = true,
@@ -52,6 +50,13 @@ return function()
 			}),
 		},
 	})
+
+	forEach({ "markdown", "html" }, function(ft)
+		cmp.setup.buffer({
+			filetype = ft,
+			sources = cmp_src(as_names("snippets", "buffer", "path", "tmux", "digraphs", "emoji"), as_names("buffer")),
+		})
+	end)
 
 	cmp.setup.cmdline({ "/", "?" }, {
 		mapping = cmp_map.preset.cmdline(),
