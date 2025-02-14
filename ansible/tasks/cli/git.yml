@@ -60,4 +60,3 @@
         extract_dir: "{{ ghr_tmp_dir }}/delta"
         copy_src: "{{ ghr_tmp_dir }}/tmp/delta/delta-{{ delta_version }}-{{ delta_architecture }}/delta"
         copy_dest: "{{ ghr_install_dir }}/delta"
-
