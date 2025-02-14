@@ -55,6 +55,7 @@ return {
 			{ "<leader>oh", builtin.oldfiles, desc = "Open history" },
 			{ "<leader>op", extensions.project.project, desc = "Select project" },
 			{ "<leader>rg", builtin.live_grep, desc = "RG in files" },
+			{ "<leader>/", builtin.current_buffer_fuzzy_find, desc = "grep in buffer" },
 		})
 	end,
 }
