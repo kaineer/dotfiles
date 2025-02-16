@@ -50,12 +50,14 @@ return {
 
 		wk.add({
 			{ "<leader>of", builtin.find_files, desc = "Open file" },
-			{ "<leader>og", builtin.git_files, desc = "Open from git" },
 			{ "<leader>od", builtin.diagnostics, desc = "Open diagnostics" },
 			{ "<leader>oh", builtin.oldfiles, desc = "Open history" },
 			{ "<leader>op", extensions.project.project, desc = "Select project" },
 			{ "<leader>rg", builtin.live_grep, desc = "RG in files" },
 			{ "<leader>/", builtin.current_buffer_fuzzy_find, desc = "grep in buffer" },
+			{ "<leader>ogf", builtin.git_files, desc = "Open git files" },
+			{ "<leader>ogb", builtin.git_branches, desc = "Open git branches" },
+			{ "<leader>ogs", builtin.git_stash, desc = "Open git stash" },
 		})
 	end,
 }
