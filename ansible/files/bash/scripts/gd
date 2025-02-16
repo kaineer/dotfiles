@@ -37,9 +37,9 @@ add_directory() {
   BIN=${2:-${EDITOR}}
   NAME=$(basename $DIR)
 
-  output_config | \
+  output_config |
     jq -M ".[\"$NAME\"].dir=\"$DIR\"|.[\"$NAME\"].bin=\"$BIN\"" \
-    > $CONFIG_FILE.new
+      >$CONFIG_FILE.new
 
   # Otherwise jq will remove all file content
   mv $CONFIG_FILE.new $CONFIG_FILE
@@ -52,7 +52,7 @@ edit_config_file() {
 
 create_config_file() {
   mkdir -p $(dirname $CONFIG_FILE)
-  echo "{}" > $CONFIG_FILE
+  echo "{}" >$CONFIG_FILE
 }
 
 ensure_config_file() {
@@ -85,11 +85,11 @@ fzf_directory() {
 ensure_config_file
 
 case "$1" in
-  "h"|"help") usage ;;
-  "e"|"edit") edit_config_file ;;
-  "f") output_config ;;
-  "."|"add") add_directory $PWD $2 ;;
-  "ls"|"list") list_titles ;;
-  "") fzf_directory ;;
-  *) fzf_directory $@ ;;
+"h" | "help") usage ;;
+"e" | "edit") edit_config_file ;;
+"f") output_config ;;
+"." | "add") add_directory $PWD $2 ;;
+"ls" | "list") list_titles ;;
+"") fzf_directory ;;
+*) fzf_directory $@ ;;
 esac
