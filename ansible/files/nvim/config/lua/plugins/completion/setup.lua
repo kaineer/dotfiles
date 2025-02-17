@@ -1,3 +1,5 @@
+local tmuxSource = require("plugins.completion.sources.tmux")
+
 return function()
 	local cmp = require("cmp")
 	local cmp_map = cmp.mapping
@@ -7,11 +9,18 @@ return function()
 	local forEach = cu.each
 	local tap = cu.tap
 
+	local custom_source = function(name)
+		if name == "tmux" then
+			return tmuxSource
+		end
+		return { name = name }
+	end
+
 	local as_names = function(...)
 		local args = { ... }
 		return tap({}, function(result)
 			forEach(args, function(value)
-				table.insert(result, { name = value })
+				table.insert(result, custom_source(value))
 			end)
 		end)
 	end
