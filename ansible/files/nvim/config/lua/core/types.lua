@@ -2,31 +2,17 @@
 
 -- check argument type
 
-local types = {}
-
-function types.fn(obj)
-  return type(obj) == "function"
+local hasType = function(typeName)
+	return function(obj)
+		return type(obj) == typeName
+	end
 end
 
-function types.number(obj)
-  return type(obj) == "number"
-end
-
-function types.string(obj)
-  return type(obj) == "string"
-end
-
-function types.none(obj)
-  return type(obj) == "nil"
-end
-
-function types.boolean(obj)
-  return type(obj) == "boolean"
-end
-
-function types.table(obj)
-  return type(obj) == "table"
-end
-
-return types
-
+return {
+	fn = hasType("function"),
+	boolean = hasType("boolean"),
+	number = hasType("number"),
+	string = hasType("string"),
+	table = hasType("table"),
+	none = hasType("nil"),
+}

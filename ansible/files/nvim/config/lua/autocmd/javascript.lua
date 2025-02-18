@@ -1,3 +1,5 @@
+-- autocmd/javascript.lua
+
 local bindings = {
 	{ "<c-r>", ":!node %<cr>" },
 	{ "<c-d>", ":lua vim.diagnostic.disable()<cr>" },

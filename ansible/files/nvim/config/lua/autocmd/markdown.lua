@@ -1,3 +1,5 @@
+-- autocmd/markdown.lua
+
 local bindings = {
 	{ "<a-s>", ":!tmux new-window 'slides %'<cr>" },
 }
