@@ -11,4 +11,5 @@ return requireAll("plugins.edit.", {
 	"trouble",
 	"emmet",
 	"snippets",
+	"kanji",
 })
