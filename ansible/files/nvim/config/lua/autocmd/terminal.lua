@@ -1,3 +1,5 @@
+-- autocmd/terminal.lua
+
 return {
 	name = "Terminal",
 	config = function(cmd)
