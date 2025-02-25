@@ -1,0 +1,26 @@
+- name: Mkdir for mocp configs
+  file:
+    path: "/home/{{ user.name }}/.moc/themes"
+    recurse: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    mode: "755"
+  with_items:
+    - themes
+    - pid
+
+- name: Link config files
+  file:
+    src: "{{ playbook_dir }}/files/mocp/{{ item.name }}"
+    dest: "/home/{{ user.name }}/.moc/{{ item.path }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: "link"
+  with_items:
+    - name: config
+      path: config
+    - name: keymap
+      path: keymap
+    - name: theme
+      path: "themes/theme"
