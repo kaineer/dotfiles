@@ -1,4 +1,4 @@
 #
-Keymap = /home/kaineer/.moc/keymap
-Theme = /home/kaineer/.moc/themes/theme
+Keymap = ${HOME}/.moc/keymap
+Theme = ${HOME}/.moc/themes/theme
 MOCDir = ~/.moc/pid
