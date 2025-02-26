@@ -1,17 +1,22 @@
 # @link: https://github.com/lipnitsk/mocp/blob/master/themes/darkdot_theme
 #
 background		= default	default
-frame			= white		default
-window_title		= white		default
+frame			= cyan		default
+window_title		= cyan	default
 directory		= blue		default	bold
 selected_directory	= black		cyan
 playlist		= white		default	bold
 selected_playlist	= black		cyan
 file			= white		default
 selected_file		= black		cyan
-marked_file		= white		default	bold
-marked_selected_file	= white		cyan	bold
+marked_file		= yellow		default
+marked_selected_file	= yellow cyan bold
+# Time length of file
 info			= white		default
+selected_info = black cyan
+marked_selected_info = yellow cyan bold
+marked_info = yellow default
+
 status			= white		default
 title			= white		default bold
 state			= white		default	bold
@@ -23,10 +28,10 @@ sound_parameters	= white		default bold
 legend			= white		default
 disabled		= black		default bold
 enabled			= white		default	bold
-empty_mixer_bar		= white		default
-filled_mixer_bar	= black		white
+empty_mixer_bar		= cyan		default
+filled_mixer_bar	= black		cyan
 empty_time_bar		= white		default
-filled_time_bar		= black		white
+filled_time_bar		= black		cyan
 entry			= white		default
 entry_title		= white		default
 error			= white		red	bold
