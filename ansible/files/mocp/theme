@@ -3,16 +3,16 @@
 background		= default	default
 frame			= cyan		default
 window_title		= cyan	default
-directory		= blue		default	bold
+directory		= cyan		default	bold
 selected_directory	= black		cyan
 playlist		= white		default	bold
 selected_playlist	= black		cyan
-file			= white		default
+file			= magenta		default
 selected_file		= black		cyan
 marked_file		= yellow		default
 marked_selected_file	= yellow cyan bold
 # Time length of file
-info			= white		default
+info			= magenta		default
 selected_info = black cyan
 marked_selected_info = yellow cyan bold
 marked_info = yellow default
