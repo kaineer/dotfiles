@@ -1,3 +1,5 @@
+-- core/options.lua
+
 local assign = require("core.utils").assign
 
 -- Options

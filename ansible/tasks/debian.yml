@@ -17,10 +17,10 @@
 
 - name: Create bin directory
   ansible.builtin.file:
-    owner: '{{ user.name }}'
-    group: '{{ user.name }}'
-    path: '/home/{{ user.name }}/bin'
-    state: 'directory'
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    path: "/home/{{ user.name }}/bin"
+    state: "directory"
 
 - include_tasks: ./wezterm.yml
 - include_tasks: ./ghostty.yml
@@ -37,4 +37,5 @@
 - include_tasks: ./cli/fzf.yml
 - include_tasks: ./cli/neovim.yml
 - include_tasks: ./cli/node.yml
+- include_tasks: ./media/mocp.yml
 - include_tasks: ./browsers/brave.yml
