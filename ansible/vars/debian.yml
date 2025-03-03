@@ -28,6 +28,7 @@ system_packages:
   - gpg
   - htop
   - inxi
+  - jq
   - lua5.1
   - luarocks
   - make
@@ -43,6 +44,7 @@ system_packages:
   - wget
   - zip
   - xxd
+  - xq
 
 obsolete_packages:
   - aisleriot

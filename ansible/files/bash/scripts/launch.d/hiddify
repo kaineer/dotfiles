@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export HIDDIFY_BINARY=$HOME/bin/hiddify
+
+start_or_activate_by_classname "$HIDDIFY_BINARY" "Hiddify"

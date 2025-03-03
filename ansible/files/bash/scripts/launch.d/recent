@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+list_recent_files() {
+  cat $HOME/.local/share/recently-used.xbel | \
+    $HOME/bin/xq -x "/xbel/bookmark/@href" | \
+    sed "s/file:\/\///"
+}
+
+FILE=$(list_recent_files | rofi -dmenu -p "recent files")
+
+if [[ "$FILE" != "" ]]; then
+  open $FILE
+fi

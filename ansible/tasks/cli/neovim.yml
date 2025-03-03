@@ -1,5 +1,4 @@
 ---
-
 - name: Mkdir for bin scripts
   file:
     path: "/home/{{ user.name }}/bin"
@@ -24,21 +23,9 @@
     nvim_repository: "https://github.com/neovim/neovim"
     ghr_install_dir: "/home/{{ user.name }}/bin"
     ghr_releases:
-    - url: "{{ nvim_repository }}/releases/download/v{{ nvim_version }}/nvim.appimage"
-      copy_src: "{{ ghr_tmp_dir }}/nvim.appimage"
-      copy_dest: "{{ ghr_install_dir}}/nvim"
-
-- name: Check if packer.nvim is installed
-  stat:
-    path: "/home/{{ user.name }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
-  register: "packer_directory"
-
-- name: Install packer.nvim
-  when: "not packer_directory.stat.exists"
-  become_user: "{{ user.name }}"
-  git:
-    repo: https://github.com/wbthomason/packer.nvim
-    dest: "/home/{{ user.name }}/.local/share/nvim/site/pack/packer/start/packer.nvim"
+      - url: "{{ nvim_repository }}/releases/download/v{{ nvim_version }}/nvim.appimage"
+        copy_src: "{{ ghr_tmp_dir }}/nvim.appimage"
+        copy_dest: "{{ ghr_install_dir}}/nvim"
 
 - name: Set neovim config link
   file:
