@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 list_recent_files() {
-  cat $HOME/.local/share/recently-used.xbel | \
-    $HOME/bin/xq -x "/xbel/bookmark/@href" | \
+  cat $HOME/.local/share/recently-used.xbel |
+    xq -x "/xbel/bookmark/@href" |
     sed "s/file:\/\///"
 }
 
