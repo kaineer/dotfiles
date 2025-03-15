@@ -1,6 +1,7 @@
 gui_packages:
   - baobab
   - dmenu
+  - gimp
   - gnome-text-editor
   - libnotify-bin
   - mediainfo

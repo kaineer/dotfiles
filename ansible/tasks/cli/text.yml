@@ -17,6 +17,7 @@
 
 - include_tasks: ./text/ripgrep.yml
 - include_tasks: ./text/fd.yml
+- include_tasks: ./text/jless.yml
 - include_tasks: ./text/eza.yml
 - include_tasks: ./text/bat.yml
 - include_tasks: ./text/hurl.yml

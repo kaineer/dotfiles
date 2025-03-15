@@ -1,0 +1,25 @@
+# https://github.com/PaulJuliusMartinez/jless/releases/download/v0.9.0/jless-v0.9.0-x86_64-unknown-linux-gnu.zip
+#
+# JSON viewer
+
+- name: Check if jless is installed
+  stat:
+    path: "/home/{{user.name}}/bin/jless"
+  register: "jless_binary"
+
+- name: Install jless release
+  when: "not jless_binary.stat.exists"
+  include_role:
+    name: "ansible-role-github-release"
+  vars:
+    owner: "{{user.name}}"
+    jless_version: "0.9.0"
+    jless_arch: "x86_64-unknown-linux-gnu"
+    jless_repo: "https://github.com/PaulJuliusMartinez/jless"
+    ghr_install_dir: "/home/{{user.name}}/bin"
+    ghr_releases:
+      - url: "{{jless_repo}}/releases/download/v{{jless_version}}/jless-v{{jless_version}}-{{jless_arch}}.zip"
+        owner: "{{user.name}}"
+        copy_src: "{{ghr_tmp_dir}}/jless"
+        copy_dest: "{{ghr_install_dir}}/jless"
+        extract_dir: ""

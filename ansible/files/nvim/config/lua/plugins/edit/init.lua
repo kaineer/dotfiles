@@ -7,7 +7,7 @@ return requireAll("plugins.edit.", {
 	"eyeliner", -- jump to symbol
 	"hurl",
 	"colorizer",
-	-- "todo",
+	"todo",
 	"trouble",
 	"emmet",
 	"snippets",
