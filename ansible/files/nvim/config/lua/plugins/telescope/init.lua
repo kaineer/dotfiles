@@ -19,8 +19,13 @@ return {
 		local each = require("core.utils").each
 		local load_extension = pkg.load_extension
 		local merge = require("core.utils").merge
+		local ignore_files = {
+			file_ignore_patterns = {
+				"node_modules",
+			},
+		}
 
-		local defaults = merge({}, theme, { borderchars = { " ", " " } })
+		local defaults = merge({}, theme, ignore_files, { borderchars = { " ", " " } })
 
 		local settings = {
 			defaults = defaults,

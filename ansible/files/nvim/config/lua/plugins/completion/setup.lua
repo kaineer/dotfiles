@@ -46,7 +46,7 @@ return function()
 			["<cr>"] = cmp_map.confirm({ select = true }),
 			["<c-j>"] = cmp_map.confirm({ select = true }),
 		},
-		sources = cmp_src(as_names("nvim_lsp", "snippets", "buffer", "path", "tmux"), as_names("buffer")),
+		sources = cmp_src(as_names("nvim_lsp", "vsnip", "buffer", "path", "tmux"), as_names("buffer")),
 		formatting = {
 			format = require("lspkind").cmp_format({
 				with_text = true,
