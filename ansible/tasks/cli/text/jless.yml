@@ -1,6 +1,7 @@
-# https://github.com/PaulJuliusMartinez/jless/releases/download/v0.9.0/jless-v0.9.0-x86_64-unknown-linux-gnu.zip
-#
 # JSON viewer
+#
+# @link: https://github.com/PaulJuliusMartinez/jless
+# @link: https://github.com/PaulJuliusMartinez/jless/releases/latest
 
 - name: Check if jless is installed
   stat:
