@@ -46,7 +46,7 @@
 - name: Set neovim snippets link
   file:
     src: "{{ playbook_dir }}/files/nvim/snippets/"
-    dest: "/home/{{ user.name }}/.vsnip"
+    dest: "/home/{{ user.name }}/.config/snippets"
     state: "link"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
