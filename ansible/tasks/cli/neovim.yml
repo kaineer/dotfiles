@@ -42,3 +42,11 @@
     state: link
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
+
+- name: Set neovim snippets link
+  file:
+    src: "{{ playbook_dir }}/files/nvim/snippets/"
+    dest: "/home/{{ user.name }}/.vsnip"
+    state: "link"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
