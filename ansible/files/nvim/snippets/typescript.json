@@ -1,0 +1,42 @@
+{
+  "store": {
+    "prefix": [
+      "store"
+    ],
+    "body": [
+      "import { combineReducers, configureStore } from '@reduxjs/toolkit';",
+      "",
+      "const reducer = combineReducers({",
+      "});",
+      "export const store = configureStore({",
+      "  reducer",
+      "});"
+    ],
+    "description": "Store index"
+  },
+  "slice": {
+    "prefix": "slice",
+    "body": [
+      "import { createSlice } from '@reduxjs/toolkit';",
+      "",
+      "interface ${1}Content {",
+      "}",
+      "",
+      "const initialState: ${1}Content = {}",
+      "",
+      "export const ${1}Slice = createSlice({",
+      "  name: '${1}',",
+      "  initialState,",
+      "  reducers: {},",
+      "})"
+    ],
+    "description": "Slice skeleton"
+  },
+  "sliceItem": {
+    "prefix": "sliceItem",
+    "body": [
+      "[${1}Slice.reducerPath]: ${1}Slice.reducer,"
+    ],
+    "description": "Slice item in store"
+  }
+}

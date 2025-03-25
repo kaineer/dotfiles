@@ -38,7 +38,7 @@ cmd open ${{
     text/*) $EDITOR $fx ;;
     image/*) eog -fw "$f" ;;
     audio/*) mplayer "$f" ;;
-    video/*) mm "$f" 2>&1 >/dev/null ;;
+    video/*) mplayer -fs "$f" 2>&1 >/dev/null ;;
     application/json) jl "$f" --mode line ;;
     # video/*) mplayer "$f" -fs ;;
     *) for f in $fx; do setsid $OPENER "$f" > /dev/null 2> /dev/null & done;;

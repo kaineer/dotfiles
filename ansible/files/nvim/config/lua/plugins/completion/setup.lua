@@ -46,7 +46,7 @@ return function()
 			["<cr>"] = cmp_map.confirm({ select = true }),
 			["<c-j>"] = cmp_map.confirm({ select = true }),
 		},
-		sources = cmp_src(as_names("nvim_lsp", "snippets", "buffer", "path", "tmux"), as_names("buffer")),
+		sources = cmp_src(as_names("nvim_lsp", "vsnip", "buffer", "path", "tmux"), as_names("buffer")),
 		formatting = {
 			format = require("lspkind").cmp_format({
 				with_text = true,
@@ -82,4 +82,6 @@ return function()
     imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
     smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
   ]])
+
+	vim.g.vsnip_snippet_dir = vim.fn.expand("~/.config/snippets/")
 end
