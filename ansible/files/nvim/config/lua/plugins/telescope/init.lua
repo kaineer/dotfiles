@@ -16,21 +16,28 @@ return {
 	config = function()
 		local theme = require("telescope.themes").get_ivy()
 		local pkg = require("telescope")
-		local each = require("core.utils").each
-		local load_extension = pkg.load_extension
-		local merge = require("core.utils").merge
+		local utils = require("core.utils")
+		local each = utils.each
+		local merge = utils.merge
+		local map = utils.map
 
-		local defaults = merge({}, theme, { borderchars = { " ", " " } })
+		local custom_defaults = {
+			file_ignore_patterns = { "node_modules" },
+			borderchars = { " ", " " },
+		}
+
+		local home = vim.fn.expand("~")
 
 		local settings = {
-			defaults = defaults,
+			defaults = merge({}, theme, custom_defaults),
 			extensions = {
 				project = {
-					base_dirs = {
-						{ path = "/home/kaineer/git", max_depth = 3 },
-						{ path = "/home/kaineer/devel/itc", max_depth = 3 },
-						{ path = "/home/kaineer/devel/kaineer", max_depth = 3 },
-					},
+					base_dirs = map({ "/git", "/devel/itc", "/devel/kaineer" }, function(partial)
+						return {
+							path = vim.fn.expand("~") .. partial,
+							max_depth = 3,
+						}
+					end),
 					theme = "ivy",
 				},
 				["ui-select"] = {
@@ -41,7 +48,7 @@ return {
 
 		pkg.setup(settings)
 
-		each({ "project", "ui-select" }, load_extension)
+		each({ "project", "ui-select" }, pkg.load_extension)
 
 		local builtin = require("telescope.builtin")
 		local extensions = pkg.extensions
