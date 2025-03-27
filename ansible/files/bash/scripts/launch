@@ -38,13 +38,14 @@ list_commands() {
 }
 
 case "$1" in
-  "ls"|"list")
-    list_commands ;;
-  "")
-    CMD=$(list_commands | rofi -dmenu)
-    [[ "$CMD" != "" ]] && . $LAUNCH_DIR/$CMD
-    ;;
-  *)
-    [ -f $LAUNCH_DIR/$1 ] && . $LAUNCH_DIR/$1
-    ;;
+"ls" | "list")
+  list_commands
+  ;;
+"")
+  CMD=$(list_commands | rofi -dmenu)
+  [[ "$CMD" != "" ]] && . $LAUNCH_DIR/$CMD
+  ;;
+*)
+  [ -f $LAUNCH_DIR/$1 ] && . $LAUNCH_DIR/$1
+  ;;
 esac

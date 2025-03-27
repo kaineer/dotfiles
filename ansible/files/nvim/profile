@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
 
-if [ -x "$HOME/bin/nvim" ]; then
-  EDITOR=${EDITOR:-nvim}
+EDITOR=${EDITOR:-vi}
 
-  e() {
-    if [[ "$1" == "" ]]; then
-      $EDITOR .
-    else
-      $EDITOR $@
-    fi
-  }
-fi
+e() {
+  if [[ "$1" == "" ]]; then
+    $EDITOR .
+  else
+    $EDITOR $@
+  fi
+}

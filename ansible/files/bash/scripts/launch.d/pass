@@ -3,11 +3,14 @@
 list_password_files() {
   cd $HOME/.password-store
   $HOME/bin/fd -e gpg | sed "s/\.gpg//; s/\.\///"
-  cd - > /dev/null
+  cd - >/dev/null
 }
 
 FILE=$(list_password_files | rofi -dmenu -matching fuzzy -p pass)
 
 if [[ "$FILE" != "" ]]; then
-  pass -c $FILE && notify-send -t 5000 "pass" "Copied ${FILE} to clipboard.\n\nWill clear in 45 seconds."
+  pass -c $FILE &&
+    notify-send -t 5000 \
+      "pass" \
+      "Copied ${FILE} to clipboard.\n\nWill clear in 45 seconds."
 fi
