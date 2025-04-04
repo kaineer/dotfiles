@@ -1,0 +1,13 @@
+{
+  "tsx json": {
+    "prefix": [
+      "tsx"
+    ],
+    "body": [
+      "{",
+      "\"classes\": {$0",
+      "}"
+    ],
+    "description": "TSX resources json"
+  }
+}

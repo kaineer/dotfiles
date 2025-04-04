@@ -1,0 +1,10 @@
+{
+  "component": {
+    "prefix": "component",
+    "body": [
+      "export const $1 = () => {",
+      "}"
+    ],
+    "description": "Component sceleton"
+  }
+}

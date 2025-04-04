@@ -76,6 +76,6 @@ __alt_ "t" "t" "list tmux actions, select and run"
 __alt_ "a" "t j" "list sessions and select"
 __alt_ "s" "serve" "serve directory"
 __alt_ ";" "kyo e" "edit current tasks"
-__alt_ "w" "wget $(xsel -b)" "download from copied link"
+__alt_ "w" "wget $\(xsel -b\)" "download from copied link"
 
 [[ "$(which nu)" != "" ]] && __alt_ "n" "nu" "start nushell"
