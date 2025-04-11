@@ -60,6 +60,7 @@ return {
 			{ "<leader>od", builtin.diagnostics, desc = "Open diagnostics" },
 			{ "<leader>oh", builtin.oldfiles, desc = "Open history" },
 			{ "<leader>op", extensions.project.project, desc = "Select project" },
+			{ "<leader>oq", builtin.quickfixhistory, desc = "Quickfix history" },
 			{ "<leader>rg", builtin.live_grep, desc = "RG in files" },
 			{ "<leader>/", builtin.current_buffer_fuzzy_find, desc = "grep in buffer" },
 			{ "<leader>ogf", builtin.git_files, desc = "Open git files" },
