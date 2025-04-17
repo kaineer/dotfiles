@@ -28,7 +28,7 @@ build_ssh_keys() {
   ssh-keygen -b 4096 -t rsa -f "$SSH_DIR/id_rsa" -N "" \
     -C "$USER@$HOSTNAME"
 
-  cat "$SSH_DIR/id_rsa.pub" >> "$SSH_DIR/authorized_keys"
+  cat "$SSH_DIR/id_rsa.pub" >>"$SSH_DIR/authorized_keys"
 
   chmod 600 "$SSH_DIR/authorized_keys"
 }
@@ -55,10 +55,16 @@ play_ansible_playbook() {
   VERBOSITY=""
   [[ "$DEBUG" == "true" ]] && VERBOSITY="-vvv"
 
+  EXTRA_VARS="$DOTFILES_DIR/ansible/vars/user.yml"
+  HOST_EXTRA_VARS="$DOTFILES_DIR/ansible/bars/usre/$HOSTNAME.yml"
+  if [ -f "$HOST_EXTRA_VARS" ]; then
+    EXTRA_VARS="$HOST_EXTRA_VARS"
+  fi
+
   sudo \
     LC_ALL="C.UTF-8" \
     ANSIBLE_ROLES_PATH="$ROLE_PATH:$ANSIBLE_ROLES_PATH" \
-    ansible-playbook $VERBOSITY local.yml
+    ansible-playbook $VERBOSITY -e @$EXTRA_VARS local.yml
 }
 
 restart_x_server() {
@@ -70,21 +76,21 @@ restart_x_server() {
   DN=$(basename ${DM})
 
   case "$(basename $DN)" in
-    "lightdm")
-      sudo systemctl restart lightdm
-      ;;
-    "GDM"|"gdm")
-      sudo systemctl restart gdm
-      ;;
-    "KDM"|"kdm")
-      sudo systemctl restart kdm
-      ;;
-    "MDM"|"mdm")
-      sudo systemctl restart mdm
-      ;;
-    *)
-      echo " [INFO ] Could not restart your display manager"
-      ;;
+  "lightdm")
+    sudo systemctl restart lightdm
+    ;;
+  "GDM" | "gdm")
+    sudo systemctl restart gdm
+    ;;
+  "KDM" | "kdm")
+    sudo systemctl restart kdm
+    ;;
+  "MDM" | "mdm")
+    sudo systemctl restart mdm
+    ;;
+  *)
+    echo " [INFO ] Could not restart your display manager"
+    ;;
   esac
 }
 
