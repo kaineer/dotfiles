@@ -2,6 +2,8 @@
 - hosts: localhost
   connection: local
   become: true
+  environment:
+    PRESERVED_USER: "{{ lookup('ansible.builtin.env', 'USER') }}"
 
   tasks:
     # --- variables
