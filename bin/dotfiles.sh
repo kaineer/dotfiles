@@ -56,7 +56,7 @@ play_ansible_playbook() {
   [[ "$DEBUG" == "true" ]] && VERBOSITY="-vvv"
 
   EXTRA_VARS="$DOTFILES_DIR/ansible/vars/user.yml"
-  HOST_EXTRA_VARS="$DOTFILES_DIR/ansible/bars/usre/$HOSTNAME.yml"
+  HOST_EXTRA_VARS="$DOTFILES_DIR/ansible/vars/user/$HOSTNAME.yml"
   if [ -f "$HOST_EXTRA_VARS" ]; then
     EXTRA_VARS="$HOST_EXTRA_VARS"
   fi
