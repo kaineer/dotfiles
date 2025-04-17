@@ -17,6 +17,16 @@ function M.each(tbl, fn)
 	end
 end
 
+function M.filter(tbl, fn)
+	local result = {}
+	for i, v in ipairs(tbl) do
+		if fn(v, i) then
+			table.insert(result, v)
+		end
+	end
+	return result
+end
+
 function M.map(tbl, fn)
 	local result = {}
 	for i, v in ipairs(tbl) do
