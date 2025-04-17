@@ -42,7 +42,6 @@ return {
 			extensions = {
 				project = {
 					base_dirs = map(base_dirs, function(partial)
-						print(partial)
 						return {
 							path = vim.fn.expand("~") .. partial,
 							max_depth = 3,
