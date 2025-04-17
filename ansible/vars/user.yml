@@ -1,4 +1,5 @@
 ---
 user:
-  name: kaineer
+  name: "{{ lookup('ansible.builtin.env', 'USER') }}"
+  home: "{{ lookup('ansible.builtin.env', 'HOME') }}"
   email: kaineer@gmail.com

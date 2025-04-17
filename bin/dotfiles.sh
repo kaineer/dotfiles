@@ -2,7 +2,7 @@
 
 set -e
 
-USER=kaineer
+USER=user
 HOME="/home/$USER"
 
 SSH_DIR="$HOME/.ssh"
