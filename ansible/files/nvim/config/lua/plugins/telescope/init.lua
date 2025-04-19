@@ -65,6 +65,7 @@ return {
 			{ "<leader>ogf", builtin.git_files, desc = "Open git files" },
 			{ "<leader>ogb", builtin.git_branches, desc = "Open git branches" },
 			{ "<leader>ogs", builtin.git_stash, desc = "Open git stash" },
+			{ "<leader>ogg", builtin.git_status, desc = "Open git status" },
 		})
 	end,
 }

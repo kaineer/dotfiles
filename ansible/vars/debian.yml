@@ -33,6 +33,7 @@ system_packages:
   - luarocks
   - make
   - neofetch
+  - network-manager-openvpn
   - pass
   - python3-pip
   - python3-pip
