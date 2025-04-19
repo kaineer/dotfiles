@@ -20,19 +20,28 @@ return {
 		local each = utils.each
 		local merge = utils.merge
 		local map = utils.map
+		local filter = utils.filter
 
 		local custom_defaults = {
 			file_ignore_patterns = { "node_modules" },
 			borderchars = { " ", " " },
 		}
 
-		local home = vim.fn.expand("~")
+		local base_dirs = filter({
+			"/git",
+			"/devel/kaineer",
+			"/devel/htmlacademy",
+			"/devel/itc",
+		}, function(dir)
+			local path = vim.fn.expand("~") .. dir
+			return vim.fn.isdirectory(path) ~= 0
+		end)
 
 		local settings = {
 			defaults = merge({}, theme, custom_defaults),
 			extensions = {
 				project = {
-					base_dirs = map({ "/git", "/devel/itc", "/devel/kaineer" }, function(partial)
+					base_dirs = map(base_dirs, function(partial)
 						return {
 							path = vim.fn.expand("~") .. partial,
 							max_depth = 3,
@@ -60,6 +69,7 @@ return {
 			{ "<leader>od", builtin.diagnostics, desc = "Open diagnostics" },
 			{ "<leader>oh", builtin.oldfiles, desc = "Open history" },
 			{ "<leader>op", extensions.project.project, desc = "Select project" },
+			{ "<leader>oq", builtin.quickfixhistory, desc = "Quickfix history" },
 			{ "<leader>rg", builtin.live_grep, desc = "RG in files" },
 			{ "<leader>/", builtin.current_buffer_fuzzy_find, desc = "grep in buffer" },
 			{ "<leader>ogf", builtin.git_files, desc = "Open git files" },
