@@ -1,9 +1,9 @@
 #!/bin/bash
 
-set -e
+USER=kaineer
+HOME=/home/$USER
 
-USER=user
-HOME="/home/$USER"
+set -e
 
 SSH_DIR="$HOME/.ssh"
 DOTFILES_DIR="$HOME/git/config/dotfiles"
