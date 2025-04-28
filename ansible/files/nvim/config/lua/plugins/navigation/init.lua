@@ -1,10 +1,12 @@
 -- plugins/navigation/
 
-local requireAll = require('core.utils').requireWithPrefix
+local requireAll = require("core.utils").requireWithPrefix
 
-return requireAll('plugins.navigation.', {
-  'dirvish', 'tmux',
-  'which-key',
-  'web-icons',
-  'projectionist',
+return requireAll("plugins.navigation.", {
+	"dirvish",
+	-- "lir",
+	"tmux",
+	"which-key",
+	"web-icons",
+	"projectionist",
 })
