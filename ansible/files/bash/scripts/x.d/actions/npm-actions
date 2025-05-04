@@ -39,15 +39,16 @@ __list_actions() {
 
 __run_action() {
   case "$1" in
-    "init") npm init --yes && $EDITOR package.json ;;
-    "start"|"install"|"publish"|"test") npm $1 ;;
-    "purge") rm -rf node_modules ;;
-    "version-patch") npm version patch ;;
-    *) npm run $1 ;;
+  "init") npm init --yes && $EDITOR package.json ;;
+  "install") npm --force install ;;
+  "start" | "publish" | "test") npm $1 ;;
+  "purge") rm -rf node_modules ;;
+  "version-patch") npm version patch ;;
+  *) npm run $1 ;;
   esac
 }
 
 case "$1" in
-  "list") __list_actions ;;
-  *) __run_action $1 ;;
+"list") __list_actions ;;
+*) __run_action $1 ;;
 esac
