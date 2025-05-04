@@ -1,8 +1,6 @@
 {
   "store": {
-    "prefix": [
-      "store"
-    ],
+    "prefix": ["store"],
     "body": [
       "import { combineReducers, configureStore } from '@reduxjs/toolkit';",
       "",
@@ -34,9 +32,42 @@
   },
   "sliceItem": {
     "prefix": "sliceItem",
-    "body": [
-      "[${1}Slice.reducerPath]: ${1}Slice.reducer,"
-    ],
+    "body": ["[${1}Slice.reducerPath]: ${1}Slice.reducer,"],
     "description": "Slice item in store"
+  },
+  "component": {
+    "prefix": "component",
+    "description": "Component skeleton",
+    "body": [
+      "import classes from './${1}.module.css'",
+      "",
+      "interface Props {",
+      "}",
+      "",
+      "export const $1 = () => {",
+      "  return (",
+      "  );",
+      "}"
+    ]
+  },
+  "storybook": {
+    "prefix": "storybook",
+    "description": "Storybook skeleton",
+    "body": [
+      "import type { Meta, StoryObj } from '@storybook/react';",
+      "import { $1 } from './$1';",
+      "",
+      "const meta: Meta<typeof $1> = {",
+      "  title: '$2',",
+      "  component: $1,",
+      "  tags: ['autodocs'],",
+      "  parameters: {",
+      "  }",
+      "}",
+      "",
+      "export default meta;",
+      "",
+      "type Story = StoryObj<typeof $1>;"
+    ]
   }
 }

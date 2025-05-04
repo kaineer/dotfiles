@@ -96,6 +96,7 @@ map.normal({
 
 map.visual({
 	{ ";", 'y<c-[>:!browse "https://translate.google.com/?sl=ja&tl=ru&text=<c-r>""<cr>' },
+	{ "<m-n>", ":norm " },
 })
 
 map.normal({
