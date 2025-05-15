@@ -43,6 +43,7 @@ system_packages:
   - unzip
   - wget
   - zip
+  - yq
   - xsel
   - xxd
   - xq
