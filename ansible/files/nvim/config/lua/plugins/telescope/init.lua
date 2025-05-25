@@ -69,6 +69,7 @@ return {
 			{ "<leader>od", builtin.diagnostics, desc = "Open diagnostics" },
 			{ "<leader>ob", builtin.buffers, desc = "Open buffers" },
 			{ "<leader>oh", builtin.oldfiles, desc = "Open history" },
+			{ "<leader>om", builtin.marks, desc = "Open marks" },
 			{ "<leader>op", extensions.project.project, desc = "Select project" },
 			{ "<leader>oq", builtin.quickfixhistory, desc = "Quickfix history" },
 			{ "<leader>rg", builtin.live_grep, desc = "RG in files" },
