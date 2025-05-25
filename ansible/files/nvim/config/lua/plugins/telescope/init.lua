@@ -67,6 +67,7 @@ return {
 		wk.add({
 			{ "<leader>of", builtin.find_files, desc = "Open file" },
 			{ "<leader>od", builtin.diagnostics, desc = "Open diagnostics" },
+			{ "<leader>ob", builtin.buffers, desc = "Open buffers" },
 			{ "<leader>oh", builtin.oldfiles, desc = "Open history" },
 			{ "<leader>op", extensions.project.project, desc = "Select project" },
 			{ "<leader>oq", builtin.quickfixhistory, desc = "Quickfix history" },
