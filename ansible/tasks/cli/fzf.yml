@@ -30,10 +30,10 @@
     fzf_architecture: "linux_amd64"
     ghr_install_dir: "/home/{{ user.name }}/bin"
     ghr_releases:
-    - url: "{{ fzf_repository }}/releases/download/v{{ fzf_version }}/fzf-{{ fzf_version }}-{{ fzf_architecture }}.tar.gz"
-      copy_src: "{{ ghr_tmp_dir }}/fzf"
-      copy_dest: "{{ ghr_install_dir}}/fzf"
-      extract_dir: ""
+      - url: "{{ fzf_repository }}/releases/download/v{{ fzf_version }}/fzf-{{ fzf_version }}-{{ fzf_architecture }}.tar.gz"
+        copy_src: "{{ ghr_tmp_dir }}/fzf"
+        copy_dest: "{{ ghr_install_dir}}/fzf"
+        extract_dir: ""
 
 - name: Create config dir
   file:
@@ -51,4 +51,3 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     state: "link"
-

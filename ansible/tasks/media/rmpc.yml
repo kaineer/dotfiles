@@ -1,0 +1,31 @@
+# @link: https://github.com/mierak/rmpc/releases/download/v0.8.0/rmpc-v0.8.0-x86_64-unknown-linux-gnu.tar.gz
+
+- name: Mkdir for bin scripts
+  file:
+    path: "/home/{{ user.name }}/bin"
+    recurse: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    mode: "755"
+
+- name: Check if rmpc is installed
+  stat:
+    path: "/home/{{user.name}}/bin/rmpc"
+  register: "rmpc_binary"
+
+- name: Install rmpc as github release
+  when: "not rmpc_binary.stat.exists"
+  include_role:
+    name: "ansible-role-github-release"
+  vars:
+    owner: "{{ user.name }}"
+    rmpc_version: "0.8.0"
+    rmpc_repository: "https://github.com/mierak/rmpc"
+    rmpc_architecture: "x86_64-unknown-linux-gnu"
+    ghr_install_dir: "/home/{{ user.name }}/bin"
+    ghr_releases:
+      - url: "{{ rmpc_repository }}/releases/download/v{{ rmpc_version }}/rmpc-v{{rmpc_version}}-{{rmpc_architecture}}.tar.gz"
+        copy_src: "{{ ghr_tmp_dir }}/rmpc"
+        copy_dest: "{{ ghr_install_dir }}/rmpc"
+        extract_dir: ""
