@@ -1,0 +1,10 @@
+#!/bin/bash
+
+EDITOR=${EDITOR:-vi}
+FILE=$HOME/bin/$1
+
+if [ -f $FILE ]; then
+  nvim $FILE
+else
+  echo " * File $FILE not found"
+fi

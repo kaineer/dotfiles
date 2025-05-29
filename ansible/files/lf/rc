@@ -40,6 +40,7 @@ cmd open ${{
     audio/*) mplayer "$f" ;;
     video/*) mplayer -fs "$f" 2>&1 >/dev/null ;;
     application/json) jl "$f" --mode line ;;
+    application/pdf) zathura "$f" ;;
     # video/*) mplayer "$f" -fs ;;
     *) for f in $fx; do setsid $OPENER "$f" > /dev/null 2> /dev/null & done;;
   esac
