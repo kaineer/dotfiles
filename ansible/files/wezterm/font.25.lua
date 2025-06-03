@@ -8,8 +8,7 @@ return function(config, wezterm)
   -- $ wezterm ls-fonts --list-system
   --
   config.font = wezterm.font_with_fallback({
-    "FiraCode Nerd Font",   -- firacode, it is more compact
-    "GitLab Mono",          -- gitlab eyecandy
+    "FiraCode Nerd Font", -- firacode, it is more compact
+    "GitLab Mono", -- gitlab eyecandy
   })
 end
-

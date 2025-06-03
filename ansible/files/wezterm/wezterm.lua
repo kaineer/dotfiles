@@ -7,13 +7,13 @@ local wezterm = require("wezterm")
 local config = require("./config")(wezterm)
 
 local files = {
-  "options",        -- options
+  "options", -- options
   "ligature",
   "shell",
-  "color_scheme",   -- nord color scheme
-  "font",           -- fira code nerd
-  "hyperlink",      -- custom hyperlinks
-  "fullscreen",     -- open wezterm in fullscreen mode
+  "color_scheme", -- nord color scheme
+  "font", -- fira code nerd
+  "hyperlink", -- custom hyperlinks
+  "fullscreen", -- open wezterm in fullscreen mode
 }
 
 for _, file in ipairs(files) do
