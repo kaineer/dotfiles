@@ -1,0 +1,4 @@
+#!/bin/bash
+
+COLOR=$(nord lsn | fzf -dmenu | sed "s/^.*: //")
+echo "$COLOR" | xsel -b
