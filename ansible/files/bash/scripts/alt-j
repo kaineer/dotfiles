@@ -1,0 +1,7 @@
+#!/bin/bash
+
+ITEM=$(echo -ne "nc\nmocp\nax f\n" | fzf)
+
+if [[ "$ITEM" != "" ]]; then
+  eval "$ITEM"
+fi
