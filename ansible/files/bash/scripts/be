@@ -1,10 +1,50 @@
 #!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: edit script from "$HOME/bin"
+#
+# Dependencies:
+#   * EDITOR env variable
+#   * fzf - [fuzzy finder](https://github.com/junegunn/fzf)
+#
+# State: actively used
+#
 
+BINDIR="$HOME/bin"
 EDITOR=${EDITOR:-vi}
-FILE=$HOME/bin/$1
 
-if [ -f $FILE ]; then
-  nvim $FILE
-else
-  echo " * File $FILE not found"
-fi
+edit_file() {
+  [[ "$FILENAME" != "" ]] && $EDITOR $FILENAME
+}
+
+edit_and_make_executable() {
+  edit_file
+  [ -f $FILENAME ] && chmod 755 $FILENAME
+}
+
+select_and_edit_script() {
+  cd "$BINDIR"
+  FILENAME=$(ls -1 | fzf)
+  edit_file
+  cd - >/dev/null
+}
+
+case "$1" in
+"") select_and_edit_script ;;
+"rm" | "remove")
+  if [[ "$2" != "" ]]; then
+    rm ~/bin/$2
+  else
+    echo " $ be rm <script_name> # remove script"
+  fi
+  ;;
+*)
+  FILENAME="$BINDIR/$1"
+
+  [ ! -f $FILENAME ] && edit_and_make_executable || edit_file
+  ;;
+esac
