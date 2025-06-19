@@ -4,6 +4,7 @@ list_commands() {
   echo "nc      | ctrl+i"
   echo "mocp    | ctrl+o"
   echo "ax f    | alt+a"
+  echo "ax sync"
 }
 
 ITEM=$(list_commands | fzf | sed "s/|.*$//")
