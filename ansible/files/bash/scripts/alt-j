@@ -1,6 +1,12 @@
 #!/bin/bash
 
-ITEM=$(echo -ne "nc\nmocp\nax f\n" | fzf)
+list_commands() {
+  echo "nc      | ctrl+i"
+  echo "mocp    | ctrl+o"
+  echo "ax f    | alt+a"
+}
+
+ITEM=$(list_commands | fzf | sed "s/|.*$//")
 
 if [[ "$ITEM" != "" ]]; then
   eval "$ITEM"
