@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [[ "$TMUX" == "" ]]; then
+  x $@
+else
+  tmux display-popup -T$PWD x $@
+fi
