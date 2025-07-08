@@ -1,10 +1,12 @@
 #!/bin/bash
 
 list_commands() {
-  echo "nc      | ctrl+i"
-  echo "mocp    | ctrl+o"
-  echo "ax f    | alt+a"
+  echo "nc      | ctrl+p"
+  echo "mocp    | ctrl+i"
   echo "gd conf | ctrl+o"
+  echo "x       | ctrl+x"
+  echo "cfg run | ctrl+c"
+  echo "ax f    | alt+a"
   echo "ax sync"
 }
 
