@@ -1,0 +1,100 @@
+#!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: runs npm/pnpm/yarn
+#
+# Dependencies:
+#   $ROOT/.pm file
+
+usage() {
+  clear
+  echo ":: Package manager shortcut"
+  echo ""
+  echo " $ pm init              # create package.json"
+  echo " ------------------------------------------------------"
+  echo " $ pm h[elp]            # show this help"
+  echo " $ pm ri|reinstall      # remove node_modules, $PM install"
+  echo " $ pm use npm|pnpm|yarn # choose package manager"
+  echo " $ pm ver[sion]         # select version"
+  echo "                        #   and put into .node-version"
+  echo " $ pm ls                # list package managers"
+  echo " $ pm [anything]        # $PM [anything]"
+}
+
+if [ ! -f "$PWD/package.json" ]; then
+  if [[ "$1" == "init" ]]; then
+    npm init --yes
+  elif [[ "$1" != "h" ]]; then
+    echo " ! pm command is available only in package directory"
+    exit
+  fi
+fi
+
+PM="npm"
+LCFGFILE="$PWD/.pm"
+
+if [ -f "$LCFGFILE" ]; then
+  PM=$(cat "$LCFGFILE")
+fi
+
+set_node_version() {
+  fnm use "$1"
+  node --version >"$PWD/.node-version"
+}
+
+use_package_manager() {
+  case "$1" in
+  "npm" | "pnpm" | "yarn")
+    echo "$1" >"$LCFGFILE"
+    echo " * Set pm to $1"
+    ;;
+  "")
+    N=$(pm ls | fzf)
+    pm use "$N"
+    ;;
+  *) ;;
+  esac
+}
+
+list_package_managers() {
+  [[ "$(which npm)" != "" ]] && echo "npm"
+  [[ "$(which pnpm)" != "" ]] && echo "pnpm"
+  [[ "$(which yarn)" != "" ]] && echo "yarn"
+}
+
+display_info() {
+  echo "Name: $(cat package.json | jq -r .name)"
+  [ -f ./.node-version ] && echo "Node: $(cat ./.node-version)" || echo " > run «pm ver 20» for example"
+  [ -f ./.pm ] && echo "  Pm: $(cat ./.pm)" || echo " > run «pm use npm» for example"
+}
+
+case "$1" in
+"ri" | "reinstall")
+  rm -rf node_modules
+  $PM install --force
+  ;;
+"" | "h" | "help")
+  usage | bat -p -lsh
+  ;;
+"use")
+  shift
+  use_package_manager $@
+  ;;
+"ver" | "version")
+  shift
+  set_node_version "$@"
+  ;;
+"info")
+  display_info
+  ;;
+"ls" | "list")
+  list_package_managers
+  ;;
+*)
+  $PM "$@"
+  ;;
+esac

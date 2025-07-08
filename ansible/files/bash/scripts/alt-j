@@ -4,6 +4,7 @@ list_commands() {
   echo "nc      | ctrl+i"
   echo "mocp    | ctrl+o"
   echo "ax f    | alt+a"
+  echo "gd conf | ctrl+o"
   echo "ax sync"
 }
 
