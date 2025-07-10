@@ -20,7 +20,7 @@
   vars:
     owner: "{{user.name}}"
     ytdl_repo: "https://github.com/yt-dlp/yt-dlp"
-    ytdl_version: "2025.04.30"
+    ytdl_version: "2025.06.30"
     ghr_install_dir: "/home/{{user.name}}/bin/releases"
     ghr_releases:
       - url: "{{ytdl_repo}}/releases/download/{{ytdl_version}}/yt-dlp_linux"

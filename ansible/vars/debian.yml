@@ -17,6 +17,11 @@ gui_packages:
   - zathura
   - ffmpeg
 
+awesome_packages:
+  - awesome
+  - dunst
+  - arandr
+
 system_packages:
   - age
   - curl
@@ -48,6 +53,8 @@ system_packages:
   - xxd
   - xq
 
+# Remove games and another obsolete gui packages
+#
 obsolete_packages:
   - aisleriot
   - gnome-2048

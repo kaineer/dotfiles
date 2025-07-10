@@ -10,6 +10,12 @@
     state: "present"
   when: "ansible_nodename in gui_workstations"
 
+- name: Install awesome packages
+  package:
+    name: "{{ awesome_packages }}"
+    state: "present"
+  when: "ansible_nodename in awesome_workstations"
+
 - name: Remove unnecessary packages
   package:
     name: "{{ obsolete_packages }}"

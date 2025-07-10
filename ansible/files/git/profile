@@ -9,8 +9,8 @@
 [[ "$1" != "-i" ]] && return
 
 git_current_branch() {
-  git_list_branches | \
-    grep '*' | \
+  git_list_branches |
+    grep '*' |
     cut -f2 -d" "
 }
 
@@ -19,7 +19,7 @@ git_list_branches() {
 }
 
 git_list_branches_but_current() {
-  git_list_branches | \
+  git_list_branches |
     grep -v '*' | cut -c3-
 }
 
@@ -43,6 +43,10 @@ add() {
 
 ci() {
   git commit "$@"
+}
+
+cia() {
+  git commit --amend
 }
 
 git_co_reverse_changes() {
@@ -78,9 +82,9 @@ git_co_branch() {
 
 co() {
   case "$1" in
-    "--") git_co_reverse_changes $@ ;;
-    "-b") git_co_new_branch $@ ;;
-    *)    git_co_branch $@ ;;
+  "--") git_co_reverse_changes $@ ;;
+  "-b") git_co_new_branch $@ ;;
+  *) git_co_branch $@ ;;
   esac
 }
 

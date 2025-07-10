@@ -7,4 +7,5 @@ return requireAll("plugins.git.", {
   -- "gitlab",
   "messenger",
   "gist2",
+  "gh",
 })
