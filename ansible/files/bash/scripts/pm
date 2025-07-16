@@ -77,6 +77,10 @@ case "$1" in
   rm -rf node_modules
   $PM install --force
   ;;
+"harakiri" | "clean")
+  rm -rf node_modules
+  rm -rf dist
+  ;;
 "" | "h" | "help")
   usage | bat -p -lsh
   ;;
