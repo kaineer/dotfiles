@@ -46,33 +46,44 @@ list_in_bin() {
   fi
 }
 
-case "$1" in
-  "reinit")
-    rm ./.envrc
-    $0 init
-    ;;
-  "init")
-    mkdir -p bin
-    [ ! -f ./.envrc ] && echo_envrc >./.envrc
-    direnv allow .
+_usage() {
+  echo " $ $0 reinit -- init project environment again"
+  echo " $ $0 init -- create bin dir etc"
+  echo " $ $0 ls -- list created scripts"
+  echo " $ $0 e[dit] -- edit .envrc"
+  echo " $ $0 [scriptname] -- create/edit a script"
+}
 
-    [[ "$DEBUG" == "true" ]] && echo_envrc
-    ;;
-  "erc") # FOR DEBUGGING
+case "$1" in
+"reinit")
+  rm ./.envrc
+  $0 init
+  ;;
+"init")
+  mkdir -p bin
+  [ ! -f ./.envrc ] && echo_envrc >./.envrc
+  direnv allow .
+
+  [[ "$DEBUG" == "true" ]] && echo_envrc
+  ;;
+"erc") # FOR DEBUGGING
+  echo_envrc
+  ;;
+"e" | "edit")
+  $EDITOR ./.envrc
+  ;;
+"ls" | "list")
+  shift
+  list_in_bin
+  ;;
+"h" | "help")
+  _usage
+  ;;
+*)
+  if [[ "$1" != "" ]]; then
+    edit_script $1
+  else
     echo_envrc
-    ;;
-  "e"|"edit")
-    $EDITOR ./.envrc
-    ;;
-  "ls"|"list")
-    shift
-    list_in_bin
-    ;;
-  *)
-    if [[ "$1" != "" ]]; then
-      edit_script $1
-    else
-      echo_envrc
-    fi
-    ;;
+  fi
+  ;;
 esac
