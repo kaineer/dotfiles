@@ -15,6 +15,7 @@
 ## bootstrap
 BIN=$(readlink -f $0)
 DIR=$(dirname $BIN)
+BASE=$(basename $BIN)
 ## bootstrap
 
 echo_envrc() {
@@ -47,11 +48,11 @@ list_in_bin() {
 }
 
 _usage() {
-  echo " $ $0 reinit -- init project environment again"
-  echo " $ $0 init -- create bin dir etc"
-  echo " $ $0 ls -- list created scripts"
-  echo " $ $0 e[dit] -- edit .envrc"
-  echo " $ $0 [scriptname] -- create/edit a script"
+  echo " $ $BASE reinit -- init project environment again"
+  echo " $ $BASE init -- create bin dir etc"
+  echo " $ $BASE ls -- list created scripts"
+  echo " $ $BASE e[dit] -- edit .envrc"
+  echo " $ $BASE [scriptname] -- create/edit a script"
 }
 
 case "$1" in
