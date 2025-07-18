@@ -33,6 +33,7 @@ system_packages:
   - htop
   - inxi
   - jq
+  - keychain
   - lua5.1
   - luarocks
   - make
