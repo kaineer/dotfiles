@@ -1,3 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+[[ "$1" != "-i" ]] && return
+
+# NOTE: needs keychain, but it should be installed
+#   from ansible task
 
 eval "$(keychain --quiet --eval id_rsa)"
