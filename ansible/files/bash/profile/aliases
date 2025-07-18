@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+[[ "$1" != "-i" ]] && return
+
 clip_aliases() {
   alias clip='xsel -b'
 }

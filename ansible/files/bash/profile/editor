@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+[[ "$1" != "-i" ]] && return
+
 if [ -x "$(command -v nvim)" ]; then
   export EDITOR=nvim
 elif [ -x "$(command -v vi)" ]; then

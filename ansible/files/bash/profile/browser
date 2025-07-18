@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
 
+[[ "$1" != "-i" ]] && return
+
 export BROWSER=/usr/bin/brave-browser
 export BROWSER_CLASS="brave-browser"

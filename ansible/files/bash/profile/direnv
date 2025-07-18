@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
+[[ "$1" != "-i" ]] && return
+
 [ -x "$(command -v direnv)" ] && eval "$(direnv hook bash)"
