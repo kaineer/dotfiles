@@ -21,6 +21,7 @@ usage() {
   echo " $ pm use npm|pnpm|yarn # choose package manager"
   echo " $ pm ver[sion]         # select version"
   echo "                        #   and put into .node-version"
+  echo " $ pm clean             # remove dist and node_modules dirs"
   echo " $ pm ls                # list package managers"
   echo " $ pm [anything]        # $PM [anything]"
 }
