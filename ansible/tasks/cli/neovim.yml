@@ -19,7 +19,7 @@
     name: "ansible-role-github-release"
   vars:
     owner: "{{ user.name }}"
-    nvim_version: "0.11.2"
+    nvim_version: "0.11.3"
     nvim_arch: "linux-x86_64"
     nvim_repository: "https://github.com/neovim/neovim"
     ghr_install_dir: "/home/{{ user.name }}/bin"
