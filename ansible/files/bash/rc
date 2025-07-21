@@ -3,6 +3,11 @@
 # for examples
 
 # tag: config-profile
+#
+# NOTE: не забываем указывать в скриптах,
+#  для какого режима их лучше грузить - для интерактивного
+#  или неинтерактивного, чтобы скрипт не грузился два раза
+#
 DIR="$HOME/.config/profile.d"
 [ ! -d "$DIR" ] && mkdir -p "$DIR"
 
@@ -15,13 +20,16 @@ done
 # tag: /config-profile
 
 # Build path
-PATH="$HOME/bin:$PATH"
+ALREADY_ADDED_COUNT=$(echo $PATH | tr ':' '\n' | grep "$HOME/bin" | wc -l)
+if [[ "$ALREADY_ADDED_COUNT" == "0" ]]; then
+  PATH="$HOME/bin:$PATH"
+fi
 
 # If not running interactively, don't do anything
 case $- in
-    *i*) ;;
-    *I*) ;;
-      *) return;;
+*i*) ;;
+*I*) ;;
+*) return ;;
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -50,7 +58,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# tag: config-profile-interactive
+# tag: /config-profile
 for SRC in $PROFILE_ITEMS; do
   [[ "$DEBUG" == "true" ]] && echo " [DEBUG] Loading ${SRC}.."
   source $SRC -i
