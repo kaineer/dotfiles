@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+### NOTE: this line means we should not load fnm
+###   for non-interactive shell
 [[ "$1" != "-i" ]] && return
 
 export FNM_PATH=$HOME/.fnm

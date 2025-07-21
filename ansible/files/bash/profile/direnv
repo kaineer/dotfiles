@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
-[[ "$1" != "-i" ]] && return
+### NOTE: this line means we should not load fzf
+###   for interactive shell
+###   (because it will be already loaded for non-interactive one)
+###
+[[ "$1" == "-i" ]] && return
 
 [ -x "$(command -v direnv)" ] && eval "$(direnv hook bash)"

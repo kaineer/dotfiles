@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+### NOTE: this line means we should not load fzf
+###   for non-interactive shell
 [[ "$1" != "-i" ]] && return
 
 export LS_COLORS=$(vivid generate nord)

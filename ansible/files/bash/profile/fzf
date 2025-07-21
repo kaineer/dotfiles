@@ -4,6 +4,8 @@
 # * Nord theme: https://www.nordtheme.com/
 #
 
+### NOTE: this line means we should not load fzf
+###   for non-interactive shell
 [[ "$1" != "-i" ]] && return
 
 eval "$(fzf --bash)"

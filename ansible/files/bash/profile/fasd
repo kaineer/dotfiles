@@ -2,6 +2,8 @@
 
 # @link: https://github.com/clvv/fasd
 
+### NOTE: this line means we should not load fasd
+###   for non-interactive shell
 [[ "$1" != "-i" ]] && return
 
 eval "$(fasd --init posix-alias bash-hook)"
