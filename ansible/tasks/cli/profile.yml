@@ -22,5 +22,6 @@
     - fasd
     - fzf
     - node
+    - path
     - ssh
     - vivid

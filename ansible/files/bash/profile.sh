@@ -18,11 +18,8 @@ fi
 
 # set PATH so it includes user's private bin if it exists
 # Build path
-ALREADY_ADDED_COUNT=$(echo $PATH | tr ':' '\n' | grep "$HOME/bin" | wc -l)
-if [[ "$ALREADY_ADDED_COUNT" == "0" ]]; then
-  if [ -d "$HOME/bin" ]; then
-    PATH="$HOME/bin:$PATH"
-  fi
+if [ -d "$HOME/bin" ]; then
+  PATH="$HOME/bin:$PATH"
 fi
 
 # set PATH so it includes user's private bin if it exists
