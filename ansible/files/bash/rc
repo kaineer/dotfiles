@@ -14,7 +14,7 @@ DIR="$HOME/.config/profile.d"
 PROFILE_ITEMS=$(ls -1 $DIR/* 2>/dev/null)
 
 for SRC in $PROFILE_ITEMS; do
-  [[ "$DEBUG" == "true" ]] && echo " [DEBUG] Non-interactive ${SRC}.." && date +%N
+  [[ "$DEBUG" == "true" ]] && echo " [DEBUG] Non-interactive ${SRC}.."
   source $SRC
 done
 # tag: /config-profile
@@ -60,7 +60,7 @@ fi
 
 # tag: /config-profile
 for SRC in $PROFILE_ITEMS; do
-  [[ "$DEBUG" == "true" ]] && echo " [DEBUG] Interactive ${SRC}.." && date +%N
+  [[ "$DEBUG" == "true" ]] && echo " [DEBUG] Interactive ${SRC}.."
   source $SRC -i
 done
 # tag: /config-profile
