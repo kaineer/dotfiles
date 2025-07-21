@@ -4,3 +4,6 @@ go = o
 
 menu_up = k
 menu_down = j
+
+quit_client = q escape
+quit = ^q
