@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+COUNT="${1:-1}"
+jq -r .[].name | shuf -n${COUNT} | sed "s/^/style of /;s/$/,/"

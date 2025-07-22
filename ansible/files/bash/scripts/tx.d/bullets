@@ -1,0 +1,3 @@
+# Just add bullets before lines
+
+sed "s/^/ * /"

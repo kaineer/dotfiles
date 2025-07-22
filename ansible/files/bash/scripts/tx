@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: text filters and mappers
+#
+
+## bootstrap
+export BIN=$(readlink -f $0)
+export DIR=$(dirname $BIN)
+export SCRIPTS_DIR="$DIR/tx.d"
+export EDITOR=${EDITOR:-vi}
+[ -x $HOME/bin/nvim ] && EDITOR=$HOME/bin/nvim
+## bootstrap
+
+case "$1" in
+  "ls")
+    cd $SCRIPTS_DIR && ls -1 && cd - >/dev/null 2>&1
+    ;;
+  "rm")
+    rm -f $SCRIPTS_DIR/$2
+    ;;
+  "e"|"edit")
+    [[ "$2" != "" ]] && $EDITOR $SCRIPTS_DIR/$2 || echo " [ERROR] Specify filter name"
+    ;;
+  *)
+    NAME=$1
+    shift && source $SCRIPTS_DIR/$NAME $@
+    ;;
+esac
