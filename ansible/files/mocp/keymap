@@ -1,4 +1,5 @@
-#
+# MOCP keymap
+# @link: https://github.com/gokcehan/lf/blob/master/etc/lfrc.example
 
 go = o
 
@@ -6,4 +7,4 @@ menu_up = k
 menu_down = j
 
 quit_client = q escape
-quit = ^q
+quit = Q

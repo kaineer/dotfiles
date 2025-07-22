@@ -21,3 +21,4 @@
 - include_tasks: ./text/eza.yml
 - include_tasks: ./text/bat.yml
 - include_tasks: ./text/hurl.yml
+- include_tasks: ./text/xq.yml

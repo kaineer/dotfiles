@@ -52,7 +52,6 @@ system_packages:
   - yq
   - xsel
   - xxd
-  - xq
 
 # Remove games and another obsolete gui packages
 #

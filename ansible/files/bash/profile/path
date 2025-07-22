@@ -4,5 +4,8 @@
 ###   for non-interactive shell
 [[ "$1" == "-i" ]] && return
 
-FIXED_PATH=$(echo $PATH | tr ':' '\n' | grep -v "^$" | sort | uniq | tr '\n' ':')
-export PATH=$FIXED_PATH
+# 1. remove duplicates, remove $HOME/bin
+# 2. prepend with $HOME/bin
+
+FIXED_PATH=$(echo $PATH | tr ':' '\n' | grep -v "^$" | grep -v "$HOME/bin" | sort | uniq | tr '\n' ':')
+export PATH="$HOME/bin:$FIXED_PATH"
