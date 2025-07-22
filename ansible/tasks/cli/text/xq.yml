@@ -1,3 +1,9 @@
+# @link: https://github.com/sibprogrammer/xq
+#
+# Инструмент для получения содержимого xml-файлов
+#  -n чтобы получить узлы как есть, в противном случае будет только текст
+#  -x чтобы использовать xpath запрос
+
 - name: Check if xd is installed
   stat:
     path: "/home/{{user.name}}/bin/xq"
@@ -8,8 +14,6 @@
   include_role:
     name: "ansible-role-github-release"
   vars:
-    # https://github.com/sibprogrammer/xq/releases/download/v1.3.0/xq_1.3.0_darwin_amd64.tar.gz
-    # https://github.com/sibprogrammer/xq/releases/download/v1.3.0/xq_1.3.0_linux_amd64.tar.gz
     owner: "{{user.name}}"
     xq_version: "1.3.0"
     xq_arch: "linux_amd64"
