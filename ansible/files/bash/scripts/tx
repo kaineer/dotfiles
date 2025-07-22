@@ -24,6 +24,9 @@ case "$1" in
   "rm")
     rm -f $SCRIPTS_DIR/$2
     ;;
+  ""|"h")
+    source $SCRIPTS_DIR/help
+    ;;
   "e"|"edit")
     [[ "$2" != "" ]] && $EDITOR $SCRIPTS_DIR/$2 || echo " [ERROR] Specify filter name"
     ;;
