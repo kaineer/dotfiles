@@ -1,7 +1,0 @@
-echo " tx is a tool to keep frequently used commands"
-echo ""
-echo " $ tx h[elp] -- show this help"
-echo " $ tx e[dit] script_name -- edit/create script"
-echo " $ tx ls -- list already created scripts"
-echo " $ tx rm script_name -- remove script"
-echo " $ tx script_name [...args] -- run script"
