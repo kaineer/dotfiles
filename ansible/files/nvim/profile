@@ -7,6 +7,8 @@ list_possible_editors() {
   echo "nvui"
   echo "nvim"
   echo "vi"
+
+  ## not exactly vim, though
   echo "zed"
   echo "code"
   echo "xed"
