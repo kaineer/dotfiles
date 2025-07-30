@@ -14,7 +14,7 @@ export BIN=$(readlink -f $0)
 export DIR=$(dirname $BIN)
 export DDIR="$DIR/tx.d"
 export EDITOR=${EDITOR:-vi}
-[ -x $HOME/bin/nvim ] && EDITOR=$HOME/bin/nvim
+[ -x $HOME/bin/nvim ] && export EDITOR=$HOME/bin/nvim
 ## bootstrap
 
 case "$1" in

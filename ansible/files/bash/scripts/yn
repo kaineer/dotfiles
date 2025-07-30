@@ -1,0 +1,28 @@
+#!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: yes/no script. runs $@ for 'yes' answer
+#
+
+echo_yes_no() {
+  echo "yes"
+  echo "no"
+}
+
+
+PROMPT=
+if [[ "$1" == "-p" ]]; then
+  PROMPT="-p $2:"
+  shift
+  shift
+fi
+
+ANSWER=$(echo_yes_no | $HOME/bin/chooser $PROMPT)
+
+if [[ "$ANSWER" == "yes" ]]; then
+  $@
+fi

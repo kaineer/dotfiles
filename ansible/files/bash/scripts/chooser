@@ -10,8 +10,12 @@
 #
 
 choose_with_fzf() {
+  FZF_PROMPT=
+  IGNORE_CASE=
+
   # skip rofi flags
   if [[ "$1" == "-i" ]]; then
+    IGNORE_CASE="-i"
     shift
   fi
   if [[ "$1" == "-matching" ]]; then
@@ -19,11 +23,16 @@ choose_with_fzf() {
     shift
   fi
   if [[ "$1" == "-p" ]]; then
+    FZF_PROMPT=$2
     shift
     shift
   fi
 
-  fzf $@
+  if [[ "$FZF_PROMPT" != "" ]]; then
+    fzf $IGNORE_CASE --prompt "$FZF_PROMPT " $@
+  else
+    fzf $IGNORE_CASE $@
+  fi
 }
 
 choose_with_rofi() {
