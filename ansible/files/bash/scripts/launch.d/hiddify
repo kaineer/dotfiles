@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-export HIDDIFY_BINARY="pkexec $HOME/bin/hiddify"
-
-# start_or_activate_by_classname "$HIDDIFY_BINARY" "Hiddify"
-pkexec /home/kaineer/bin/hiddify &

@@ -6,7 +6,7 @@ list_password_files() {
   cd - >/dev/null
 }
 
-FILE=$(list_password_files | rofi -dmenu -matching fuzzy -p pass)
+FILE=$(list_password_files | $HOME/bin/chooser -matching fuzzy -p pass)
 
 if [[ "$FILE" != "" ]]; then
   pass -c $FILE &&

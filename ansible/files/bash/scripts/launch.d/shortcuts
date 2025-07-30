@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+WM_CLASS='cinnamon-settings keyboard'
+
+start_or_activate_by_classname "cinnamon-settings keyboard -t shortcuts" "${WM_CLASS}"

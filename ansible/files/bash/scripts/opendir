@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: open dir with $EDITOR from terminal
+#   but with nemo from gui
+#
+
+open_with_editor() {
+  $EDITOR $@
+}
+
+open_with_nemo() {
+  nemo $@
+}
+
+if [[ "$TERM" == "screen-256color" ]]; then
+  open_with_editor $@
+else
+  open_with_nemo $@
+fi

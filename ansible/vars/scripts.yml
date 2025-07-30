@@ -3,9 +3,11 @@ scripts:
   - ax
   - b
   - be
+  - chooser
   - gd
   - launch
   - nord
+  - opendir
   - pe
   - pm
   - tx

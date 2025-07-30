@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: choose from list with fzf from terminal
+#   but with rofi -dmenu from gui
+#
+
+choose_with_fzf() {
+  # skip rofi flags
+  if [[ "$1" == "-i" ]]; then
+    shift
+  fi
+  if [[ "$1" == "-matching" ]]; then
+    shift
+    shift
+  fi
+  if [[ "$1" == "-p" ]]; then
+    shift
+    shift
+  fi
+
+  fzf $@
+}
+
+choose_with_rofi() {
+  rofi -dmenu $@
+}
+
+if [[ "$TERM" == "screen-256color" ]]; then
+  choose_with_fzf $@
+else
+  choose_with_rofi $@
+fi

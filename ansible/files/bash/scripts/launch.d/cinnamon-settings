@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+if [[ "$GDMSESSION" != "cinnamon" ]]; then
+  return
+fi
+
+list_settings_items() {
+  echo "calendar"
+  echo "desktop"
+  echo "effects"
+  echo "extensions"
+  echo "keyboard"
+  echo "network"
+  echo "online-accounts"
+  echo "screensaver"
+  echo "themes"
+}
+
+ITEM=$(list_settings_items | $HOME/bin/chooser -p settings)
+
+if [[ "$ITEM" != "" ]]; then
+  cinnamon-settings $ITEM
+fi

@@ -9,12 +9,12 @@ list_locations() {
   list_media_disks
 }
 
-DIR=$(list_locations | rofi -dmenu -matching fuzzy -p locations)
+DIR=$(list_locations | $HOME/bin/chooser -matching fuzzy -p locations)
 
 if [[ "$DIR" != "" ]]; then
   if [[ "$DIR" == "home" ]]; then
-    nemo $HOME
+    $HOME/bin/opendir $HOME
   else
-    nemo "/media/$USER/$DIR"
+    $HOME/bin/opendir "/media/$USER/$DIR"
   fi
 fi

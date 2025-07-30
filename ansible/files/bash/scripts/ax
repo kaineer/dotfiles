@@ -70,17 +70,20 @@ edit_debian_vars() {
 }
 
 case "$1" in
-  "ce"|"config")        edit_ansible_config ;;
-  "v"|"vars")  edit_debian_vars ;;
-  "se")        shift; edit_script $1 ;;
-  "sel")       edit_script_list ;;
-  "update")          apply_dotfiles ;;
-  "")
-    source $DIR/ax.d/help
-    ;;
-  *)
-    F=$DIR/ax.d/$1
-    shift
-    [[ -f $F ]] && source $F $@
-    ;;
+"ce" | "config") edit_ansible_config ;;
+"v" | "vars") edit_debian_vars ;;
+"se")
+  shift
+  edit_script $1
+  ;;
+"sel") edit_script_list ;;
+"update") apply_dotfiles ;;
+"")
+  source $DIR/ax.d/help
+  ;;
+*)
+  F=$DIR/ax.d/$1
+  shift
+  [[ -f $F ]] && source $F $@
+  ;;
 esac

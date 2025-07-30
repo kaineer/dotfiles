@@ -24,7 +24,7 @@ start_or_activate_by_classname() {
   BINARY=$1
   CLASSNAME=$2
 
-  WINID=$(xdotool search --classname $CLASSNAME | tail -n1)
+  WINID=$(xdotool search --classname "$CLASSNAME" | tail -n1)
 
   if [[ "$WINID" == "" ]]; then
     $BINARY &

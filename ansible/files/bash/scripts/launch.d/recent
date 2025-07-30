@@ -6,7 +6,7 @@ list_recent_files() {
     sed "s/file:\/\///"
 }
 
-FILE=$(list_recent_files | rofi -dmenu -p "recent files")
+FILE=$(list_recent_files | $HOME/bin/chooser -p "recent files")
 
 if [[ "$FILE" != "" ]]; then
   open $FILE
