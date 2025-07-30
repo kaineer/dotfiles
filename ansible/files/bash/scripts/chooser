@@ -31,11 +31,11 @@ choose_with_fzf() {
     FZF_PROMPT=$PROMPT
   fi
 
-  if [[ "$FZF_PROMPT" != "" ]]; then
-    fzf $IGNORE_CASE --prompt "$FZF_PROMPT " $@
-  else
-    fzf $IGNORE_CASE $@
+  if [[ -z "${FZF_PROMPT}" ]]; then
+    FZF_PROMPT=">"
   fi
+
+  fzf $IGNORE_CASE --prompt "$FZF_PROMPT " $@
 }
 
 choose_with_rofi() {
