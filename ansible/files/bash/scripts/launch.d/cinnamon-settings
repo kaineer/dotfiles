@@ -1,24 +1,22 @@
 #!/usr/bin/env bash
 
-if [[ "$GDMSESSION" != "cinnamon" ]]; then
-  return
-fi
+if [[ "$GDMSESSION" == "cinnamon" ]]; then
+  list_settings_items() {
+    echo "calendar"
+    echo "desktop"
+    echo "display"
+    echo "effects"
+    echo "extensions"
+    echo "keyboard"
+    echo "network"
+    echo "online-accounts"
+    echo "screensaver"
+    echo "themes"
+  }
 
-list_settings_items() {
-  echo "calendar"
-  echo "desktop"
-  echo "display"
-  echo "effects"
-  echo "extensions"
-  echo "keyboard"
-  echo "network"
-  echo "online-accounts"
-  echo "screensaver"
-  echo "themes"
-}
+  ITEM=$(list_settings_items | $HOME/bin/chooser -p settings)
 
-ITEM=$(list_settings_items | $HOME/bin/chooser -p settings)
-
-if [[ "$ITEM" != "" ]]; then
-  cinnamon-settings $ITEM
+  if [[ "$ITEM" != "" ]]; then
+    cinnamon-settings $ITEM
+  fi
 fi
