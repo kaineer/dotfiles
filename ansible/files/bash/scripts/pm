@@ -73,14 +73,24 @@ display_info() {
   [ -f ./.pm ] && echo "  Pm: $(cat ./.pm)" || echo " > run «pm use npm» for example"
 }
 
-case "$1" in
-"ri" | "reinstall")
+reinstall_directory() {
   rm -rf node_modules
   $PM install --force
-  ;;
-"harakiri" | "clean")
+}
+
+cleanup_directory() {
   rm -rf node_modules
   rm -rf dist
+}
+
+case "$1" in
+"ri" | "reinstall")
+  yn -p "Remove installed modules and install again?" \
+    reinstall_directory
+  ;;
+"harakiri" | "clean")
+  yn -p "Remove dist and node_modules directories?" \
+    cleanup_directory
   ;;
 "" | "h" | "help")
   usage | bat -p -lsh

@@ -26,6 +26,8 @@ choose_with_fzf() {
     FZF_PROMPT=$2
     shift
     shift
+  elif [[ "$PROMPT" != "" ]]; then
+    FZF_PROMPT=$PROMPT
   fi
 
   if [[ "$FZF_PROMPT" != "" ]]; then
@@ -38,6 +40,8 @@ choose_with_fzf() {
 choose_with_rofi() {
   rofi -dmenu $@
 }
+
+echo "$@"
 
 if [[ "$TERM" == "screen-256color" ]]; then
   choose_with_fzf $@

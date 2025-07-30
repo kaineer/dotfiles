@@ -13,15 +13,14 @@ echo_yes_no() {
   echo "no"
 }
 
-
 PROMPT=
 if [[ "$1" == "-p" ]]; then
-  PROMPT="-p $2:"
+  PROMPT="$2"
   shift
   shift
 fi
 
-ANSWER=$(echo_yes_no | $HOME/bin/chooser $PROMPT)
+ANSWER=$(echo_yes_no | PROMPT="$PROMPT" $HOME/bin/chooser | tr -d "\n")
 
 if [[ "$ANSWER" == "yes" ]]; then
   $@
