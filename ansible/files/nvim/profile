@@ -1,11 +1,49 @@
 #!/usr/bin/env bash
 
-EDITOR=${EDITOR:-vi}
+[[ "$1" != "-i" ]] && return
+
+list_possible_editors() {
+  echo "neovide"
+  echo "nvui"
+  echo "nvim"
+  echo "vi"
+  echo "zed"
+  echo "code"
+  echo "xed"
+  echo "gedit"
+}
+
+detect_editor() {
+  for name in $(list_possible_editors); do
+    LOCAL_PATH="$HOME/bin/$name"
+    ROOT_PATH="/bin/$name"
+    USR_PATH="/usr/bin/$name"
+
+    [ -x $LOCAL_PATH ] && echo $LOCAL_PATH && return 0
+    [ -x $ROOT_PATH ] && echo $ROOT_PATH && return 0
+    [ -x $USR_PATH ] && echo $USR_PATH && return 0
+  done
+}
+
+export DETECTED_EDITOR=$(detect_editor)
+
+run_editor() {
+  if [[ "$TMUX" != "" ]]; then
+    DIR="$(basename $PWD)"
+    printf -v WIN_NAME "%.3s:%.3s" $DIR $DETECTED_EDITOR
+    tmux rename-window "$WIN_NAME"
+  fi
+  if [[ "$1" == "" ]]; then
+    if [ -f $PWD/now ]; then
+      $DETECTED_EDITOR $PWD/now
+    else
+      $DETECTED_EDITOR $PWD
+    fi
+  else
+    $DETECTED_EDITOR $@
+  fi
+}
 
 e() {
-  if [[ "$1" == "" ]]; then
-    $EDITOR .
-  else
-    $EDITOR $@
-  fi
+  run_editor $@
 }
