@@ -32,7 +32,8 @@ export DETECTED_EDITOR=$(detect_editor)
 run_editor() {
   if [[ "$TMUX" != "" ]]; then
     DIR="$(basename $PWD)"
-    printf -v WIN_NAME "%.3s:%.3s" $DIR $DETECTED_EDITOR
+    EDITOR=$(basename $DETECTED_EDITOR)
+    printf -v WIN_NAME "%.3s:%.4s" $DIR $EDITOR
     tmux rename-window "$WIN_NAME"
   fi
   if [[ "$1" == "" ]]; then
@@ -48,4 +49,9 @@ run_editor() {
 
 e() {
   run_editor $@
+  if [[ "$TMUX" != "" ]]; then
+    DIR=$(basename $PWD)
+    printf -v WIN_NAME "%.8s" $DIR
+    tmux rename-window "$WIN_NAME"
+  fi
 }
