@@ -27,6 +27,7 @@ choose_with_fzf() {
     shift
     shift
   elif [[ "$PROMPT" != "" ]]; then
+    # Prompt with spaces from another script
     FZF_PROMPT=$PROMPT
   fi
 
@@ -40,8 +41,6 @@ choose_with_fzf() {
 choose_with_rofi() {
   rofi -dmenu $@
 }
-
-echo "$@"
 
 if [[ "$TERM" == "screen-256color" ]]; then
   choose_with_fzf $@
