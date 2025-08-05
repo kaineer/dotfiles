@@ -7,7 +7,7 @@
     group: "{{ user.name }}"
     mode: "644"
 
-- name: Copy prorile
+- name: Copy profile
   copy:
     src: ../../files/bash/profile.sh
     dest: "/home/{{ user.name }}/.profile"

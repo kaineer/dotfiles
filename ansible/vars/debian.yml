@@ -1,5 +1,6 @@
 gui_packages:
   - baobab
+  - cabextract
   - dmenu
   - gimp
   - gnome-text-editor
@@ -10,7 +11,6 @@ gui_packages:
   - p7zip
   - p7zip-full
   - rofi
-  - telegram-desktop
   - webp
   - wmctrl
   - xdotool

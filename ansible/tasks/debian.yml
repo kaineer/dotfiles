@@ -46,4 +46,6 @@
 - include_tasks: ./media/mocp.yml
 - include_tasks: ./media/rmpc.yml
 - include_tasks: ./browsers/brave.yml
+
 - include_tasks: ./gui/obsidian.yml
+- include_tasks: ./gui/telegram.yml

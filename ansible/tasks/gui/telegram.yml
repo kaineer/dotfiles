@@ -1,0 +1,51 @@
+# https://telegram.org/dl/desktop/linux
+#
+# To update current telegram binary:
+#  1. remove $HOME/bin/telegram
+#  2. ax udpate
+#
+- name: Check for telegram installed
+  stat:
+    path: "/home/{{ user.name }}/bin/telegram"
+  register: "telegram_link"
+
+- name: Create HOME/tmp directory
+  when: "not telegram_link.stat.exists"
+  file:
+    path: "/home/{{ user.name }}/tmp"
+    state: directory
+    mode: "0755"
+
+- name: Download Telegram Desktop binary
+  when: "not telegram_link.stat.exists"
+  get_url:
+    url: "https://telegram.org/dl/desktop/linux"
+    dest: "/home/{{ user.name }}/tmp/telegram.tar.xz"
+
+- name: Create HOME/bin/releases directory
+  when: "not telegram_link.stat.exists"
+  file:
+    path: "/home/{{ user.name }}/bin/releases"
+    state: directory
+    owner: "{{ user.name }}"
+    mode: "0755"
+
+- name: Unpack telegram binary
+  when: "not telegram_link.stat.exists"
+  unarchive:
+    src: "/home/{{ user.name }}/tmp/telegram.tar.xz"
+    dest: "/home/{{ user.name }}/bin/releases"
+    remote_src: yes
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0755"
+
+- name: Create symbolic link for telegram
+  when: "not telegram_link.stat.exists"
+  file:
+    src: "/home/{{ user.name }}/bin/releases/Telegram/Telegram"
+    dest: "/home/{{ user.name }}/bin/telegram"
+    state: link
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0755"

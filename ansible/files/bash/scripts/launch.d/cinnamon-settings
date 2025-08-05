@@ -7,6 +7,7 @@ if [[ "$GDMSESSION" == "cinnamon" ]]; then
     echo "display"
     echo "effects"
     echo "extensions"
+    echo "fonts"
     echo "keyboard"
     echo "network"
     echo "online-accounts"

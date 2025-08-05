@@ -1,0 +1,13 @@
+{
+  "function": {
+    "prefix": [
+      "fn",
+      "fu"
+    ],
+    "body": [
+      "function ${1:name} (${2:params}) {",
+      "$0",
+      "}"
+    ]
+  }
+}
