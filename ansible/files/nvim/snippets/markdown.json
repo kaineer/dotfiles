@@ -1,0 +1,7 @@
+{
+  "code": {
+    "prefix": "code",
+    "body": ["```${1:json}", "$0", "```"],
+    "description": "codeblock"
+  }
+}
