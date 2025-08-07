@@ -27,6 +27,9 @@ case "$1" in
 "" | "h" | "help")
   cat $DDIR/help.md
   ;;
+"e0")
+  $EDITOR $0
+  ;;
 "e" | "edit")
   [[ "$2" != "" ]] && $EDITOR $DDIR/$2 || echo " [ERROR] Specify filter name"
   ;;
