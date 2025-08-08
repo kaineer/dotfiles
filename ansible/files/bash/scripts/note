@@ -9,7 +9,10 @@ export BITS_DIR="$HOME/git/bits"
 fzf_then_edit() {
   FILTER="$1"
 
+  echo "$PATH"
+
   cd $BITS_DIR
+  export FZF_DEFAULT_OPTS="--preview 'bat --color=always'"
   if [[ "$FILTER" == "" ]]; then
     FILE=$(fd -tf | fzf)
   else
