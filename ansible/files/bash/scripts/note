@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+export BIN=$(readlink -f $0)
+export DIR=$(dirname $BIN)
+export DDIR="$DIR/note.d"
+export BITS_REPO="git@github.com:kaineer/bits.git"
+export BITS_DIR="$HOME/git/bits"
+
+case "$1" in
+"new") source "$DDIR/new_note" ;;
+"clone") source "$DDIR/clone_repo" ;;
+"sync")
+  shift
+  export DF_DIR="$BITS_DIR"
+  source "$DDIR/sync" $@
+  ;;
+# TODO:
+"x")
+  cd "$BITS_DIR"
+  shift
+  eval "$@"
+  ;;
+esac

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if [ ! -d "${BITS_DIR}" ]; then
+  git clone "${BITS_REPO}" "${BITS_DIR}"
+else
+  echo " [WARN ] You already have directory ${BITS_DIR}"
+  echo " [WARN ] Rename/remove it to use as repo clone"
+fi

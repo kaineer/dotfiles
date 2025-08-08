@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+### FORMING A FRESH NOTE
+TIMESTAMP=$(date +%Y.%m.%d--%H:%M:%S)
+FILENAME=$(date +%Y/%m%d/%H%M%S.md)
+
+get_clip() {
+  xsel -ob
+}
+
+get_urls() {
+  get_clip | grep -e "https\?:\/\/"
+}
+
+get_url() {
+  get_urls | head -n1
+}
+
+is_url_in_clipboard() {
+  [[ "$(get_url)" != "" ]]
+}
+
+ensure_directory() {
+  F="${BITS_DIR}/${FILENAME}"
+  D=$(dirname $F)
+  if [ ! -d "${D}" ]; then
+    mkdir -p "${D}"
+  fi
+}
+
+print_note() {
+  echo "\`\`\`yaml"
+  echo "created_at: ${TIMESTAMP}"
+  echo "directory: ${PWD}"
+
+  if is_url_in_clipboard; then
+    echo "url: $(get_url)"
+  else
+    echo "clipboard: |"
+    get_clip | sed 's/^/  /'
+  fi
+
+  echo -e "\n\`\`\`"
+}
+
+ensure_directory
+print_note >"$BITS_DIR/$FILENAME"
+$EDITOR "$BITS_DIR/$FILENAME"

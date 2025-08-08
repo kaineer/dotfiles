@@ -17,15 +17,15 @@ DF_NOTHING_TO_COMMIT=$(nothing_to_commit)
 if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
   git add .
   case "$1" in
-    "e"|"edit")
-      git commit --edit -m "$(commit_message)"
-      ;;
-    "")
-      git commit -m "$(commit_message)"
-      ;;
-    *)
-      git commit -m "$(commit_message $@)"
-      ;;
+  "e" | "edit")
+    git commit --edit -m "$(commit_message)"
+    ;;
+  "")
+    git commit -m "$(commit_message)"
+    ;;
+  *)
+    git commit -m "$(commit_message $@)"
+    ;;
   esac
 fi
 git pull origin master
