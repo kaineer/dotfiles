@@ -14,10 +14,12 @@ case "$1" in
   export DF_DIR="$BITS_DIR"
   source "$DDIR/sync" $@
   ;;
-# TODO:
 "x")
   cd "$BITS_DIR"
   shift
   eval "$@"
+  ;;
+"")
+  fd -tf | fzf | xargs nvim
   ;;
 esac
