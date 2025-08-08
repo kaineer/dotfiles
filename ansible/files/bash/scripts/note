@@ -23,7 +23,23 @@ case "$1" in
   shift
   eval "$@"
   ;;
+"y" | "year")
+  F=$(date +%Y/)
+  FILE=$(fd -tf | fzf -q"$F")
+  [[ "$FILE" != "" ]] && nvim $FILE
+  ;;
+"m" | "mon" | "month")
+  F=$(date +%Y/%m)
+  FILE=$(fd -tf | fzf -q"$F")
+  [[ "$FILE" != "" ]] && nvim $FILE
+  ;;
+"d" | "kyo")
+  F=$(date +%Y/%m%d)
+  FILE=$(fd -tf | fzf -q"$F")
+  [[ "$FILE" != "" ]] && nvim $FILE
+  ;;
 "")
-  fd -tf | fzf | xargs nvim
+  FILE=$(fd -tf | fzf)
+  [[ "$FILE" != "" ]] && nvim $FILE
   ;;
 esac
