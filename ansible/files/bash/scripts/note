@@ -12,11 +12,10 @@ fzf_then_edit() {
   echo "$PATH"
 
   cd $BITS_DIR
-  export FZF_DEFAULT_OPTS="--preview 'bat --color=always -p -lmd {}'"
   if [[ "$FILTER" == "" ]]; then
-    FILE=$(fd -tf | fzf)
+    FILE=$(fd -tf | fzf --preview='bat --color=always -p -lmd {}')
   else
-    FILE=$(fd -tf | fzf -1 -q"$FILTER")
+    FILE=$(fd -tf | fzf --exact --preview='bat --color=always -p -lmd {}' -1 -q"$FILTER")
   fi
   if [[ "$FILE" != "" ]]; then
     $EDITOR $FILE
@@ -52,6 +51,9 @@ case "$1" in
   ;;
 "d" | "kyo")
   fzf_then_edit "$(date +%Y/%m%d)"
+  ;;
+"h" | "help")
+  bat -p -lmd $DDIR/help.md
   ;;
 "")
   cd $BITS_DIR
