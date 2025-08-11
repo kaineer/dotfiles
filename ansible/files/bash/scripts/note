@@ -12,7 +12,7 @@ fzf_then_edit() {
   echo "$PATH"
 
   cd $BITS_DIR
-  export FZF_DEFAULT_OPTS="--preview 'bat --color=always'"
+  export FZF_DEFAULT_OPTS="--preview 'bat --color=always -p -lmd {}'"
   if [[ "$FILTER" == "" ]]; then
     FILE=$(fd -tf | fzf)
   else
