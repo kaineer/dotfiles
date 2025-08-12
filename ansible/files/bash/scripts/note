@@ -9,8 +9,6 @@ export BITS_DIR="$HOME/git/bits"
 fzf_then_edit() {
   FILTER="$1"
 
-  echo "$PATH"
-
   cd $BITS_DIR
   if [[ "$FILTER" == "" ]]; then
     FILE=$(fd -tf | fzf --preview='bat --color=always -p -lmd {}')
@@ -49,15 +47,18 @@ case "$1" in
 "m" | "mon" | "month")
   fzf_then_edit "$(date +%Y/%m)"
   ;;
-"d" | "kyo")
+"d" | "kyou")
   fzf_then_edit "$(date +%Y/%m%d)"
   ;;
 "h" | "help")
   bat -p -lmd $DDIR/help.md
   ;;
+"rg")
+  cd $BITS_DIR && nvim +":Telescope live_grep"
+  ;;
 "")
   cd $BITS_DIR
-  FILE=$(fd -tf | fzf)
+  fzf_then_edit
   [[ "$FILE" != "" ]] && nvim $FILE
   ;;
 esac
