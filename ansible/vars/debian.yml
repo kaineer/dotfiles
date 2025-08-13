@@ -1,6 +1,7 @@
 gui_packages:
   - baobab
   - cabextract
+  - chafa
   - dmenu
   - gimp
   - gnome-text-editor
