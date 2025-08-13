@@ -1,0 +1,64 @@
+[custom0]
+binding=['<Super>backslash']
+command='/home/kaineer/bin/launch browser'
+name='launch browser'
+
+[custom1]
+binding=['<Super>Return']
+command='/home/kaineer/bin/launch terminal'
+name='launch or find terminal'
+
+[custom10]
+binding=['<Super>r']
+command='/home/kaineer/bin/launch recent'
+name='launch recent'
+
+[custom11]
+binding=['<Super>i']
+command='/home/kaineer/bin/launch shortcuts'
+name='launch shortcuts'
+
+[custom12]
+binding=['<Super>s']
+command='/home/kaineer/bin/launch cinnamon-settings'
+name='launch cinnamon settings'
+
+[custom2]
+binding=['<Super>x']
+command='/home/kaineer/bin/rndi'
+name='eog'
+
+[custom3]
+binding=['<Super>m']
+command='/home/kaineer/bin/launch telegram'
+name='launch telegram'
+
+[custom4]
+binding=['<Super>Tab']
+command='/usr/bin/rofi -show window'
+name='select window'
+
+[custom5]
+binding=['<Super>k']
+command='/home/kaineer/bin/launch kill'
+name='kill window'
+
+[custom6]
+binding=['<Super>semicolon']
+command='/home/kaineer/bin/launch pass'
+name='password'
+
+[custom7]
+binding=['<Super>j']
+command='/home/kaineer/bin/launch'
+name='launch ...'
+
+[custom8]
+binding=['<Super>space']
+command='/home/kaineer/bin/launch run'
+name='run ...'
+
+[custom9]
+binding=['<Super>z']
+command='/home/kaineer/.local/bin/zed'
+name='zed'
