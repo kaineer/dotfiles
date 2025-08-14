@@ -31,6 +31,7 @@ ensure_directory() {
 print_note() {
   echo "\`\`\`yaml"
   echo "created_at: ${TIMESTAMP}"
+  echo "hostname: ${HOSTNAME}"
   echo "directory: ${PWD}"
 
   if is_url_in_clipboard; then
