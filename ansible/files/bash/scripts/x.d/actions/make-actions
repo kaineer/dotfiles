@@ -7,9 +7,9 @@
 
 __list_actions() {
   if [ -f Makefile ]; then
-    cat Makefile | \
-      grep -v ".PHONY" | \
-      grep ":" | \
+    cat Makefile |
+      grep -v ".PHONY" |
+      grep ":" |
       sed "s/:.*$//"
   fi
 }
@@ -19,6 +19,6 @@ __run_action() {
 }
 
 case "$1" in
-  "list") __list_actions ;;
-  *) __run_action $1 ;;
+"list") __list_actions ;;
+*) __run_action $1 ;;
 esac
