@@ -84,6 +84,6 @@ case "$1" in
 *)
   F=$DIR/ax.d/$1
   shift
-  [[ -f $F ]] && source $F $@
+  [[ -f $F ]] && REPO_DIR="${DF_DIR}" source $F $@
   ;;
 esac

@@ -12,7 +12,7 @@ nothing_to_commit() {
   git status . | grep "nothing to commit" | wc -l
 }
 
-cd $DF_DIR
+cd $REPO_DIR
 DF_NOTHING_TO_COMMIT=$(nothing_to_commit)
 if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
   git add .

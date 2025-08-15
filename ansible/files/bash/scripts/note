@@ -25,8 +25,7 @@ case "$1" in
 "clone") source "$DDIR/clone_repo" ;;
 "sync")
   shift
-  export DF_DIR="$BITS_DIR"
-  source "$DDIR/sync" $@
+  REPO_DIR="${BITS_DIR}" source "$DDIR/sync" $@
   ;;
 "bro" | "browse")
   cd $BITS_DIR
