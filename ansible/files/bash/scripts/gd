@@ -38,6 +38,11 @@ add_directory() {
   URL="$(xsel -ob)"
   NAME=$(basename $DIR)
 
+  COUNT="$(echo $URL | grep 'http' | wc -l)"
+  if [[ "$COUNT" == "0" ]]; then
+    URL=""
+  fi
+
   if [[ "$URL" != "" ]]; then
     BIN="open"
     NAME="site:${URL}"
@@ -84,7 +89,7 @@ fzf_directory() {
     URL=$(output_config | jq -r ".[\"${TARGET}\"].url")
     BIN=$(output_config | jq -r ".[\"${TARGET}\"].bin")
 
-    if [[ "$URL" != "" ]]; then
+    if [[ "${URL}" != "null" ]]; then
       eval "$BIN $URL"
     elif [ -d $DIR ]; then
       cd $DIR && eval "$BIN ." && cd - >/dev/null

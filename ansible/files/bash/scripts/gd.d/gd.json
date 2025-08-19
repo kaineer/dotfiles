@@ -1,0 +1,22 @@
+{
+  "shedevrum/create": {
+    "url": "https://shedevrum.ai/text-to-image/",
+    "bin": "brave-browser"
+  },
+  "twitter": {
+    "url": "https://x.com/home",
+    "bin": "brave-browser"
+  },
+  "project:current": {
+    "dir": "/home/kaineer/devel/itc/frontend-game/",
+    "bin": "nvim"
+  },
+  "project:walk-map": {
+    "dir": "/home/kaineer/devel/itc/maps/walk-map",
+    "bin": "nvim"
+  },
+  "gmail": {
+    "url": "https://mail.google.com/mail/",
+    "bin": "open"
+  }
+}

@@ -14,3 +14,11 @@
     group: "{{ user.name }}"
     state: "link"
   with_items: "{{ scripts }}"
+
+- name: Link gd.json
+  file:
+    src: "{{ playbook_dir }}/files/bash/scripts/gd.d/gd.json"
+    dest: "/home/{{ user.name }}/var/dir.json"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: "link"
