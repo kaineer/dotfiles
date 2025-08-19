@@ -57,7 +57,7 @@ add_directory() {
   fi
 
   # Otherwise jq will remove all file content
-  mv $CONFIG_FILE.new $SOUR
+  mv $CONFIG_FILE.new $SOURCE_FILE
 }
 
 edit_config_file() {
