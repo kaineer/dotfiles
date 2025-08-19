@@ -33,28 +33,28 @@ output_config() {
   cat $CONFIG_FILE
 }
 
+add_url() {
+  URL=$1
+  if [[ "$URL" == "" ]]; then
+    URL="$(xsel -ob)"
+  fi
+  NAME=$(echo $URL | sed 's/https\?:\/\///')
+  output_config |
+    jq -M ".[\"$NAME\"].url=\"$URL\"|.[\"$NAME\"].bin=\"$BIN\"" \
+      >$CONFIG_FILE.new
+
+  # Otherwise jq will remove all file content
+  mv $CONFIG_FILE.new $SOURCE_FILE
+}
+
 add_directory() {
   DIR=$1
   BIN=${2:-${EDITOR}}
-  URL="$(xsel -ob)"
   NAME=$(basename $DIR)
 
-  COUNT="$(echo $URL | grep 'http' | wc -l)"
-  if [[ "$COUNT" == "0" ]]; then
-    URL=""
-  fi
-
-  if [[ "$URL" != "" ]]; then
-    BIN="open"
-    NAME="site:${URL}"
-    output_config |
-      jq -M ".[\"$NAME\"].url=\"$URL\"|.[\"$NAME\"].bin=\"$BIN\"" \
-        >$CONFIG_FILE.new
-  else
-    output_config |
-      jq -M ".[\"$NAME\"].dir=\"$DIR\"|.[\"$NAME\"].bin=\"$BIN\"" \
-        >$CONFIG_FILE.new
-  fi
+  output_config |
+    jq -M ".[\"$NAME\"].dir=\"$DIR\"|.[\"$NAME\"].bin=\"$BIN\"" \
+      >$CONFIG_FILE.new
 
   # Otherwise jq will remove all file content
   mv $CONFIG_FILE.new $SOURCE_FILE
@@ -107,6 +107,7 @@ case "$1" in
 "e" | "edit") edit_config_file ;;
 "f") output_config ;;
 "." | "add") add_directory $PWD $2 ;;
+"url") add_url $2 ;;
 "ls" | "list") list_titles ;;
 "") fzf_directory ;;
 *) fzf_directory $@ ;;

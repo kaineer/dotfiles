@@ -18,5 +18,17 @@
   "gmail": {
     "url": "https://mail.google.com/mail/",
     "bin": "open"
+  },
+  "trello": {
+    "url": "https://trello.com/u/tangerinecat/boards",
+    "bin": "open"
+  },
+  "jlpt-for-learners": {
+    "url": "https://www.jlpt.jp/e/samples/forlearners.html",
+    "bin": "open"
+  },
+  "nhee.ru": {
+    "url": "https://nhee.ru",
+    "bin": "open"
   }
 }
