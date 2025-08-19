@@ -35,11 +35,20 @@ output_config() {
 add_directory() {
   DIR=$1
   BIN=${2:-${EDITOR}}
+  URL="$(xsel -ob)"
   NAME=$(basename $DIR)
 
-  output_config |
-    jq -M ".[\"$NAME\"].dir=\"$DIR\"|.[\"$NAME\"].bin=\"$BIN\"" \
-      >$CONFIG_FILE.new
+  if [[ "$URL" != "" ]]; then
+    BIN="open"
+    NAME="site:${URL}"
+    output_config |
+      jq -M ".[\"$NAME\"].url=\"$URL\"|.[\"$NAME\"].bin=\"$BIN\"" \
+        >$CONFIG_FILE.new
+  else
+    output_config |
+      jq -M ".[\"$NAME\"].dir=\"$DIR\"|.[\"$NAME\"].bin=\"$BIN\"" \
+        >$CONFIG_FILE.new
+  fi
 
   # Otherwise jq will remove all file content
   mv $CONFIG_FILE.new $CONFIG_FILE
@@ -72,9 +81,12 @@ fzf_directory() {
 
   if [[ "$TARGET" != "" ]]; then
     DIR=$(output_config | jq -r ".[\"${TARGET}\"].dir")
+    URL=$(output_config | jq -r ".[\"${TARGET}\"].url")
     BIN=$(output_config | jq -r ".[\"${TARGET}\"].bin")
 
-    if [ -d $DIR ]; then
+    if [[ "$URL" != "" ]]; then
+      eval "$BIN $URL"
+    elif [ -d $DIR ]; then
       cd $DIR && eval "$BIN ." && cd - >/dev/null
     elif [ -f $DIR ]; then
       eval "$BIN $DIR"

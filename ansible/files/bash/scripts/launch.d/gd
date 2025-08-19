@@ -10,5 +10,10 @@ TARGET=$(list_titles | $HOME/bin/chooser -i -matching fuzzy -p "gd")
 
 if [[ "$TARGET" != "" ]]; then
   DIR=$(cat $CONFIG_FILE | jq -r ".[\"${TARGET}\"].dir")
-  $HOME/bin/opendir "$DIR"
+  URL=$(cat $CONFIG_FILE | jq -r ".[\"${TARGET}\"].url")
+  if [[ "$URL" != "" ]]; then
+    open "$URL"
+  else
+    $HOME/bin/opendir "$DIR"
+  fi
 fi
