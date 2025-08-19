@@ -14,6 +14,7 @@
 #
 
 CONFIG_FILE=$HOME/var/dir.json
+SOURCE_FILE=$(readlink -f $CONFIG_FILE)
 EDITOR=nvim
 
 usage() {
@@ -56,7 +57,7 @@ add_directory() {
   fi
 
   # Otherwise jq will remove all file content
-  mv $CONFIG_FILE.new $CONFIG_FILE
+  mv $CONFIG_FILE.new $SOUR
 }
 
 edit_config_file() {
