@@ -38,6 +38,7 @@ add_url() {
   if [[ "$URL" == "" ]]; then
     URL="$(xsel -ob)"
   fi
+  BIN="open"
   NAME=$(echo $URL | sed 's/https\?:\/\///')
   output_config |
     jq -M ".[\"$NAME\"].url=\"$URL\"|.[\"$NAME\"].bin=\"$BIN\"" \

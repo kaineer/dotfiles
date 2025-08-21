@@ -30,5 +30,41 @@
   "nhee.ru": {
     "url": "https://nhee.ru",
     "bin": "open"
+  },
+  "react:router": {
+    "url": "https://reactrouter.com/",
+    "bin": "open"
+  },
+  "react": {
+    "url": "https://react.dev/",
+    "bin": "open"
+  },
+  "react-three-fiber": {
+    "url": "https://r3f.docs.pmnd.rs/getting-started/introduction",
+    "bin": "open"
+  },
+  "vite": {
+    "url": "https://vite.dev/",
+    "bin": "open"
+  },
+  "vitest": {
+    "url": "https://vitest.dev/",
+    "bin": "open"
+  },
+  "xnxx.com": {
+    "url": "https://xnxx.com",
+    "bin": "open"
+  },
+  "youtube.com": {
+    "url": "https://youtube.com",
+    "bin": "open"
+  },
+  "": {
+    "url": "",
+    "bin": "open"
+  },
+  "aniwatchtv": {
+    "url": "https://aniwatchtv.to/tv",
+    "bin": "open"
   }
 }

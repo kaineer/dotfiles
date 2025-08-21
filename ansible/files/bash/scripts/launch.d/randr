@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+ARANDR_BIN="$(which arandr)"
+ARANDR_CLASS="arandr"
+
+start_or_activate_by_classname "$ARANDR_BIN" "$ARANDR_CLASS"
