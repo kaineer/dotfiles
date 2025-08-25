@@ -66,5 +66,25 @@
   "aniwatchtv": {
     "url": "https://aniwatchtv.to/tv",
     "bin": "open"
+  },
+  "nextjs": {
+    "url": "https://nextjs.org/",
+    "bin": "open"
+  },
+  "deepseek": {
+    "url": "https://chat.deepseek.com",
+    "bin": "open"
+  },
+  "vite/alias": {
+    "url": "https://vite.dev/config/shared-options.html#resolve-alias",
+    "bin": "open"
+  },
+  "color/canva": {
+    "url": "https://www.canva.com/colors/color-wheel/",
+    "bin": "open"
+  },
+  "project:testbench": {
+    "dir": "/home/kaineer/devel/itc/test-bench",
+    "bin": "nvim"
   }
 }
