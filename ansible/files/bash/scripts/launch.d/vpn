@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+start_or_activate_by_classname "$HOME/bin/hiddify" "Hiddify"
