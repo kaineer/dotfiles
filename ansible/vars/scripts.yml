@@ -11,6 +11,7 @@ scripts:
   - opendir
   - pe
   - pm
+  # - switch_layout
   - tx
   - yn
   - x

@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: switch layout
+# Dependencies:
+#  * setxkbmap
+#  * grep
+#  * awk
+#
+# Вышло не очень, тк гуй теряет текущий лэйаут и не дает переключаться
+#
+BIN="$(which setxkbmap)"
+
+if [[ "$BIN" != "" ]]; then
+  CURRENT="$($BIN -query | grep layout | awk '{print $2}')"
+
+  if [[ "$CURRENT" == "us" ]]; then
+    $BIN ru
+  else
+    $BIN us
+  fi
+fi

@@ -98,5 +98,17 @@
   "keep.google": {
     "url": "https://keep.google.com/",
     "bin": "open"
+  },
+  "yt:poe2:sorceress:01": {
+    "url": "https://youtu.be/9H_llGGJ1sk",
+    "bin": "open"
+  },
+  "yt:poe2:warrior:01": {
+    "url": "https://youtu.be/Em5JzOWteBw",
+    "bin": "open"
+  },
+  "yt:poe2:ost": {
+    "url": "https://youtu.be/p-g4zWgUjUI?list=PLs2gPxL93WG0RBssQDDkMUdC-yme-H83K",
+    "bin": "open"
   }
 }
