@@ -86,5 +86,17 @@
   "project:testbench": {
     "dir": "/home/kaineer/devel/itc/test-bench",
     "bin": "nvim"
+  },
+  "gosuslugi.ru": {
+    "url": "https://gosuslugi.ru/",
+    "bin": "open"
+  },
+  "project:touch-server": {
+    "dir": "/home/kaineer/devel/itc/maps/touch-server",
+    "bin": "nvim"
+  },
+  "keep.google": {
+    "url": "https://keep.google.com/",
+    "bin": "open"
   }
 }
