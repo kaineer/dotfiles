@@ -110,5 +110,13 @@
   "yt:poe2:ost": {
     "url": "https://youtu.be/p-g4zWgUjUI?list=PLs2gPxL93WG0RBssQDDkMUdC-yme-H83K",
     "bin": "open"
+  },
+  "fastify.dev": {
+    "url": "https://fastify.dev/",
+    "bin": "open"
+  },
+  "keep.google:shedevrum": {
+    "url": "https://keep.google.com/#label/shedevrum",
+    "bin": "open"
   }
 }

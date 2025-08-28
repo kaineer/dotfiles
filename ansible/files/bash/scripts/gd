@@ -62,7 +62,6 @@ add_directory() {
 }
 
 edit_config_file() {
-  echo "[DEBUG] Editor: $EDITOR, Config: $CONFIG_FILE"
   $EDITOR $CONFIG_FILE
 }
 
