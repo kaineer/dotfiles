@@ -12,6 +12,7 @@ scripts:
   - pe
   - pm
   # - switch_layout
+  - the
   - tx
   - yn
   - x
