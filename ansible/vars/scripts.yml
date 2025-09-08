@@ -13,6 +13,7 @@ scripts:
   - pm
   # - switch_layout
   - the
+  - tmux-status
   - tx
   - yn
   - x

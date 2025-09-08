@@ -1,6 +1,8 @@
 {
   "store": {
-    "prefix": ["store"],
+    "prefix": [
+      "store"
+    ],
     "body": [
       "import { combineReducers, configureStore } from '@reduxjs/toolkit';",
       "",
@@ -32,7 +34,9 @@
   },
   "sliceItem": {
     "prefix": "sliceItem",
-    "body": ["[${1}Slice.reducerPath]: ${1}Slice.reducer,"],
+    "body": [
+      "[${1}Slice.reducerPath]: ${1}Slice.reducer,"
+    ],
     "description": "Slice item in store"
   },
   "component": {
@@ -68,6 +72,16 @@
       "export default meta;",
       "",
       "type Story = StoryObj<typeof $1>;"
+    ]
+  },
+  "reexport": {
+    "prefix": [
+      "rex"
+    ],
+    "description": "Export all from another file",
+    "body": [
+      "export * from '$1'",
+      "$0"
     ]
   }
 }
