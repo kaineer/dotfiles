@@ -59,10 +59,6 @@
     "url": "https://youtube.com",
     "bin": "open"
   },
-  "": {
-    "url": "",
-    "bin": "open"
-  },
   "aniwatchtv": {
     "url": "https://aniwatchtv.to/tv",
     "bin": "open"
@@ -117,6 +113,10 @@
   },
   "keep.google:shedevrum": {
     "url": "https://keep.google.com/#label/shedevrum",
+    "bin": "open"
+  },
+  "install.doctor": {
+    "url": "https://install.doctor/",
     "bin": "open"
   }
 }
