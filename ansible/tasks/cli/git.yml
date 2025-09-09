@@ -16,14 +16,16 @@
   copy:
     src: ../../files/git/gitconfig
     dest: "/home/{{ user.name }}/.config/git/config"
+    state: "link"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "644"
 
 - name: Copy git global ignore
   copy:
-    src: ../../files/git/gitignore
+    src: "{{playbook_dir}}/files/git/gitignore"
     dest: "/home/{{ user.name }}/.config/git/ignore"
+    state: "link"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "644"
