@@ -5,5 +5,7 @@
 #  / / / /___   github: https://github.com/kaineer
 #  \/  \____/   twitter: https://twitter.com/kaineer
 #
+# What: this variable is used by
+#  * git config
 
 export XDG_CONFIG_HOME="$HOME/.config"
