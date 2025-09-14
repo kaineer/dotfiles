@@ -11,6 +11,7 @@ require("lazy").setup({
   require("plugins.navigation"),
   require("plugins.treesitter"),
   require("plugins.git"),
+  require("plugins.languages"),
   require("plugins.completion"),
   require("plugins.edit"),
   require("plugins.lsp"),

@@ -12,6 +12,8 @@ scripts:
   - pe
   - pm
   # - switch_layout
+  - the
+  - tmux-status
   - tx
   - yn
   - x

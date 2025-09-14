@@ -10,7 +10,7 @@ return {
     { "nvim-telescope/telescope-project.nvim" },
     { "nvim-telescope/telescope-ui-select.nvim" },
 
-    { "nvim-tree/nvim-web-devicons",            enabled = vim.g.have_nerd_font },
+    { "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
   },
 
   config = function()
@@ -68,19 +68,20 @@ return {
     local wk = require("which-key")
 
     wk.add({
-      { "<leader>of",  builtin.find_files,                desc = "Open file" },
-      { "<leader>od",  builtin.diagnostics,               desc = "Open diagnostics" },
-      { "<leader>ob",  builtin.buffers,                   desc = "Open buffers" },
-      { "<leader>oh",  builtin.oldfiles,                  desc = "Open history" },
-      { "<leader>om",  builtin.marks,                     desc = "Open marks" },
-      { "<leader>op",  extensions.project.project,        desc = "Select project" },
-      { "<leader>oq",  builtin.quickfixhistory,           desc = "Quickfix history" },
-      { "<leader>rg",  builtin.live_grep,                 desc = "RG in files" },
-      { "<leader>/",   builtin.current_buffer_fuzzy_find, desc = "grep in buffer" },
-      { "<leader>ogf", builtin.git_files,                 desc = "Open git files" },
-      { "<leader>ogb", builtin.git_branches,              desc = "Open git branches" },
-      { "<leader>ogs", builtin.git_stash,                 desc = "Open git stash" },
-      { "<leader>ogg", builtin.git_status,                desc = "Open git status" },
+      { "<leader>of", builtin.find_files, desc = "Open file" },
+      { "<leader>od", builtin.diagnostics, desc = "Open diagnostics" },
+      { "<leader>ob", builtin.buffers, desc = "Open buffers" },
+      { "<leader>oh", builtin.oldfiles, desc = "Open history" },
+      { "<leader>om", builtin.marks, desc = "Open marks" },
+      { "<leader>op", extensions.project.project, desc = "Select project" },
+      { "<leader>oq", builtin.quickfixhistory, desc = "Quickfix history" },
+      { "<leader>rg", builtin.live_grep, desc = "RG in files" },
+      { "<leader>/", builtin.current_buffer_fuzzy_find, desc = "grep in buffer" },
+      { "<leader>ogf", builtin.git_files, desc = "Open git files" },
+      { "<leader>ogb", builtin.git_branches, desc = "Open git branches" },
+      { "<leader>ogs", builtin.git_stash, desc = "Open git stash" },
+      { "<leader>ogg", builtin.git_status, desc = "Open git status" },
+      { "<leader>ov", ":Videre<cr>", desc = "Videre" },
     })
   end,
 }

@@ -14,6 +14,7 @@ local each = require("core.utils").each
 each({
   "direnv",
   "javascript",
+  "json",
   "terminal",
   "markdown",
 }, applyCmd)

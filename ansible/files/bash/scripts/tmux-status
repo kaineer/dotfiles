@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+right_status() {
+  ON="$(xset -q | sed -rn 's/.*LED mask.*(.)[[:xdigit:]]{3}/\1/p')"
+  [[ "$ON" == "1" ]] && echo " ru " || echo " en "
+}
+
+case "$1" in
+"right") right_status ;;
+esac

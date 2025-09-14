@@ -17,27 +17,27 @@ local extra = "x"
 
 -- singleMapping({ "K", ":Action<cr>" }, { silent = true })
 local singleMapping = function(tbl, options)
-	if not types.table(tbl) then
-		return
-	end
-	local opts = {
-		silent = options.silent,
-		expr = options.expr,
-		noremap = true,
-	}
+  if not types.table(tbl) then
+    return
+  end
+  local opts = {
+    silent = options.silent,
+    expr = options.expr,
+    noremap = true,
+  }
 
-	local mode = options.mode or normal
-	local lhs = tbl[1]
-	local rhs = tbl[2]
+  local mode = options.mode or normal
+  local lhs = tbl[1]
+  local rhs = tbl[2]
 
-	if types.fn(rhs) then
-		local cbopts = merge(opts, {
-			callback = rhs,
-		})
-		set_keymap(mode, lhs, "", cbopts)
-	elseif types.string(rhs) then
-		set_keymap(mode, lhs, rhs, opts)
-	end
+  if types.fn(rhs) then
+    local cbopts = merge(opts, {
+      callback = rhs,
+    })
+    set_keymap(mode, lhs, "", cbopts)
+  elseif types.string(rhs) then
+    set_keymap(mode, lhs, rhs, opts)
+  end
 end
 
 -- commonMapping({
@@ -45,25 +45,25 @@ end
 --   opts = { mode = 'i', silent = true }
 -- })
 local commonMapping = function(tbl, mappings)
-	local options = tbl.opts or { mode = "n" }
-	if not types.table(mappings) then
-		mappings = tbl
-	end
-	if not types.table(mappings) then
-		return
-	end
-	for _, mapping in ipairs(mappings) do
-		singleMapping(mapping, options)
-	end
+  local options = tbl.opts or { mode = "n" }
+  if not types.table(mappings) then
+    mappings = tbl
+  end
+  if not types.table(mappings) then
+    return
+  end
+  for _, mapping in ipairs(mappings) do
+    singleMapping(mapping, options)
+  end
 end
 
 function map.mode(tbl, mode)
-	local opts = tbl.opts or {}
-	opts.mode = mode
-	opts.silent = true
-	tbl.opts = opts
+  local opts = tbl.opts or {}
+  opts.mode = mode
+  opts.silent = true
+  tbl.opts = opts
 
-	commonMapping(tbl)
+  commonMapping(tbl)
 end
 
 -- map.normal({
@@ -71,48 +71,48 @@ end
 --   { 'L', ':Action2<cr>' },
 -- })
 function map.normal(tbl)
-	map.mode(tbl, normal)
+  map.mode(tbl, normal)
 end
 
 function map.insert(tbl)
-	map.mode(tbl, insert)
+  map.mode(tbl, insert)
 end
 
 function map.terminal(tbl)
-	map.mode(tbl, terminal)
+  map.mode(tbl, terminal)
 end
 
 function map.visual(tbl)
-	map.mode(tbl, visual)
+  map.mode(tbl, visual)
 end
 
 function map.command(tbl)
-	map.mode(tbl, command)
+  map.mode(tbl, command)
 end
 
 function map.extra(tbl)
-	map.mode(tbl, extra)
+  map.mode(tbl, extra)
 end
 
 function map.buffer(tbl, opts)
-	local mode = normal
+  local mode = normal
 
-	if not types.table(opts) then
-		opts = {}
-	end
-	if not types.boolean(opts.noremap) then
-		opts.noremap = true
-	end
-	if not types.boolean(opts.silent) then
-		opts.silent = true
-	end
+  if not types.table(opts) then
+    opts = {}
+  end
+  if not types.boolean(opts.noremap) then
+    opts.noremap = true
+  end
+  if not types.boolean(opts.silent) then
+    opts.silent = true
+  end
 
-	for _, mapping in ipairs(tbl) do
-		local lhs = mapping[1]
-		local rhs = mapping[2]
+  for _, mapping in ipairs(tbl) do
+    local lhs = mapping[1]
+    local rhs = mapping[2]
 
-		set_buf_keymap(0, mode, lhs, rhs, opts)
-	end
+    set_buf_keymap(0, mode, lhs, rhs, opts)
+  end
 end
 
 return map
