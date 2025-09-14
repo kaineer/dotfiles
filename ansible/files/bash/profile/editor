@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
-
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
 ### NOTE: this line means we should not load editor env
 ###   for non-interactive shell
 [[ "$1" != "-i" ]] && return

@@ -1,4 +1,12 @@
 #!/usr/bin/env bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: this variable is used by
+#  * git config
 
 ### NOTE: this line means we should fix path
 ###   for non-interactive shell

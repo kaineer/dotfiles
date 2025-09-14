@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
-
-### NOTE: this line means we should not load fzf
-###   for non-interactive shell
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
 [[ "$1" != "-i" ]] && return
 
 # NOTE: needs keychain, but it should be installed
