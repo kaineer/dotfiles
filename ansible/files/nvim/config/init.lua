@@ -6,7 +6,8 @@ require("autocmd")
 
 -- setup plugins
 require("lazy").setup({
-  require("plugins.colors.nordic"),
+  -- require("plugins.colors.nordic"),
+  require("plugins.colors.vague"),
   require("plugins.telescope"),
   require("plugins.navigation"),
   require("plugins.treesitter"),

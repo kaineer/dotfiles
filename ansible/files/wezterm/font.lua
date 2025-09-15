@@ -9,6 +9,8 @@ return function(config, wezterm)
   --
   config.font = wezterm.font_with_fallback({
     "FiraCode Nerd Font", -- firacode, it is more compact
-    "GitLab Mono", -- gitlab eyecandy
+    "GitLab Mono",        -- gitlab eyecandy
   })
+
+  config.warn_about_missing_glyphs = false
 end

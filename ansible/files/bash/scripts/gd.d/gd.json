@@ -118,5 +118,9 @@
   "install.doctor": {
     "url": "https://install.doctor/",
     "bin": "open"
+  },
+  "jj-vcs": {
+    "url": "https://jj-vcs.github.io/",
+    "bin": "open"
   }
 }
