@@ -115,6 +115,10 @@
     "url": "https://keep.google.com/#label/shedevrum",
     "bin": "open"
   },
+  "generator:box-shadow": {
+    "url": "https://html-css-js.com/css/generator/box-shadow/",
+    "bin": "open"
+  },
   "install.doctor": {
     "url": "https://install.doctor/",
     "bin": "open"
