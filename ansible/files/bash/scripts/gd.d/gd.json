@@ -126,5 +126,9 @@
   "jj-vcs": {
     "url": "https://jj-vcs.github.io/",
     "bin": "open"
+  },
+  "itc:swagger": {
+    "url": "http://10.1.0.213:8080/webjars/swagger-ui/index.html",
+    "bin": "open"
   }
 }
