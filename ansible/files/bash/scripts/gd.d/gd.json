@@ -79,8 +79,12 @@
     "url": "https://www.canva.com/colors/color-wheel/",
     "bin": "open"
   },
-  "project:testbench": {
-    "dir": "/home/kaineer/devel/itc/test-bench",
+  "project:testbench:client": {
+    "dir": "/home/kaineer/devel/itc/test-bench/client",
+    "bin": "nvim"
+  },
+  "project:testbench:server": {
+    "dir": "/home/kaineer/devel/itc/test-bench/server",
     "bin": "nvim"
   },
   "gosuslugi.ru": {

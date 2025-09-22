@@ -13,19 +13,21 @@
     mode: "755"
 
 - name: Copy git config
-  copy:
+  file:
     src: ../../files/git/gitconfig
     dest: "/home/{{ user.name }}/.config/git/config"
+    force: "yes"
     state: "link"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "644"
 
 - name: Copy git global ignore
-  copy:
+  file:
     src: "{{playbook_dir}}/files/git/gitignore"
     dest: "/home/{{ user.name }}/.config/git/ignore"
     state: "link"
+    force: "yes"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "644"

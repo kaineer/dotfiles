@@ -1,0 +1,22 @@
+- name: Check if zathura is installed
+  stat:
+    path: "/bin/zathura"
+  register: "zathura_bin"
+
+- name: Create config dir
+  when: "zathura_bin.stat.exists"
+  file:
+    state: "directory"
+    path: "/home/{{user.name}}/.config/zathura"
+    mode: "0755"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+
+- name: Link zathura config
+  when: "zathura_bin.stat.exists"
+  file:
+    src: "{{ playbook_dir }}/files/zathura/rc"
+    dest: "/home/{{user.name}}/.config/zathura/zathurarc"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: "link"
