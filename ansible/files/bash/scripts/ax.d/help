@@ -20,4 +20,3 @@ echo " $ ax key gl|gitlab   # copy public ssh, open gitlab settings"
 echo " $ ax pass clone      # clone password repo"
 echo " $ ax x ...           # run any command in dotfiles"
 echo ""
-
