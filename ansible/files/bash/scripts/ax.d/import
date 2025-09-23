@@ -6,7 +6,7 @@ import_host_and_keys() {
   NAME=$1
   if [ -f $DF_TARGET/$NAME.host ]; then
     debug "Importing $NAME host config"
-    cp $DF_TARGET/jino.host $HOME/.ssh/hosts/jino
+    cp $DF_TARGET/$NAME.host $HOME/.ssh/hosts/$NAME
 
     debug "Copying keys for $NAME"
     PUB=$DF_TARGET/$NAME.pub
