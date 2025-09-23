@@ -14,7 +14,7 @@
 
 - name: Copy git config
   file:
-    src: ../../files/git/gitconfig
+    src: "{{ playbook_dir }}/files/git/gitconfig"
     dest: "/home/{{ user.name }}/.config/git/config"
     force: "yes"
     state: "link"
@@ -24,7 +24,7 @@
 
 - name: Copy git global ignore
   file:
-    src: "{{playbook_dir}}/files/git/gitignore"
+    src: "{{ playbook_dir }}/files/git/gitignore"
     dest: "/home/{{ user.name }}/.config/git/ignore"
     state: "link"
     force: "yes"
