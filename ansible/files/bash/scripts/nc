@@ -1,4 +1,12 @@
 #!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: Select color from nord palette and copy to clipboard
+#
 
 COLOR=$(nord lsn | fzf -dmenu | sed "s/^.*: //")
 echo "$COLOR" | xsel -b

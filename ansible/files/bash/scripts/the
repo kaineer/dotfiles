@@ -27,12 +27,10 @@ echo_usage() {
 }
 
 echo_path() {
-  echo -e "## PATH\n"
-  echo "$PATH" | sed "s/:/\\n/g" | grep -v "^$" | sed "s/^/ -> /"
+  echo "$PATH" | sed "s/:/\\n/g" | grep -v "^$"
 }
 
 echo_net() {
-  echo -e "## NET\n"
   NETS="$(ip a | grep -E '^[0-9]+:' | cut -f2 -d' ' | grep -Ev '(lo|tun)')"
   for protocol in $NETS; do
     protocol="$(echo $protocol | sed 's/: *$//m')"
@@ -51,9 +49,9 @@ echo_uname() {
 }
 
 echo_architecture() {
-  OPSYS="$(uname -s | tr '[A-Z]' '[a-z]')"
+  OS="$(uname -s | tr '[A-Z]' '[a-z]')"
   MACHINE="$(uname -m)"
-  echo "${OPSYS}-${MACHINE}"
+  echo "${OS}-${MACHINE}"
 }
 
 case "$1" in
