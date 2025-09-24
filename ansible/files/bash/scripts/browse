@@ -1,0 +1,32 @@
+#!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: open browser using $1 as url
+#
+# Dependencies:
+#   * BROWSER env variable
+#   * $1 should be an url
+
+open_browser() {
+  BROWSER=${BROWSER:-$(which brave-browser)}
+  $BROWSER $1 >/dev/null
+  if [[ "$BROWSER_CLASS" != "" ]]; then
+    xdo activate -N "$BROWSER_CLASS"
+  fi
+}
+
+URL=$1
+
+if [[ "$URL" != "" ]]; then
+  TERM_ID=browseurl term store "$URL"
+  open_browser $URL
+else
+  URL=$(TERM_ID=browseurl term)
+  if [[ "$URL" != "" ]]; then
+    open_browser $URL
+  fi
+fi

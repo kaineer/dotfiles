@@ -10,6 +10,7 @@
   file:
     src: "{{ playbook_dir }}/files/bash/scripts/{{ item }}"
     dest: "/home/{{ user.name }}/bin/{{ item }}"
+    force: true
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     state: "link"

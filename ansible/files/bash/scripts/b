@@ -31,6 +31,6 @@ main() {
 }
 
 case "$1" in
-  "h"|"help") usage ;;
-  *) main $@ ;;
+"h" | "help") usage ;;
+*) main $@ ;;
 esac

@@ -3,5 +3,5 @@
 if [[ "$TMUX" == "" ]]; then
   x $@
 else
-  tmux display-popup -T$PWD x $@
+  tmux display-popup -w80% -T$PWD -d$PWD x $@
 fi
