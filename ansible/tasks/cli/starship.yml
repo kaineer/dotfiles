@@ -43,10 +43,10 @@
 
 - name: Copy starship profile
   copy:
-    src: ../../files/starship/profile.sh
+    src: "{{playbook_dir}}/files/starship/profile.sh"
     dest: "/home/{{ user.name }}/.config/profile.d/starship"
 
 - name: Copy icon script
   copy:
-    src: ../../files/starship/icon
+    src: "{{playbook_dir}}/files/starship/icon"
     dest: "/home/{{ user.name }}/bin/icon"

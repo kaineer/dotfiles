@@ -1,7 +1,7 @@
 ---
 - name: Copy bashrc
   copy:
-    src: ../../files/bash/rc
+    src: "{{ playbook_dir }}/files/bash/rc"
     dest: "/home/{{ user.name }}/.bashrc"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
@@ -9,7 +9,7 @@
 
 - name: Copy profile
   copy:
-    src: ../../files/bash/profile.sh
+    src: "{{ playbook_dir }}/files/bash/profile.sh"
     dest: "/home/{{ user.name }}/.profile"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"

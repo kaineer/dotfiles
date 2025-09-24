@@ -17,7 +17,7 @@
 
 - name: Copy LF rc file
   copy:
-    src: ../../files/lf/rc
+    src: "{{ playbook_dir }}/files/lf/rc"
     dest: "/home/{{ user.name }}/.config/lf/lfrc"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
@@ -25,12 +25,12 @@
 
 - name: Copy icons file
   copy:
-    src: ../../files/lf/icons.example
+    src: "{{playbook_dir}}/files/lf/icons.example"
     dest: "/home/{{ user.name }}/.config/lf/icons"
 
 - name: Copy colors file
   copy:
-    src: ../../files/lf/colors.example
+    src: "{{ playbook_dir }}/files/lf/colors.example"
     dest: "/home/{{ user.name }}/.config/lf/colors"
 
 - name: Mkdir for bin scripts
@@ -44,7 +44,7 @@
 
 - name: Copy LF previewer
   copy:
-    src: "../../files/lf/previewer.sh"
+    src: "{{playbook_dir}}/files/lf/previewer.sh"
     dest: "/home/{{ user.name }}/bin/lf-preview.sh"
     mode: "644"
     owner: "{{ user.name }}"
@@ -66,7 +66,7 @@
     owner: "{{ user.name }}"
     ghr_install_dir: "/home/{{ user.name }}/bin"
     ghr_releases:
-    - url: "{{ lf_repository }}/releases/download/{{ lf_version }}/lf-{{ lf_architecture }}.tar.gz"
-      copy_src: "{{ ghr_tmp_dir }}/lf"
-      copy_dest: "{{ ghr_install_dir}}/lf"
-      extract_dir: ""
+      - url: "{{ lf_repository }}/releases/download/{{ lf_version }}/lf-{{ lf_architecture }}.tar.gz"
+        copy_src: "{{ ghr_tmp_dir }}/lf"
+        copy_dest: "{{ ghr_install_dir}}/lf"
+        extract_dir: ""
