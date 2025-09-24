@@ -16,22 +16,34 @@
     mode: "755"
 
 - name: Copy LF rc file
-  copy:
+  file:
     src: "{{ playbook_dir }}/files/lf/rc"
     dest: "/home/{{ user.name }}/.config/lf/lfrc"
+    state: "link"
+    force: true
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "644"
 
 - name: Copy icons file
-  copy:
+  file:
     src: "{{playbook_dir}}/files/lf/icons.example"
     dest: "/home/{{ user.name }}/.config/lf/icons"
+    state: "link"
+    force: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "644"
 
 - name: Copy colors file
-  copy:
+  file:
     src: "{{ playbook_dir }}/files/lf/colors.example"
     dest: "/home/{{ user.name }}/.config/lf/colors"
+    state: "link"
+    force: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "644"
 
 - name: Mkdir for bin scripts
   file:
@@ -43,9 +55,11 @@
     mode: "755"
 
 - name: Copy LF previewer
-  copy:
+  file:
     src: "{{playbook_dir}}/files/lf/previewer.sh"
     dest: "/home/{{ user.name }}/bin/lf-preview.sh"
+    state: "link"
+    force: true
     mode: "644"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"

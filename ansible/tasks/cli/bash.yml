@@ -1,19 +1,23 @@
 ---
 - name: Copy bashrc
-  copy:
+  file:
     src: "{{ playbook_dir }}/files/bash/rc"
     dest: "/home/{{ user.name }}/.bashrc"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "644"
+    state: "link"
+    force: true
 
 - name: Copy profile
-  copy:
+  file:
     src: "{{ playbook_dir }}/files/bash/profile.sh"
     dest: "/home/{{ user.name }}/.profile"
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "644"
+    state: "link"
+    force: true
 
 - name: Create profile directory
   file:

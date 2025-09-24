@@ -1,6 +1,8 @@
 ---
 - name: Copy .tmux.conf
-  copy:
+  file:
+    state: "link"
+    force: true
     src: "{{ playbook_dir }}/files/tmux/tmux.conf"
     dest: "/home/{{ user.name }}/.tmux.conf"
     owner: "{{ user.name }}"
@@ -22,4 +24,3 @@
     state: link
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
-

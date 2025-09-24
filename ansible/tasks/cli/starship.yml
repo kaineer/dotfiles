@@ -42,11 +42,19 @@
     group: "{{ user.name }}"
 
 - name: Copy starship profile
-  copy:
+  file:
     src: "{{playbook_dir}}/files/starship/profile.sh"
     dest: "/home/{{ user.name }}/.config/profile.d/starship"
+    state: "link"
+    force: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
 
 - name: Copy icon script
-  copy:
+  file:
     src: "{{playbook_dir}}/files/starship/icon"
     dest: "/home/{{ user.name }}/bin/icon"
+    state: "link"
+    force: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
