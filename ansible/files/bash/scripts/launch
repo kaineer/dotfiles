@@ -42,7 +42,7 @@ case "$1" in
   list_commands
   ;;
 "")
-  CMD=$(list_commands | rofi -dmenu)
+  CMD=$(list_commands | $HOME/bin/chooser)
   [[ "$CMD" != "" ]] && . $LAUNCH_DIR/$CMD
   ;;
 *)

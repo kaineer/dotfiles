@@ -134,5 +134,9 @@
   "itc:swagger": {
     "url": "http://10.1.0.213:8080/webjars/swagger-ui/index.html",
     "bin": "open"
+  },
+  "ido.skills": {
+    "url": "https://ido.skills.tsu.ru/mod/page/view.php?id=29835",
+    "bin": "open"
   }
 }
