@@ -1,7 +1,7 @@
 -- font.lua
 
 return function(config, wezterm)
-  config.font_size = 25.0
+  config.font_size = 16.0
 
   -- To get available font names use
   --
@@ -9,6 +9,8 @@ return function(config, wezterm)
   --
   config.font = wezterm.font_with_fallback({
     "FiraCode Nerd Font", -- firacode, it is more compact
-    "GitLab Mono", -- gitlab eyecandy
+    "GitLab Mono",        -- gitlab eyecandy
   })
+
+  config.warn_about_missing_glyphs = false
 end

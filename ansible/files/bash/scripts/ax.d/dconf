@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+SHORTCUTS_FILE="$DF_DIR/dconf/keyboard-shortcuts.dconf"
+SHORTCUTS_PATH="/org/cinnamon/desktop/keybindings/"
+
+if [[ "$(which dconf)" == "" ]]; then
+  echo "dconf not found"
+fi
+
+case "$1" in
+  "export")
+    mkdir -p "$DF_DIR/dconf"
+    dconf dump "$SHORTCUTS_PATH" >$SHORTCUTS_FILE
+    ;;
+  "import")
+    if [ -f $SHORTCUTS_FILE ]; then
+      cat $SHORTCUTS_FILE | dconf load "$SHORTCUTS_PATH"
+    fi
+    ;;
+  "debug")
+    cat $SHORTCUTS_FILE
+    ;;
+esac

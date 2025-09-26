@@ -1,0 +1,93 @@
+[/]
+custom-list=['custom13', 'custom12', 'custom11', 'custom8', 'custom7', 'custom5', 'custom3', 'custom1', '__dummy__', 'custom2', 'custom0', 'custom4', 'custom6', 'custom9', 'custom10']
+looking-glass-keybinding=@as []
+show-desklets=@as []
+
+[custom-keybindings/custom0]
+binding=['<Super>backslash']
+command='/home/kaineer/bin/launch browser'
+name='launch browser'
+
+[custom-keybindings/custom1]
+binding=['<Super>Return']
+command='/home/kaineer/bin/launch terminal'
+name='launch or find terminal'
+
+[custom-keybindings/custom10]
+binding=['<Super>r']
+command='/home/kaineer/bin/launch recent'
+name='launch recent'
+
+[custom-keybindings/custom11]
+binding=['<Super>i']
+command='/home/kaineer/bin/launch shortcuts'
+name='launch shortcuts'
+
+[custom-keybindings/custom12]
+binding=['<Super>s']
+command='/home/kaineer/bin/launch cinnamon-settings'
+name='launch cinnamon settings'
+
+[custom-keybindings/custom13]
+binding=['<Super>g']
+command='/home/kaineer/bin/launch gd'
+name='Go ...'
+
+[custom-keybindings/custom2]
+binding=['<Super>x']
+command='/home/kaineer/bin/rndi'
+name='eog'
+
+[custom-keybindings/custom3]
+binding=['<Super>m']
+command='/home/kaineer/bin/launch telegram'
+name='launch telegram'
+
+[custom-keybindings/custom4]
+binding=['<Super>Tab']
+command='/usr/bin/rofi -show window'
+name='select window'
+
+[custom-keybindings/custom5]
+binding=['<Super>k']
+command='/home/kaineer/bin/launch kill'
+name='kill window'
+
+[custom-keybindings/custom6]
+binding=['<Super>semicolon']
+command='/home/kaineer/bin/launch pass'
+name='password'
+
+[custom-keybindings/custom7]
+binding=['<Super>j']
+command='/home/kaineer/bin/launch'
+name='launch ...'
+
+[custom-keybindings/custom8]
+binding=['<Super>space']
+command='/home/kaineer/bin/launch run'
+name='run ...'
+
+[custom-keybindings/custom9]
+binding=['<Super>z']
+command='/home/kaineer/.local/bin/zed'
+name='zed'
+
+[media-keys]
+area-screenshot-clip=['<Primary><Shift>a']
+screensaver=['<Control><Alt>l', '<Super>l']
+screenshot=['<Primary><Shift>p']
+screenshot-clip=['<Super>p']
+
+[wm]
+close=['<Alt>F4', '<Super>q']
+switch-monitor=['XF86Display']
+switch-to-workspace-1=['<Super>1']
+switch-to-workspace-2=['<Super>2']
+switch-to-workspace-3=['<Super>3']
+switch-to-workspace-4=['<Super>4']
+switch-to-workspace-5=['<Super>5']
+switch-to-workspace-6=['<Super>6']
+switch-to-workspace-down=@as []
+switch-to-workspace-left=['<Control><Alt>Left']
+switch-to-workspace-right=['<Control><Alt>Right']
