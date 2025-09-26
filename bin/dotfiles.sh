@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USER=kaineer
+USER=${USER:-kaineer}
 HOME=/home/$USER
 
 set -e
