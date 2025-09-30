@@ -1,0 +1,3 @@
+[/]
+layouts=['us', 'ru']
+options=['lv3\tlv3:switch', 'compat\tmisc:typo', 'grp\tgrp:caps_toggle']

@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+LAYOUTS_FILE="$DF_DIR/dconf/keyboard-layouts.dconf"
+LAYOUTS_PATH="/org/gnome/libgnomekbd/keyboard/"
+
 SHORTCUTS_FILE="$DF_DIR/dconf/keyboard-shortcuts.dconf"
 SHORTCUTS_PATH="/org/cinnamon/desktop/keybindings/"
 
@@ -17,6 +20,7 @@ run_export() {
   mkdir -p "$DF_DIR/dconf"
   dconf dump "$SHORTCUTS_PATH" >$SHORTCUTS_FILE
   dconf dump "$TERMINAL_PATH" >$TERMINAL_FILE
+  dconf dump "$LAYOUTS_PATH" >$LAYOUTS_FILE
 }
 
 run_import() {
@@ -25,6 +29,9 @@ run_import() {
   fi
   if [ -f $TERMINAL_FILE ]; then
     cat $TERMINAL_FILE | dconf load "$TERMINAL_PATH"
+  fi
+  if [ -f $LAYOUTS_FILE ]; then
+    cat $LAYOUTS_FILE | dconf load "$LAYOUTS_PATH"
   fi
 }
 
