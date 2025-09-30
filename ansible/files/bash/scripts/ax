@@ -77,7 +77,9 @@ case "$1" in
   edit_script $1
   ;;
 "sel") edit_script_list ;;
-"update") apply_dotfiles ;;
+"update")
+  apply_dotfiles
+  ;;
 "")
   source $DIR/ax.d/help
   ;;

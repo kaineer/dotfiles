@@ -35,8 +35,8 @@ edit_script() {
     $EDITOR $F
   else
     $EDITOR $F
-    chmod 755 $F
   fi
+  chmod 755 $F
 }
 
 list_in_bin() {

@@ -3,25 +3,35 @@
 SHORTCUTS_FILE="$DF_DIR/dconf/keyboard-shortcuts.dconf"
 SHORTCUTS_PATH="/org/cinnamon/desktop/keybindings/"
 
+TERMINAL_FILE="$DF_DIR/dconf/terminal.dconf"
+TERMINAL_PATH="/org/gnome/terminal/legacy/profiles:/"
+
 check_for_dconf() {
-  [[ "$(which dconf)" == "" ]] && (echo "dconf not found"; exit 1)
+  [[ "$(which dconf)" == "" ]] && (
+    echo "dconf not found"
+    exit 1
+  )
 }
 
 run_export() {
   mkdir -p "$DF_DIR/dconf"
   dconf dump "$SHORTCUTS_PATH" >$SHORTCUTS_FILE
+  dconf dump "$TERMINAL_PATH" >$TERMINAL_FILE
 }
 
 run_import() {
   if [ -f $SHORTCUTS_FILE ]; then
     cat $SHORTCUTS_FILE | dconf load "$SHORTCUTS_PATH"
   fi
+  if [ -f $TERMINAL_FILE ]; then
+    cat $TERMINAL_FILE | dconf load "$TERMINAL_PATH"
+  fi
 }
 
 check_for_dconf
 
 case "$1" in
-  "export") run_export ;;
-  "import") run_import ;;
-  "debug") cat $SHORTCUTS_FILE ;;
+"export") run_export ;;
+"import") run_import ;;
+"debug") cat $SHORTCUTS_FILE ;;
 esac
