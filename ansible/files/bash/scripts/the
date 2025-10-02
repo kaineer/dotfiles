@@ -54,10 +54,16 @@ echo_architecture() {
   echo "${OS}-${MACHINE}"
 }
 
+kill_selected() {
+  PID=$(ps ux | fzf | sed "s/ \+/ /g" | cut -f2 -d" ")
+  [[ "$PID" != "" ]] && kill -9 $PID
+}
+
 case "$1" in
 "path") echo_path ;;
 "net") echo_net ;;
 "uname") echo_uname ;;
 "arch") echo_architecture ;;
+"kill") kill_selected ;;
 "h" | "") echo_usage ;;
 esac
