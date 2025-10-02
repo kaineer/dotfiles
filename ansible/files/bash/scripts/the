@@ -15,6 +15,7 @@ _usage() {
   echo " $ the net       # address of current available network"
   echo " $ the uname     # uname active parts"
   echo " $ the arch      # architecture for binaries"
+  echo " $ the kill      # kill selected process"
   echo "\`\`\`"
 }
 
