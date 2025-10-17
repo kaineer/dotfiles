@@ -43,7 +43,6 @@ system_packages:
   - network-manager-openvpn
   - pass
   - python3-pip
-  - python3-pip
   - python3-venv
   - rsync
   - tldr
@@ -60,6 +59,9 @@ system_packages:
 #
 obsolete_packages:
   - aisleriot
+  - brasero
+  - four-in-a-row
+  - five-or-more
   - gnome-2048
   - gnome-chess
   - gnome-games
@@ -72,16 +74,14 @@ obsolete_packages:
   - gnome-taquin
   - gnome-tetravex
   - gnome-tweaks
-  - swell-foop
-  - iagno
-  - hitori
-  - lightsoff
-  - quadrapassel
-  - four-in-a-row
-  - five-or-more
-  - tali
-  - brasero
   - hexchat
+  - hitori
+  - iagno
+  - lightsoff
   - pidgin
+  - quadrapassel
+  - rhythmbox
+  - swell-foop
   - shotwell
+  - tali
   - thunderbird

@@ -17,9 +17,10 @@
   when: "ansible_nodename in awesome_workstations"
 
 - name: Remove unnecessary packages
-  package:
+  apt:
     name: "{{ obsolete_packages }}"
     state: "absent"
+    autoremove: true
 
 - name: Create bin directory
   ansible.builtin.file:
