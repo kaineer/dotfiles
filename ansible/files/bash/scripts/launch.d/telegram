@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
-export TELEGRAM_BINARY=$(which telegram-desktop)
+export TELEGRAM_BINARY="$(which telegram-desktop)"
+if [[ "${TELEGRAM_BINARY}" == "" ]]; then
+  export TELEGRAM_BINARY="$(which telegram)"
+fi
 
 start_or_activate_by_classname "$TELEGRAM_BINARY" "Telegram"
