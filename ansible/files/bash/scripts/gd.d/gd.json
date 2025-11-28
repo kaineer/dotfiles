@@ -139,6 +139,10 @@
     "url": "https://ido.skills.tsu.ru/mod/page/view.php?id=29835",
     "bin": "open"
   },
+  "oop:tests": {
+    "dir": "/home/kaineer/devel/itc/oop-fe-2025.ai/docs/tests",
+    "bin": "lf"
+  },
   "github": {
     "url": "https://github.com/kaineer",
     "bin": "open"
