@@ -64,3 +64,7 @@ for SRC in $PROFILE_ITEMS; do
   source $SRC -i
 done
 # tag: /config-profile
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

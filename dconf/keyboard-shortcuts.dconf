@@ -1,5 +1,5 @@
 [/]
-custom-list=['custom13', 'custom12', 'custom11', 'custom8', 'custom7', 'custom5', 'custom3', 'custom1', '__dummy__', 'custom2', 'custom0', 'custom4', 'custom6', 'custom9', 'custom10']
+custom-list=['custom10', 'custom9', 'custom6', 'custom4', 'custom0', 'custom2', '__dummy__', 'custom1', 'custom3', 'custom5', 'custom7', 'custom8', 'custom11', 'custom12', 'custom13']
 looking-glass-keybinding=@as []
 show-desklets=@as []
 
@@ -70,7 +70,7 @@ name='run ...'
 
 [custom-keybindings/custom9]
 binding=['<Super>z']
-command='/home/kaineer/.local/bin/zed'
+command='/home/kaineer/bin/launch zed'
 name='zed'
 
 [media-keys]
@@ -91,3 +91,4 @@ switch-to-workspace-6=['<Super>6']
 switch-to-workspace-down=@as []
 switch-to-workspace-left=['<Control><Alt>Left']
 switch-to-workspace-right=['<Control><Alt>Right']
+toggle-maximized=['<Alt>Return']

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export ZED_BINARY="$HOME/.local/bin/zed"
+
+start_or_activate_by_classname "$ZED_BINARY" "dev.zed.Zed"
