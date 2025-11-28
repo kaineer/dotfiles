@@ -1,0 +1,51 @@
+Please report this error to author.
+`:help eskk` to see author's e-mail address.
+
+Sat 11 Oct 2025 08:02:57 PM +05
+
+--- char ---
+char: ''(0)
+mode(): n
+--- char ---
+
+--- exception ---
+exception type: Vim internal error
+v:exception: Can't read '/home/kaineer/.skk-jisyo'!
+v:throwpoint: VimLeavePre Autocommands for "*"..function <SNR>43_cmd_update_dictionary[3]..eskk#get_skk_dict[2]..eskk#dictionary#new[1]..<SNR>127_Dictionary_new[4]..<SNR>127_PhysicalDict_new[10]..<SNR>127_PhysicalDict_update_lines[9]..<SNR>127_PhysicalDict_update_lines_main, line 2
+
+--- exception ---
+
+--- preedit ---
+(no preedit)
+--- preedit ---
+
+--- Vim's :version ---
+NVIM v0.11.4
+Build type: Release
+LuaJIT 2.1.1741730670
+Run ":verbose version" for more info
+--- Vim's :version ---
+
+
+--- Operating System ---
+"uname -a" = Linux myrkur 6.1.0-40-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.153-1 (2025-09-20) x86_64 GNU/Linux
+--- Operating System ---
+
+--- feature-list ---
+gui_running = 0
+unix = 1
+mac = 0
+macunix = 0
+win16 = 0
+win32 = 0
+win64 = 0
+win32unix = 0
+win95 = 0
+amiga = 0
+beos = 0
+dos16 = 0
+dos32 = 0
+os2 = 0
+qnx = 0
+vms = 0
+--- feature-list ---

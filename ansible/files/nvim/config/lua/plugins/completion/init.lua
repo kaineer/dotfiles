@@ -13,7 +13,7 @@ return {
 		"hrsh7th/vim-vsnip-integ",
 		"hrsh7th/cmp-emoji",
 		"andersevenrud/cmp-tmux",
-		"dmitmel/cmp-digraphs",
+		-- "dmitmel/cmp-digraphs",
 
 		-- icons
 		"onsails/lspkind.nvim",

@@ -7,6 +7,7 @@ gui_packages:
   - gimp
   - gnome-text-editor
   - libnotify-bin
+  - lightdm-gtk-greeter-settings
   - mediainfo
   - moc
   - mplayer
@@ -45,6 +46,7 @@ system_packages:
   - python3-pip
   - python3-venv
   - rsync
+  - strace
   - tldr
   - tmux
   - vivid

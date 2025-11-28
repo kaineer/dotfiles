@@ -14,3 +14,10 @@ clip_aliases() {
 }
 
 [ -x /usr/bin/xsel ] && clip_aliases
+
+# Make dir unless exists
+#   then change into this dir
+mcd() {
+  [ ! -d $1 ] && mkdir -p $1
+  cd $1
+}

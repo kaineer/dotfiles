@@ -142,5 +142,29 @@
   "oop:tests": {
     "dir": "/home/kaineer/devel/itc/oop-fe-2025.ai/docs/tests",
     "bin": "lf"
+  },
+  "github": {
+    "url": "https://github.com/kaineer",
+    "bin": "open"
+  },
+  "doppler": {
+    "url": "https://dashboard.doppler.com/",
+    "bin": "open"
+  },
+  "tool:svg:snap": {
+    "url": "http://snapsvg.io/",
+    "bin": "open"
+  },
+  "nihongo:jisho": {
+    "url": "https://jisho.org/",
+    "bin": "open"
+  },
+  "ai:deepseek": {
+    "url": "https://chat.deepseek.com/",
+    "bin": "open"
+  },
+  "ai:grok": {
+    "url": "https://grok.com/",
+    "bin": "open"
   }
 }
