@@ -18,6 +18,12 @@ save_version() {
   VERSION=$(cat package.json | jq -r .devDependencies.vite)
   if [[ "$VERSION" != "" ]]; then
     (
+      echo "#  _____  ___"
+      echo "# /__   \/ __\  Tangerine Cat, kaineer@gmail.com"
+      echo "#   / /\/ /"
+      echo "#  / / / /___   github: https://github.com/kaineer"
+      echo "#  \/  \____/   twitter: https://twitter.com/kaineer"
+      echo "#"
       echo "# Vite version"
       echo "export VITE_VERSION=\"$VERSION\""
     ) >$VERSION_FILE
