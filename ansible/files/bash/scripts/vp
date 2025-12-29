@@ -1,0 +1,44 @@
+#!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+
+VERSION_FILE="$HOME/.config/profile.d/vite.version"
+
+usage() {
+  echo " $ vp new app_name    # create project"
+  echo " $ vp echo            # output variables"
+  echo " $ vp save            # save vite version"
+}
+
+save_version() {
+  VERSION=$(cat package.json | jq -r .devDependencies.vite)
+  if [[ "$VERSION" != "" ]]; then
+    (
+      echo "# Vite version"
+      echo "export VITE_VERSION=\"$VERSION\""
+    ) >$VERSION_FILE
+  fi
+}
+
+echo_version() {
+  echo "in file [$VERSION_FILE]:"
+  echo "export VITE_VERSION=$VITE_VERSION"
+}
+
+create_project() {
+  echo "npm create vite@$VITE_VERSION $1"
+}
+
+case "$1" in
+"save") save_version ;;
+"echo" | "info") echo_version ;;
+"new" | "create")
+  shift
+  create_project $@
+  ;;
+"" | "h" | "help") usage ;;
+esac
