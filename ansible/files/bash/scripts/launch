@@ -37,7 +37,16 @@ list_commands() {
   cd $LAUNCH_DIR && ls -1 && cd - >/dev/null
 }
 
+launch_last() {
+  # LAST=$(history 1 | sed 's/^[[:space:]]*//')
+  LAST_DIR=$(fasd -l | tail -n1)
+  eval "cd $LAST_DIR && fc -s"
+}
+
 case "$1" in
+"last")
+  launch_last
+  ;;
 "ls" | "list")
   list_commands
   ;;
