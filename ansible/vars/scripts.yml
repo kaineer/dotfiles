@@ -17,6 +17,7 @@ scripts:
   - tmux-status
   - tx
   - yn
+  - vp
   - x
   - xtm
   - nc
