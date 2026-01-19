@@ -2,4 +2,27 @@
 
 export ZED_BINARY="$HOME/.local/bin/zed"
 
-start_or_activate_by_classname "$ZED_BINARY" "dev.zed.Zed"
+CLASSNAME="dev.zed.Zed"
+
+CONTENT=$(xdotool search --class $CLASSNAME)
+
+COUNT="$(echo "$CONTENT" | wc -l)"
+
+list_windows() {
+  for x in $1; do
+    title=$(xdotool getwindowname $x)
+    echo "$x $title"
+  done
+}
+
+if [[ "$COUNT" == "0" ]]; then
+  "$ZED_BINARY"
+elif [[ "$COUNT" == "1" ]]; then
+  xdotool windowactivate "$CONTENT"
+else
+  OUTPUT=$(list_windows "$CONTENT" | rofi -dmenu -p zed)
+  WID=$(echo "$OUTPUT" | sed "s/ .*$//")
+  xdotool windowactivate "$WID"
+fi
+
+# start_or_activate_by_classname "$ZED_BINARY" "dev.zed.Zed"
