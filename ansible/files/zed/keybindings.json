@@ -1,0 +1,53 @@
+//  _____  ___
+// /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+//   / /\/ /
+//  / / / /___   github: https://github.com/kaineer
+//  \/  \____/   twitter: https://twitter.com/kaineer
+//
+// Zed keybindings
+//
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-w": "workspace::CloseActiveDock",
+      "ctrl-space t e": "project_panel::ToggleFocus",
+      "ctrl-space n w": "workspace::NewWindow",
+      "ctrl-space c k": "zed::OpenKeymapFile",
+      "ctrl-space t g": "git_panel::ToggleFocus",
+      "ctrl-space t a": "agent::ToggleFocus",
+      "ctrl-space t s": "task::Spawn",
+      "ctrl-j": null
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "ctrl-w": "pane::CloseActiveItem",
+      "ctrl-space o f": "file_finder::Toggle",
+      "ctrl-space o o": "outline::Toggle",
+      "ctrl-space c t": "zed::OpenProjectTasks",
+      "ctrl-space c a": "editor::ToggleCodeActions",
+      "ctrl-space /": "buffer_search::Deploy",
+      "ctrl-space r g": "project_search::ToggleAllSearchResults",
+      "ctrl-space 1": "pane::CloseOtherItems",
+      "ctrl-space 2": "workspace::NewFileSplitVertical",
+      "alt-h": "workspace::ActivatePreviousPane",
+      "alt-l": "workspace::ActivateNextPane"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-j": "terminal_panel::ToggleFocus"
+    }
+  },
+  {
+    "context": "Terminal",
+    "bindings": {
+      "ctrl-w": "workspace::CloseActiveDock",
+      "ctrl-a ctrl-w": "workspace::CloseAllDocks",
+      "ctrl-k": "editor::ToggleFocus"
+    }
+  }
+]

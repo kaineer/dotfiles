@@ -24,5 +24,3 @@ else
   WID=$(echo "$OUTPUT" | sed "s/ .*$//")
   xdotool windowactivate "$WID"
 fi
-
-# start_or_activate_by_classname "$ZED_BINARY" "dev.zed.Zed"
