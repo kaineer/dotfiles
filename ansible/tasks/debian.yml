@@ -52,3 +52,4 @@
 - include_tasks: ./gui/obsidian.yml
 - include_tasks: ./gui/telegram.yml
 - include_tasks: ./gui/zathura.yml
+- include_tasks: ./gui/zed.yml

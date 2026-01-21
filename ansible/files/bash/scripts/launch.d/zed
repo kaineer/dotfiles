@@ -6,7 +6,7 @@ CLASSNAME="dev.zed.Zed"
 
 CONTENT=$(xdotool search --class $CLASSNAME)
 
-COUNT="$(echo "$CONTENT" | sed "s/ *//" | grep -v "^$" | wc -l)"
+COUNT="$(echo "$CONTENT" | sed "s/ *$//" | grep -v "^$" | wc -l)"
 
 list_windows() {
   for x in $1; do
@@ -24,5 +24,3 @@ else
   WID=$(echo "$OUTPUT" | sed "s/ .*$//")
   xdotool windowactivate "$WID"
 fi
-
-# start_or_activate_by_classname "$ZED_BINARY" "dev.zed.Zed"
