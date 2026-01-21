@@ -1,0 +1,32 @@
+# Install zed editor
+#
+# url: https://zed.dev
+# recipe: https://chat.deepseek.com/share/agb7oxnulmw0rboedv
+
+- name: Install Zed using the official install script
+  shell: |
+    curl -fsSL https://zed.dev/install.sh | sh
+  args:
+    creates: "/home/{{ user.name }}/.local/bin/zed"
+
+- name: Create configuration dir
+  file:
+    path: "/home/{{user.name}}/.config/zed"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0755"
+
+- name: Create link to settings.json
+  file:
+    src: "{{ playbook_dir }}/files/zed/settings.json"
+    dest: "/home/{{user.name}}/.config/zed/settings.json"
+    state: link
+    force: yes
+
+- name: Create link to keymap.json
+  file:
+    src: "{{ playbook_dir }}/files/zed/keymap.json"
+    dest: "/home/{{user.name}}/.config/zed/keymap.json"
+    state: link
+    force: yes

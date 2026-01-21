@@ -6,7 +6,7 @@ CLASSNAME="dev.zed.Zed"
 
 CONTENT=$(xdotool search --class $CLASSNAME)
 
-COUNT="$(echo "$CONTENT" | wc -l)"
+COUNT="$(echo "$CONTENT" | sed "s/ .*$//" | grep -v "^$" | wc -l)"
 
 list_windows() {
   for x in $1; do
