@@ -5,7 +5,8 @@
 //  \/  \____/   twitter: https://twitter.com/kaineer
 //
 // Zed keybindings
-
+// zed documentation: https://zed.dev/docs/key-bindings
+//
 [
   {
     "context": "Workspace",
@@ -20,8 +21,8 @@
       "ctrl-space t s": "task::Spawn",
       "ctrl-space ctrl-space": "command_palette::Toggle",
       "ctrl-j": null,
-      "ctrl-h": null,
-    },
+      "ctrl-h": null
+    }
   },
   {
     "context": "Editor && vim_mode == normal",
@@ -36,41 +37,41 @@
       "ctrl-space 1": "pane::CloseOtherItems",
       "ctrl-space 2": "workspace::NewFileSplitVertical",
       "alt-h": "workspace::ActivatePreviousPane",
-      "alt-l": "workspace::ActivateNextPane",
-    },
+      "alt-l": "workspace::ActivateNextPane"
+    }
   },
   {
     "context": "AgentPanel",
     "bindings": {
-      "ctrl-h": "workspace::CloseAllDocks",
-    },
+      "ctrl-h": "workspace::CloseAllDocks"
+    }
   },
   {
     "context": "Editor",
     "bindings": {
-      "ctrl-l": null,
-    },
+      "ctrl-l": null
+    }
   },
   {
     "context": "Editor && mode==full",
     "bindings": {
       "ctrl-j": "terminal_panel::ToggleFocus",
       "ctrl-h": "project_panel::ToggleFocus",
-      "ctrl-l": "agent::ToggleFocus",
-    },
+      "ctrl-l": "agent::ToggleFocus"
+    }
   },
   {
     "context": "ProjectPanel",
     "bindings": {
-      "ctrl-l": ["workspace::CloseAllDocks", "editor::ToggleFocus"],
-    },
+      "ctrl-l": ["workspace::CloseAllDocks", "editor::ToggleFocus"]
+    }
   },
   {
     "context": "Terminal",
     "bindings": {
       "ctrl-w": "workspace::CloseActiveDock",
       "ctrl-a ctrl-w": "workspace::CloseAllDocks",
-      "ctrl-k": ["workspace::CloseAllDocks", "editor::ToggleFocus"],
-    },
-  },
+      "ctrl-k": ["workspace::CloseAllDocks", "editor::ToggleFocus"]
+    }
+  }
 ]
