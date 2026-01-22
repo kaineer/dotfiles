@@ -19,16 +19,16 @@
       "ctrl-space t t": "terminal_panel::ToggleFocus",
       "ctrl-space t a": "agent::ToggleFocus",
       "ctrl-space t s": "task::Spawn",
+      "ctrl-space o f": "file_finder::Toggle",
       "ctrl-space ctrl-space": "command_palette::Toggle",
       "ctrl-j": null,
-      "ctrl-h": null
-    }
+      "ctrl-h": null,
+    },
   },
   {
     "context": "Editor && vim_mode == normal",
     "bindings": {
       "ctrl-w": "pane::CloseActiveItem",
-      "ctrl-space o f": "file_finder::Toggle",
       "ctrl-space o o": "outline::Toggle",
       "ctrl-space c t": "zed::OpenProjectTasks",
       "ctrl-space c a": "editor::ToggleCodeActions",
@@ -37,41 +37,41 @@
       "ctrl-space 1": "pane::CloseOtherItems",
       "ctrl-space 2": "workspace::NewFileSplitVertical",
       "alt-h": "workspace::ActivatePreviousPane",
-      "alt-l": "workspace::ActivateNextPane"
-    }
+      "alt-l": "workspace::ActivateNextPane",
+    },
   },
   {
     "context": "AgentPanel",
     "bindings": {
-      "ctrl-h": "workspace::CloseAllDocks"
-    }
+      "ctrl-h": "workspace::CloseAllDocks",
+    },
   },
   {
     "context": "Editor",
     "bindings": {
-      "ctrl-l": null
-    }
+      "ctrl-l": null,
+    },
   },
   {
     "context": "Editor && mode==full",
     "bindings": {
       "ctrl-j": "terminal_panel::ToggleFocus",
       "ctrl-h": "project_panel::ToggleFocus",
-      "ctrl-l": "agent::ToggleFocus"
-    }
+      "ctrl-l": "agent::ToggleFocus",
+    },
   },
   {
     "context": "ProjectPanel",
     "bindings": {
-      "ctrl-l": ["workspace::CloseAllDocks", "editor::ToggleFocus"]
-    }
+      "ctrl-l": ["workspace::CloseAllDocks", "editor::ToggleFocus"],
+    },
   },
   {
     "context": "Terminal",
     "bindings": {
       "ctrl-w": "workspace::CloseActiveDock",
       "ctrl-a ctrl-w": "workspace::CloseAllDocks",
-      "ctrl-k": ["workspace::CloseAllDocks", "editor::ToggleFocus"]
-    }
-  }
+      "ctrl-k": ["workspace::CloseAllDocks", "editor::ToggleFocus"],
+    },
+  },
 ]

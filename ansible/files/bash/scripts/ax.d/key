@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 
 ssh_key_copy() {
-  cat $HOME/.ssh/id_rsa.pub | xsel -b
+  KEY="${1:-id_rsa}"
+  cat $HOME/.ssh/${KEY}.pub | xsel -b
   notify "SSH key is copied"
 }
 
 case "$1" in
-  "gh"|"github")
-    ssh_key_copy
-    open "https://github.com/settings/keys"
-    ;;
-  "gl"|"gitlab")
-    ssh_key_copy
-    open "https://gitlab.com/-/user_settings/ssh_keys"
-    ;;
+"gh" | "github")
+  ssh_key_copy
+  open "https://github.com/settings/keys"
+  ;;
+"gl" | "gitlab")
+  ssh_key_copy
+  open "https://gitlab.com/-/user_settings/ssh_keys"
+  ;;
 esac

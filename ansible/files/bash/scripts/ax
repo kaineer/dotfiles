@@ -30,20 +30,20 @@ debug() {
   [[ "$DEBUG" == "true" ]] && echo " » " $@
 }
 
-export DF_NOTIFY=$(which notify-sendx)
+export DF_NOTIFY=$(which notify-send)
 export DF_NOTIFY_WARNING="false"
 
 if [[ "$DF_NOTIFY" != "" ]]; then
   notify() {
-    notify-send "Ax" "$@"
+    notify-send "AX" "$@"
   }
 else
   notify() {
     if [[ "$DF_NOTIFY_WARNING" == "false" ]]; then
-      echo " [WARN :Ax] Please, install libnotify"
+      echo " [WARN :AX] Please, install libnotify"
       export DF_NOTIFY_WARNING="true"
     fi
-    echo " [DEBUG:Ax]" $@
+    echo " [DEBUG:AX]" $@
   }
 fi
 
