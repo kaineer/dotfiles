@@ -9,6 +9,8 @@
   args:
     creates: "/home/{{ user.name }}/.local/bin/zed"
 
+# Install configuration
+#
 - name: Create configuration dir
   file:
     path: "/home/{{user.name}}/.config/zed"
@@ -30,3 +32,19 @@
     dest: "/home/{{user.name}}/.config/zed/keymap.json"
     state: link
     force: yes
+
+# Install color theme
+#
+- name: Create theme directory
+  file:
+    path: "/home/{{user.name}}/.config/zed/themes"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0755"
+
+- name: Download nordic theme
+  get_url:
+    url: "https://raw.githubusercontent.com/bIaqat/nordic-theme-zed/refs/heads/main/themes/nordic.json"
+    dest: "/home/{{user.name}}/.config/zed/themes/nordic.json"
+    force: "no"

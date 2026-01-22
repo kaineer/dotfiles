@@ -1699,6 +1699,7 @@
       "prettier": {
         "allowed": true,
       },
+      "tab_size": 2,
     },
   },
   // Settings for auto-closing of JSX tags.
