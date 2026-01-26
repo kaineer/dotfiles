@@ -3,12 +3,17 @@
 # url: https://zed.dev
 # recipe: https://chat.deepseek.com/share/agb7oxnulmw0rboedv
 
+# Run official script to install zed
+#
 - name: Install Zed using the official install script
+  become_user: "{{ user.name }}"
   shell: |
     curl -fsSL https://zed.dev/install.sh | sh
   args:
     creates: "/home/{{ user.name }}/.local/bin/zed"
 
+# Install configuration
+#
 - name: Create configuration dir
   file:
     path: "/home/{{user.name}}/.config/zed"
@@ -21,6 +26,8 @@
   file:
     src: "{{ playbook_dir }}/files/zed/settings.json"
     dest: "/home/{{user.name}}/.config/zed/settings.json"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
     state: link
     force: yes
 
@@ -28,5 +35,25 @@
   file:
     src: "{{ playbook_dir }}/files/zed/keymap.json"
     dest: "/home/{{user.name}}/.config/zed/keymap.json"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
     state: link
     force: yes
+
+# Install color theme
+#
+- name: Create theme directory
+  file:
+    path: "/home/{{user.name}}/.config/zed/themes"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "0755"
+
+- name: Download nordic theme
+  get_url:
+    url: "https://raw.githubusercontent.com/bIaqat/nordic-theme-zed/refs/heads/main/themes/nordic.json"
+    dest: "/home/{{user.name}}/.config/zed/themes/nordic.json"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    force: "no"

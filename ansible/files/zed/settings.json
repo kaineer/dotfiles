@@ -115,7 +115,7 @@
   //         "when_closing_with_no_tabs": "close_window",
   //  3. Never close the window
   //         "when_closing_with_no_tabs": "keep_window_open",
-  "when_closing_with_no_tabs": "close_window",
+  "when_closing_with_no_tabs": "keep_window_open",
   // What to do when the last window is closed.
   // May take 2 values:
   //  1. Use the current platform's convention
@@ -1719,6 +1719,7 @@
       "prettier": {
         "allowed": true,
       },
+      "tab_size": 2,
     },
   },
   // Settings for auto-closing of JSX tags.

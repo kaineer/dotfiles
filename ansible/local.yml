@@ -5,6 +5,11 @@
   environment:
     PRESERVED_USER: "{{ lookup('ansible.builtin.env', 'USER') }}"
 
+  # vars:
+  #   user_attributes: &user_attributes
+  #     owner: "{{ user.name }}"
+  #     group: "{{ user.name }}"
+
   tasks:
     # --- variables
     #
