@@ -9,6 +9,23 @@
 {
   /// The displayed name of this project. If not set or null, the root directory name
   /// will be displayed.
+  "lsp": {
+    "vtsls": {
+      "settings": {
+        "typescript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always"
+          }
+        },
+        "javascript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always"
+          }
+        }
+      },
+      "enable_lsp_tasks": true
+    }
+  },
   "project_name": null,
   // The name of the Zed theme to use for the UI.
   //
@@ -748,9 +765,9 @@
     // The default model to use when creating new threads.
     "default_model": {
       // The provider to use.
-      "provider": "zed.dev",
+      "provider": "deepseek",
       // The model to use.
-      "model": "claude-sonnet-4",
+      "model": "deepseek-chat",
     },
     // Additional parameters for language model requests. When making a request to a model, parameters will be taken
     // from the last entry in this list that matches the model's provider and name. In each entry, both provider
@@ -778,7 +795,7 @@
     //
     // Note: This setting has no effect on external agents that support permission modes, such as Claude Code.
     //       You can set `agent_servers.claude.default_mode` to `bypassPermissions` to skip all permission requests.
-    "always_allow_tool_actions": false,
+    "always_allow_tool_actions": true,
     // When enabled, agent edits will be displayed in single-file editors for review
     "single_file_review": true,
     // When enabled, show voting thumbs for feedback on agent edits.
@@ -1650,6 +1667,7 @@
       "prettier": {
         "allowed": true,
       },
+      "tab_size": 2,
     },
     "JSON": {
       "prettier": {
@@ -1688,12 +1706,14 @@
       "prettier": {
         "allowed": true,
       },
+      "tab_size": 2,
     },
     "TypeScript": {
       "language_servers": ["!typescript-language-server", "vtsls", "..."],
       "prettier": {
         "allowed": true,
       },
+      "tab_size": 2,
     },
     "YAML": {
       "prettier": {
@@ -1892,7 +1912,7 @@
     // Whether to hide the root entry when only one folder is open in the window.
     "hide_root": true,
     // Whether to hide the hidden entries in the project panel.
-    "hide_hidden": true,
+    "hide_hidden": false,
     // Settings for automatically opening files.
     "auto_open": {
       // Whether to automatically open newly created files in the editor.

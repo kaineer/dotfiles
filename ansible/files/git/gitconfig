@@ -20,7 +20,7 @@
 [core]
   excludesFile = ~/.gitignore
   editor = vi
-  pager = delta
+	pager =
 
 [delta]
   navigate = true
