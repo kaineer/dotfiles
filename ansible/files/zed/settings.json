@@ -14,17 +14,19 @@
       "settings": {
         "typescript": {
           "updateImportsOnFileMove": {
-            "enabled": "always"
-          }
+            "enabled": "always",
+          },
+          "enabled": true,
+          "disable_redeclare_check": false,
         },
         "javascript": {
           "updateImportsOnFileMove": {
-            "enabled": "always"
-          }
-        }
+            "enabled": "always",
+          },
+        },
       },
-      "enable_lsp_tasks": true
-    }
+      "enable_lsp_tasks": true,
+    },
   },
   "project_name": null,
   // The name of the Zed theme to use for the UI.
@@ -35,7 +37,7 @@
   // - "dark": Use the theme indicated by the "dark" field
   "theme": {
     "mode": "dark",
-    "light": "One Light",
+    "light": "Nord Light",
     "dark": "Nordic Syntax",
   },
   "icon_theme": "Zed (Default)",
@@ -1667,6 +1669,7 @@
       "prettier": {
         "allowed": true,
       },
+      "tab_size": 2,
     },
     "JSON": {
       "prettier": {
@@ -1706,6 +1709,7 @@
       "prettier": {
         "allowed": true,
       },
+      "tab_size": 2,
     },
     "TypeScript": {
       "language_servers": ["!typescript-language-server", "vtsls", "..."],
@@ -1713,6 +1717,7 @@
       "prettier": {
         "allowed": true,
       },
+      "tab_size": 2,
     },
     "YAML": {
       "prettier": {

@@ -11,6 +11,10 @@
   st = status
   ci = commit
   lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
+  wa = worktree add
+  wl = worktree list
+  wr = worktree remove
+
 
 [pull]
   rebase = false
@@ -20,7 +24,7 @@
 [core]
   excludesFile = ~/.gitignore
   editor = vi
-  pager = delta
+	pager =
 
 [delta]
   navigate = true
