@@ -37,7 +37,7 @@
   // - "dark": Use the theme indicated by the "dark" field
   "theme": {
     "mode": "dark",
-    "light": "One Light",
+    "light": "Nord Light",
     "dark": "Nordic Syntax",
   },
   "icon_theme": "Zed (Default)",

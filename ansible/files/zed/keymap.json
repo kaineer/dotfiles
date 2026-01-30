@@ -43,7 +43,6 @@
       "ctrl-space r g": "project_search::ToggleAllSearchResults",
       "ctrl-space 1": "pane::CloseOtherItems",
       "ctrl-space 2": "workspace::NewFileSplitVertical",
-      "alt-h": "workspace::ActivatePreviousPane",
       "alt-l": "workspace::ActivateNextPane",
     },
   },
@@ -57,6 +56,7 @@
     "context": "Editor",
     "bindings": {
       "ctrl-l": null,
+      "ctrl-h": "project_panel::RevealInFileManager",
       "ctrl-k ctrl-l": "pane::SplitAndMoveRight",
       "ctrl-k ctrl-j": "pane::SplitAndMoveDown",
     },
