@@ -71,7 +71,16 @@
     "bindings": {
       "ctrl-w": "workspace::CloseActiveDock",
       "ctrl-a ctrl-w": "workspace::CloseAllDocks",
+      "ctrl-l": "agent::ToggleFocus",
       "ctrl-k": ["workspace::CloseAllDocks", "editor::ToggleFocus"],
+    },
+  },
+  {
+    "context": "Pane && EmptyPane",
+    "bindings": {
+      "ctrl-h": "project_panel::ToggleFocus",
+      "ctrl-j": "terminal_panel::ToggleFocus",
+      "ctrl-l": "agent::ToggleFocus",
     },
   },
 ]
