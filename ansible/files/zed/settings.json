@@ -35,11 +35,7 @@
   // - "system": Use the theme that corresponds to the system's appearance
   // - "light": Use the theme indicated by the "light" field
   // - "dark": Use the theme indicated by the "dark" field
-  "theme": {
-    "mode": "dark",
-    "light": "Nord Light",
-    "dark": "Nordic Syntax",
-  },
+  "theme": "Nordic",
   "icon_theme": "Zed (Default)",
   // The name of a base set of key bindings to use.
   // This setting can take six values, each named after another
@@ -1705,7 +1701,7 @@
     },
     "TSX": {
       "language_servers": ["!typescript-language-server", "vtsls", "..."],
-      "tab_size": 2,
+
       "prettier": {
         "allowed": true,
       },
@@ -1713,7 +1709,7 @@
     },
     "TypeScript": {
       "language_servers": ["!typescript-language-server", "vtsls", "..."],
-      "tab_size": 2,
+
       "prettier": {
         "allowed": true,
       },
