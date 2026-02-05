@@ -43,19 +43,15 @@
     "url": "https://r3f.docs.pmnd.rs/getting-started/introduction",
     "bin": "open"
   },
-  "vite": {
+  "dev:vite": {
     "url": "https://vite.dev/",
     "bin": "open"
   },
-  "vitest": {
+  "dev:vitest": {
     "url": "https://vitest.dev/",
     "bin": "open"
   },
-  "xnxx.com": {
-    "url": "https://xnxx.com",
-    "bin": "open"
-  },
-  "youtube.com": {
+  "youtube": {
     "url": "https://youtube.com",
     "bin": "open"
   },
@@ -63,11 +59,11 @@
     "url": "https://aniwatchtv.to/tv",
     "bin": "open"
   },
-  "nextjs": {
+  "dev:nextjs": {
     "url": "https://nextjs.org/",
     "bin": "open"
   },
-  "deepseek": {
+  "ai:deepseek": {
     "url": "https://chat.deepseek.com",
     "bin": "open"
   },
@@ -165,6 +161,14 @@
   },
   "ai:grok": {
     "url": "https://grok.com/",
+    "bin": "open"
+  },
+  "localhost:vite": {
+    "url": "http://localhost:5173/",
+    "bin": "open"
+  },
+  "itc:map:backend": {
+    "url": "http://10.1.0.248:5000/",
     "bin": "open"
   }
 }

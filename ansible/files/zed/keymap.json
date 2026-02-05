@@ -47,6 +47,12 @@
     },
   },
   {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "ctrl-j": "editor::InsertSnippet",
+    },
+  },
+  {
     "context": "AgentPanel",
     "bindings": {
       "ctrl-h": "workspace::CloseAllDocks",
@@ -59,6 +65,7 @@
       "ctrl-h": "project_panel::RevealInFileManager",
       "ctrl-k ctrl-l": "pane::SplitAndMoveRight",
       "ctrl-k ctrl-j": "pane::SplitAndMoveDown",
+      "ctrl-space ctrl-n": "workspace::NewFile",
     },
   },
   {
