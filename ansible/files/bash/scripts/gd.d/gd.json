@@ -64,7 +64,7 @@
     "bin": "open"
   },
   "ai:deepseek": {
-    "url": "https://chat.deepseek.com",
+    "url": "https://chat.deepseek.com/",
     "bin": "open"
   },
   "vite/alias": {
@@ -107,7 +107,7 @@
     "url": "https://youtu.be/p-g4zWgUjUI?list=PLs2gPxL93WG0RBssQDDkMUdC-yme-H83K",
     "bin": "open"
   },
-  "fastify.dev": {
+  "dev:fastify": {
     "url": "https://fastify.dev/",
     "bin": "open"
   },
@@ -155,10 +155,6 @@
     "url": "https://jisho.org/",
     "bin": "open"
   },
-  "ai:deepseek": {
-    "url": "https://chat.deepseek.com/",
-    "bin": "open"
-  },
   "ai:grok": {
     "url": "https://grok.com/",
     "bin": "open"
@@ -169,6 +165,10 @@
   },
   "itc:map:backend": {
     "url": "http://10.1.0.248:5000/",
+    "bin": "open"
+  },
+  "gist:maps:api": {
+    "url": "https://gist.github.com/kaineer/69ee25e40796051068cbc6f5b918d638",
     "bin": "open"
   }
 }

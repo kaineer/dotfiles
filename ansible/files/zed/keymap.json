@@ -65,6 +65,7 @@
       "ctrl-h": "project_panel::RevealInFileManager",
       "ctrl-k ctrl-l": "pane::SplitAndMoveRight",
       "ctrl-k ctrl-j": "pane::SplitAndMoveDown",
+      "ctrl-space ctrl-v": "workspace::ToggleVimMode",
       "ctrl-space ctrl-n": "workspace::NewFile",
     },
   },

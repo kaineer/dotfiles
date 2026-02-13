@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+
+[[ "$1" != "-i" ]] && return
+
+if [[ "$ZED_CONTEXT" != "" ]]; then
+  export GIT_PAGER=
+fi

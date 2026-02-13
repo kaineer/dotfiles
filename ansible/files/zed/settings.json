@@ -13,19 +13,19 @@
       "settings": {
         "typescript": {
           "updateImportsOnFileMove": {
-            "enabled": "always"
+            "enabled": "always",
           },
           "enabled": true,
-          "disable_redeclare_check": false
+          "disable_redeclare_check": false,
         },
         "javascript": {
           "updateImportsOnFileMove": {
-            "enabled": "always"
-          }
-        }
+            "enabled": "always",
+          },
+        },
       },
-      "enable_lsp_tasks": true
-    }
+      "enable_lsp_tasks": true,
+    },
   },
   "project_name": null,
   // The name of the Zed theme to use for the UI.
@@ -35,9 +35,9 @@
   // - "light": Use the theme indicated by the "light" field
   // - "dark": Use the theme indicated by the "dark" field
   "theme": {
-    "mode": "light",
+    "mode": "dark",
     "light": "Nord Light",
-    "dark": "Nordic Syntax"
+    "dark": "Nordic Syntax",
   },
   "icon_theme": "Zed (Default)",
   // The name of a base set of key bindings to use.
@@ -48,7 +48,7 @@
   // Features that can be globally enabled or disabled
   "features": {
     // Which edit prediction provider to use.
-    "edit_prediction_provider": "none"
+    "edit_prediction_provider": "none",
   },
   // The name of a font to use for rendering text in the editor
   // ".ZedMono" currently aliases to Lilex
@@ -89,7 +89,7 @@
   // The OpenType features to enable for text in the UI
   "ui_font_features": {
     // Disable ligatures:
-    "calt": false
+    "calt": false,
   },
   // Whether to enable vim modes and key bindings.
   "vim_mode": true,
@@ -262,7 +262,7 @@
     // When true, enables drag and drop text selection in buffer.
     "enabled": true,
     // The delay in milliseconds that must elapse before drag and drop is allowed. Otherwise, a new text selection is created.
-    "delay": 300
+    "delay": 300,
   },
   // What to do when go to definition yields no results.
   //
@@ -306,7 +306,7 @@
     "**/*.key",
     "**/*.cert",
     "**/*.crt",
-    "**/secrets.yml"
+    "**/secrets.yml",
   ],
   // Whether to use additional LSP queries to format (and amend) the code after
   // every "trigger" symbol input, defined by LSP server capabilities.
@@ -373,14 +373,14 @@
   // Visible characters used to render whitespace when show_whitespaces is enabled.
   "whitespace_map": {
     "space": "•",
-    "tab": "→"
+    "tab": "→",
   },
   // Settings related to calls in Zed
   "calls": {
     // Join calls with the microphone live by default
     "mute_on_join": false,
     // Share your project when you are the first to join a channel
-    "share_on_join": false
+    "share_on_join": false,
   },
   // Whether to allow windows to tab together based on the user’s tabbing preference (macOS only).
   "use_system_window_tabs": false,
@@ -415,7 +415,7 @@
     // the future we will migrate by setting this to false
     //
     // You need to rejoin a call for this setting to apply
-    "experimental.legacy_audio_compatible": true
+    "experimental.legacy_audio_compatible": true,
   },
   // Scrollbar related settings
   "scrollbar": {
@@ -454,8 +454,8 @@
       // When false, forcefully disables the horizontal scrollbar. Otherwise, obey other settings.
       "horizontal": true,
       // When false, forcefully disables the vertical scrollbar. Otherwise, obey other settings.
-      "vertical": true
-    }
+      "vertical": true,
+    },
   },
   // Minimap related settings
   "minimap": {
@@ -503,7 +503,7 @@
     // 3. "gutter" or "none" to not highlight the current line in the minimap.
     "current_line_highlight": null,
     // Maximum number of columns to display in the minimap.
-    "max_width_columns": 80
+    "max_width_columns": 80,
   },
   // Enable middle-click paste on Linux.
   "middle_click_paste": true,
@@ -526,7 +526,7 @@
     // Whether to show fold buttons in the gutter.
     "folds": true,
     // Minimum number of characters to reserve space for in the gutter.
-    "min_line_number_digits": 4
+    "min_line_number_digits": 4,
   },
   "indent_guides": {
     // Whether to show indent guides in the editor.
@@ -547,7 +547,7 @@
     //
     // 1. "disabled"
     // 2. "indent_aware"
-    "background_coloring": "disabled"
+    "background_coloring": "disabled",
   },
   // Whether the editor will scroll beyond the last line.
   "scroll_beyond_last_line": "one_page",
@@ -566,7 +566,7 @@
   "fast_scroll_sensitivity": 4.0,
   "sticky_scroll": {
     // Whether to stick scopes to the top of the editor.
-    "enabled": false
+    "enabled": false,
   },
   "relative_line_numbers": "disabled",
   // If 'search_wrap' is disabled, search result do not wrap around the end of the file.
@@ -584,7 +584,7 @@
     // Whether to interpret the search query as a regular expression.
     "regex": false,
     // Whether to center the cursor on each search match when navigating.
-    "center_on_match": false
+    "center_on_match": false,
   },
   // When to populate a new search's query based on the text under the cursor.
   // This setting can take the following three values:
@@ -627,8 +627,8 @@
       "shift": false,
       "alt": false,
       "platform": false,
-      "function": false
-    }
+      "function": false,
+    },
   },
   // Whether to resize all the panels in a dock when resizing the dock.
   // Can be a combination of "left", "right" and "bottom".
@@ -664,7 +664,7 @@
       //    "always"
       // 2. Never show indent guides:
       //    "never"
-      "show": "always"
+      "show": "always",
     },
     // Scrollbar-related settings
     "scrollbar": {
@@ -681,11 +681,11 @@
       //    "always"
       // 5. Never show the scrollbar:
       //    "never"
-      "show": null
+      "show": null,
     },
     // Default depth to expand outline items in the current file.
     // Set to 0 to collapse all items that have children, 1 or higher to collapse items at that depth or deeper.
-    "expand_outlines_with_depth": 100
+    "expand_outlines_with_depth": 100,
   },
   "collaboration_panel": {
     // Whether to show the collaboration panel button in the status bar.
@@ -693,7 +693,7 @@
     // Where to dock the collaboration panel. Can be 'left' or 'right'.
     "dock": "left",
     // Default width of the collaboration panel.
-    "default_width": 240
+    "default_width": 240,
   },
   "git_panel": {
     // Whether to show the git panel button in the status bar.
@@ -729,12 +729,12 @@
       // Choices: always, auto, never, system
       // Default: inherits editor scrollbar settings
       // "show": null
-    }
+    },
   },
   "message_editor": {
     // Whether to automatically replace emoji shortcodes with emoji characters.
     // For example: typing `:wave:` gets replaced with `👋`.
-    "auto_replace_emoji_shortcode": true
+    "auto_replace_emoji_shortcode": true,
   },
   "notification_panel": {
     // Whether to show the notification panel button in the status bar.
@@ -742,7 +742,7 @@
     // Where to dock the notification panel. Can be 'left' or 'right'.
     "dock": "right",
     // Default width of the notification panel.
-    "default_width": 380
+    "default_width": 380,
   },
   "agent": {
     // Whether the inline assistant should use streaming tools, when available
@@ -768,7 +768,7 @@
       // The provider to use.
       "provider": "deepseek",
       // The model to use.
-      "model": "deepseek-chat"
+      "model": "deepseek-chat",
     },
     // Additional parameters for language model requests. When making a request to a model, parameters will be taken
     // from the last entry in this list that matches the model's provider and name. In each entry, both provider
@@ -825,8 +825,8 @@
           "grep": true,
           "terminal": true,
           "thinking": true,
-          "web_search": true
-        }
+          "web_search": true,
+        },
       },
       "ask": {
         "name": "Ask",
@@ -843,14 +843,14 @@
           "open": true,
           "grep": true,
           "thinking": true,
-          "web_search": true
-        }
+          "web_search": true,
+        },
       },
       "minimal": {
         "name": "Minimal",
         "enable_all_context_servers": false,
-        "tools": {}
-      }
+        "tools": {},
+      },
     },
     // Where to show notifications when the agent has either completed
     // its response, or else needs confirmation before it can run a
@@ -878,7 +878,7 @@
     // Minimum number of lines to display in the agent message editor.
     //
     // Default: 4
-    "message_editor_min_lines": 4
+    "message_editor_min_lines": 4,
   },
   // Whether the screen sharing icon is shown in the os status bar.
   "show_call_status_icon": true,
@@ -942,7 +942,7 @@
     //    "errors"
     // 3. Mark files with errors and warnings:
     //    "all"
-    "show_diagnostics": "off"
+    "show_diagnostics": "off",
   },
   // Settings related to preview tabs.
   "preview_tabs": {
@@ -963,7 +963,7 @@
     "enable_preview_file_from_code_navigation": true,
     // Whether to keep tabs in preview mode when code navigation is used to navigate away from them.
     // If `enable_preview_file_from_code_navigation` or `enable_preview_multibuffer_from_code_navigation` is also true, the new tab may replace the existing one.
-    "enable_keep_preview_on_code_navigation": false
+    "enable_keep_preview_on_code_navigation": false,
   },
   // Settings related to the file finder.
   "file_finder": {
@@ -1007,7 +1007,7 @@
     //   * "all": Use all gitignored files
     //   * "indexed": Use only the files Zed had indexed
     //   * "smart": Be smart and search for ignored when called from a gitignored worktree
-    "include_ignored": "smart"
+    "include_ignored": "smart",
   },
   // Whether or not to remove any trailing whitespace from lines of a buffer
   // before saving it.
@@ -1082,7 +1082,7 @@
     // Send debug info like crash reports.
     "diagnostics": true,
     // Send anonymized usage data like what languages you're using Zed with.
-    "metrics": true
+    "metrics": true,
   },
   // Whether to disable all AI features in Zed.
   //
@@ -1116,7 +1116,7 @@
       "enabled": true,
       // Minimum time to wait before pulling diagnostics from the language server(s).
       // 0 turns the debounce off.
-      "debounce_ms": 50
+      "debounce_ms": 50,
     },
     // Settings for inline diagnostics
     "inline": {
@@ -1134,8 +1134,8 @@
       "min_column": 0,
       // The minimum severity of the diagnostics to show inline.
       // Inherits editor's diagnostics' max severity settings when `null`.
-      "max_severity": null
-    }
+      "max_severity": null,
+    },
   },
   // Files or globs of files that will be excluded by Zed entirely. They will be skipped during file
   // scans, file searches, and not be displayed in the project file tree. Takes precedence over `file_scan_inclusions`.
@@ -1150,7 +1150,7 @@
     "**/.DS_Store",
     "**/Thumbs.db",
     "**/.classpath",
-    "**/.settings"
+    "**/.settings",
   ],
   // Files or globs of files that will be included by Zed, even when ignored by git. This is useful
   // for files that are not tracked by git, but are still important to your project. Note that globs
@@ -1196,14 +1196,14 @@
       // Whether or not to display the git commit summary on the same line.
       "show_commit_summary": false,
       // The minimum column number to show the inline blame information at
-      "min_column": 0
+      "min_column": 0,
     },
     "blame": {
-      "show_avatar": true
+      "show_avatar": true,
     },
     // Control which information is shown in the branch picker.
     "branch_picker": {
-      "show_author_name": true
+      "show_author_name": true,
     },
     // How git hunks are displayed visually in the editor.
     // This setting can take two values:
@@ -1215,7 +1215,7 @@
     "hunk_style": "staged_hollow",
     // Should the name or path be displayed first in the git view.
     // "path_style": "file_name_first" or "file_path_first"
-    "path_style": "file_name_first"
+    "path_style": "file_name_first",
   },
   // The list of custom Git hosting providers.
   "git_hosting_providers": [
@@ -1249,7 +1249,7 @@
       "**/secrets.yml",
       "**/.zed/settings.json", // zed project settings
       "/**/zed/settings.json", // zed user settings
-      "/**/zed/keymap.json"
+      "/**/zed/keymap.json",
     ],
     // When to show edit predictions previews in buffer.
     // This setting takes two possible values:
@@ -1267,16 +1267,16 @@
     "copilot": {
       "enterprise_uri": null,
       "proxy": null,
-      "proxy_no_verify": null
+      "proxy_no_verify": null,
     },
     "codestral": {
       "api_url": "https://codestral.mistral.ai",
       "model": "codestral-latest",
-      "max_tokens": 150
+      "max_tokens": 150,
     },
     // Whether edit predictions are enabled when editing text threads in the agent panel.
     // This setting has no effect if globally disabled.
-    "enabled_in_text_threads": true
+    "enabled_in_text_threads": true,
   },
   // Settings specific to journaling
   "journal": {
@@ -1286,7 +1286,7 @@
     // May take 2 values:
     // 1. hour12
     // 2. hour24
-    "hour_format": "hour12"
+    "hour_format": "hour12",
   },
   // Settings specific to the terminal
   "terminal": {
@@ -1407,8 +1407,8 @@
         // Preferred Conda manager to use when activating Conda environments.
         // Values: "auto", "conda", "mamba", "micromamba"
         // Default: "auto"
-        "conda_manager": "auto"
-      }
+        "conda_manager": "auto",
+      },
     },
     "toolbar": {
       // Whether to display the terminal title in its toolbar's breadcrumbs.
@@ -1416,7 +1416,7 @@
       //
       // The shell running in the terminal needs to be configured to emit the title.
       // Example: `echo -e "\e]2;New Title\007";`
-      "breadcrumbs": false
+      "breadcrumbs": false,
     },
     // Scrollbar-related settings
     "scrollbar": {
@@ -1433,7 +1433,7 @@
       //    "always"
       // 5. Never show the scrollbar:
       //    "never"
-      "show": null
+      "show": null,
     },
     // Set the terminal's font size. If this option is not included,
     // the terminal will default to matching the buffer's font size.
@@ -1510,12 +1510,12 @@
         "    )",
         "    # optional line/column suffix (included in path for PathWithPosition::parse_str)",
         "    (:+[0-9]+(:[0-9]+)?|:?\\([0-9]+([,:]?[0-9]+)?\\))?",
-        ")"
-      ]
+        ")",
+      ],
     ],
     // Timeout for hover and Cmd-click path hyperlink discovery in milliseconds. Specifying a
     // timeout of `0` will disable path hyperlinking in terminal.
-    "path_hyperlink_timeout_ms": 1
+    "path_hyperlink_timeout_ms": 1,
   },
   "code_actions_on_format": {},
   // Settings related to running tasks.
@@ -1531,7 +1531,7 @@
     // * Zed task from history (e.g. one-off task was spawned before)
     //
     // Default: true
-    "prefer_lsp": true
+    "prefer_lsp": true,
   },
   // An object whose keys are language names, and whose values
   // are arrays of filenames or extensions of files that should
@@ -1550,10 +1550,10 @@
       "**/.zed/*.json",
       "**/.vscode/**/*.json",
       "**/{zed,Zed}/{settings,keymap,tasks,debug}.json",
-      "tsconfig*.json"
+      "tsconfig*.json",
     ],
     "Markdown": [".rules", ".cursorrules", ".windsurfrules", ".clinerules"],
-    "Shell Script": [".env.*"]
+    "Shell Script": [".env.*"],
   },
   // Settings for which version of Node.js and NPM to use when installing
   // language servers and Copilot.
@@ -1569,14 +1569,14 @@
     // `path`, but not `npm_path`, Zed will assume that `npm` is located at
     // `${path}/../npm`.
     "path": null,
-    "npm_path": null
+    "npm_path": null,
   },
   // The extensions that Zed should automatically install on startup.
   //
   // If you don't want any of these extensions, add this field to your settings
   // and change the value to `false`.
   "auto_install_extensions": {
-    "html": true
+    "html": true,
   },
   // The capabilities granted to extensions.
   //
@@ -1585,17 +1585,17 @@
     {
       "kind": "process:exec",
       "command": "*",
-      "args": ["**"]
+      "args": ["**"],
     },
     {
       "kind": "download_file",
       "host": "*",
-      "path": ["**"]
+      "path": ["**"],
     },
     {
       "kind": "npm:install",
-      "package": "*"
-    }
+      "package": "*",
+    },
   ],
   // Controls how completions are processed for this language.
   "completions": {
@@ -1626,7 +1626,7 @@
     // When set to 0, waits indefinitely.
     //
     // Default: 0
-    "lsp_fetch_timeout_ms": 0,
+    "lsp_fetch_timeout_ms": 300,
     // Controls what range to replace when accepting LSP completions.
     //
     // When LSP servers give an `InsertReplaceEdit` completion, they provides two ranges: `insert` and `replace`. Usually, `insert`
@@ -1646,100 +1646,100 @@
     // 4. "replace_suffix"
     //   Behaves like `"replace"` if the text after the cursor is a suffix of the completion, and like
     //   `"insert"` otherwise.
-    "lsp_insert_mode": "replace_suffix"
+    "lsp_insert_mode": "replace_suffix",
   },
   // Different settings for specific languages.
   "languages": {
     "CSS": {
       "prettier": {
-        "allowed": true
+        "allowed": true,
       },
-      "tab_size": 2
+      "tab_size": 2,
     },
     "Diff": {
       "show_edit_predictions": false,
       "remove_trailing_whitespace_on_save": false,
-      "ensure_final_newline_on_save": false
+      "ensure_final_newline_on_save": false,
     },
     "Git Commit": {
       "allow_rewrap": "anywhere",
       "soft_wrap": "editor_width",
-      "preferred_line_length": 72
+      "preferred_line_length": 72,
     },
     "HTML": {
       "prettier": {
-        "allowed": true
+        "allowed": true,
       },
-      "tab_size": 2
+      "tab_size": 2,
     },
     "JavaScript": {
-      "language_servers": ["!typescript-language-server", "vtsls", "..."],
+      "language_servers": ["!typescript-language-server", "vtsls"],
       "prettier": {
-        "allowed": true
+        "allowed": true,
       },
-      "tab_size": 2
+      "tab_size": 2,
     },
     "JSON": {
       "prettier": {
-        "allowed": true
+        "allowed": true,
       },
-      "tab_size": 2
+      "tab_size": 2,
     },
     "JSONC": {
       "prettier": {
-        "allowed": true
+        "allowed": true,
       },
-      "tab_size": 2
+      "tab_size": 2,
     },
     "Markdown": {
       "format_on_save": "off",
       "use_on_type_format": false,
-      "remove_trailing_whitespace_on_save": false,
+      "remove_trailing_whitespace_on_save": true,
       "allow_rewrap": "anywhere",
       "soft_wrap": "editor_width",
       "completions": {
-        "words": "disabled"
+        "words": "disabled",
       },
       "prettier": {
-        "allowed": true
-      }
+        "allowed": true,
+      },
     },
     "Plain Text": {
       "allow_rewrap": "anywhere",
       "soft_wrap": "editor_width",
       "completions": {
-        "words": "disabled"
-      }
+        "words": "disabled",
+      },
     },
     "TSX": {
-      "language_servers": ["!typescript-language-server", "vtsls", "..."],
+      "language_servers": ["!typescript-language-server", "vtsls"],
       "prettier": {
-        "allowed": true
+        "allowed": true,
       },
-      "tab_size": 2
+      "tab_size": 2,
     },
     "TypeScript": {
-      "language_servers": ["!typescript-language-server", "vtsls", "..."],
+      "language_servers": ["!typescript-language-server", "vtsls"],
       "prettier": {
-        "allowed": true
+        "allowed": true,
       },
-      "tab_size": 2
+      "tab_size": 2,
     },
     "YAML": {
       "prettier": {
-        "allowed": true
+        "allowed": true,
       },
-      "tab_size": 2
-    }
+      "tab_size": 2,
+    },
   },
   // Settings for auto-closing of JSX tags.
   "jsx_tag_auto_close": {
-    "enabled": true
+    "enabled": true,
   },
   // Common language server settings.
   "global_lsp_settings": {
     // Whether to show the LSP servers button in the status bar.
-    "button": true
+    "button": false,
   },
   // Vim settings
   "vim": {
@@ -1753,14 +1753,18 @@
     // Specify the mode as the key and the shape as the value.
     // The mode can be one of the following: "normal", "replace", "insert", "visual".
     // The shape can be one of the following: "block", "bar", "underline", "hollow".
-    "cursor_shape": {}
+    "cursor_shape": {
+      "normal": "block",
+      "insert": "bar",
+      "visual": "underline",
+    },
   },
   // Which-key popup settings
   "which_key": {
     // Whether to show the which-key popup when holding down key combinations.
-    "enabled": false,
+    "enabled": true,
     // Delay in milliseconds before showing the which-key popup.
-    "delay_ms": 1000
+    "delay_ms": 1000,
   },
   // The server to connect to. If the environment variable
   // ZED_SERVER_URL is set, it will override this setting.
@@ -1853,20 +1857,20 @@
     "show_user_menu": false,
     "show_sign_in": false,
     // Menues
-    "show_menus": false
+    "show_menus": false,
   },
   // Settings related to the editor's tab bar.
   "tab_bar": {
-    "show": false
+    "show": false,
   },
   // Toolbar related settings
   "toolbar": {
     "breadcrumbs": true,
-    "quick_actions": false
+    "quick_actions": false,
   },
   // Status bar-related settings.
   "status_bar": {
-    "experimental.show": false
+    "experimental.show": false,
   },
   "project_panel": {
     // Whether to hide the gitignore entries in the project panel.
@@ -1878,7 +1882,7 @@
     // Whether to reveal it in the project panel automatically,
     // when a corresponding project entry becomes active.
     // Gitignored entries are never auto revealed.
-    "auto_reveal_entries": false,
+    "auto_reveal_entries": true,
     // Whether the project panel should open on startup.
     "starts_open": false,
     // Whether to fold directories automatically and show compact folders
@@ -1905,7 +1909,7 @@
       //    "always"
       // 2. Never show indent guides:
       //    "never"
-      "show": "never"
+      "show": "never",
     },
     // Sort order for entries in the project panel.
     // This setting can take three values:
@@ -1930,7 +1934,7 @@
       // Whether to automatically open files after pasting or duplicating them.
       "on_paste": false,
       // Whether to automatically open files dropped from external sources.
-      "on_drop": false
-    }
-  }
+      "on_drop": false,
+    },
+  },
 }

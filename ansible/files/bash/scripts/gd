@@ -17,6 +17,10 @@ CONFIG_FILE=$HOME/var/dir.json
 SOURCE_FILE=$(readlink -f $CONFIG_FILE)
 EDITOR=nvim
 
+if [[ "$TERM" != "screen-256color" ]]; then
+  EDITOR="/home/kaineer/bin/zed"
+fi
+
 usage() {
   echo " » Go to Dir and..."
   echo ""
