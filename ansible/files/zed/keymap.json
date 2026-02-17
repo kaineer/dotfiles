@@ -44,6 +44,8 @@
       "ctrl-space 1": "pane::CloseOtherItems",
       "ctrl-space 2": "workspace::NewFileSplitVertical",
       "alt-l": "workspace::ActivateNextPane",
+      "alt-j": "vim::SelectNext",
+      "alt-k": "vim::SelectPrevious",
     },
   },
   {

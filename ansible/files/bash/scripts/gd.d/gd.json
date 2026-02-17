@@ -31,15 +31,15 @@
     "url": "https://nhee.ru",
     "bin": "open"
   },
-  "react:router": {
+  "dev:react:router": {
     "url": "https://reactrouter.com/",
     "bin": "open"
   },
-  "react": {
+  "dev:react": {
     "url": "https://react.dev/",
     "bin": "open"
   },
-  "react-three-fiber": {
+  "dev:react-three-fiber": {
     "url": "https://r3f.docs.pmnd.rs/getting-started/introduction",
     "bin": "open"
   },
@@ -71,7 +71,7 @@
     "url": "https://vite.dev/config/shared-options.html#resolve-alias",
     "bin": "open"
   },
-  "color/canva": {
+  "tool:color/canva": {
     "url": "https://www.canva.com/colors/color-wheel/",
     "bin": "open"
   },
@@ -123,11 +123,11 @@
     "url": "https://install.doctor/",
     "bin": "open"
   },
-  "jj-vcs": {
+  "dev:jj": {
     "url": "https://jj-vcs.github.io/",
     "bin": "open"
   },
-  "itc:swagger": {
+  "swagger:talent-id": {
     "url": "http://10.1.0.213:8080/webjars/swagger-ui/index.html",
     "bin": "open"
   },
@@ -163,12 +163,16 @@
     "url": "http://localhost:5173/",
     "bin": "open"
   },
-  "itc:map:backend": {
-    "url": "http://10.1.0.248:5000/",
+  "swagger:ekbmaps": {
+    "url": "http://10.1.0.248:5000/swagger/",
     "bin": "open"
   },
   "gist:maps:api": {
     "url": "https://gist.github.com/kaineer/69ee25e40796051068cbc6f5b918d638",
+    "bin": "open"
+  },
+  "figma:ekbmaps": {
+    "url": "https://www.figma.com/design/brMf6mvxg5Uw3NSHcNisF1/3D-%D0%9A%D0%B0%D1%80%D1%82%D0%B0-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82?node-id=0-1&p=f&t=H8Lz6ky3EWDjrSfE-0",
     "bin": "open"
   }
 }

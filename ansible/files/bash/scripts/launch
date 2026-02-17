@@ -20,6 +20,32 @@ export DIR=$(dirname $BIN)
 export LAUNCH_DIR=$DIR/launch.d
 ## bootstrap
 
+__list_windows() {
+  for x in $1; do
+    title=$(xdotool getwindowname $x)
+    echo "$x $title"
+  done
+}
+
+start_or_select_from_list() {
+  BINARY=$1
+  CLASSNAME=$2
+  PROMPT=$3
+
+  CONTENT=$(xdotool search --class $CLASSNAME)
+  COUNT="$(echo "$CONTENT" | sed "s/ *$//" | grep -v "^$" | wc -l)"
+
+  if [[ "$COUNT" == "0" ]]; then
+    "$BINARY"
+  elif [[ "$COUNT" == "1" ]]; then
+    xdotool windowactivate "$CONTENT"
+  else
+    OUTPUT=$(__list_windows "$CONTENT" | rofi -dmenu $PROMPT)
+    WID=$(echo "$OUTPUT" | sed "s/ .*$//")
+    xdotool windowactivate "$WID"
+  fi
+}
+
 start_or_activate_by_classname() {
   BINARY=$1
   CLASSNAME=$2
