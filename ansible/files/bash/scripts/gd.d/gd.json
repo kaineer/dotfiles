@@ -174,5 +174,9 @@
   "figma:ekbmaps": {
     "url": "https://www.figma.com/design/brMf6mvxg5Uw3NSHcNisF1/3D-%D0%9A%D0%B0%D1%80%D1%82%D0%B0-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82?node-id=0-1&p=f&t=H8Lz6ky3EWDjrSfE-0",
     "bin": "open"
+  },
+  "dev:react-icons": {
+    "url": "https://react-icons.github.io/react-icons/",
+    "bin": "open"
   }
 }
