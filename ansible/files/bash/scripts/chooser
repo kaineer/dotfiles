@@ -39,7 +39,7 @@ choose_with_fzf() {
 }
 
 choose_with_rofi() {
-  rofi -dmenu $@
+  rofi -dmenu -matching normal $@
 }
 
 if [[ "$TERM" == "screen-256color" ]]; then

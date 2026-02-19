@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+XF="$HOME/.config/BraveSoftware/Brave-Browser/Default/History"
+XFR="$XF.read"
+
+json_sqlite3() {
+  F=$1
+  sqlite3 $F -json "select id, title, url from urls" 2>/dev/null
+}
+
+json_urls() {
+  json_sqlite3 $XF
+
+  if [[ "$?" != "0" ]]; then
+    cp "$XF" "$XFR"
+    json_sqlite3 $XFR
+  fi
+}
+
+TERM=$(json_urls | jq -r '.[] | [.id, .title] | join(" ")' | $HOME/bin/chooser)
+
+URLID=$(echo $TERM | sed "s/\"//;s/ .*$//")
+
+URL=$(json_urls | jq -r ".[] | select(.id==$URLID) | .url")
+
+if [[ "$URL" != "" ]]; then
+  open $URL
+fi

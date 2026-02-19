@@ -46,6 +46,7 @@ system_packages:
   - python3-pip
   - python3-venv
   - rsync
+  - sqlite3
   - strace
   - tldr
   - tmux

@@ -1,5 +1,5 @@
 {
-  "shedevrum/create": {
+  "ai:shedevrum": {
     "url": "https://shedevrum.ai/text-to-image/",
     "bin": "brave-browser"
   },
@@ -177,6 +177,22 @@
   },
   "dev:react-icons": {
     "url": "https://react-icons.github.io/react-icons/",
+    "bin": "open"
+  },
+  "dev:sonner": {
+    "url": "https://sonner.emilkowal.ski/",
+    "bin": "open"
+  },
+  "ai:grok:favorites": {
+    "url": "https://grok.com/imagine/favorites",
+    "bin": "open"
+  },
+  "ai:alice": {
+    "url": "https://alice.yandex.ru/",
+    "bin": "open"
+  },
+  "dev:jq": {
+    "url": "https://play.jqlang.org/",
     "bin": "open"
   }
 }

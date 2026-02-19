@@ -46,6 +46,7 @@
       "alt-l": "workspace::ActivateNextPane",
       "alt-j": "vim::SelectNext",
       "alt-k": "vim::SelectPrevious",
+      "ctrl-r": ["task::Spawn", { "task_name": "Run with bun" }],
     },
   },
   {
