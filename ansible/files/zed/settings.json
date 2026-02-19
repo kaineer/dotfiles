@@ -92,7 +92,7 @@
     "calt": false,
   },
   // Whether to enable vim modes and key bindings.
-  "vim_mode": false,
+  "vim_mode": true,
   // Whether to restore last closed project when fresh Zed instance is opened
   // May take 3 values:
   //  1. All workspaces open during last session
