@@ -23,3 +23,12 @@
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     state: "link"
+
+- name: Link clip directory
+  file:
+    src: "{{ playbook_dir }}/files/bash/scripts/lc.var"
+    dest: "/home/{{ user.name }}/var/clip"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: "link"
+    force: "yes"

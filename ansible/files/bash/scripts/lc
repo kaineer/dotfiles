@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# launch clip
+
+CLIP_DIR="$HOME/var/clip"
+FL_SCRIPT="fl"
+
+[ ! -d $CLIP_DIR ] && mkdir -p $CLIP_DIR
+
+save_clip() {
+  local content
+  content=$(xsel -o | sed "s/^ *//;s/ *$//")
+
+  if [[ "$content" != "" ]]; then
+    local md5
+    md5=$(echo -n "$content" | md5sum | sed "s/ .*$//")
+
+    local filename="$CLIP_DIR/$md5.txt"
+    if [ ! -f "$filename" ]; then
+      echo "$content" >$filename
+      notify-send "clip md5" "$md5"
+    else
+      notify-send "clip" "already saved"
+    fi
+  fi
+}
+
+list_clips() {
+  local first_line
+  local md5_prefix
+
+  # Проверяем, есть ли файлы
+  if [ -z "$(ls -A "$CLIP_DIR" 2>/dev/null)" ]; then
+    echo "Нет сохраненных клипов" >&2
+    exit 0
+  fi
+
+  # Для каждого файла в директории
+  cd $CLIP_DIR
+  for file in $(fd -e txt); do
+    if [ -f "$file" ]; then
+      # Получаем первые 8 символов md5 (из имени файла)
+      md5_prefix=$(basename "$file" .txt | cut -c1-8)
+
+      # Получаем первую строку через скрипт fl
+      first_line=$(head -n1 "$file" | "$FL_SCRIPT")
+
+      # Выводим результат
+      echo "$md5_prefix $first_line"
+    fi
+  done
+  cd - >/dev/null
+}
+
+select_and_copy() {
+  local line,id
+  local found_file=""
+
+  line=$(list_clips | $HOME/bin/chooser)
+  id=$(echo $line | sed "s/ .*$//")
+  if [[ "$id" != "" ]]; then
+    for file in "$CLIP_DIR"/*.txt; do
+      if [ -f "$file" ]; then
+        local filename=$(basename "$file" .txt)
+        # Проверяем совпадение по первым символам или полному md5
+        if [[ "$filename" == "$search_pattern"* ]]; then
+          found_file="$file"
+          break
+        fi
+      fi
+    done
+    if [[ "$found_file" != "" ]]; then
+      \cat $found_file | xsel -i -b
+      notify-send "clip" "content is retrieved"
+    fi
+  fi
+}
+
+case "$1" in
+"") save_clip ;;
+"ls") list_clips ;;
+"fzf") select_and_copy ;;
+esac

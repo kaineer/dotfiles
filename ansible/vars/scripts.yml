@@ -5,14 +5,15 @@ scripts:
   - be
   - browse
   - chooser
+  - fl
   - gd
   - launch
+  - lc
   - note
   - nord
   - opendir
   - pe
   - pm
-  # - switch_layout
   - the
   - tmux-status
   - tx

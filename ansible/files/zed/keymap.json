@@ -70,6 +70,7 @@
       "ctrl-k ctrl-j": "pane::SplitAndMoveDown",
       "ctrl-space ctrl-v": "workspace::ToggleVimMode",
       "ctrl-space ctrl-n": "workspace::NewFile",
+      "ctrl-1": "workspace::CloseAllDocks",
     },
   },
   {
