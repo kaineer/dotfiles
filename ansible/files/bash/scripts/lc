@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # launch clip
 
-CLIP_DIR="$HOME/var/clip"
-FL_SCRIPT="fl"
+CLIP_DIR="/home/kaineer/var/clip"
+FL_SCRIPT="/home/kaineer/bin/fl"
 
 [ ! -d $CLIP_DIR ] && mkdir -p $CLIP_DIR
 
@@ -52,7 +52,8 @@ list_clips() {
 }
 
 select_and_copy() {
-  local line,id
+  local line
+  local id
   local found_file=""
 
   line=$(list_clips | $HOME/bin/chooser)
