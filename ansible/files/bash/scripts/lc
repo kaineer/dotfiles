@@ -36,7 +36,7 @@ list_clips() {
 
   # Для каждого файла в директории
   cd $CLIP_DIR
-  for file in $(fd -e txt); do
+  for file in $($HOME/bin/fd -e txt); do
     if [ -f "$file" ]; then
       # Получаем первые 8 символов md5 (из имени файла)
       md5_prefix=$(basename "$file" .txt | cut -c1-8)

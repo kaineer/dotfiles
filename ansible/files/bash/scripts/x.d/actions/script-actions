@@ -1,0 +1,31 @@
+#!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+
+SCRIPTFILE="scripts.json"
+
+__has_script_json() {
+  [ -f $SCRIPTFILE ]
+}
+
+__list_scripts() {
+  cat "$SCRIPTFILE" | jq -r "keys | join(\"\\n\")"
+}
+
+__list_actions() {
+  __list_scripts
+}
+
+__run_action() {
+  CMD=$(cat "$SCRIPTFILE" | jq -r ".[\"$1\"]")
+  echo $CMD
+  eval "$CMD"
+}
+
+case "$1" in
+"list") __list_actions ;;
+*) __run_action $1 ;;
+esac

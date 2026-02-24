@@ -46,10 +46,6 @@
   //
   "base_keymap": "VSCode",
   // Features that can be globally enabled or disabled
-  "features": {
-    // Which edit prediction provider to use.
-    "edit_prediction_provider": "none",
-  },
   // The name of a font to use for rendering text in the editor
   // ".ZedMono" currently aliases to Lilex
   // but this may change in the future.
@@ -1239,6 +1235,7 @@
     // Any addition to this list will be merged with the default list.
     // Globs are matched relative to the worktree root,
     // except when starting with a slash (/) or equivalent in Windows.
+    "provider": "none",
     "disabled_globs": [
       "**/.env*",
       "**/*.pem",
