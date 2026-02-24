@@ -1,5 +1,5 @@
 [/]
-custom-list=['custom10', 'custom9', 'custom6', 'custom4', 'custom0', 'custom2', '__dummy__', 'custom1', 'custom3', 'custom5', 'custom7', 'custom8', 'custom11', 'custom12', 'custom13']
+custom-list=['custom15', 'custom10', 'custom9', 'custom6', 'custom4', 'custom0', 'custom2', '__dummy__', 'custom1', 'custom3', 'custom5', 'custom7', 'custom8', 'custom11', 'custom12', 'custom13', 'custom14']
 looking-glass-keybinding=@as []
 show-desklets=@as []
 
@@ -32,6 +32,16 @@ name='launch cinnamon settings'
 binding=['<Super>g']
 command='/home/kaineer/bin/launch gd'
 name='Go ...'
+
+[custom-keybindings/custom14]
+binding=['<Super>c']
+command='/home/kaineer/bin/lc'
+name='save clipboard'
+
+[custom-keybindings/custom15]
+binding=['<Super>v']
+command='/home/kaineer/bin/lc fzf'
+name='restore clipboard'
 
 [custom-keybindings/custom2]
 binding=['<Super>x']
