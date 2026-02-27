@@ -164,7 +164,7 @@
     "bin": "open"
   },
   "swagger:ekbmaps": {
-    "url": "http://10.1.0.248:5000/swagger/",
+    "url": "http://10.1.0.71:8080/swagger/",
     "bin": "open"
   },
   "gist:maps:api": {

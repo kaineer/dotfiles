@@ -63,15 +63,21 @@ select_and_copy() {
       if [ -f "$file" ]; then
         local filename=$(basename "$file" .txt)
         # Проверяем совпадение по первым символам или полному md5
-        if [[ "$filename" == "$search_pattern"* ]]; then
+        if [[ "$filename" == "$id"* ]]; then
           found_file="$file"
           break
         fi
       fi
     done
     if [[ "$found_file" != "" ]]; then
-      \cat $found_file | xsel -i -b
-      notify-send "clip" "content is retrieved"
+      cat $found_file | xsel -ib
+
+      if [[ "$DEBUG" != "" ]]; then
+        xsel -o
+        notify-send "clip" "content of ${id} is retrieved\n\n$(cat $found_file)"
+      else
+        notify-send "clip" "content of ${id} is retrieved"
+      fi
     fi
   fi
 }
