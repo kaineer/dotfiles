@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+TARGET_DIR="$HOME/Pictures/shedevrum/$(date +%Y%m%d)"
+URL=$(xsel -o)
+COUNT=$(echo $1 | grep "masterpiecer-images.s3.yandex.net" | wc -l)
+
+__replace_index() {
+  echo "$1" | sed "s/:[0-9]/:$2/"
+}
+
+if [[ "$COUNT" != "0" ]]; then
+  mkdir -p "$TARGET_DIR"
+  cd "$TARGET_DIR"
+
+  echo " > Looks like images from shed"
+  echo -ne " > Loading images.."
+  for idx in $(seq 1 6); do
+    IURL=$(__replace_index $URL $idx)
+    ITARGET=$(echo $IURL | sed "s/.*\//\.\//; s/:/_/; s/$/\.jpg/")
+
+    wget $IURL -O $ITARGET 2>/dev/null >/dev/null
+    echo -ne "."
+  done
+  echo "done"
+fi

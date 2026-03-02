@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: download ai files
+
+export BIN=$(readlink -f $0)
+export DIR=$(dirname $BIN)
+
+AGENTS_DIR=$DIR/aid.d
+
+list_agents() {
+  cd $AGENTS_DIR && ls -1 && cd - >/dev/null
+}
+
+get_clipboard() {
+  xsel -o 2>/dev/null
+  echo ""
+}
+
+CLIPBOARD=$(get_clipboard)
+
+for agent in $(list_agents); do
+  eval ". $DIR/aid.d/$agent \"$CLIPBOARD\""
+done
