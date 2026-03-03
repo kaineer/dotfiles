@@ -1,16 +1,18 @@
 #!/usr/bin/env bash
 
+source ../fn/colors
+
 __try_to() {
   COMMAND=$1
   MESSAGE=$2
 
-  echo -ne " + ${MESSAGE}.."
+  echo -ne " ${cyan}+${white} ${MESSAGE}.."
   OUTPUT="$(eval $COMMAND 2>&1)"
   if [[ "$?" == "0" ]]; then
     echo "done"
   else
     echo " > GOT ERRORS"
-    echo -e "\033[31;1m$OUTPUT\033[0m"
+    echo -e "${bold_red}$OUTPUT${reset}"
   fi
 }
 
