@@ -1,22 +1,6 @@
 #!/usr/bin/env bash
 
-source "$DIR/fn/colors"
-
-__try_to() {
-  COMMAND=$1
-  MESSAGE=$2
-
-  echo -ne " ${cyan}+${bold_white} ${MESSAGE}..${reset}"
-  OUTPUT="$(eval $COMMAND 2>&1)"
-  if [[ "$?" == "0" ]]; then
-    echo -e "${bold_green}done${reset}"
-  else
-    echo -e "${bold_red}failure${reset}"
-    echo -e " ${bold_yellow}> GOT ERRORS${reset}"
-    echo -e "${bold_red}$OUTPUT${reset}"
-    exit 1
-  fi
-}
+source "$DIR/fn/try"
 
 commit_message() {
   echo "Sync from $HOSTNAME at $(date +'%d.%m.%Y -- %H:%M')"
