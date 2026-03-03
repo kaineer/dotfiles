@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+__try_to() {
+  COMMAND=$1
+  MESSAGE=$2
+
+  echo -ne "${MESSAGE}.."
+  OUTPUT="$(COMMAND 2>&1)"
+  if [[ "$?" == "0" ]]; then
+    echo "done"
+  else
+    echo " > GOT ERRORS"
+    echo -e "\033[31;1m$OUTPUT\033[0m"
+  fi
+}
+
 commit_message() {
   echo "Sync from $HOSTNAME at $(date +'%d.%m.%Y -- %H:%M')"
   if [[ "$1" != "" ]]; then
@@ -28,5 +42,5 @@ if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
     ;;
   esac
 fi
-git pull origin master
-git push origin master
+__try_to "git pull origin master" "Pulling changes from github"
+__try_to "git push origin master" "Pushing changes to github"
