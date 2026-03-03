@@ -57,6 +57,8 @@ system_packages:
   - yq
   - xsel
   - xxd
+  # Development
+  # - libx11-dev
 
 # Remove games and another obsolete gui packages
 #
@@ -88,3 +90,5 @@ obsolete_packages:
   - shotwell
   - tali
   - thunderbird
+  # Development
+  - libx11-dev
