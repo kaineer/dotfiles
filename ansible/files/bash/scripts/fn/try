@@ -2,9 +2,11 @@
 
 source "$DIR/fn/colors"
 
+SQ=""
+
 __start() {
   MESSAGE=$1
-  echo -ne " ${cyan}+${bold_white} ${MESSAGE}..${reset}"
+  echo -ne " ${cyan}+${bold_white} ${MESSAGE}${SQ}${SQ}${reset}"
 }
 
 __ok() {
@@ -24,10 +26,11 @@ __try_to() {
   __start $MESSAGE
   OUTPUT="$(eval $COMMAND 2>&1)"
   if [[ "$?" == "0" ]]; then
-    echo -e "${bold_green}done${reset}"
+    __ok
   else
-    echo -e "${bold_red}failure${reset}"
+    __failure
     echo -e " ${bold_yellow}> GOT ERRORS${reset}"
+    echo -e " --- OUTPUT ---"
     echo -e "${bold_red}$OUTPUT${reset}"
     exit 1
   fi
