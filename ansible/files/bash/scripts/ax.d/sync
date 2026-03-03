@@ -5,7 +5,7 @@ __try_to() {
   MESSAGE=$2
 
   echo -ne "${MESSAGE}.."
-  OUTPUT="$(COMMAND 2>&1)"
+  OUTPUT="$(${COMMAND} 2>&1)"
   if [[ "$?" == "0" ]]; then
     echo "done"
   else
