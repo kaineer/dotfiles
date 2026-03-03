@@ -11,8 +11,8 @@ __try_to() {
   if [[ "$?" == "0" ]]; then
     echo -e "${bold_green}done${reset}"
   else
-    echo "${bold_red}failure${reset}"
-    echo " ${bold_yellow}> GOT ERRORS${reset}"
+    echo -e "${bold_red}failure${reset}"
+    echo -e " ${bold_yellow}> GOT ERRORS${reset}"
     echo -e "${bold_red}$OUTPUT${reset}"
     exit 1
   fi
