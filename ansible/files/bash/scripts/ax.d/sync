@@ -4,7 +4,7 @@ __try_to() {
   COMMAND=$1
   MESSAGE=$2
 
-  echo -ne "${MESSAGE}.."
+  echo -ne " + ${MESSAGE}.."
   OUTPUT="$(eval $COMMAND 2>&1)"
   if [[ "$?" == "0" ]]; then
     echo "done"
