@@ -1,5 +1,19 @@
 #!/usr/bin/env bash
 
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: functions to use for output
+#
+#  * __header "message" to display a message
+#  * __start "message" message without CR
+#  * __ok -- display "done"
+#  * __failure -- display "failure" and exit 1
+#  * __try_to "command" "message" -- display message, then try to run command and show ok/failure by $?
+
 source "$DIR/fn/colors"
 
 SQ=""
