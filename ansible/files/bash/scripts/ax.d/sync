@@ -14,7 +14,7 @@ nothing_to_commit() {
   git status . | grep "nothing to commit" | wc -l
 }
 
-echo -e " \uf444 Synchronizing dotfiles"
+echo -e " » Synchronizing dotfiles"
 
 cd $REPO_DIR
 DF_NOTHING_TO_COMMIT=$(nothing_to_commit)
