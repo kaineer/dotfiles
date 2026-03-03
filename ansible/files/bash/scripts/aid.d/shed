@@ -8,6 +8,8 @@
 #
 # What: download shedevrum file
 
+source $DIR/fn/try
+
 TARGET_DIR="$HOME/Pictures/shedevrum/$(date +%Y%m%d)"
 URL=$(xsel -o)
 COUNT=$(echo $1 | grep "masterpiecer-images.s3.yandex.net" | wc -l)
@@ -20,14 +22,16 @@ if [[ "$COUNT" != "0" ]]; then
   mkdir -p "$TARGET_DIR"
   cd "$TARGET_DIR"
 
-  echo " > Looks like images from shed"
-  echo -ne " > Loading images.."
+  __header "Loading images from shed"
+  __start "Loading images "
+
   for idx in $(seq 1 6); do
     IURL=$(__replace_index $URL $idx)
     ITARGET=$(echo $IURL | sed "s/.*\//\.\//; s/:/_/; s/$/\.jpg/")
 
     wget $IURL -O $ITARGET 2>/dev/null >/dev/null
-    echo -ne "."
+    __step
   done
-  echo "done"
+  echo -n " "
+  __ok
 fi

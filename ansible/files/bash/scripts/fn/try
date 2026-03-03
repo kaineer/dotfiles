@@ -4,9 +4,19 @@ source "$DIR/fn/colors"
 
 SQ=""
 
+__header() {
+  echo -ne "${bold_cyan}## $1"
+  echo ""
+  echo ""
+}
+
+__step() {
+  echo -ne "$SQ"
+}
+
 __start() {
   MESSAGE=$1
-  echo -ne " ${cyan}+${bold_white} ${MESSAGE}..${reset}"
+  echo -ne " ${cyan}+${bold_white} ${MESSAGE}${reset}"
 }
 
 __ok() {
@@ -21,9 +31,8 @@ __try_to() {
   COMMAND=$1
   MESSAGE=$2
 
-  # echo -ne " ${cyan}+${bold_white} ${MESSAGE}..${reset}"
-
   __start $MESSAGE
+  echo -n ".."
   OUTPUT="$(eval $COMMAND 2>&1)"
   if [[ "$?" == "0" ]]; then
     __ok
