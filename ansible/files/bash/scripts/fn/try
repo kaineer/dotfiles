@@ -2,11 +2,26 @@
 
 source "$DIR/fn/colors"
 
+__start() {
+  MESSAGE=$1
+  echo -ne " ${cyan}+${bold_white} ${MESSAGE}..${reset}"
+}
+
+__ok() {
+  echo -e "${bold_green}done${reset}"
+}
+
+__failure() {
+  echo -e "${bold_red}failure${reset}"
+}
+
 __try_to() {
   COMMAND=$1
   MESSAGE=$2
 
-  echo -ne " ${cyan}+${bold_white} ${MESSAGE}..${reset}"
+  # echo -ne " ${cyan}+${bold_white} ${MESSAGE}..${reset}"
+
+  __start $MESSAGE
   OUTPUT="$(eval $COMMAND 2>&1)"
   if [[ "$?" == "0" ]]; then
     echo -e "${bold_green}done${reset}"
