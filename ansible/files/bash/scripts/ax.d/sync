@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ../fn/colors
+source "$DIR/fn/colors"
 
 __try_to() {
   COMMAND=$1
