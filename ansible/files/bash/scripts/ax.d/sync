@@ -9,7 +9,7 @@ __try_to() {
   echo -ne " ${cyan}+${white} ${MESSAGE}.."
   OUTPUT="$(eval $COMMAND 2>&1)"
   if [[ "$?" == "0" ]]; then
-    echo "done"
+    echo -e "${bold_green}done${reset}"
   else
     echo " > GOT ERRORS"
     echo -e "${bold_red}$OUTPUT${reset}"
