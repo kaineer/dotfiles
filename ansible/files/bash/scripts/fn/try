@@ -6,7 +6,7 @@ SQ=""
 
 __start() {
   MESSAGE=$1
-  echo -ne " ${cyan}+${bold_white} ${MESSAGE}${SQ}${SQ}${reset}"
+  echo -ne " ${cyan}+${bold_white} ${MESSAGE}..${reset}"
 }
 
 __ok() {
