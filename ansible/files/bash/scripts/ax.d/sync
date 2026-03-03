@@ -4,8 +4,10 @@ __try_to() {
   COMMAND=$1
   MESSAGE=$2
 
+  echo "::: COMMAND: $COMMAND"
+
   echo -ne "${MESSAGE}.."
-  OUTPUT="$(${COMMAND} 2>&1)"
+  OUTPUT="$(eval $COMMAND 2>&1)"
   if [[ "$?" == "0" ]]; then
     echo "done"
   else
@@ -30,12 +32,13 @@ cd $REPO_DIR
 DF_NOTHING_TO_COMMIT=$(nothing_to_commit)
 if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
   git add .
+  COMMIT_MSG=$(commit_message)
   case "$1" in
   "e" | "edit")
-    git commit --edit -m "$(commit_message)"
+    git commit --edit -m "$COMMIT_MSG"
     ;;
   "")
-    git commit -m "$(commit_message)"
+    __try_to "git commit -m '$COMMIT_MSG'" "Comitting changes"
     ;;
   *)
     git commit -m "$(commit_message $@)"
