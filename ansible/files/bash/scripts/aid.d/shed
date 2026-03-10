@@ -22,18 +22,28 @@ if [[ "$COUNT" != "0" ]]; then
   mkdir -p "$TARGET_DIR"
   cd "$TARGET_DIR"
 
-  __header "Loading images from shed"
-  __start "Loading images "
+  IDX=$(echo $URL | sed "s/^.*://")
 
-  for idx in $(seq 1 6); do
-    IURL=$(__replace_index $URL $idx)
-    ITARGET=$(echo $IURL | sed "s/.*\//\.\//; s/:/_/; s/$/\.jpg/")
+  if [[ "$IDX" == "1" ]]; then
+    __header "Loading images from shed"
+    __start "Loading images "
 
-    wget $IURL -O $ITARGET 2>/dev/null >/dev/null
-    __step
-  done
-  echo -n " "
-  __ok
+    for idx in $(seq 1 6); do
+      IURL=$(__replace_index $URL $idx)
+      ITARGET=$(echo $IURL | sed "s/.*\//\.\//; s/:/_/; s/$/\.jpg/")
+
+      wget $IURL -O $ITARGET 2>/dev/null >/dev/null
+      __step
+    done
+    echo -n " "
+    __ok
+  else
+    __header "Loading file from shed"
+    __start "Loading "
+    TARGET=$(echo $URL | sed "s/.*\//\.\//; s/:/_/; s/$/\.jpg/")
+    wget $URL -O $TARGET 2>/dev/null >/dev/null
+    __ok
+  fi
 
   if [[ "$NEMO" != "" ]]; then
     nemo $TARGET_DIR
