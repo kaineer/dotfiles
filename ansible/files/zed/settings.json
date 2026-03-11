@@ -762,9 +762,10 @@
     // The default model to use when creating new threads.
     "default_model": {
       // The provider to use.
-      "provider": "deepseek",
+      "enable_thinking": false,
+      "provider": "ollama",
       // The model to use.
-      "model": "deepseek-chat",
+      "model": "gemma2:2b",
     },
     // Additional parameters for language model requests. When making a request to a model, parameters will be taken
     // from the last entry in this list that matches the model's provider and name. In each entry, both provider

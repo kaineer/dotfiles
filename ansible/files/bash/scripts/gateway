@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: Change gateway ip/last octet
+
+BIN=$(readlink -f $0)
+DIR=$(dirname $BIN)
+
+source $DIR/fn/try
+
+usage() {
+  B0=$(basename $0)
+  echo -n " > Использование: $B0 <новый IP или число от 1 до 254>
+>
+>  Примеры:
+>    $B0 192.168.1.1    # установить новый шлюз 192.168.1.1
+>    $B0 100            # заменить последний байт текущего шлюза на 100
+"
+  exit 1
+}
+
+if [ $# -ne 1 ]; then
+  usage
+fi
+
+NEW_GATEWAY="$1"
+
+# Получаем текущий default gateway
+CURRENT_GATEWAY=$(ip route | grep default | awk '{print $3}')
+
+if [ -z "$CURRENT_GATEWAY" ]; then
+  echo "не найден default gateway"
+  exit 1
+fi
+
+echo "Текущий gateway: $CURRENT_GATEWAY"
+
+# Проверяем, является ли аргумент числом от 1 до 254
+if [[ "$NEW_GATEWAY" =~ ^[0-9]+$ ]] && [ "$NEW_GATEWAY" -ge 1 ] && [ "$NEW_GATEWAY" -le 254 ]; then
+  # Заменяем последний байт текущего gateway
+  BASE_IP=$(echo $CURRENT_GATEWAY | cut -d. -f1-3)
+  NEW_GATEWAY="${BASE_IP}.${NEW_GATEWAY}"
+  echo "Преобразовано в IP: $NEW_GATEWAY"
+fi
+
+# Проверяем валидность IP адреса
+if ! [[ "$NEW_GATEWAY" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  echo "некорректный IP адрес или число: $NEW_GATEWAY"
+  exit 1
+fi
+
+# Проверяем, совпадает ли новый IP с текущим
+if [ "$NEW_GATEWAY" = "$CURRENT_GATEWAY" ]; then
+  echo "Новый gateway совпадает с текущим. Ничего не меняем."
+  exit 0
+fi
+
+# Получаем интерфейс для default gateway
+INTERFACE=$(ip route | grep default | awk '{print $5}')
+
+if [ -z "$INTERFACE" ]; then
+  echo "не удалось определить интерфейс"
+  exit 1
+fi
+
+echo "Интерфейс: $INTERFACE"
+
+# Удаляем текущий default gateway
+echo "Удаляем текущий gateway..."
+if ! sudo ip route del default; then
+  echo "Ошибка при удалении default gateway"
+  exit 1
+fi
+
+# Добавляем новый default gateway
+echo "Добавляем новый gateway: $NEW_GATEWAY через интерфейс $INTERFACE"
+if ! sudo ip route add default via $NEW_GATEWAY dev $INTERFACE; then
+  echo "Ошибка при добавлении нового gateway"
+  # Пробуем восстановить старый
+  sudo ip route add default via $CURRENT_GATEWAY dev $INTERFACE
+  exit 1
+fi
+
+# Проверяем результат
+NEW_CURRENT=$(ip route | grep default | awk '{print $3}')
+echo "Новый gateway успешно установлен: $NEW_CURRENT"

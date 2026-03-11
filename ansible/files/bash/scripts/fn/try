@@ -41,6 +41,10 @@ __failure() {
   echo -e "${bold_red}failure${reset}"
 }
 
+__error() {
+  echo -e "${bold_red} * ERROR: $@${reset}"
+}
+
 __try_to() {
   COMMAND=$1
   MESSAGE=$2
