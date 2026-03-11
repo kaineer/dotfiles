@@ -1,24 +1,32 @@
 #!/usr/bin/env bash
 
-echo "## ansible config runner"
-echo ""
-echo " $ ax update          # run dotfiles.sh to update config"
-echo " $ DEBUG=true ax update"
-echo "                      # run update with maximum verbosity"
-echo " $ ax ce              # edit ansible.cfg"
-echo " $ ax f[zf]           # choose file to edit in dotfiles"
-echo " $ ax git             # run git command"
-echo " $ ax se [scriptname] # edit script in bash/script"
-echo " $ ax sel             # edit list of scripts to install"
-echo " $ ax sync [e[dit]]   # sync repo with remote on github"
-echo " $ ax v[ars]          # edit debian packages list"
-echo " $ ax export <dir>    # export pgp private key"
-echo " $ ax import <dir>    # import pgp private key"
-echo " $ ax roles           # list installed roles"
-echo " $ ax key gh|github   # copy public ssh, open github settings"
-echo " $ ax key gl|gitlab   # copy public ssh, open gitlab settings"
-echo " $ ax pass clone      # clone password repo"
-echo " $ ax dconf export    # export dconf data into dotfiles"
-echo " $ ax dconf import    # import dconf data from dotfiles"
-echo " $ ax x ...           # run any command in dotfiles"
-echo ""
+print_help() {
+  echo "## ansible config runner"
+  echo ""
+  echo " $ ax update          # run dotfiles.sh to update config"
+  echo " $ DEBUG=true ax update"
+  echo "                      # run update with maximum verbosity"
+  echo " $ ax ce              # edit ansible.cfg"
+  echo " $ ax f[zf]           # choose file to edit in dotfiles"
+  echo " $ ax git             # run git command"
+  echo " $ ax se [scriptname] # edit script in bash/script"
+  echo " $ ax sel             # edit list of scripts to install"
+  echo " $ ax sync [e[dit]]   # sync repo with remote on github"
+  echo " $ ax v[ars]          # edit debian packages list"
+  echo " $ ax export <dir>    # export pgp private key"
+  echo " $ ax import <dir>    # import pgp private key"
+  echo " $ ax roles           # list installed roles"
+  echo " $ ax key gh|github   # copy public ssh, open github settings"
+  echo " $ ax key gl|gitlab   # copy public ssh, open gitlab settings"
+  echo " $ ax pass clone      # clone password repo"
+  echo " $ ax dconf export    # export dconf data into dotfiles"
+  echo " $ ax dconf import    # import dconf data from dotfiles"
+  echo " $ ax x ...           # run any command in dotfiles"
+  echo ""
+}
+
+if [[ "$(which bat)" != "" ]]; then
+  print_help | bat -lsh -p
+else
+  print_help
+fi
