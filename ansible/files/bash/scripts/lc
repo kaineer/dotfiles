@@ -8,7 +8,7 @@ FL_SCRIPT="/home/kaineer/bin/fl"
 
 save_clip() {
   local content
-  content=$(xsel -o | sed "s/^ *//;s/ *$//")
+  content=$(xsel -o | sed "s/^ *//;s/ *$//; s/ \+/ /" | grep -v "^$")
 
   if [[ "$content" != "" ]]; then
     local md5
