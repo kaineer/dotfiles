@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 # Supported file extensions
-MEDIA_EXTENSIONS = {".png", ".jpg", ".jpeg"}
+MEDIA_EXTENSIONS = {".png", ".jpg", ".jpeg", ".mp4"}
 MARKDOWN_EXTENSIONS = {".md"}
 SUPPORTED_EXTENSIONS = MEDIA_EXTENSIONS | MARKDOWN_EXTENSIONS
 
@@ -42,7 +42,7 @@ def format_file_list(files, dest_path):
     rel_path = get_relative_nomad_path(dest_path)
 
     # Build the output
-    output = [f"Move to directory {rel_path}:"]
+    output = [f"### Move to directory {rel_path}:"]
 
     # Add numbered files
     for i, filename in enumerate(sorted(files), 1):
@@ -179,7 +179,7 @@ def cmd_move(args):
 
     # Display totals
     if total_image_files + total_md_files > 0:
-        print("Totals:")
+        print("### Totals:")
         print(f"  Image files: {total_image_files}")
         print(f"  Markdown files: {total_md_files}")
         if not is_dry_run():
