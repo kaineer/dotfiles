@@ -19,7 +19,7 @@ source "$DIR/fn/colors"
 SQ=""
 
 __header() {
-  echo -ne "${bold_cyan}## $1"
+  echo -ne "${bold_cyan}## $1${reset}"
   echo ""
   echo ""
 }

@@ -24,7 +24,7 @@ if [[ "$COUNT" != "0" ]]; then
 
   IDX=$(echo $URL | sed "s/^.*://")
 
-  if [[ "$IDX" == "1" ]]; then
+  if [[ "$IDX" == "1" && "$SINGLE" != "yes" ]]; then
     __header "Loading images from shed"
     __start "Loading images "
 

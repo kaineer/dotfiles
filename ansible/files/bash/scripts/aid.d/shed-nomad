@@ -10,21 +10,9 @@
 
 source $DIR/fn/try
 
-TIMESTAMP="$(date +%Y%m%d)"
-SOURCE_DIR="$HOME/Pictures/shedevrum/$TIMESTAMP"
-NOMAD_DIR="/media/kaineer/nomad/images/shedevrum"
-TARGET_DIR="/media/kaineer/nomad/images/shedevrum/$TIMESTAMP"
-
-if [ -d "$SOURCE_DIR" ]; then
-  FILES_COUNT=$(cd "$SOURCE_DIR" && ls -1 | wc -l)
-
-  if [[ "$FILES_COUNT" != "0" ]]; then
-    if [ -d "$NOMAD_DIR" ]; then
-      __header "Export shedevrum files to nomad disk"
-      mkdir -p $TARGET_DIR
-      cd $SOURCE_DIR
-      __try_to "mv * $TARGET_DIR" "Move files exported today"
-      cd - >/dev/null 2>&1
-    fi
-  fi
+if aid.py nomad; then
+  __header "Export shedevrum files to nomad disk"
+  aid.py move \
+    "/home/$USER/Pictures/shedevrum/" \
+    "images/shedevrum"
 fi

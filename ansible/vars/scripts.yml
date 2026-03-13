@@ -1,5 +1,6 @@
 scripts:
   - aid
+  - aid.py
   - alt-j
   - ax
   - b
