@@ -22,8 +22,32 @@ get_clipboard() {
   echo ""
 }
 
-CLIPBOARD=$(get_clipboard)
+load_content() {
+  CLIPBOARD=$(get_clipboard)
 
-for agent in $(list_agents); do
-  eval ". $DIR/aid.d/$agent \"$CLIPBOARD\""
-done
+  for agent in $(list_agents); do
+    eval ". $DIR/aid.d/$agent \"$CLIPBOARD\""
+  done
+}
+
+watch_content() {
+  while true; do
+    sleep 5
+    CLIPBOARD=$(get_clipboard)
+    LINES=$(echo $CLIPBOARD | wc -l)
+
+    if [[ "$CLIPBOARD" != "$OLD_CLIPBOARD" ]]; then
+      echo " [INFO ] Clipboard changed.."
+      load_content
+      OLD_CLIPBOARD=${CLIPBOARD}
+      echo " [INFO ] ..done updating"
+    fi
+  done
+}
+
+case "$1" in
+"") load_content ;;
+"ls") list_agents | sed "s/^/ * /" ;;
+"w" | "watch") watch_content ;;
+*) $EDITOR $DIR/aid.d/$1 ;;
+esac
