@@ -163,8 +163,12 @@
     "url": "http://localhost:5173/",
     "bin": "open"
   },
-  "swagger:ekbmaps": {
+  "swagger:ekbmaps:71": {
     "url": "http://10.1.0.71:8080/swagger/",
+    "bin": "open"
+  },
+  "swagger:ekbmaps:dima": {
+    "url": "http://10.1.0.248:8080/swagger/",
     "bin": "open"
   },
   "gist:maps:api": {

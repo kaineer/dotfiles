@@ -19,6 +19,7 @@ require("lazy").setup({
   require("plugins.none-ls"),
   -- require("plugins.lualine"),
   require("plugins.telekasten"),
+  require("plugins.ai.gen"),
 
   -- {
   -- 	dir = "~/devel/kaineer/skk-lua.nvim",

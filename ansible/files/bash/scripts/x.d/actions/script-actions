@@ -16,7 +16,9 @@ __list_scripts() {
 }
 
 __list_actions() {
-  __list_scripts
+  if __has_script_json; then
+    __list_scripts
+  fi
 }
 
 __run_action() {

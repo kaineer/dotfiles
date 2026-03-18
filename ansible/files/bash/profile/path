@@ -16,4 +16,4 @@
 # 2. prepend with $HOME/bin
 
 FIXED_PATH=$(echo $PATH | tr ':' '\n' | grep -v "^$" | grep -v "$HOME/bin" | sort | uniq | tr '\n' ':')
-export PATH="$HOME/bin:$FIXED_PATH"
+export PATH="$HOME/bin:$HOME/ollama/bin:$FIXED_PATH"

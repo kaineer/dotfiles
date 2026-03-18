@@ -1,5 +1,6 @@
 scripts:
   - aid
+  - aid.py
   - alt-j
   - ax
   - b
@@ -7,6 +8,7 @@ scripts:
   - browse
   - chooser
   - fl
+  - gateway
   - gd
   - launch
   - lc

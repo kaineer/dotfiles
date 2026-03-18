@@ -4,7 +4,7 @@ import sys
 
 line = sys.stdin.readline()
 if line:
-    cleaned = re.sub(r"[^a-z ]", "", line.rstrip("\n").lower())
+    cleaned = re.sub(r"[^a-z0-9 ]", "", line.rstrip("\n").lower())
     print(cleaned.strip()[0:40], end="")
 else:
     print("", end="")

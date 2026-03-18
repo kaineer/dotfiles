@@ -762,6 +762,7 @@
     // The default model to use when creating new threads.
     "default_model": {
       // The provider to use.
+      "enable_thinking": false,
       "provider": "deepseek",
       // The model to use.
       "model": "deepseek-chat",
