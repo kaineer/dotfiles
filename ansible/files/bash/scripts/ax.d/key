@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO: generate key unless exists
+
 ssh_key_copy() {
   KEY="${1:-id_rsa}"
   cat $HOME/.ssh/${KEY}.pub | xsel -b
@@ -8,11 +10,11 @@ ssh_key_copy() {
 
 case "$1" in
 "gh" | "github")
-  ssh_key_copy
+  ssh_key_copy $2
   open "https://github.com/settings/keys"
   ;;
 "gl" | "gitlab")
-  ssh_key_copy
+  ssh_key_copy $2
   open "https://gitlab.com/-/user_settings/ssh_keys"
   ;;
 esac
