@@ -65,6 +65,8 @@ for SRC in $PROFILE_ITEMS; do
 done
 # tag: /config-profile
 
+export OLLAMA_BASE_URL="http://10.1.0.72:11434"
+
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"

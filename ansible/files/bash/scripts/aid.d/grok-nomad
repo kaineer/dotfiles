@@ -1,8 +1,0 @@
-source $DIR/fn/try
-
-if aid.py nomad; then
-  __header "Export grok files to nomad disk"
-  aid.py move \
-    "/home/$USER/Pictures/grok/" \
-    "images/grok"
-fi
