@@ -42,9 +42,11 @@ watch_content() {
     sleep 5
     CLIPBOARD=$(get_clipboard)
     LINES=$(echo $CLIPBOARD | wc -l)
+    FIRST_LINE=$(echo $CLIPBOARD | head -n1)
 
     if [[ "$CLIPBOARD" != "$OLD_CLIPBOARD" ]]; then
       echo " [INFO ] Clipboard changed.."
+      echo " [INFO ] -> $FIRST_LINE"
       load_content
       OLD_CLIPBOARD=${CLIPBOARD}
       echo " [INFO ] ..done updating"

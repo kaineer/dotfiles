@@ -35,6 +35,9 @@ __start() {
 
 __ok() {
   echo -e "${bold_green}done${reset}"
+  if [[ "$(which notify-send)" != "" ]]; then
+    notify-send "DONE"
+  fi
 }
 
 __failure() {

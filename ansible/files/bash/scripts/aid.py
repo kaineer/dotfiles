@@ -42,7 +42,7 @@ def format_file_list(files, dest_path):
     rel_path = get_relative_nomad_path(dest_path)
 
     # Build the output
-    output = [f"### Move to directory {rel_path}:"]
+    output = [f"### Move to directory file://{rel_path}"]
 
     # Add numbered files
     for i, filename in enumerate(sorted(files), 1):

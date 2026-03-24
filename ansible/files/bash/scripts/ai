@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+AI_HOST="http://10.1.0.72"
+AI_PORT="11434"
+
+host_info() {
+  echo "ai:"
+  echo "  host: $AI_HOST"
+  echo "  port: $AI_PORT"
+  echo "  url: $AI_HOST:$AI_PORT"
+
+  echo "models:"
+  list_models | sed "s/^/  - /"
+}
+
+list_models() {
+  curl -q --silent --no-buffer "$AI_HOST:$AI_PORT/api/tags" |
+    jq -r .models[].model
+}
+
+case "$1" in
+"") host_info ;;
+"ls") list_models | sed "s/^/ * /" ;;
+esac
