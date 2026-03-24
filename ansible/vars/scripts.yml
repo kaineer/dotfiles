@@ -1,27 +1,55 @@
 scripts:
+  # Also something mighty, but in the future
+  - ai
+  ## Two scripts to process clipboard
+  #    and links in clipboard
   - aid
   - aid.py
+  # Chooser from tmux options,
+  #   binded to <leader> alt-j
   - alt-j
+  # This whole system control script
   - ax
+  # Open browser with link provided
   - b
-  - be
   - browse
+  # Edit script in $HOME/bin
+  - be
+  # fzf for terminal/rofi for desktop
   - chooser
+  # Gets first line and trims it
   - fl
+  # Switches network gateway
   - gateway
+  # Goto directory
+  #   (but now it can open url also)
   - gd
+  # Launch something
   - launch
+  # May be sometime I will merge it with aid
   - lc
+  # Прикольная утилита. Странно, что заброшенная
   - note
+  # Nord palette colors
   - nord
+  # nvim for terminal/nemo for desktop
   - opendir
+  # project environment control script
   - pe
+  # Package manager shortcut
   - pm
+  # Utility for net, path, uname, arch
   - the
   - tmux-status
+  # This one is obscure, but mighty
   - tx
+  # Check if user is sure
   - yn
+  # Persist vite version
   - vp
+  # Ultra-launcher for anything
   - x
+  # Run x launcher in tmux/outside
   - xtm
+  # Choose nord color and copy to clipboard
   - nc
