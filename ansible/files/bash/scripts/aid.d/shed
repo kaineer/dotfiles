@@ -31,15 +31,9 @@ if [[ "$COUNT" != "0" ]]; then
 
     IDX=$(echo $URL | sed "s/^.*://")
 
-<<<<<<< HEAD
-  if [[ "$IDX" == "1" && "$SINGLE" != "yes" ]]; then
-    __header "Loading images from shed"
-    __start "Loading images to file://$TARGET_DIR\nProgress: "
-=======
     if [[ "$IDX" == "1" && "$SINGLE" != "yes" ]]; then
       __header "Loading images from shed"
-      __start "Loading images "
->>>>>>> 218453367173494de791c06713a526796aa712ff
+      __start "Loading images to file://$TARGET_DIR\nProgress: "
 
       for idx in $(seq 1 6); do
         IURL=$(__replace_index $URL $idx)
