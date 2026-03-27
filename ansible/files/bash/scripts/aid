@@ -16,11 +16,11 @@ AGENTS_DIR=$DIR/aid.d
 list_agents() {
   # cd $AGENTS_DIR && ls -1 && cd - >/dev/null
   echo "shed"
-  echo "grok"
+  # echo "grok"
 
   if aid.py nomad; then
     echo "shed-nomad"
-    echo "grok-nomad"
+    # echo "grok-nomad"
   fi
 }
 
