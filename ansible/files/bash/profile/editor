@@ -9,7 +9,9 @@
 ###   for non-interactive shell
 [[ "$1" != "-i" ]] && return
 
-if [ -x "$(command -v nvim)" ]; then
+if [[ "$TERM_PROGRAM" == "zed" ]]; then
+  export EDITOR="zed --wait"
+elif [ -x "$(command -v nvim)" ]; then
   export EDITOR=nvim
 elif [ -x "$(command -v vi)" ]; then
   export EDITOR=vi

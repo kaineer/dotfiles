@@ -45,6 +45,8 @@ scripts:
   - tx
   # Check if user is sure
   - yn
+  # Store variables in $HOME/var/vars
+  - var
   # Persist vite version
   - vp
   # Ultra-launcher for anything

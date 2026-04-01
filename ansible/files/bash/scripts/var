@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+SDIR="$HOME/var/vars"
+
+ensure_storage() {
+  [ ! -d $SDIR ] && mkdir -p $SDIR
+}
+
+get_var() {
+  NAME=$1
+  FNAME="$SDIR/$NAME"
+  if [ -f "$FNAME" ]; then
+    cat "$FNAME"
+  fi
+}
+
+set_var() {
+  NAME=$1
+  VALUE=$2
+  FNAME="$SDIR/$NAME"
+
+  if [[ "$VALUE" == "" ]]; then
+    [ -f "$FNAME" ] && rm $FNAME
+  else
+    ensure_storage
+    echo "$VALUE" >$FNAME
+  fi
+}
+
+list_vars() {
+  cd $SDIR
+  for f in $(ls -1); do
+    local value=$(cat $f)
+    echo "$f: $value"
+  done
+  cd - >/dev/null 2>&1
+}
+
+if [[ "$1" == "ls" ]]; then
+  list_vars
+else
+  if [[ "${#@}" == "1" ]]; then
+    get_var "$1"
+  elif [[ "${#@}" == "2" ]]; then
+    set_var "$1" "$2"
+  fi
+fi

@@ -18,7 +18,10 @@
     "model_parameters": [],
   },
   "buffer_font_family": "FiraCode Nerd Font",
+  "buffer_font_size": 16,
   "terminal": {
     "font_family": "FiraCode Nerd Font",
+    "font_size": 16,
   },
+  "tab_bar": { "show": false },
 }
