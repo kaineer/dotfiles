@@ -2,6 +2,11 @@ tmp/
 dump/
 settings.txt
 .*
+
+### Neovim config innards
+#
 secret.lua
-ansible/files/nvim/plugin/
 lazy-lock.json
+
+ansible/files/nvim/plugin/
+ansible/files/nvim/config/log/
