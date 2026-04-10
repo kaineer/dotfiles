@@ -13,6 +13,7 @@ _usage() {
   echo "\`\`\`sh"
   echo " $ the path      # all parts of current executables path"
   echo " $ the net       # address of current available network"
+  echo " $ the ssh       # list all ssh hosts, check availability"
   echo " $ the uname     # uname active parts"
   echo " $ the arch      # architecture for binaries"
   echo " $ the kill      # kill selected process"
