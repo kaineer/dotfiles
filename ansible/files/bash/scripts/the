@@ -60,11 +60,48 @@ kill_selected() {
   [[ "$PID" != "" ]] && kill -9 $PID
 }
 
+list_available_hosts() {
+  echo "ekb71"
+  echo "ekb72"
+  echo "jetson"
+  echo "eva"
+}
+
+__check_ssh() {
+  local host=$1
+  local timeout=5
+
+  # Попытка SSH-подключения с таймаутом (без реальной авторизации)
+  ssh -o ConnectTimeout=$timeout \
+    -o BatchMode=yes \
+    -o StrictHostKeyChecking=no \
+    -o NumberOfPasswordPrompts=0 \
+    "$host" "exit" 2>/dev/null </dev/null
+
+  return $?
+}
+
+list_ssh_hosts() {
+  while IFS= read -r host; do
+    # Пропускаем пустые строки и комментарии
+    [[ -z "$host" || "$host" =~ ^[[:space:]]*# ]] && continue
+
+    printf " * %-10s " "$host:"
+
+    if __check_ssh "$host"; then
+      echo "✅ online"
+    else
+      echo "❌ offline"
+    fi
+  done < <(list_available_hosts)
+}
+
 case "$1" in
 "path") echo_path ;;
 "net") echo_net ;;
 "uname") echo_uname ;;
 "arch") echo_architecture ;;
 "kill") kill_selected ;;
+"ssh") list_ssh_hosts ;;
 "h" | "") echo_usage ;;
 esac

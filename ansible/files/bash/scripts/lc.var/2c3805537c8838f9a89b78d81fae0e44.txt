@@ -1,0 +1,10 @@
+"createMutation": {
+"prefix": "mutation",
+"body": [
+"${1:postN}: builder.mutation<${2:Result}, ${3:Parameter}>({",
+" query: ({",
+" url: \"$4\",",
+" method: \"${5:POST}\",",
+" }",
+"}),"
+]

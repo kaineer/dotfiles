@@ -52,6 +52,7 @@ system_packages:
   - tmux
   - vivid
   - unzip
+  - uuid-runtime
   - wget
   - zip
   - yq
