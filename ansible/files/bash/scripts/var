@@ -71,7 +71,8 @@ usage() {
   echo "Usage:"
   echo " $ var name        # Variable value to stdout"
   echo " $ var name value  # Store value for variable"
-  echo " $ var --delete|rm # Remove value for variable"
+  echo " $ var -d | --delete | rm"
+  echo "                   # Remove value for variable"
   echo " $ var -i name     # Store clipboard to variable"
   echo " $ var -l | ls     # List variables with values"
 }
@@ -84,7 +85,13 @@ case "$1" in
   shift
   rm_var $@
   ;;
-"--help" | "h" | "help") usage ;;
+"" | "--help" | "h" | "help")
+  if [[ "$(which bat)" != "" ]]; then
+    usage | bat -lsh -p
+  else
+    usage
+  fi
+  ;;
 "-i" | "clip")
   shift
   store_clip $@
