@@ -37,6 +37,8 @@ set_var() {
 }
 
 list_vars() {
+  [ ! -d $SDIR ] && return
+
   cd $SDIR
   for file in $(ls -1); do
     local value=$(cat $file)
