@@ -71,19 +71,19 @@ usage() {
   echo "Usage:"
   echo " $ var name        # Variable value to stdout"
   echo " $ var name value  # Store value for variable"
-  echo " $ var name \"\"     # Remove value for variable"
   echo " $ var --delete|rm # Remove value for variable"
   echo " $ var -i name     # Store clipboard to variable"
-  echo " $ var ls | list   # List variables with values"
+  echo " $ var -l | ls     # List variables with values"
 }
 
 case "$1" in
-"ls" | "list") list_vars ;;
+"-l" | "--list" | "ls" | "list")
+  list_vars
+  ;;
 "-d" | "--delete" | "rm")
   shift
   rm_var $@
   ;;
-"-l" | "--list") list_vars ;;
 "--help" | "h" | "help") usage ;;
 "-i" | "clip")
   shift
