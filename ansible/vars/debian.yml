@@ -36,6 +36,7 @@ system_packages:
   - htop
   - inxi
   - jq
+  - jsonnet
   - keychain
   - lua5.1
   - luarocks
