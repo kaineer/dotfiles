@@ -6,19 +6,48 @@
 //
 // Zed editor settings
 {
+  "language_models": {
+    "ollama": {
+      "api_url": "http://10.1.0.72:11434"
+    }
+  },
+  "edit_predictions": {
+    "provider": "none",
+  },
+  "lsp": {
+    "vtsls": {
+      "settings": {
+        "typescript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always",
+          },
+        },
+        "javascript": {
+          "updateImportsOnFileMove": {
+            "enabled": "always",
+          },
+        },
+      },
+      "enable_lsp_tasks": true,
+    },
+  },
   "theme": "Nordic Syntax",
   "vim_mode": true,
   "agent": {
     "default_model": {
-      "provider": "deepseek",
-      "model": "deepseek-chat",
+      "provider": "ollama",
+      "model": "gemma3:4b",
       "enable_thinking": false,
     },
     "favorite_models": [],
     "model_parameters": [],
   },
   "buffer_font_family": "FiraCode Nerd Font",
+  "buffer_font_size": 16,
   "terminal": {
     "font_family": "FiraCode Nerd Font",
+    "font_size": 16,
   },
+  "tab_bar": { "show": false },
+  "file_scan_exclusions": ["ai/responses/**/*.md"],
 }

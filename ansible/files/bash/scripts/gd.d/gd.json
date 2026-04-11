@@ -198,5 +198,17 @@
   "dev:jq": {
     "url": "https://play.jqlang.org/",
     "bin": "open"
+  },
+  "swagger:game:prod": {
+    "url": "http://10.1.0.213:8080/webjars/swagger-ui/index.html",
+    "bin": "open"
+  },
+  "swagger:game:dev": {
+    "url": "http://10.1.0.203:8080/webjars/swagger-ui/index.html",
+    "bin": "open"
+  },
+  "ekbmaps:yandex": {
+    "url": "https://disk.360.yandex.ru/d/913sMu4CRdjaAg",
+    "bin": "open"
   }
 }
