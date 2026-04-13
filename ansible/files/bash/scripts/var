@@ -37,31 +37,65 @@ set_var() {
 }
 
 list_vars() {
+  [ ! -d $SDIR ] && return
+
   cd $SDIR
   for file in $(ls -1); do
     local value=$(cat $file)
-    local lines=$(echo $value | wc -l)
-    if [[ "$lines" == "1" ]]; then
+    local lines=$(echo -e "$value" | wc -l)
+    if [[ "$lines" == "0" ]]; then
+      echo -ne ""
+    elif [[ "$lines" == "1" ]]; then
       echo "$file: $value"
     else
-      echo "$file:"
+      echo "$file: |"
       echo "$value" | sed "s/^/  /"
     fi
   done
   cd - >/dev/null 2>&1
 }
 
+rm_var() {
+  NAME="$1"
+  FNAME="$SDIR/$NAME"
+  [ -f "$FNAME" ] && rm "$FNAME"
+}
+
+store_clip() {
+  NAME="$1"
+  CLIPBOARD="$(xsel -ob)"
+  set_var "$NAME" "$CLIPBOARD"
+}
+
 usage() {
   echo "Usage:"
-  echo " $ var name       # Variable value to stdout"
-  echo " $ var name value # Store value for variable"
-  echo " $ var name \"\"    # Remove value for variable"
-  echo " $ var ls|list    # List variables with values"
+  echo " $ var name        # Variable value to stdout"
+  echo " $ var name value  # Store value for variable"
+  echo " $ var -d | --delete | rm"
+  echo "                   # Remove value for variable"
+  echo " $ var -i name     # Store clipboard to variable"
+  echo " $ var -l | ls     # List variables with values"
 }
 
 case "$1" in
-"ls" | "list") list_vars ;;
-"h" | "help") usage ;;
+"-l" | "--list" | "ls" | "list")
+  list_vars
+  ;;
+"-d" | "--delete" | "rm")
+  shift
+  rm_var $@
+  ;;
+"" | "--help" | "h" | "help")
+  if [[ "$(which bat)" != "" ]]; then
+    usage | bat -lsh -p
+  else
+    usage
+  fi
+  ;;
+"-i" | "clip")
+  shift
+  store_clip $@
+  ;;
 *)
   if [[ "${#@}" == "1" ]]; then
     get_var "$1"
