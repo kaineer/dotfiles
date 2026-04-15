@@ -1,0 +1,7 @@
+{
+  awesome: [
+    // "awesome",
+    "dunst",
+    "arandr",
+  ]
+}
