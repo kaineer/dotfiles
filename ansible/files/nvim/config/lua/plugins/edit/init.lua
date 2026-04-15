@@ -6,10 +6,10 @@ return requireAll("plugins.edit.", {
 	"trim", -- trim whitespaces
 	"eyeliner", -- jump to symbol
 	"hurl",
-	"colorizer",
+	-- "colorizer", -- устарел
 	"todo",
 	"trouble",
 	"emmet",
 	"snippets",
-	-- "kanji",
+	"kanji",
 })

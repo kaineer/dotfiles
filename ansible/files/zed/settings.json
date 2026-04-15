@@ -8,7 +8,7 @@
 {
   "language_models": {
     "ollama": {
-      "api_url": "http://10.1.0.72:11434"
+      "api_url": "http://10.1.0.27:11434"
     }
   },
   "edit_predictions": {
@@ -34,10 +34,11 @@
   "theme": "Nordic Syntax",
   "vim_mode": true,
   "agent": {
+    "default_profile": "ask",
     "default_model": {
       "provider": "ollama",
-      "model": "gemma3:4b",
-      "enable_thinking": false,
+      "model": "gemma4:e4b",
+      "enable_thinking": true,
     },
     "favorite_models": [],
     "model_parameters": [],
