@@ -8,8 +8,8 @@
 {
   "language_models": {
     "ollama": {
-      "api_url": "http://10.1.0.27:11434"
-    }
+      "api_url": "http://10.1.0.27:11434",
+    },
   },
   "edit_predictions": {
     "provider": "none",
@@ -51,4 +51,5 @@
   },
   "tab_bar": { "show": false },
   "file_scan_exclusions": ["ai/responses/**/*.md"],
+  "tab_size": 2,
 }
