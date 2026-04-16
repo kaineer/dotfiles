@@ -93,4 +93,4 @@ obsolete_packages:
   - tali
   - thunderbird
   # Development
-  - libx11-dev
+  # - libx11-dev
