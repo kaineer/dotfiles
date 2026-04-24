@@ -3,10 +3,10 @@ return {
   opts = {
     -- model = "gemma2:2b",
     -- model = "qwen3.5",
-    host = "10.1.0.72",
+    host = "10.1.0.27",
     port = "11434",
-    model = "gemma3:4b",
-    display_mode = "vertical-split",
+    model = "deepseek-coder:6.7b",
+    display_mode = "horizontal-split",
     result_filetype = "text",
   },
   init = function()

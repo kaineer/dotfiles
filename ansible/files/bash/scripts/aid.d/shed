@@ -21,7 +21,7 @@ __replace_index() {
 }
 
 __host_available() {
-  ping -c1 "$YANDEX_HOST" >/dev/null 2>/dev/null
+  ping -c1 "$YANDEX_HOST" &>/dev/null
   [[ "$?" == "0" ]]
 }
 
@@ -40,7 +40,7 @@ if [[ "$COUNT" != "0" ]]; then
         IURL=$(__replace_index $URL $idx)
         ITARGET=$(echo $IURL | sed "s/.*\//\.\//; s/:/_/; s/$/\.jpg/")
 
-        wget $IURL -O $ITARGET 2>/dev/null >/dev/null
+        wget $IURL -O $ITARGET &>/dev/null
         __step
       done
       echo -n " "

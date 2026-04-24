@@ -210,5 +210,9 @@
   "ekbmaps:yandex": {
     "url": "https://disk.360.yandex.ru/d/913sMu4CRdjaAg",
     "bin": "open"
+  },
+  "gh:ai-audit": {
+    "url": "https://github.com/Chechushkov/AI_Auditor",
+    "bin": "open"
   }
 }
