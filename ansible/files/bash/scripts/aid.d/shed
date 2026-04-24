@@ -13,7 +13,7 @@ source $DIR/fn/try
 TARGET_DIR="$HOME/Pictures/shedevrum/$(date +%Y%m%d)"
 URL=$(xsel -o)
 YANDEX_HOST="masterpiecer-images.s3.yandex.net"
-COUNT=$(echo $1 | grep "$YANDEX_HOST" | wc -l)
+COUNT=$(echo "$1" | grep "$YANDEX_HOST" | wc -l)
 SINGLE=$(var single)
 
 __replace_index() {
@@ -49,7 +49,7 @@ if [[ "$COUNT" != "0" ]]; then
       __header "Loading file from shed"
       __start "Loading "
       TARGET=$(echo $URL | sed "s/.*\//\.\//; s/:/_/; s/$/\.jpg/")
-      wget $URL -O $TARGET 2>/dev/null >/dev/null
+      wget $URL -O $TARGET &>/dev/null
       __ok
     fi
 
