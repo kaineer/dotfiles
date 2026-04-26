@@ -8,6 +8,8 @@ scripts:
   # Chooser from tmux options,
   #   binded to <leader> alt-j
   - alt-j
+
+  - ansi
   # This whole system control script
   - ax
   # Open browser with link provided
