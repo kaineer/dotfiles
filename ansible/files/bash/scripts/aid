@@ -33,7 +33,7 @@ load_content() {
   CLIPBOARD=$(get_clipboard)
 
   for agent in $(list_agents); do
-    eval ". $DIR/aid.d/$agent \"$CLIPBOARD\""
+    . "$DIR/aid.d/$agent" "$CLIPBOARD"
   done
 }
 
@@ -41,12 +41,13 @@ watch_content() {
   while true; do
     sleep 5
     CLIPBOARD=$(get_clipboard)
-    LINES=$(echo $CLIPBOARD | wc -l)
-    FIRST_LINE=$(echo $CLIPBOARD | head -n1)
+    LINES=$(echo -e "$CLIPBOARD" | wc -l)
+    FIRST_LINE=$(echo -e "$CLIPBOARD" | head -n1)
 
     if [[ "$CLIPBOARD" != "$OLD_CLIPBOARD" ]]; then
       echo " [INFO ] Clipboard changed.."
-      echo " [INFO ] -> $FIRST_LINE"
+      COLS=$(echo "$COLUMNS - 14" | bc)
+      echo " [INFO ] -> ${FIRST_LINE:0:$COLS}"
       load_content
       OLD_CLIPBOARD=${CLIPBOARD}
       echo " [INFO ] ..done updating"

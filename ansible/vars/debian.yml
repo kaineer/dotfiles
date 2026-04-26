@@ -46,6 +46,8 @@ system_packages:
   - pass
   - python3-pip
   - python3-venv
+  - podman
+  - podman-compose
   - rsync
   - sqlite3
   - strace

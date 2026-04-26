@@ -6,10 +6,22 @@
 //
 // Zed editor settings
 {
+  "project_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "git_panel": {
+    "dock": "left"
+  },
   "language_models": {
     "ollama": {
-      "api_url": "http://10.1.0.27:11434"
-    }
+      "api_url": "http://10.1.0.27:11434",
+    },
   },
   "edit_predictions": {
     "provider": "none",
@@ -34,6 +46,7 @@
   "theme": "Nordic Syntax",
   "vim_mode": true,
   "agent": {
+    "dock": "right",
     "default_profile": "ask",
     "default_model": {
       "provider": "ollama",
@@ -51,4 +64,11 @@
   },
   "tab_bar": { "show": false },
   "file_scan_exclusions": ["ai/responses/**/*.md"],
+  "tab_size": 2,
+  "languages": {
+    "Python": {
+      "tab_size": 4,
+      "hard_tabs": false,
+    },
+  },
 }

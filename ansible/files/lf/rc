@@ -14,6 +14,7 @@ map R delete
 map m meta
 
 map o rr
+map z gf
 
 map <enter> nemo
 
@@ -33,10 +34,15 @@ cmd xx ${{
   /home/kaineer/bin/x
 }}
 
+cmd gf ${{
+  TARGET_DIR=$(fasd -ld | fzf)
+  [ ! -z "$TARGET_DIR" ]] && lf -remote "send $id cd \"$TARGET_DIR\""
+}}
+
 cmd open ${{
   case $(file --mime-type "$f" -b) in
     text/*) $EDITOR $fx ;;
-    image/*) eog -fw "$f" ;;
+    image/*) feh -FZ "$(dirname $f)" ;;
     audio/*) mplayer "$f" ;;
     video/*) mplayer -fs -nosound "$f" 2>&1 >/dev/null ;;
     application/json) jl "$f" --mode line ;;
