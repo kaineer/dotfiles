@@ -17,6 +17,7 @@
     - include_vars: ./vars/debian.yml
     - include_vars: ./vars/workstations.yml
     - include_vars: ./vars/scripts.yml
+    - include_vars: ./vars/logs.yml
 
     # --- tasks
     #

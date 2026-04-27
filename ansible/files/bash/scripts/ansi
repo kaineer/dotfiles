@@ -8,14 +8,14 @@
 # What: utility for ANSI escape sequences
 
 show_help() {
-  cat <<EOF
+  echo -e "
 Usage: ansi <command> [arguments]
 
-TEXT COLORS (can be combined with ;):
+\e[1mTEXT COLORS\e[0m (can be combined with ;):
   black, red, green, yellow, blue, magenta, cyan, white
   bg-black, bg-red, ... (background colors)
 
-TEXT ATTRIBUTES:
+\e[1mTEXT ATTRIBUTES\e[0m:
   reset       - reset all attributes
   bold        - bold
   dim         - dim
@@ -25,7 +25,7 @@ TEXT ATTRIBUTES:
   reverse     - reverse colors
   hidden      - hidden text
 
-CURSOR CONTROL:
+\e[1mCURSOR CONTROL\e[0m:
   home        - cursor to beginning of line
   clear       - clear screen, cursor to home position
   goto X Y    - move cursor to position (X, Y)
@@ -34,9 +34,9 @@ CURSOR CONTROL:
   hide-cursor - hide cursor
   show-cursor - show cursor
 
-OTHER:
+\e[1mOTHER\e[0m:
   palette     - show color demo
-EOF
+"
 }
 
 # Text color codes

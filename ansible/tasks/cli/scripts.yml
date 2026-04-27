@@ -16,6 +16,16 @@
     state: "link"
   with_items: "{{ scripts }}"
 
+- name: Link logs
+  file:
+    src: "{{ playbook_dir }}/files/bash/scripts/log"
+    dest: "/home/{{ user.name }}/bin/{{ item }}"
+    force: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: "link"
+  with_items: "{{ logs }}"
+
 - name: Link gd.json
   file:
     src: "{{ playbook_dir }}/files/bash/scripts/gd.d/gd.json"

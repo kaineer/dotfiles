@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+BIN0=$0
+BASE=$(basename $BIN0)
+
+DEBUG=$(var loglvl)
+DEBUG=${DEBUG:-error}
+
+TSFORMAT=""
+USETS=$(var logts)
+if [[ "$USETS" != "" ]]; then
+  TSFORMAT="%H:%M:%S"
+fi
+
+ts() {
+  date +" $TSFORMAT"
+}
+
+if [[ ":debug:" == *":$DEBUG:"* ]]; then
+  log_debug() {
+    echo -e " $(ansi red bold) $(ansi reset)$(ts)" $@
+  }
+else
+  log_debug() {
+    echo -ne ""
+  }
+fi
+
+if [[ ":debug:info:" == *":$DEBUG:"* ]]; then
+  log_info() {
+    echo -e " $(ansi cyan bold)$(ansi reset)$(ts)" $@
+  }
+else
+  log_info() {
+    echo -ne ""
+  }
+fi
+
+if [[ ":debug:info:warn:" == *":$DEBUG:"* ]]; then
+  log_warn() {
+    echo -e " $(ansi yellow bold)$(ansi reset)$(ts)" $@
+  }
+else
+  log_warn() {
+    echo -ne ""
+  }
+fi
+
+log_error() {
+  echo -e " $(ansi red bold)$(ansi reset)$(ts)" $@
+}
+
+case "$BASE" in
+"error") log_error $@ ;;
+"warn") log_warn $@ ;;
+"info") log_info $@ ;;
+"debug") log_debug $@ ;;
+esac
