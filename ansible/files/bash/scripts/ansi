@@ -1,0 +1,166 @@
+#!/usr/bin/env bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: utility for ANSI escape sequences
+
+show_help() {
+  cat <<EOF
+Usage: ansi <command> [arguments]
+
+TEXT COLORS (can be combined with ;):
+  black, red, green, yellow, blue, magenta, cyan, white
+  bg-black, bg-red, ... (background colors)
+
+TEXT ATTRIBUTES:
+  reset       - reset all attributes
+  bold        - bold
+  dim         - dim
+  italic      - italic
+  underline   - underline
+  blink       - blink
+  reverse     - reverse colors
+  hidden      - hidden text
+
+CURSOR CONTROL:
+  home        - cursor to beginning of line
+  clear       - clear screen, cursor to home position
+  goto X Y    - move cursor to position (X, Y)
+  save-cursor - save cursor position
+  rest-cursor - restore cursor position
+  hide-cursor - hide cursor
+  show-cursor - show cursor
+
+OTHER:
+  palette     - show color demo
+EOF
+}
+
+# Text color codes
+declare -A COLORS=(
+  ["black"]="30"
+  ["red"]="31"
+  ["green"]="32"
+  ["yellow"]="33"
+  ["blue"]="34"
+  ["magenta"]="35"
+  ["cyan"]="36"
+  ["white"]="37"
+
+  # Background colors
+  ["bg-black"]="40"
+  ["bg-red"]="41"
+  ["bg-green"]="42"
+  ["bg-yellow"]="43"
+  ["bg-blue"]="44"
+  ["bg-magenta"]="45"
+  ["bg-cyan"]="46"
+  ["bg-white"]="47"
+)
+
+# Text attributes
+declare -A ATTRS=(
+  ["reset"]="0"
+  ["bold"]="1"
+  ["dim"]="2"
+  ["italic"]="3"
+  ["underline"]="4"
+  ["blink"]="5"
+  ["reverse"]="7"
+  ["hidden"]="8"
+)
+
+show_palette() {
+  echo "=== Text Colors ==="
+  echo -e "\e[30m black \e[0m"
+  echo -e "\e[31m red \e[0m"
+  echo -e "\e[32m green \e[0m"
+  echo -e "\e[33m yellow \e[0m"
+  echo -e "\e[34m blue \e[0m"
+  echo -e "\e[35m magenta \e[0m"
+  echo -e "\e[36m cyan \e[0m"
+  echo -e "\e[37m white \e[0m"
+
+  echo -e "\n=== Background Colors ==="
+  for bg in bg-black; do
+    echo -e "\e[${COLORS[$bg]}m $(printf '%-10s' $bg) \e[0m"
+  done
+  for bg in bg-red bg-green bg-yellow bg-blue bg-magenta bg-cyan bg-white; do
+    echo -e "\e[${COLORS[$bg]};30m $(printf '%-10s' $bg) \e[0m"
+  done
+
+  echo -e "\n=== Combinations ==="
+  echo -e "\e[1;31m bold+red \e[0m"
+  echo -e "\e[4;32m underline+green \e[0m"
+  echo -e "\e[1;30;44m bold+black+bg-blue \e[0m"
+}
+
+# Main logic
+if [ $# -eq 0 ]; then
+  show_help
+  exit 0
+fi
+
+case "$1" in
+# Help
+help | --help | -h)
+  show_help
+  ;;
+
+# Palette
+palette)
+  show_palette
+  ;;
+
+# Cursor control
+home)
+  echo -ne "\r"
+  ;;
+clear)
+  echo -ne "\e[2J\e[H"
+  ;;
+goto)
+  if [ -n "$2" ] && [ -n "$3" ]; then
+    echo -ne "\e[$3;$2H"
+  else
+    echo "Error: specify X and Y coordinates" >&2
+    exit 1
+  fi
+  ;;
+save-cursor)
+  echo -ne "\e[s"
+  ;;
+rest-cursor)
+  echo -ne "\e[u"
+  ;;
+hide-cursor)
+  echo -ne "\e[?25l"
+  ;;
+show-cursor)
+  echo -ne "\e[?25h"
+  ;;
+
+*)
+  # Build codes from arguments
+  codes=""
+  for arg in "$@"; do
+    if [ -n "${COLORS[$arg]}" ]; then
+      [ -n "$codes" ] && codes+=";"
+      codes+="${COLORS[$arg]}"
+    elif [ -n "${ATTRS[$arg]}" ]; then
+      [ -n "$codes" ] && codes+=";"
+      codes+="${ATTRS[$arg]}"
+    else
+      echo "Unknown command: $arg" >&2
+      exit 1
+    fi
+  done
+
+  if [ -n "$codes" ]; then
+    echo -ne "\e[${codes}m"
+  fi
+  ;;
+esac
