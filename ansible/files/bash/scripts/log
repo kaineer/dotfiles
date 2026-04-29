@@ -13,7 +13,7 @@ if [[ "$USETS" != "" ]]; then
 fi
 
 ts() {
-  date +" $TSFORMAT"
+  date +"$TSFORMAT"
 }
 
 if [[ ":debug:" == *":$DEBUG:"* ]]; then
@@ -28,7 +28,7 @@ fi
 
 if [[ ":debug:info:" == *":$DEBUG:"* ]]; then
   log_info() {
-    echo -e " $(ansi cyan bold)$(ansi reset)$(ts)" $@
+    echo -e " $(ansi cyan bold) $(ansi reset)$(ts)" $@
   }
 else
   log_info() {
@@ -38,7 +38,7 @@ fi
 
 if [[ ":debug:info:warn:" == *":$DEBUG:"* ]]; then
   log_warn() {
-    echo -e " $(ansi yellow bold)$(ansi reset)$(ts)" $@
+    echo -e " $(ansi yellow bold) $(ansi reset)$(ts)" $@
   }
 else
   log_warn() {
@@ -47,7 +47,7 @@ else
 fi
 
 log_error() {
-  echo -e " $(ansi red bold)$(ansi reset)$(ts)" $@
+  echo -e " $(ansi red bold) $(ansi reset)$(ts)" $@
 }
 
 case "$BASE" in

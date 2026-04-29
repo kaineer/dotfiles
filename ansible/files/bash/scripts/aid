@@ -45,12 +45,12 @@ watch_content() {
     FIRST_LINE=$(echo -e "$CLIPBOARD" | head -n1)
 
     if [[ "$CLIPBOARD" != "$OLD_CLIPBOARD" ]]; then
-      echo " [INFO ] Clipboard changed.."
+      debug "Clipboar changed"
       COLS=$(echo "$COLUMNS - 14" | bc)
-      echo " [INFO ] -> ${FIRST_LINE:0:$COLS}"
+      debug "${FIRST_LINE:0:$COLS}"
       load_content
       OLD_CLIPBOARD=${CLIPBOARD}
-      echo " [INFO ] ..done updating"
+      debug "done updating"
     fi
   done
 }
