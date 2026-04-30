@@ -3,3 +3,4 @@ logs:
   - warn
   - info
   - debug
+  - success

@@ -50,9 +50,14 @@ log_error() {
   echo -e " $(ansi red bold) $(ansi reset)$(ts)" $@
 }
 
+log_success() {
+  echo -e " $(ansi green bold) $(ansi reset)$(ts)" $@
+}
+
 case "$BASE" in
 "error") log_error $@ ;;
 "warn") log_warn $@ ;;
 "info") log_info $@ ;;
 "debug") log_debug $@ ;;
+"success") log_success $@ ;;
 esac
