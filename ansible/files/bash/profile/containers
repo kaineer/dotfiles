@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #  _____  ___
 # /__   \/ __\  Tangerine Cat, kaineer@gmail.com
 #   / /\/ /
@@ -6,11 +6,12 @@
 #  \/  \____/   twitter: https://twitter.com/kaineer
 #
 
-if [[ "$(which podman)" == "" ]]; then
+[[ "$1" != "-i" ]] && return
+
+if [[ "$(which podman)" != "" ]]; then
   alias dc=podman-compose
   alias d=podman
-fi
-if [[ "$(which docker)" == "" ]]; then
+elif [[ "$(which docker)" == "" ]]; then
   alias dc=docker-compose
   alias d=docker
 fi

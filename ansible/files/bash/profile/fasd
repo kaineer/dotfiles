@@ -11,9 +11,12 @@
 ###   for non-interactive shell
 [[ "$1" != "-i" ]] && return
 
-eval "$(fasd --init posix-alias bash-hook)"
+eval "$(fasd --init posix-hook bash-hook)"
 
-unalias s
+# Самостоятельное определение fasd_cd
+fasd_cd() {
+  [ $# -gt 1 ] && cd "$(fasd -e echo "$@")" || fasd "$@"
+}
 alias j='fasd_cd -d'
 
 jg() {

@@ -62,6 +62,8 @@ fi
 for SRC in $PROFILE_ITEMS; do
   [[ "$DEBUG" == "true" ]] && echo " [DEBUG] Interactive ${SRC}.."
   source $SRC -i
+
+  [[ "$DEBUG" == "true" ]] && alias | grep -E " dc?="
 done
 # tag: /config-profile
 

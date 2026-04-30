@@ -23,6 +23,7 @@
     - fzf
     - node
     - path
+    - containers
     - ssh
     - vivid
     - xdg
