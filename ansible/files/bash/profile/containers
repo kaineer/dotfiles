@@ -9,9 +9,28 @@
 [[ "$1" != "-i" ]] && return
 
 if [[ "$(which podman)" != "" ]]; then
-  alias dc=podman-compose
+  # alias dc=podman-compose
+  alias dc="~/.podman-compose-venv/bin/podman-compose"
   alias d=podman
+  alias drm="podman rm"
+  alias dk="podman kill"
+  alias dps="podman ps"
+  alias dpsf='podman ps --format "{{.ID}}|{{.Names}}|{{.Status}}" | awk -F"|" '\''{printf "%-15s | %-25s | %s\n", $1, $2, $3}'\'
+  alias dpsi="podman ps --format \"{{.ID}}\""
+
+  drk() {
+    podman kill $@
+    podman rm $@
+  }
 elif [[ "$(which docker)" == "" ]]; then
   alias dc=docker-compose
   alias d=docker
+  alias drm="docker rm"
+  alias dk="docker kill"
+  alias dps="docker ps"
+
+  drk() {
+    docker kill $@
+    docker rm $@
+  }
 fi
