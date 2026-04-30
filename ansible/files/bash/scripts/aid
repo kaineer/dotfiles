@@ -38,6 +38,7 @@ load_content() {
 }
 
 watch_content() {
+  info "Watching clipboard for changes"
   while true; do
     sleep 5
     CLIPBOARD=$(get_clipboard)
@@ -45,7 +46,7 @@ watch_content() {
     FIRST_LINE=$(echo -e "$CLIPBOARD" | head -n1)
 
     if [[ "$CLIPBOARD" != "$OLD_CLIPBOARD" ]]; then
-      debug "Clipboar changed"
+      debug "Clipboard changed"
       COLS=$(echo "$COLUMNS - 14" | bc)
       debug "${FIRST_LINE:0:$COLS}"
       load_content
