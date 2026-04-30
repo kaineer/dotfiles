@@ -51,7 +51,7 @@ log_error() {
 }
 
 log_success() {
-  echo -e " $(ansi green bold) $(ansi reset)$(ts)" $@
+  echo -e " $(ansi green bold) $(ansi reset)$(ts)" $@
 }
 
 case "$BASE" in
