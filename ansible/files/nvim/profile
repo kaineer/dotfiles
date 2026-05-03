@@ -16,6 +16,9 @@ list_possible_editors() {
 }
 
 detect_editor() {
+  if [[ "$TERM_PROGRAM" == "zed" ]]; then
+    echo "$(which zed) -e" && return 0
+  fi
   for name in $(list_possible_editors); do
     LOCAL_PATH="$HOME/bin/$name"
     ROOT_PATH="/bin/$name"
