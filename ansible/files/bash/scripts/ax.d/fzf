@@ -5,7 +5,7 @@
 
 cd $DF_DIR
 
-PREVIEW="bat --color=always --style=plain {}"
+PREVIEW="bat --color=always -p {}"
 
 if [[ "$1" == "" ]]; then
   # Select from all ax files

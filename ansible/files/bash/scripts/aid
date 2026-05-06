@@ -62,7 +62,8 @@ usage() {
   echo " $ $BASE         # process clipboard once
  $ $BASE ls      # list available processors
  $ $BASE w[atch] # process clipboard on each change
- $ $BASE <name>  # edit processor script"
+ $ $BASE <name>  # edit processor script
+ $ $BASE --help  # show this text" | bat -lsh -p
 }
 
 case "$1" in
