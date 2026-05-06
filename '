@@ -59,16 +59,12 @@ watch_content() {
 }
 
 usage() {
-  echo " $ $BASE         # process clipboard once"
-  echo " $ $BASE ls      # list available processors"
-  echo " $ $BASE w[atch] # process clipboard on each change"
-  echo " $ $BASE <name>  # edit processor script"
+  echo " $ $BASE # process clipboard once"
 }
 
 case "$1" in
 "") load_content ;;
 "ls") list_agents | sed "s/^/ * /" ;;
 "w" | "watch") watch_content ;;
-"h" | "--help" | "help") usage ;;
 *) $EDITOR $DIR/aid.d/$1 ;;
 esac

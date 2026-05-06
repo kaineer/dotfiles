@@ -10,9 +10,9 @@
 
 source $DIR/fn/try
 
-if aid.py nomad; then
+if py nomad; then
   __header "Export shedevrum files to nomad disk"
-  aid.py move \
+  py move \
     "/home/$USER/Pictures/shedevrum/" \
     "images/shedevrum"
 fi
