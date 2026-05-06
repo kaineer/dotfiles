@@ -59,10 +59,10 @@ watch_content() {
 }
 
 usage() {
-  echo " $ $BASE         # process clipboard once"
-  echo " $ $BASE ls      # list available processors"
-  echo " $ $BASE w[atch] # process clipboard on each change"
-  echo " $ $BASE <name>  # edit processor script"
+  echo " $ $BASE         # process clipboard once
+ $ $BASE ls      # list available processors
+ $ $BASE w[atch] # process clipboard on each change
+ $ $BASE <name>  # edit processor script"
 }
 
 case "$1" in
