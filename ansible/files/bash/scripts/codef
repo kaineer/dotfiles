@@ -39,6 +39,18 @@ cat_file() {
   fi
 }
 
+goto_fragment() {
+  FJ="$(json_file)"
+  if [[ "$1" != "" ]]; then
+    KEY="$(list_names | grep "$1" | head -n1)"
+    if [[ "$KEY" != "" ]]; then
+      FILEPATH="$(jq -r --arg key "$KEY" '.[$key].fullpath' "$FJ")"
+      ROW="$(jq -r --arg key "$KEY" '.[$key].lines.from' "$FJ")"
+      zed "$FILEPATH:$ROW" &
+    fi
+  fi
+}
+
 edit_fragment() {
   FJ="$(json_file)"
   if [[ "$1" != "" ]]; then
@@ -79,9 +91,17 @@ case "$1" in
   shift
   edit_fragment $@
   ;;
+"go")
+  shift
+  goto_fragment $@
+  ;;
 "rm")
   shift
   remove_file $@
+  ;;
+"go")
+  shift
+  goto_fragment $@
   ;;
 "md" | "markdown")
   shift
