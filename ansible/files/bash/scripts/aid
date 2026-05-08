@@ -20,6 +20,7 @@ py() {
 
 list_agents() {
   echo "shed"
+  echo "copy-fragment"
 
   if py nomad; then
     echo "shed-nomad"

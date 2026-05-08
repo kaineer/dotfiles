@@ -16,6 +16,8 @@
 SELECTED=$(xsel -o | sed '$ { /^[[:space:]]*$/d; }')
 LINE_COUNT=$(echo "$SELECTED" | wc -l)
 
+echo "$SELECTED" >/tmp/selected.txt
+
 jq -n \
   --arg fullpath "$ZED_FILE" \
   --arg filename "$ZED_FILENAME" \
