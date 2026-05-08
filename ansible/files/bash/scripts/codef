@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+BIN="$(readlink -f $0)"
+BASE="$(basename $BIN)"
+
 # Where collecting json is placed
 json_file() {
   FJ="$(var fragmentJson)"
@@ -58,7 +61,18 @@ markdown() {
   ' "$FJ"
 }
 
+usage() {
+  echo " $ $BASE h[elp]   # show this text"
+  echo " $ $BASE base     # get current file to keep fragments"
+  echo " $ $BASE ls|list  # list already added filenames"
+  echo " $ $BASE e[dit]   # open added file to fix"
+  echo " $ $BASE rm       # remove filename"
+  echo " $ $BASE md       # output markdown"
+  echo " $ $BASE          # select then edit file"
+}
+
 case "$1" in
+"h" | "help") usage ;;
 "base") json_file ;;
 "ls" | "list") list_names ;;
 "cat")
