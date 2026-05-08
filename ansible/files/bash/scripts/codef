@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
-# Where collecting json is placed
+DEFAULT_FJ="$HOME/var/fragments.json"
+
 json_file() {
-  FJ="$(var fragmentJson)"
+  FJ="$(var codefBase)"
   [[ "$FJ" == "" ]] && (
-    mkdir -p "$HOME/var"
-    FJ="$HOME/var/fragments.json"
+    DIR="$(dirname $DEFAULT_FJ)"
+    mkdir -p "$DIR"
+    FJ="$DEFAULT_FJ"
     echo "$FJ"
   ) || echo "$FJ"
 }
@@ -48,9 +50,9 @@ edit_fragment() {
 
       # Читаем отредактированный файл и обновляем .text
       jq --arg key "$KEY" \
-         --rawfile text "/tmp/$FILE" \
-         '.[$key].text = ($text | rtrimstr("\n") | split("\n"))' \
-         "$FJ" > "${FJ}.tmp" && mv "${FJ}.tmp" "$FJ"
+        --rawfile text "/tmp/$FILE" \
+        '.[$key].text = ($text | rtrimstr("\n") | split("\n"))' \
+        "$FJ" >"${FJ}.tmp" && mv "${FJ}.tmp" "$FJ"
 
       rm "/tmp/$FILE"
     fi
@@ -62,7 +64,7 @@ markdown() {
 
   jq -r '
     to_entries[] |
-    "## \(.value.filename):\(.value.lines.from)-\(.value.lines.to)\n\n```\(.value.filename)\n\(.value.text | join("\n"))\n```\n"
+    "## \(.value.filename):\(.value.lines.from)-\(.value.lines.to)\n\n````\(.value.filename)\n\(.value.text | join("\n"))\n````\n"
   ' "$FJ"
 }
 

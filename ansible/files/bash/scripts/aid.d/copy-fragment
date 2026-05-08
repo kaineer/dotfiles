@@ -37,4 +37,4 @@ jq --arg key "$FILENAME" \
   '.[$key] = $fragment' \
   "$FRAGMENT_JSON" >"${FRAGMENT_JSON}.tmp" && mv "${FRAGMENT_JSON}.tmp" "$FRAGMENT_JSON"
 
-info "[$N] [$(date +%H:%M:%S)] Updated: $FILENAME"
+info "[$N] Updated: $FILENAME"
