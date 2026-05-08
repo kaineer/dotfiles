@@ -6,6 +6,11 @@
 //
 // Zed editor settings
 {
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Zed (Default)",
+    "dark": "Zed (Default)"
+  },
   "telemetry": {
     "diagnostics": false,
     "metrics": false,
@@ -48,7 +53,11 @@
       "enable_lsp_tasks": true,
     },
   },
-  "theme": "Nordic Syntax",
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "Nordic Syntax"
+  },
   "vim_mode": true,
   "agent": {
     "dock": "right",

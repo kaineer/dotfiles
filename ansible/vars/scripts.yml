@@ -57,3 +57,5 @@ scripts:
   - xtm
   # Choose nord color and copy to clipboard
   - nc
+  # Zed utilities
+  - zed-copy-lines

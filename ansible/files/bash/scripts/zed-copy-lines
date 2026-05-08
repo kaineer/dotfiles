@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: Copy lines from zed editor into clipboard
+#
+# Dependencies:
+#  * zed environment variables
+#  * xsel
+#  * jq
+#  * sed
+
+SELECTED=$(xsel -o | sed '$ { /^[[:space:]]*$/d; }')
+LINE_COUNT=$(echo "$SELECTED" | wc -l)
+
+jq -n \
+  --arg fullpath "$ZED_FILE" \
+  --arg filename "$ZED_FILENAME" \
+  --arg from "$ZED_ROW" \
+  --arg to "$((ZED_ROW + LINE_COUNT - 1))" \
+  --arg text "$SELECTED" \
+  --arg uuid "$(uuidgen)" \
+  '{
+    type: "copy-fragment",
+    uuid: $uuid,
+    filename: $filename,
+    fullpath: $fullpath,
+    lines: { from: ($from | tonumber), to: ($to | tonumber) },
+    text: ($text | split("\n"))
+  }' | xsel -ib
