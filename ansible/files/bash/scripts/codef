@@ -45,6 +45,14 @@ edit_fragment() {
       FILE="$(jq -r --arg key "$KEY" '.[$key].filename' "$FJ")"
       cat_file "$KEY" >"/tmp/$FILE"
       $EDITOR "/tmp/$FILE"
+
+      # Читаем отредактированный файл и обновляем .text
+      jq --arg key "$KEY" \
+         --rawfile text "/tmp/$FILE" \
+         '.[$key].text = ($text | rtrimstr("\n") | split("\n"))' \
+         "$FJ" > "${FJ}.tmp" && mv "${FJ}.tmp" "$FJ"
+
+      rm "/tmp/$FILE"
     fi
   fi
 }
