@@ -40,23 +40,33 @@ load_content() {
   done
 }
 
+__watch_step() {
+  CLIPBOARD=$(get_clipboard)
+  LINES=$(echo -e "$CLIPBOARD" | wc -l)
+  FIRST_LINE=$(echo -e "$CLIPBOARD" | head -n1)
+
+  if [[ "$CLIPBOARD" != "$OLD_CLIPBOARD" ]]; then
+    debug "Clipboard changed"
+    COLS=$(echo "$COLUMNS - 14" | bc)
+    debug "${FIRST_LINE:0:$COLS}"
+    load_content
+    OLD_CLIPBOARD=${CLIPBOARD}
+    debug "done updating"
+  fi
+}
+
 watch_content() {
   info "Watching clipboard for changes"
-  while true; do
-    sleep 5
-    CLIPBOARD=$(get_clipboard)
-    LINES=$(echo -e "$CLIPBOARD" | wc -l)
-    FIRST_LINE=$(echo -e "$CLIPBOARD" | head -n1)
-
-    if [[ "$CLIPBOARD" != "$OLD_CLIPBOARD" ]]; then
-      debug "Clipboard changed"
-      COLS=$(echo "$COLUMNS - 14" | bc)
-      debug "${FIRST_LINE:0:$COLS}"
-      load_content
-      OLD_CLIPBOARD=${CLIPBOARD}
-      debug "done updating"
-    fi
-  done
+  if [[ "$(which clipnotify)" == "" ]]; then
+    while true; do
+      sleep 5
+      __watch_step
+    done
+  else
+    while clipnotify; do
+      __watch_step
+    done
+  fi
 }
 
 usage() {
