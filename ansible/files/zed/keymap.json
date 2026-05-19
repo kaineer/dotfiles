@@ -33,6 +33,13 @@
     },
   },
   {
+    "context": "Editor",
+    "bindings": {
+      "alt-c": ["task::Spawn", { "task_name": "Copy selected lines" }],
+      "alt-d": ["task::Spawn", { "task_name": "Debug ZED vars" }],
+    },
+  },
+  {
     "context": "Editor && vim_mode == normal",
     "bindings": {
       "ctrl-w": "pane::CloseActiveItem",
@@ -47,6 +54,8 @@
       "alt-j": "vim::SelectNext",
       "alt-k": "vim::SelectPrevious",
       "ctrl-r": ["task::Spawn", { "task_name": "Run with bun" }],
+      "alt-c": ["task::Spawn", { "task_name": "Copy selected lines" }],
+      "alt-d": ["task::Spawn", { "task_name": "Debug ZED vars" }],
     },
   },
   {

@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+source $DIR/fn/try
+
+N="copy-fragment"
+FRAGMENT_JSON="$(codef base)"
+
+CURRENT=$(xsel -ob 2>/dev/null)
+[ -z "$CURRENT" ] && return 0
+
+if ! echo "$CURRENT" | jq empty >/dev/null 2>&1; then
+  debug "[$N] Not valid JSON, skipping"
+  debug "[$N] $CURRENT"
+  return 0
+fi
+
+TYPE=$(echo "$CURRENT" | jq -r '.type // empty')
+if [ "$TYPE" != "copy-fragment" ]; then
+  debug "[$N] Wrong json type"
+  return 0
+fi
+
+info "[$N] Save copied fragment in $FRAGMENT_JSON"
+
+[ ! -f "$FRAGMENT_JSON" ] && (
+  info "Creating $FRAGMENT_JSON"
+  echo '{}' >"$FRAGMENT_JSON"
+)
+
+FILENAME=$(echo "$CURRENT" | jq -r '.filename')
+
+# 5. Кладём фрагмент по ключу — перезаписываем, а не добавляем в массив
+debug "[$N] Adding fragment to $FRAGMENT_JSON"
+
+jq --arg key "$FILENAME" \
+  --argjson fragment "$CURRENT" \
+  '.[$key] = $fragment' \
+  "$FRAGMENT_JSON" >"${FRAGMENT_JSON}.tmp" && mv "${FRAGMENT_JSON}.tmp" "$FRAGMENT_JSON"
+
+debug "[$N] Updated: $FILENAME"

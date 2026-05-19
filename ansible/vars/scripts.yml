@@ -19,6 +19,8 @@ scripts:
   - be
   # fzf for terminal/rofi for desktop
   - chooser
+  # manage code fragments before sending to ai
+  - codef
   # Gets first line and trims it
   - fl
   # Switches network gateway
@@ -57,3 +59,5 @@ scripts:
   - xtm
   # Choose nord color and copy to clipboard
   - nc
+  # Zed utilities
+  - zed-copy-lines

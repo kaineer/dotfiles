@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+
+DEFAULT_FJ="$HOME/var/fragments.json"
+
+json_file() {
+  FJ="$(var codefBase)"
+  [[ "$FJ" == "" ]] && (
+    DIR="$(dirname $DEFAULT_FJ)"
+    mkdir -p "$DIR"
+    FJ="$DEFAULT_FJ"
+    echo "$FJ"
+  ) || echo "$FJ"
+}
+
+list_names() {
+  FJ="$(json_file)"
+  if [ -f $FJ ]; then
+    cat "$FJ" | jq -r .[].filename
+  fi
+}
+
+remove_file() {
+  FJ="$(json_file)"
+  if [[ "$1" != "" ]]; then
+    KEY="$(list_names | grep "$1" | head -n1)"
+    if [[ "$KEY" != "" ]]; then
+      jq --arg key "$KEY" 'del(.[$key])' "$FJ" >"${FJ}.tmp" && mv "${FJ}.tmp" "$FJ"
+    fi
+  fi
+}
+
+cat_file() {
+  FJ="$(json_file)"
+  if [[ "$1" != "" ]]; then
+    KEY="$(list_names | grep "$1" | head -n1)"
+    if [[ "$KEY" != "" ]]; then
+      jq -r --arg key "$KEY" '.[$key].text | join("\n")' "$FJ"
+    fi
+  fi
+}
+
+goto_fragment() {
+  FJ="$(json_file)"
+  if [[ "$1" != "" ]]; then
+    KEY="$(list_names | grep "$1" | head -n1)"
+    if [[ "$KEY" != "" ]]; then
+      FILEPATH="$(jq -r --arg key "$KEY" '.[$key].fullpath' "$FJ")"
+      ROW="$(jq -r --arg key "$KEY" '.[$key].lines.from' "$FJ")"
+      zed "$FILEPATH:$ROW" &
+    fi
+  fi
+}
+
+edit_fragment() {
+  FJ="$(json_file)"
+  if [[ "$1" != "" ]]; then
+    KEY="$(list_names | grep "$1" | head -n1)"
+    if [[ "$KEY" != "" ]]; then
+      FILE="$(jq -r --arg key "$KEY" '.[$key].filename' "$FJ")"
+      cat_file "$KEY" >"/tmp/$FILE"
+      $EDITOR "/tmp/$FILE"
+
+      # Читаем отредактированный файл и обновляем .text
+      jq --arg key "$KEY" \
+        --rawfile text "/tmp/$FILE" \
+        '.[$key].text = ($text | rtrimstr("\n") | split("\n"))' \
+        "$FJ" >"${FJ}.tmp" && mv "${FJ}.tmp" "$FJ"
+
+      rm "/tmp/$FILE"
+    fi
+  fi
+}
+
+markdown() {
+  FJ="$(json_file)"
+
+  jq -r '
+    to_entries[] |
+    "## \(.value.filename):\(.value.lines.from)-\(.value.lines.to)\n\n````\(.value.filename)\n\(.value.text | join("\n"))\n````\n"
+  ' "$FJ"
+}
+
+case "$1" in
+"base") json_file ;;
+"ls" | "list") list_names ;;
+"cat")
+  shift
+  cat_file $@
+  ;;
+"e" | "edit")
+  shift
+  edit_fragment $@
+  ;;
+"go")
+  shift
+  goto_fragment $@
+  ;;
+"rm")
+  shift
+  remove_file $@
+  ;;
+"go")
+  shift
+  goto_fragment $@
+  ;;
+"md" | "markdown")
+  shift
+  markdown $@
+  ;;
+"")
+  KEY="$(list_names | fzf)"
+  if [[ "$KEY" != "" ]]; then
+    edit_fragment "$KEY"
+  fi
+  ;;
+esac
