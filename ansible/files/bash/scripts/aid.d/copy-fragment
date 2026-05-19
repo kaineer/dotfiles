@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+[[ "$(which codef)" == "" ]] && return 0
+
 source $DIR/fn/try
 
 N="copy-fragment"
