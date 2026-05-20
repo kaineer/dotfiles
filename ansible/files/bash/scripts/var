@@ -89,16 +89,16 @@ case "$1" in
   shift
   rm_var $@
   ;;
+"-i" | "clip")
+  shift
+  store_clip $@
+  ;;
 "" | "-h" | "--help" | "h" | "help")
   if [[ "$(which bat)" != "" ]]; then
     usage | bat -lsh -p
   else
     usage
   fi
-  ;;
-"-i" | "clip")
-  shift
-  store_clip $@
   ;;
 *)
   if [[ "${#@}" == "1" ]]; then
