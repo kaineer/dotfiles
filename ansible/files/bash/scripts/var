@@ -79,13 +79,17 @@ usage() {
 
 case "$1" in
 "-l" | "--list" | "ls" | "list")
-  list_vars
+  if [[ "$(which bat)" != "" ]]; then
+    list_vars | bat -lyaml -p
+  else
+    list_vars
+  fi
   ;;
 "-d" | "--delete" | "rm")
   shift
   rm_var $@
   ;;
-"" | "--help" | "h" | "help")
+"" | "-h" | "--help" | "h" | "help")
   if [[ "$(which bat)" != "" ]]; then
     usage | bat -lsh -p
   else

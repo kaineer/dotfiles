@@ -57,16 +57,16 @@ __watch_step() {
 
 watch_content() {
   info "Watching clipboard for changes"
-  if [[ "$(which clipnotify)" == "" ]]; then
-    while true; do
-      sleep 5
-      __watch_step
-    done
-  else
-    while clipnotify; do
-      __watch_step
-    done
-  fi
+  #if [[ "$(which clipnotify)" == "" ]]; then
+  while true; do
+    sleep 5
+    __watch_step
+  done
+  # else
+  # while clipnotify; do
+  #   __watch_step
+  # done
+  # fi
 }
 
 usage() {
