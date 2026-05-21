@@ -102,7 +102,6 @@ list_registries() {
 }
 
 set_current_registry() {
-
   if curl -s -f -o /dev/null "$1"; then
     ALREADY_FOUND="$(_list_registries | grep \"$1\" | wc -l)"
     if [[ "$ALREADY_FOUND" != "0" ]]; then
