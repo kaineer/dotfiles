@@ -8,7 +8,7 @@
 # What: runs npm/pnpm/yarn
 #
 # Dependencies:
-#   $ROOT/.pm file
+#   $PWD/.pm file
 
 REG_LIST_ROOT="$HOME/var/pm/registries"
 [ ! -d "$REG_LIST_ROOT" ] && mkdir -p "$REG_LIST_ROOT"
