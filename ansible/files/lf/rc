@@ -14,7 +14,8 @@ map R delete
 map m meta
 
 map o rr
-map z gf
+map gf gf
+map gz zed
 
 map <enter> nemo
 
@@ -49,4 +50,13 @@ cmd open ${{
     application/pdf) zathura "$f" ;;
     *) for f in $fx; do setsid $OPENER "$f" > /dev/null 2> /dev/null & done;;
   esac
+}}
+
+cmd zed ${{
+  if [ -d $f ]; then
+    zed $f --wait
+  elif [ -f $f ]; then
+    dirname=$(dirname $f)
+    zed $dirname --wait
+  fi
 }}

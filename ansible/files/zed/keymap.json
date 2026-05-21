@@ -37,6 +37,9 @@
     "bindings": {
       "alt-c": ["task::Spawn", { "task_name": "Copy selected lines" }],
       "alt-d": ["task::Spawn", { "task_name": "Debug ZED vars" }],
+      "ctrl-space ctrl-w": "pane::CloseAllItems",
+      "ctrl-space ctrl-j": "pane::SplitDown",
+      "ctrl-space ctrl-l": "pane::SplitRight",
     },
   },
   {

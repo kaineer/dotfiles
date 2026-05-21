@@ -8,7 +8,12 @@
 # What: runs npm/pnpm/yarn
 #
 # Dependencies:
-#   $ROOT/.pm file
+#   $PWD/.pm file
+
+REG_LIST_ROOT="$HOME/var/pm/registries"
+[ ! -d "$REG_LIST_ROOT" ] && mkdir -p "$REG_LIST_ROOT"
+
+BIN0="$(readlink -f $0)"
 
 usage() {
   clear
@@ -23,6 +28,11 @@ usage() {
   echo "                        #   and put into .node-version"
   echo " $ pm clean             # remove dist and node_modules dirs"
   echo " $ pm ls                # list package managers"
+  echo " $ pm r[egistry] ...    # registry commands"
+  echo " $ pm r ls              # list available registries"
+  echo " $ pm r <registry url>  # set registry"
+  echo " $ pm r select          # list registries, select and set"
+  echo " $ pm r                 # print current registry url"
   echo " $ pm [anything]        # $PM [anything]"
 }
 
@@ -83,6 +93,47 @@ cleanup_directory() {
   rm -rf dist
 }
 
+_list_registries() {
+  cd $REG_LIST_ROOT && cat * && cd - &>/dev/null
+}
+
+list_registries() {
+  _list_registries | sed "s/^/ * /"
+}
+
+set_current_registry() {
+  if curl -s -f -o /dev/null "$1"; then
+    ALREADY_FOUND="$(_list_registries | grep \"$1\" | wc -l)"
+    if [[ "$ALREADY_FOUND" != "0" ]]; then
+      UUID="$(uuidgen)"
+      echo "$1" > "$REG_LIST_ROOT/$UUID"
+    fi
+    echo "registry=$1" > "$HOME/.npmrc"
+  else
+    echo "Url is not available"
+  fi
+}
+
+show_current_registry() {
+  cat "$HOME/.npmrc" | sed "s/^.*=//"
+}
+
+select_registry() {
+  REG_URL="$(_list_registries | fzf)"
+  if [[ "$REG_URL" != "" ]]; then
+    set_current_registry "$REG_URL"
+  fi
+}
+
+registry_command() {
+  case "$1" in
+    "ls" | "list") list_registries ;;
+    "s" | "select") select_registry ;;
+    "") show_current_registry ;;
+    *) set_current_registry $@ ;;
+  esac
+}
+
 case "$1" in
 "ri" | "reinstall")
   yn -p "Remove installed modules and install again?" \
@@ -108,6 +159,10 @@ case "$1" in
   ;;
 "ls" | "list")
   list_package_managers
+  ;;
+"r" | "registry")
+  shift
+  registry_command $@
   ;;
 *)
   $PM "$@"

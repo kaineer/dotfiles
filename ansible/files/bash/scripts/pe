@@ -48,6 +48,7 @@ list_in_bin() {
 }
 
 _usage() {
+  echo " $ $BASE h[elp] -- show this test"
   echo " $ $BASE reinit -- init project environment again"
   echo " $ $BASE init -- create bin dir etc"
   echo " $ $BASE ls -- list created scripts"
@@ -77,7 +78,7 @@ case "$1" in
   shift
   list_in_bin
   ;;
-"h" | "help")
+"h" | "help" | "-h" | "--help")
   _usage
   ;;
 *)

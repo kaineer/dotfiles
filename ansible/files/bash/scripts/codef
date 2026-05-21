@@ -39,6 +39,7 @@ cat_file() {
   fi
 }
 
+# For zed only
 goto_fragment() {
   FJ="$(json_file)"
   if [[ "$1" != "" ]]; then

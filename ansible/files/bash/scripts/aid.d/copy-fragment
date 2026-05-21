@@ -39,4 +39,6 @@ jq --arg key "$FILENAME" \
   '.[$key] = $fragment' \
   "$FRAGMENT_JSON" >"${FRAGMENT_JSON}.tmp" && mv "${FRAGMENT_JSON}.tmp" "$FRAGMENT_JSON"
 
+notify-send "copy-fragment" "Updated: $FILENAME"
+
 debug "[$N] Updated: $FILENAME"
