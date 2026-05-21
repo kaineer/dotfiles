@@ -9,7 +9,11 @@
 # What: variables to use in another scripts
 #
 
-SDIR="$HOME/var/vars"
+ROOT_DIR="${VAR_ROOT:-$HOME/var}"
+SDIR="$ROOT_DIR/vars"
+
+debug "ROOT_DIR=$ROOT_DIR"
+debug "SDIR=$SDIR"
 
 ensure_storage() {
   [ ! -d $SDIR ] && mkdir -p $SDIR
@@ -75,6 +79,9 @@ usage() {
   echo "                   # Remove value for variable"
   echo " $ var -i name     # Store clipboard to variable"
   echo " $ var -l | ls     # List variables with values"
+  echo ""
+  echo "ENV vars:"
+  echo " * VAR_ROOT (\$HOME/var by default) - where to keep variables"
 }
 
 case "$1" in
