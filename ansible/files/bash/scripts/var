@@ -8,12 +8,16 @@
 #
 # What: variables to use in another scripts
 #
+# Note: do not use in this script custom logging,
+#   because it uses var script
+#
 
 ROOT_DIR="${VAR_ROOT:-$HOME/var}"
 SDIR="$ROOT_DIR/vars"
 
-debug "ROOT_DIR=$ROOT_DIR"
-debug "SDIR=$SDIR"
+[[ "$DEBUG" != "" ]] && echo "
+ROOT_DIR=${ROOT_DIR}
+SDIR=${SDIR}"
 
 ensure_storage() {
   [ ! -d $SDIR ] && mkdir -p $SDIR
