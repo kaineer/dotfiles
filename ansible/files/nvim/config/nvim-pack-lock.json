@@ -1,0 +1,32 @@
+{
+  "plugins": {
+    "mason-lspconfig.nvim": {
+      "rev": "7b01e2974a47d489bb92f47a41e4c0088ea8f86e",
+      "src": "https://github.com/mason-org/mason-lspconfig.nvim"
+    },
+    "mason-tool-installer.nvim": {
+      "rev": "443f1ef8b5e6bf47045cb2217b6f748a223cf7dc",
+      "src": "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim"
+    },
+    "mason.nvim": {
+      "rev": "cbf8d285e1462dd24acf3507817be2bbcb035919",
+      "src": "https://github.com/mason-org/mason.nvim"
+    },
+    "nord.nvim": {
+      "rev": "80c1e5321505aeb22b7a9f23eb82f1e193c12470",
+      "src": "https://github.com/shaunsingh/nord.nvim"
+    },
+    "nvim-lspconfig": {
+      "rev": "dfbada1a311c4bf3369f8d5421369c9b6e8b888f",
+      "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "vim-dirvish": {
+      "rev": "9525f46ccbf2dd585523fe3e3b72151554df3a42",
+      "src": "https://github.com/justinmk/vim-dirvish"
+    },
+    "vim-tmux-navigator": {
+      "rev": "e41c431a0c7b7388ae7ba341f01a0d217eb3a432",
+      "src": "https://github.com/christoomey/vim-tmux-navigator"
+    }
+  }
+}
