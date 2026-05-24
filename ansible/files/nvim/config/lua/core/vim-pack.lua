@@ -6,6 +6,11 @@ vim.pack.add {
   { src = "https://github.com/justinmk/vim-dirvish" },
   { src = "https://github.com/christoomey/vim-tmux-navigator" },
 
+  -- TODO: telescope
+  -- TODO: git
+  -- TODO: languages
+  -- TODO: completion
+
   -- LSP
   { src = "https://github.com/neovim/nvim-lspconfig" },
   { src = "https://github.com/mason-org/mason.nvim" },
