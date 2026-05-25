@@ -3,7 +3,7 @@
 -- gh link: https://github.com/tpope/vim-projectionist 
 --
 return {
-  "tpope/vim-projectionist",
+  url = "https://github.com/tpope/vim-projectionist",
   config = function()
     local wk = require('which-key')
 
