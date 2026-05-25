@@ -1,9 +1,5 @@
--- Navigation between nvim and tmux
---
--- gh link: https://github.com/christoomey/vim-tmux-navigator 
---
 return {
-  "christoomey/vim-tmux-navigator",
+  url = "https://github.com/christoomey/vim-tmux-navigator",
   setup = function()
     local assign = require("core.utils").assign
     assign(vim.g, {

@@ -2,10 +2,11 @@
 --
 -- gh: https://github.com/shaunsingh/nord.nvim
 --
+
 return {
-	"shaunsingh/nord.nvim",
-	config = function()
+  url = "https://github.com/shaunsingh/nord.nvim",
+  setup = function()
 		vim.cmd([[colorscheme nord]])
 		vim.cmd([[ highlight Normal guibg=none ]])
-	end,
+  end,
 }
