@@ -1,11 +1,10 @@
 -- plugins/git/gist.lua
 
 return {
-	"mattn/vim-gist",
-	dependencies = {
-		"mattn/webapi-vim",
-	},
-	config = function()
+  url = "https://github.com/mattn/vim-gist",
+  apiUrl = "https://github.com/mattn/webapi-vim",
+
+  config = function()
 		local assign = require("core.utils").assign
 
 		assign(vim.g, {
@@ -18,5 +17,5 @@ return {
 			gist_get_multiple_file = 1,
 			gist_clip_command = "xclip -selection clipboard",
 		})
-	end,
+  end,
 }

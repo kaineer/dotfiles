@@ -63,8 +63,9 @@
     "dock": "right",
     "default_profile": "ask",
     "default_model": {
-      "provider": "ollama",
-      "model": "gemma4:e4b",
+      "effort": "high",
+      "provider": "deepseek",
+      "model": "deepseek-v4-flash",
       "enable_thinking": true,
     },
     "favorite_models": [],
