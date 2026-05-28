@@ -31,3 +31,6 @@ scripts:
   - nc
   - zed-copy-lines
   - var
+  - var
+  - var
+  - var
