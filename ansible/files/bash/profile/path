@@ -10,10 +10,22 @@
 
 ### NOTE: this line means we should fix path
 ###   for non-interactive shell
-[[ "$1" == "-i" ]] && return
+if [[ "$1" == "-i" ]]; then
+  
+  # Fix ollama path
+  [ -d "$HOME/ollama/bin" ] && export PATH="$HOME/ollama/bin:$PATH"
 
-# 1. remove duplicates, remove $HOME/bin
-# 2. prepend with $HOME/bin
+  # FIx llama path
+  if [ -d "$HOME/llama/bin" ]; then
+    export PATH="$HOME/llama/bin:$PATH"
+    eval "$(llama-cli --completion-bash)"
+  fi
+else
+  # 1. remove duplicates, remove $HOME/bin
+  # 2. prepend with $HOME/bin
+  
+  FIXED_PATH=$(echo $PATH | tr ':' '\n' | grep -v "^$" | grep -v "$HOME/bin" | sort | uniq | tr '\n' ':')
+  
+  [ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
+fi
 
-FIXED_PATH=$(echo $PATH | tr ':' '\n' | grep -v "^$" | grep -v "$HOME/bin" | sort | uniq | tr '\n' ':')
-export PATH="$HOME/bin:$HOME/ollama/bin:$FIXED_PATH"
