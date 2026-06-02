@@ -3,5 +3,6 @@ require("core.vim-pack.config")({
   "plugins.navigation.pack",
   "plugins.telescope.pack",
   "plugins.lsp.pack",
+  "plugins.git.pack",
   "plugins.lualine.pack",
 })

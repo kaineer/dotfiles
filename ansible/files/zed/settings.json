@@ -9,7 +9,7 @@
   "icon_theme": {
     "mode": "dark",
     "light": "Zed (Default)",
-    "dark": "Zed (Default)"
+    "dark": "Zed (Default)",
   },
   "telemetry": {
     "diagnostics": false,
@@ -56,16 +56,18 @@
   "theme": {
     "mode": "dark",
     "light": "One Light",
-    "dark": "Nordic Syntax"
+    "dark": "Nordic Syntax",
   },
   "vim_mode": true,
   "agent": {
+    "enabled": false,
     "dock": "right",
     "default_profile": "write",
     "default_model": {
-      "provider": "ollama",
-      "model": "qwen2.5-coder:7b",
-      "enable_thinking": false,
+      "effort": "high",
+      "provider": "deepseek",
+      "model": "deepseek-v4-flash",
+      "enable_thinking": true,
     },
     "favorite_models": [],
     "model_parameters": [],

@@ -1,5 +1,9 @@
 {
   "plugins": {
+    "gv.vim": {
+      "rev": "ed7e9c6a118d92462c7d709c34a92682b60fa9f7",
+      "src": "https://github.com/junegunn/gv.vim"
+    },
     "lualine.nvim": {
       "rev": "131a558e13f9f28b15cd235557150ccb23f89286",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
@@ -48,13 +52,33 @@
       "rev": "9525f46ccbf2dd585523fe3e3b72151554df3a42",
       "src": "https://github.com/justinmk/vim-dirvish"
     },
+    "vim-fugitive": {
+      "rev": "3b753cf8c6a4dcde6edee8827d464ba9b8c4a6f0",
+      "src": "https://github.com/tpope/vim-fugitive"
+    },
+    "vim-gist": {
+      "rev": "fd55721a8f7c2a7c23d2e704405047e03d6f95f6",
+      "src": "https://github.com/mattn/vim-gist"
+    },
+    "vim-gitgutter": {
+      "rev": "21c977e8597c468c7dc76001389b0b430d46a4b0",
+      "src": "https://github.com/airblade/vim-gitgutter"
+    },
     "vim-projectionist": {
       "rev": "5ff7bf79a6ef741036d2038a226bcb5f8b1cd296",
       "src": "https://github.com/tpope/vim-projectionist"
     },
+    "vim-rhubarb": {
+      "rev": "5496d7c94581c4c9ad7430357449bb57fc59f501",
+      "src": "https://github.com/tpope/vim-rhubarb"
+    },
     "vim-tmux-navigator": {
       "rev": "e41c431a0c7b7388ae7ba341f01a0d217eb3a432",
       "src": "https://github.com/christoomey/vim-tmux-navigator"
+    },
+    "webapi-vim": {
+      "rev": "c7eec04aad31e1665164d8292d0ec8b5c3cc5a57",
+      "src": "https://github.com/mattn/webapi-vim"
     },
     "which-key.nvim": {
       "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",
