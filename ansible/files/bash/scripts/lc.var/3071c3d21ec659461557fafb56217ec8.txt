@@ -1,0 +1,18 @@
+<!-- two-level navbar -->
+<div class="navbar">
+<!-- First level -->
+<ul class="nav-primary">
+<li><a href="#blog">blog</a></li>
+<li><a href="#ai" class="active">ai</a></li>
+<li><a href="#tools">tools</a></li>
+<li><a href="#about">about</a></li>
+</ul>
+<!-- Second level (independent, visible always) -->
+<ul class="nav-secondary">
+<li><a href="#prompts" class="active-secondary">prompts</a></li>
+<li><a href="#web">web</a></li>
+<li><a href="#clients">clients</a></li>
+<li><a href="#models">models</a></li>
+<li><a href="#api">api</a></li>
+</ul>
+</div>

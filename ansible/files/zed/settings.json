@@ -30,7 +30,7 @@
   },
   "language_models": {
     "ollama": {
-      "api_url": "http://10.1.0.27:11434",
+      "api_url": "http://localhost:11434",
     },
   },
   "edit_predictions": {
@@ -52,6 +52,14 @@
       },
       "enable_lsp_tasks": true,
     },
+    "css-modules-kit-language-server": {
+      "initialization_options": {
+        "pattern": "**/*.module.css",
+      },
+      "settings": {
+        "preferGoToDefinitionToCssFile": true,
+      },
+    },
   },
   "theme": {
     "mode": "dark",
@@ -60,14 +68,13 @@
   },
   "vim_mode": true,
   "agent": {
-    "enabled": false,
+    "enabled": true,
     "dock": "right",
     "default_profile": "ask",
     "default_model": {
-      "effort": "high",
-      "provider": "deepseek",
-      "model": "deepseek-v4-flash",
-      "enable_thinking": true,
+      "provider": "ollama",
+      "model": "hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF:latest",
+      "enable_thinking": false,
     },
     "favorite_models": [],
     "model_parameters": [],
