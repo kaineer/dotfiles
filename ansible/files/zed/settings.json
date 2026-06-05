@@ -70,7 +70,7 @@
   "agent": {
     "enabled": true,
     "dock": "right",
-    "default_profile": "ask",
+    "default_profile": "write",
     "default_model": {
       "provider": "ollama",
       "model": "hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF:latest",

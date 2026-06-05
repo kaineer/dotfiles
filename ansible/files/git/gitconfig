@@ -39,3 +39,6 @@
   defaultBranch = master
 [github]
 	user = kaineer
+
+[url "git@github.com"]
+	insteadOf = gh
