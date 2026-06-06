@@ -136,11 +136,11 @@ registry_command() {
 
 case "$1" in
 "ri" | "reinstall")
-  yn -p "Remove installed modules and install again?" \
+  yn -p "Remove installed modules and install again?" && \
     reinstall_directory
   ;;
 "harakiri" | "clean")
-  yn -p "Remove dist and node_modules directories?" \
+  yn -p "Remove dist and node_modules directories?" && \
     cleanup_directory
   ;;
 "" | "h" | "help")

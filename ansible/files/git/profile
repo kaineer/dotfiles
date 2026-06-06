@@ -37,7 +37,7 @@ add() {
   elif [[ "$#" != "0" ]]; then
     git add "$@"
   else
-    git status -s | cut -f2 -d" " | fzf -m | xargs git add
+    git status -s | awk '{ print $2 }' | fzf -m | xargs git add
   fi
 }
 
