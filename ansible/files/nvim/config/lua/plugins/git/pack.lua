@@ -9,11 +9,11 @@ return {
     fugitive.gutterUrl,
 
     --
-    gist.apiUrl,
-    gist.url,
+    -- gist.apiUrl,
+    -- gist.url,
   },
 
   setup = function()
-    gist.config()
+    -- gist.config()
   end,
 }
