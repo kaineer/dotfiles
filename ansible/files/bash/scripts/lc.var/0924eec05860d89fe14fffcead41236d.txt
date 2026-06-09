@@ -1,0 +1,1 @@
+https://github.com/it-college-labs/study-typescript/blob/bfb98687c23e0dcfa1d7d2b5309112adbcdbec62/final-project/src/ui.ts#L97-L99
