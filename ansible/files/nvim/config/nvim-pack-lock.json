@@ -1,8 +1,40 @@
 {
   "plugins": {
+    "cmp-buffer": {
+      "rev": "b74fab3656eea9de20a9b8116afa3cfc4ec09657",
+      "src": "https://github.com/hrsh7th/cmp-buffer"
+    },
+    "cmp-cmdline": {
+      "rev": "d126061b624e0af6c3a556428712dd4d4194ec6d",
+      "src": "https://github.com/hrsh7th/cmp-cmdline"
+    },
+    "cmp-emoji": {
+      "rev": "e8398e2adf512a03bb4e1728ca017ffeac670a9f",
+      "src": "https://github.com/hrsh7th/cmp-emoji"
+    },
+    "cmp-nvim-lsp": {
+      "rev": "cbc7b02bb99fae35cb42f514762b89b5126651ef",
+      "src": "https://github.com/hrsh7th/cmp-nvim-lsp"
+    },
+    "cmp-path": {
+      "rev": "c642487086dbd9a93160e1679a1327be111cbc25",
+      "src": "https://github.com/hrsh7th/cmp-path"
+    },
+    "cmp-tmux": {
+      "rev": "95b1b921802e6f60627b3e76afb9380fddd87f9a",
+      "src": "https://github.com/andersevenrud/cmp-tmux"
+    },
+    "cmp-vsnip": {
+      "rev": "989a8a73c44e926199bfd05fa7a516d51f2d2752",
+      "src": "https://github.com/hrsh7th/cmp-vsnip"
+    },
     "gv.vim": {
       "rev": "ed7e9c6a118d92462c7d709c34a92682b60fa9f7",
       "src": "https://github.com/junegunn/gv.vim"
+    },
+    "lspkind.nvim": {
+      "rev": "c7274c48137396526b59d86232eabcdc7fed8a32",
+      "src": "https://github.com/onsails/lspkind.nvim"
     },
     "lualine.nvim": {
       "rev": "131a558e13f9f28b15cd235557150ccb23f89286",
@@ -23,6 +55,10 @@
     "nord.nvim": {
       "rev": "80c1e5321505aeb22b7a9f23eb82f1e193c12470",
       "src": "https://github.com/shaunsingh/nord.nvim"
+    },
+    "nvim-cmp": {
+      "rev": "a1d504892f2bc56c2e79b65c6faded2fd21f3eca",
+      "src": "https://github.com/hrsh7th/nvim-cmp"
     },
     "nvim-lspconfig": {
       "rev": "dfbada1a311c4bf3369f8d5421369c9b6e8b888f",
@@ -75,6 +111,14 @@
     "vim-tmux-navigator": {
       "rev": "e41c431a0c7b7388ae7ba341f01a0d217eb3a432",
       "src": "https://github.com/christoomey/vim-tmux-navigator"
+    },
+    "vim-vsnip": {
+      "rev": "9bcfabea653abdcdac584283b5097c3f8760abaa",
+      "src": "https://github.com/hrsh7th/vim-vsnip"
+    },
+    "vim-vsnip-integ": {
+      "rev": "c7c93934dece8315db3649bdc6898b76358a8b8d",
+      "src": "https://github.com/hrsh7th/vim-vsnip-integ"
     },
     "webapi-vim": {
       "rev": "c7eec04aad31e1665164d8292d0ec8b5c3cc5a57",
