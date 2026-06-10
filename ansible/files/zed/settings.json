@@ -52,14 +52,6 @@
       },
       "enable_lsp_tasks": true,
     },
-    "css-modules-kit-language-server": {
-      "initialization_options": {
-        "pattern": "**/*.module.css",
-      },
-      "settings": {
-        "preferGoToDefinitionToCssFile": true,
-      },
-    },
   },
   "theme": {
     "mode": "dark",
