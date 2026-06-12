@@ -32,6 +32,13 @@ echo_path() {
   echo "$PATH" | sed "s/:/\\n/g" | grep -v "^$"
 }
 
+net_functions() {
+  case "$1" in
+  "restart") sudo systemctl restart NetworkManager ;;
+  *) echo_net ;;
+  esac
+}
+
 echo_net() {
   ip -j a | jq -r '.[] | select(.addr_info[]?.family == "inet") | [.ifname, (.addr_info[] | select(.family=="inet") | .local)] | @tsv'
 }
@@ -91,7 +98,7 @@ list_ssh_hosts() {
 
 case "$1" in
 "path") echo_path ;;
-"net") echo_net ;;
+"net") shift && net_functions $@ ;;
 "uname") echo_uname ;;
 "arch") echo_architecture ;;
 "kill") kill_selected ;;
