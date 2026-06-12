@@ -13,6 +13,8 @@ _usage() {
   echo "\`\`\`sh"
   echo " $ the path      # all parts of current executables path"
   echo " $ the net       # address of current available network"
+  echo " $ the net restart"
+  echo "                 # restart network services"
   echo " $ the ssh       # list all ssh hosts, check availability"
   echo " $ the uname     # uname active parts"
   echo " $ the arch      # architecture for binaries"
@@ -61,10 +63,7 @@ kill_selected() {
 }
 
 list_available_hosts() {
-  echo "ekb71"
-  echo "ekb72"
-  echo "jetson"
-  echo "eva"
+  grep -h "^Host " ~/.ssh/config ~/.ssh/hosts/* 2>/dev/null | awk '{for(i=2;i<=NF;i++) if($i!="*") print $i}' | sort -u
 }
 
 __check_ssh() {
