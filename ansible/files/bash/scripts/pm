@@ -37,12 +37,17 @@ usage() {
 }
 
 if [ ! -f "$PWD/package.json" ]; then
-  if [[ "$1" == "init" ]]; then
-    npm init --yes
-  elif [[ "$1" != "h" ]]; then
-    echo " ! pm command is available only in package directory"
-    exit
-  fi
+  case "$1" in
+    "init") 
+      npm init --yes
+      exit
+      ;;
+    "h"|"r") ;;
+    *)
+      echo " ! pm command is available only in package directory"
+      exit
+      ;;
+  esac
 fi
 
 PM="npm"

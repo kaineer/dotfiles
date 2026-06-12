@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: make url by tag and search term
+#
+
+URL0="https://ya.ru/search/?text=%s"
+case "$1" in
+  "tg:j")
+    URL0="https://translate.google.com/?sl=ja&tl=ru&text=%s&op=translate" ;;
+  "ty:j")
+    URL0="https://translate.yandex.com/en/?source_lang=ja&target_lang=ru&text=%s" ;;
+  "jisho")
+    URL0="https://jisho.org/search/%s"
+esac
+
+URL=$(echo $URL0 | sed "s/%s/$2/")
+
+open "$URL"
+

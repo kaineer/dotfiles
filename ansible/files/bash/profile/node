@@ -10,7 +10,10 @@
 ###   for non-interactive shell
 [[ "$1" != "-i" ]] && return
 
-export FNM_PATH=$HOME/.fnm
 export PATH=$HOME/.local/bin:$PATH
 
-eval "$(fnm env)"
+if [[ "$(which fnm)" != "" ]]; then
+  export FNM_PATH=$HOME/.fnm
+  eval "$(fnm env)"
+  eval "$(fnm completions)"
+fi

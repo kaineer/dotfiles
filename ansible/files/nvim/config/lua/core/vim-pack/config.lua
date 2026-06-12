@@ -15,9 +15,7 @@ local applyConfig = function(path)
   end
 end
 
-local addConfigs = function(tbl)
+return function(tbl)
   local each = require("core.utils").each
   each(tbl, applyConfig)
 end
-
-return addConfigs
