@@ -1,0 +1,1 @@
+const testPoly = translatePolygon(prevPoly, dx * mid, dy * mid);
