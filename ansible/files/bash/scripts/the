@@ -13,6 +13,8 @@ _usage() {
   echo "\`\`\`sh"
   echo " $ the path      # all parts of current executables path"
   echo " $ the net       # address of current available network"
+  echo " $ the net restart"
+  echo "                 # restart network services"
   echo " $ the ssh       # list all ssh hosts, check availability"
   echo " $ the uname     # uname active parts"
   echo " $ the arch      # architecture for binaries"
@@ -30,6 +32,13 @@ echo_usage() {
 
 echo_path() {
   echo "$PATH" | sed "s/:/\\n/g" | grep -v "^$"
+}
+
+net_functions() {
+  case "$1" in
+  "restart") sudo systemctl restart NetworkManager ;;
+  *) echo_net ;;
+  esac
 }
 
 echo_net() {
@@ -54,10 +63,7 @@ kill_selected() {
 }
 
 list_available_hosts() {
-  echo "ekb71"
-  echo "ekb72"
-  echo "jetson"
-  echo "eva"
+  grep -h "^Host " ~/.ssh/config ~/.ssh/hosts/* 2>/dev/null | awk '{for(i=2;i<=NF;i++) if($i!="*") print $i}' | sort -u
 }
 
 __check_ssh() {
@@ -91,7 +97,7 @@ list_ssh_hosts() {
 
 case "$1" in
 "path") echo_path ;;
-"net") echo_net ;;
+"net") shift && net_functions $@ ;;
 "uname") echo_uname ;;
 "arch") echo_architecture ;;
 "kill") kill_selected ;;
