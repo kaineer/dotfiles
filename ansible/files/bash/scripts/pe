@@ -27,6 +27,7 @@ echo_envrc() {
   echo "export PROJECT_BIN=$(pwd)/bin"
   echo "export PROJECT_NAME=$(basename $(pwd))"
   echo "export PROJECT_CREATED=\"$(date +%d.%m.%Y)\""
+  echo "export VAR_ROOT=\"\$PROJECT_PATH/tmp\""
 }
 
 edit_script() {

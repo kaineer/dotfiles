@@ -21,6 +21,7 @@
       "ctrl-space t s": "task::Spawn",
       "ctrl-space o f": "file_finder::Toggle",
       "ctrl-space ctrl-space": "command_palette::Toggle",
+      "ctrl-space ctrl-a": ["task::Spawn", { "task_name": "Toggle test file" }],
       "ctrl-j": null,
       "ctrl-h": null,
     },
