@@ -61,6 +61,10 @@ list_vars() {
   cd - >/dev/null 2>&1
 }
 
+clean_vars() {
+  cd $VAR_ROOT/vars && rm * &>/dev/null && cd - &>/dev/null
+}
+
 rm_var() {
   NAME="$1"
   FNAME="$SDIR/$NAME"
@@ -87,6 +91,9 @@ usage() {
 }
 
 case "$1" in
+"clean")
+  clean_vars 
+  ;;
 "-l" | "--list" | "ls" | "list")
   if [[ "$(which bat)" != "" ]]; then
     list_vars | bat -lyaml -p

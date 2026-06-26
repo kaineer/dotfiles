@@ -1,0 +1,16 @@
+return {
+  name = "FocusColors",
+  config = function(cmd)
+    -- cmd("WinEnter", {
+    --   callback = function()
+    --     vim.cmd([[ highlight NormalNC guibg=#3b4252 ]])
+    --   end,
+    -- })
+    --
+    -- cmd("WinLeave", {
+    --   callback = function()
+    --     vim.cmd([[ highlight NormalNC guibg=#2e3440 ]])
+    --   end,
+    -- })
+  end,
+}
