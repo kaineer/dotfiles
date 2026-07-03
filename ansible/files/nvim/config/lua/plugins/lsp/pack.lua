@@ -5,7 +5,7 @@ return {
     "https://github.com/mason-org/mason-lspconfig.nvim",
     "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim",
   },
-  config = function()
+  setup = function()
     require("mason").setup()
     require("mason-lspconfig").setup()
     require("mason-tool-installer").setup {
@@ -13,6 +13,7 @@ return {
         "lua_ls",
         "jsonls",
         "shfmt",
+        "ts_ls",
       },
     }
   end,

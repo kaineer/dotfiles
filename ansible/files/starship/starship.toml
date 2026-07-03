@@ -10,19 +10,24 @@
 # 13.02.2021, kaineer@gmail.com
 #
 # SEEALSO: https://starship.rs/config/
-# SEEALSO: https://www.nerdfonts.com/cheat-sheet/
+# SEEALSO: https://www.nerdfonts.com/cheat-sheet
 
 add_newline = false
-format = "$hostname${custom.linux}$directory$docker_context$git_branch$git_status$nodejs$package\n$character$shell"
+format = "[󱡶](bold cyan) $hostname${custom.linux}$directory$time$docker_context$git_branch $git_status$nodejs$package\n$character$shell"
 
 [shell]
-# symbols:  ν ζ β
+# symbols:  ν ζ β 
 disabled = false
-bash_indicator = "β"
-zsh_indicator = "ζ"
-nu_indicator = "ν"
-# format = "[${indicator}]($style) "
-format = "[ ${indicator}]($style) "
+bash_indicator = "bash"
+zsh_indicator = "zsh"
+nu_indicator = "nush"
+format = "[${indicator}]($style)[](cyan) "
+
+[time]
+disabled = false
+time_format = "%H:%M:%S"
+format = "[ $time]($style)"
+style = "bold #4c566a"
 
 [custom.linux]
 # needs script "icon"
@@ -34,9 +39,9 @@ os = "linux"
 when = true
 
 [character]
-#### symbols: ❯ ✔ ✖  󰡅
-success_symbol="[✓](bold green)"
-error_symbol="[󰡅](bold red)"
+#### symbols: ❯ ✔ ✖  󰡅 
+success_symbol="[](green)"
+error_symbol="[](red)"
 
 [hostname]
 ssh_only = false
@@ -51,7 +56,7 @@ style = "green"
 truncation_symbol = '…/'
 
 [docker_context]
-format="via [$symbol$context]($style)"
+format="\nvia [$symbol$context]($style)"
 symbol="🐳 "
 detect_extensions=[]
 style="blue bold"
@@ -60,14 +65,14 @@ disabled=false
 [git_branch]
 symbol = " "
 style = "yellow"
-format = " [$symbol$branch]($style)"
+format = "\n[$symbol$branch]($style)"
 
 [git_status]
 style = "214"
 format = "[$all_status]($style)"
 
 [nodejs]
-format = " [$symbol$version]($style)"
+format = "\n[$symbol$version]($style)"
 not_capable_style = "bold red"
 symbol = "󰎙 "
 
