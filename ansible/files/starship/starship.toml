@@ -33,7 +33,7 @@ style = "bold #4c566a"
 # needs script "icon"
 # ~~~~~~~~~~~~~~~~~~~
 shell = ["icon", "linux"]
-style = "blue bold"
+style = "cyan bold"
 format = " [$output]($style) "
 os = "linux"
 when = true
