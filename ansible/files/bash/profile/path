@@ -27,4 +27,5 @@ else
   FIXED_PATH=$(echo $PATH | tr ':' '\n' | grep -v "^$" | grep -v "$HOME/bin" | sort | uniq | tr '\n' ':')
   
   [ -d "$HOME/bin" ] && export PATH="$HOME/bin:$PATH"
+  [ -d "$HOME/.config/emacs/bin" ] && export PATH="$HOME/.config/emacs/bin:$PATH"
 fi

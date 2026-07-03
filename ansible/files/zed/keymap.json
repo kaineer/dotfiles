@@ -41,6 +41,7 @@
       "ctrl-space ctrl-w": "pane::CloseAllItems",
       "ctrl-space ctrl-j": "pane::SplitDown",
       "ctrl-space ctrl-l": "pane::SplitRight",
+      "ctrl-space r g": "text_finder::Toggle",
     },
   },
   {
