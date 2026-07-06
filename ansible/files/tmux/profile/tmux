@@ -161,6 +161,10 @@ t() {
     esac
 }
 
+te() {
+  $EDITOR $TMUX_CFG/$TMUX_FILE
+}
+
 tw() {
     tmux select-window -t "$1"
 }
