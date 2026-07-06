@@ -17,6 +17,7 @@ __tmux_usage() {
     echo " $ t a <session-name> -- tmux attach -t <session-name>"
     echo " $ t ks <session-name> -- tmux kill-session -t <session-name>"
     echo " $ t <tmux-command>… -- execute tmux command"
+    echo " $ t e -- edit config"
 }
 
 __jump() {
@@ -139,6 +140,9 @@ t() {
         shift
         tmux rename-window $@
         ;;
+    "e" | "edit")
+      te
+      ;;
     "wk" | "kw") tmux kill-window ;;
     "a" | "attach")
         shift
