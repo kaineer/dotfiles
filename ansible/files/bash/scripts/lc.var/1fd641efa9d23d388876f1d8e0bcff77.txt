@@ -1,0 +1,12 @@
+ bash ps aux | grep python3
+kaineer 2866479  0.0  0.0   6356  2188 pts/7    S+   14:15   0:00 grep python3
+󱡶 teddy  …/devel/kaineer/bot-kaineer-00 14:15:39
+ bash python3 main1.py
+Бот запущен!
+Traceback (most recent call last):
+File "/home/kaineer/devel/kaineer/bot-kaineer-00/.venv/lib/python3.11/site-packages/telegram/ext/_application.py", line 1054, in __run
+loop.run_until_complete(self._bootstrap_initialize(max_retries=bootstrap_retries))
+File "/usr/lib/python3.11/asyncio/base_events.py", line 629, in run_until_complete
+self._check_running()
+File "/usr/lib/python3.11/asyncio/base_events.py", line 588, in _check_running
+raise RuntimeError('This event loop is already running')

@@ -20,6 +20,7 @@ ICON_LINUX_MINT=" "
 ICON_LINUX_UBUNTU=" "
 ICON_LINUX_DEBIAN=""
 ICON_LINUX_UNKNOWN=" "
+ICON_LINUX_FEDORA=" "
 
 __linux_is() {
   COUNT=$(cat /etc/issue | grep "$1" | wc -l)
@@ -34,6 +35,8 @@ __linux_release() {
       echo "ubuntu"
     elif __linux_is "Debian"; then
       echo "debian"
+    elif __linux_is "Fedora"; then
+      echo "fedora"
     else
       echo "unknown"
     fi
@@ -50,6 +53,7 @@ linux_icon() {
     "linuxmint")  echo "$ICON_LINUX_MINT" ;;
     "ubuntu")     echo "$ICON_LINUX_UBUNTU" ;;
     "debian")     echo "$ICON_LINUX_DEBIAN" ;;
+    "fedora")     echo "$ICON_LINUX_FEDORA" ;;
     *)            echo "$ICON_LINUX_UNKNOWN" ;;
   esac
 }
