@@ -83,3 +83,7 @@ style = "bold 202"
 [cmd_duration]
 min_time = 1_000
 format = "it took [$duration](bold yellow)"
+
+[direnv]
+disabled = false
+

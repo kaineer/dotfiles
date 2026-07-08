@@ -22,7 +22,7 @@
   include_role:
     name: "ansible-role-github-release"
   vars:
-    starship_version: "1.21.1"
+    starship_version: "1.26.0"
     starship_repository: "https://github.com/starship/starship"
     starship_arch: "i686-unknown-linux-musl"
     ghr_install_dir: "/home/{{ user.name }}/bin"
