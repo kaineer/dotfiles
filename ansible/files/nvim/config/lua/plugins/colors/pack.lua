@@ -5,6 +5,6 @@ return {
     nord.url,
   },
   setup = function()
-    nord.setup{}
+    nord.setup()
   end,
 }
