@@ -86,4 +86,4 @@ format = "it took [$duration](bold yellow)"
 
 [direnv]
 disabled = false
-
+format = " it took [$duration](bold yellow)"
