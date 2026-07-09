@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+_messages() {
+  echo "Got you"
+  echo "Confirmed"
+  echo "Ok"
+  echo "Agree"
+  echo "Done"
+}
+
+_messages | shuf -n1
