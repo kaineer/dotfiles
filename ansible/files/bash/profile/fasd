@@ -17,9 +17,11 @@ eval "$(fasd --init posix-hook bash-hook)"
 fasd_cd() {
   [ $# -gt 1 ] && cd "$(fasd -e echo "$@")" || fasd "$@"
 }
-# alias j='fasd_cd -d'
 
 j() {
+  BASE=$(basename $1)
+  tmux rename-window "$BASE"
+
   fasd_cd -d $1
 }
 
