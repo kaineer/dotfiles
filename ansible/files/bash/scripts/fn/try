@@ -35,13 +35,13 @@ __start() {
 
 __ok() {
   echo -e "${bold_green}done${reset}"
-  if [[ "$(which notify-send)" != "" ]]; then
-    if [[ "$1" == "" ]]; then
-      notify-send "DONE"
-    else
-      notify-send "DONE: $1"
-    fi
-  fi
+  # if [[ "$(which notify-send)" != "" ]]; then
+  #   if [[ "$1" == "" ]]; then
+  #     notify-send "DONE"
+  #   else
+  #     notify-send "DONE: $1"
+  #   fi
+  # fi
 }
 
 __failure() {
