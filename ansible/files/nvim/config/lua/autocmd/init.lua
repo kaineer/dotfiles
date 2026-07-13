@@ -15,7 +15,7 @@ each({
   "direnv",
   "javascript",
   "json",
-  "focus",
+  -- "focus",
   "terminal",
   "markdown",
 }, applyCmd)
