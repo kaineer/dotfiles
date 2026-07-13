@@ -6,6 +6,7 @@ _messages() {
   echo "Ok"
   echo "Agree"
   echo "Done"
+  echo "Changes are applied"
 }
 
 _messages | shuf -n1
