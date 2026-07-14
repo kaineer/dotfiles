@@ -13,7 +13,7 @@
 # SEEALSO: https://www.nerdfonts.com/cheat-sheet
 
 add_newline = false
-format = "[󱡶](bold cyan) $hostname${custom.linux}$directory$time$cmd_duration$docker_context$git_branch $git_status$nodejs$package\n$character$shell"
+format = "[󱡶](bold cyan) $hostname${custom.linux}$directory$time$cmd_duration$docker_context$git_branch $git_status$nodejs$package\n$character$direnv$shell"
 
 [shell]
 # symbols:  ν ζ β 
@@ -86,4 +86,5 @@ format = " it took [$duration](bold yellow)"
 
 [direnv]
 disabled = false
-format = " it took [$duration](bold yellow)"
+format = "[ ](bold yellow)"
+# format = " it took [$duration](bold yellow)"

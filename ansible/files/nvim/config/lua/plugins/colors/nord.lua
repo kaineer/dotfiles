@@ -6,13 +6,9 @@
 return {
   url = "https://github.com/shaunsingh/nord.nvim",
   setup = function()
-		vim.cmd([[ colorscheme nord ]])
-		vim.cmd([[ highlight Normal guibg=#2e3440 ]])
-		vim.cmd([[ highlight NormalNC guibg=#3b4252 ]])
-		--
-		-- vim.cmd([[ highlight GitGutterAdd guibg=#2e3440 ]])
-		-- vim.cmd([[ highlight GitGutterChange guibg=#2e3440 ]])
-		-- vim.cmd([[ highlight GitGutterDelete guibg=#2e3440 ]])
+    vim.cmd.colorscheme("nord")
+    vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+    vim.api.nvim_set_hl(0, "NormalNC", { bg = "#3b4252" })
   end,
 }
 
