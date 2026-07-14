@@ -2,7 +2,7 @@ return {
   urls = {
     "https://github.com/nvim-lualine/lualine.nvim",
   },
-  setup = function() 
+  setup = function()
     local mode = {
       "mode",
       fmt = function(str)

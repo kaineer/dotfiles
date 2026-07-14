@@ -42,6 +42,7 @@ return {
         "jsonls",
         "shfmt",
         "ts_ls",
+        "jinja_lsp",
       },
     }
   end,
