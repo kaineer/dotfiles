@@ -49,6 +49,9 @@ system_packages:
   - python3-venv
   - python3-pytest
   - python3-cmarkgfm
+  ### Python3 templates
+  - python3-jinja2
+  - python3-jinja2-time
   - podman
   - podman-compose
   - rsync
