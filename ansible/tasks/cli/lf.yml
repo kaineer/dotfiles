@@ -74,7 +74,7 @@
   include_role:
     name: "ansible-role-github-release"
   vars:
-    lf_version: "r33"
+    lf_version: "r41"
     lf_architecture: "linux-amd64"
     lf_repository: "https://github.com/gokcehan/lf"
     owner: "{{ user.name }}"
