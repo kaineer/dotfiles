@@ -3,10 +3,12 @@
 LAUNCH_TERMINAL="wezterm"
 
 if [[ "$LAUNCH_TERMINAL" == "" ]]; then
-  if [[ "$(which ghostty)" != "" ]]; then
-    export LAUNCH_TERMINAL="ghostty"
+  if [[ "$(which alacritty)" != "" ]]; then
+    export LAUNCH_TERMINAL="alacritty"
   elif [[ "$(which wezterm)" != "" ]]; then
     export LAUNCH_TERMINAL="wezterm"
+  elif [[ "$(which ghostty)" != "" ]]; then
+    export LAUNCH_TERMINAL="ghostty"
   fi
 fi
 
@@ -18,5 +20,9 @@ case "${LAUNCH_TERMINAL}" in
 "wezterm")
   export WEZTERM_BINARY=$HOME/bin/wezterm
   start_or_activate_by_classname "$WEZTERM_BINARY" "org.wezfurlong.wezterm"
+  ;;
+"alacritty")
+  export ALACRITTY_BINARY=$HOME/bin/alacritty
+  start_or_activate_by_classname "$ALACRITTY_BINARY" "Alacritty"
   ;;
 esac
