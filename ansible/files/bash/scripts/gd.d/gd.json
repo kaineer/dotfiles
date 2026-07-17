@@ -214,5 +214,9 @@
   "gh:ai-audit": {
     "url": "https://github.com/Chechushkov/AI_Auditor",
     "bin": "open"
+  },
+  "google-fonts": {
+    "url": "https://fonts.google.com/",
+    "bin": "open"
   }
 }
