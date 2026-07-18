@@ -12,3 +12,5 @@
 [[ "$1" == "-i" ]] && return
 
 [ -x "$(command -v direnv)" ] && eval "$(direnv hook bash)"
+
+export DIRENV_LOG_FORMAT=""
