@@ -6,4 +6,5 @@ require("core.vim-pack.config")({
   "plugins.git.pack",
   "plugins.lualine.pack",
   "plugins.completion.pack",
+  "plugins.snippets.pack",
 })
