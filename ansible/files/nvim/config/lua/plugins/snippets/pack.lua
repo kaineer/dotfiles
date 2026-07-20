@@ -9,7 +9,6 @@ return {
       create_autocmd = true,
       create_cmp_source = true,
       friendly_snippets = true,
-      -- extended_filetypes = {},
       search_paths = {
         vim.fn.expand("~/.config/snippets"),
         vim.fn.stdpath("config").."/snippets",
@@ -59,23 +58,4 @@ return {
       },
     })
   end,
-
-
-  -- urls = {
-  --   "https://github.com/L3MON4D3/LuaSnip",
-  -- },
-  -- setup = function()
-  --   local ls = require("luasnip")
-  --
-  --   vim.keymap.set({"i"}, "<tab>", function() ls.expand() end, {silent = true})
-  --   vim.keymap.set({"i", "s"}, "<C-n>", function() ls.jump( 1) end, {silent = true})
-  --   vim.keymap.set({"i", "s"}, "<C-p>", function() ls.jump(-1) end, {silent = true})
-  --
-  --   vim.keymap.set({"i", "s"}, "<c-e>", function()
-  --     if ls.choice_active() then
-  --       ls.change_choice(1)
-  --     end
-  --   end, {silent = true})
-  -- end,
 }
-

@@ -1,18 +1,13 @@
 {
-  "component": {
-    "prefix": "component",
-    "body": ["export const ${1} = () => {", "}"],
-    "description": "Component skeleton"
-  },
   "create props interface": {
     "prefix": "iprops",
-    "body": [ "interface Props {", "$0", "}", "" ],
+    "body": [ "interface Props {", "  $0", "}", "" ],
     "description": "Add properties interface before component"
   },
   "create functional component": {
     "prefix": "crfc",
     "body": [
-      "export const ${1} = ({$2}: Props) => {", "$0", "};"
+      "export const ${1} = ({$2}: Props) => {", "  $0", "};"
     ],
     "description": "Create a functional component with props"
   }
