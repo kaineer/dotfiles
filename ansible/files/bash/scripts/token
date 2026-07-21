@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+__usage() {
+  echo " $ $0 gh  # create new token on github"
+  echo " $ $0 sc  # create new token on sourcecraft"
+}
+
+case "$1" in
+  "gh"|"github")
+    open "https://github.com/settings/tokens/new"
+    ;;
+  "sc"|"sourcecraft")
+    open "https://sourcecraft.dev/me/tokens"
+    ;;
+  "h")
+    __usage
+    ;;
+esac

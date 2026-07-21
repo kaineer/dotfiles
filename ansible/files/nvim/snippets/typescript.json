@@ -83,5 +83,20 @@
       "export * from '$1'",
       "$0"
     ]
+  },
+  "export type": {
+    "prefix": "et",
+    "body": ["export type $1 = $2;"],
+    "description": "export type shortcut"
+  },
+  "export interface": {
+    "prefix": "ei",
+    "body": ["export interace $1 {", "  $0", "}"],
+    "description": "export interface shortcut"
+  },
+  "export function": {
+    "prefix": "ef",
+    "body": ["export const $1 = ($0) => {", "}" ],
+    "description": "export function shortcut"
   }
 }

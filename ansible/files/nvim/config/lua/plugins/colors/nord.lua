@@ -11,4 +11,3 @@ return {
     vim.api.nvim_set_hl(0, "NormalNC", { bg = "#3b4252" })
   end,
 }
-

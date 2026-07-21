@@ -37,3 +37,4 @@ scripts:
   - urlo
   - onsave
   - gi
+  - token

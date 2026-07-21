@@ -54,7 +54,7 @@ return {
     require("lualine").setup({
       options = {
         icons_enabled = true,
-        theme = "nordic", -- Set theme based on environment variable
+        theme = "nord", -- Set theme based on environment variable
         -- Some useful glyphs:
         -- https://www.nerdfonts.com/cheat-sheet
         --        
