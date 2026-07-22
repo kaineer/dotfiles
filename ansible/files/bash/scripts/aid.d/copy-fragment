@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+### disable
+return 0
+
 [[ "$(which codef)" == "" ]] && return 0
 
 source $DIR/fn/try
