@@ -3,6 +3,7 @@ gui_packages:
   - cabextract
   - chafa
   - dmenu
+  - feh
   - gcolor3
   - gimp
   - gnome-text-editor
