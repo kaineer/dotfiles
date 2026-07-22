@@ -8,9 +8,10 @@ return {
     local wk = require('which-key')
 
     wk.add({
-      { "<leader>aa", "<cmd>A<cr>", desc = "Projectionist alternate" },
-      { "<leader>as", "<cmd>AS<cr>", desc = "Projectionist alternate split" },
-      { "<leader>av", "<cmd>AV<cr>", desc = "Projectionist alternate vsplit" },
+      { "<leader>aa", "<cmd>A<cr>", desc = "-> alternate" },
+      { "<leader>ec", "<cmd>Ecomponent<cr>", desc = "-> component" },
+      { "<leader>em", "<cmd>Ecssmodule<cr>", desc = "-> css module" },
+      { "<leader>es", "<cmd>Estories<cr>", desc = "-> stories" },
     })
   end,
 }

@@ -218,5 +218,9 @@
   "google-fonts": {
     "url": "https://fonts.google.com/",
     "bin": "open"
+  },
+  "dev:police_ai": {
+    "dir": "/home/kaineer/devel/itc/police_ai",
+    "bin": "nvim"
   }
 }

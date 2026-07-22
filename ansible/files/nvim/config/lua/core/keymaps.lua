@@ -108,3 +108,8 @@ map.normal({
 map.normal({
 	{ "<space>mf", ":MkdnTableFormat<cr>" },
 })
+
+-- vim pack commands
+map.normal({
+  { "<space>vpu", vim.pack.update },
+})
