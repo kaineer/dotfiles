@@ -23,15 +23,22 @@ fi
 REPO=$(basename $(pwd))
 INITIALIZED="$(git remote -v 2>/dev/null | wc -l)"
 
+initial_commit() {
+  git add .
+  git commit -m "Initial commit"
+
+  echo " * Push repository to remote"
+  git push -u origin master
+}
+
 if [[ "$INITIALIZED" == "0" ]]; then
   REPO_NAME="$USER/$REPO"
   gh repo create "$REPO_NAME" --private
 
-  git add .
-  git commit -m "Initial commit"
-
   echo " * Add origin remote"
   git remote add origin "git@github.com:$REPO_NAME.git"
-  echo " * Push repository to remote"
-  git push -u origin master
+
+  initial_commit
+elif [[ "$FORCED" == "true" ]]; then
+  initial_commit
 fi
