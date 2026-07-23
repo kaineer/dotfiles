@@ -13,11 +13,13 @@ return {
     vim.lsp.config['ts_ls'] = require("plugins.lsp.opts.ts")
     vim.lsp.config['lua_ls'] = require("plugins.lsp.opts.lua")
     vim.lsp.config['jsonls'] = require("plugins.lsp.opts.json")
+    vim.lsp.config['cssmodules_ls'] = require("plugins.lsp.opts.cssmodules")
 
     -- Включаем LSP серверы
     vim.lsp.enable('ts_ls')
     vim.lsp.enable('lua_ls')
     vim.lsp.enable('jsonls')
+    vim.lsp.enable('cssmodules_ls')
 
     -- Настройка автокоманд для on_attach
     vim.api.nvim_create_autocmd('LspAttach', {
@@ -43,6 +45,7 @@ return {
         "shfmt",
         "ts_ls",
         "jinja_lsp",
+        "cssmodules_ls",
       },
     }
   end,
