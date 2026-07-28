@@ -98,5 +98,20 @@
     "prefix": "ef",
     "body": ["export const $1 = ($0) => {", "}" ],
     "description": "export function shortcut"
+  },
+  "payload action": {
+    "prefix": "pla",
+    "body": ["action: PayloadAction<$1>"],
+    "description": "payload action argument"
+  },
+  "set payload": {
+    "prefix": "setpl",
+    "body": ["set${1}: (state, action: PayloadAction<$1>) => {", "  state.$2 = action.payload;", "}"],
+    "description": "set state field with payload"
+  },
+  "get field": {
+    "prefix": "getfld",
+    "body": ["get${1}: (state) => state.$2,"],
+    "description": "selector for getting field"
   }
 }
