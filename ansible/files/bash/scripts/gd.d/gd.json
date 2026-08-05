@@ -222,5 +222,17 @@
   "dev:police_ai": {
     "dir": "/home/kaineer/devel/itc/police_ai",
     "bin": "nvim"
+  },
+  "cfg:nvim": {
+    "dir": "/home/kaineer/git/config/dotfiles/ansible/files/nvim/config/",
+    "bin": "nvim"
+  },
+  "cfg:tmux": {
+    "dir": "/home/kaineer/git/config/dotfiles/ansible/files/tmux/config/",
+    "bin": "nvim"
+  },
+  "cfg:git": {
+    "dir": "/home/kaineer/git/config/dotfiles/ansible/files/git/",
+    "bin": "nvim"
   }
 }
