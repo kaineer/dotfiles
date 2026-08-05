@@ -66,10 +66,10 @@ local tmuxSplit = function(vertical)
     end
   end
 
-  local cmd = {'tmux', 'split-window', '-c', target_dir}
-  if vertical then
-    cmd = {'tmux', 'split-window', '-h', '-c', target_dir} 
-  end
+  local cmd = {
+    'tmux', 'split-window', 
+    (vertical and '-hc' or '-c'), target_dir
+  }
 
   vim.fn.jobstart(cmd, {
     detach = true,

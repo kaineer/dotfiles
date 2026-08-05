@@ -19,3 +19,5 @@
 
  * Установить oculante из релизов
    * https://github.com/woelper/oculante
+
+ * [Debian info](https://github.com/David17c/Dfetch/releases)
