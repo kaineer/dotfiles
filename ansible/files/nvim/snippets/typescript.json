@@ -113,5 +113,23 @@
     "prefix": "getfld",
     "body": ["get${1}: (state) => state.$2,"],
     "description": "selector for getting field"
+  },
+  "endpoints build": {
+    "prefix": "epb",
+    "body": ["endpoints: (build) => ({", "  $0", "})"],
+    "description": "api endpoints"
+  },
+  "create api": {
+    "prefix": "crapi",
+    "body": [
+      "import { createApi } from \"@reduxjs/toolkit/query/react\";",
+      "export const $1Api = createApi({",
+      "  reducerPath: \"$1/api\",",
+      "  // baseQuery: ...",
+      "  tagTypes: [],",
+      "});"
+    ],
+    "description": "api object shortcut"
   }
+
 }

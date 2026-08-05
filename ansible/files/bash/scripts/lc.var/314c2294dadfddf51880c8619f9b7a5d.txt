@@ -1,0 +1,29 @@
+// ============================================================
+// POST /exam/attempts/{attemptId}/submit
+// Отправить изъятое и получить предварительную оценку
+// ============================================================
+submitAttempt: builder.mutation<Result, { attemptId: string; body: SubmitRequest }>({
+query: ({ attemptId, body }) => ({
+url: `/exam/attempts/${attemptId}/submit`,
+method: 'POST',
+body,
+}),
+invalidatesTags: (result, error, { attemptId }) => [
+{ type: 'Attempt', id: attemptId },
+{ type: 'Result', id: attemptId },
+'Exam',
+],
+// Трансформация ошибок
+transformErrorResponse: (response: { status: number; data: ErrorResponse }) => {
+if (response.status === 409) {
+return {
+...response,
+data: {
+...response.data,
+message: response.data?.message || 'Попытка уже отправлена или просрочена.',
+},
+};
+}
+return response;
+},
+}),

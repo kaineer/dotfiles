@@ -49,6 +49,33 @@ local tabs = {
 
 local tmux = {
 	rename = mkcmd("!n"),
+  split = function()
+    -- @link: https://chat.deepseek.com/share/yuyucfni0l3fsvh4sj 
+    -- split into current directory
+    local current_file = vim.fn.expand('%:p')
+    local current_dir = vim.fn.expand('%:p:h')
+    local target_dir
+
+    -- Проверяем, открыт ли dirvish
+    if vim.bo.filetype == 'dirvish' then
+      target_dir = vim.fn.expand('%:p')
+    else
+      -- Иначе используем директорию текущего файла
+      if current_file == '' then
+        target_dir = vim.fn.getcwd()
+      else
+        target_dir = current_dir
+      end
+    end
+
+    print('target_dir = ' .. target_dir)
+
+    vim.fn.jobstart({'tmux', 'split-window', '-c', target_dir}, {
+      detach = true,
+      cwd = target_dir,
+      on_exit = function() end
+    })
+  end,
 }
 
 map.normal({
@@ -87,9 +114,12 @@ map.normal({
 	{ "<leader>tl", tabs.next },
 	{ "<leader>th", tabs.prev },
 	{ "<leader>n", tmux.rename },
+  { "<leader><c-j>", tmux.split },
+
 	{ "<leader>gm", mkcmd("GitMessenger") },
 	{ "<leader>gs", mkcmd("G") },
 	{ "<leader>gl", mkcmd("GV") },
+
 
 	{ "zz", "V$%zf" },
 })
