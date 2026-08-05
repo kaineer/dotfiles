@@ -234,5 +234,13 @@
   "cfg:git": {
     "dir": "/home/kaineer/git/config/dotfiles/ansible/files/git/",
     "bin": "nvim"
+  },
+  "cfg:starship": {
+    "dir": "/home/kaineer/git/config/dotfiles/ansible/files/starship/",
+    "bin": "nvim"
+  },
+  "cfg:profiles": {
+    "dir": "/home/kaineer/git/config/dotfiles/ansible/files/bash/profile",
+    "bin": "nvim"
   }
 }
