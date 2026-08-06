@@ -79,6 +79,11 @@ case "$1" in
   shift
   list_in_bin
   ;;
+"paw"|"footprint"|"fp")
+  FOOTPRINT_DIR="$PROJECT_PATH/config/footprint"
+  mkdir -p "$FOOTPRINT_DIR"
+  cp "$PROJECT_PATH/.envrc" "$FOOTPRINT_DIR/${USER}@${HOSTNAME}.envrc"
+  ;;
 "h" | "help" | "-h" | "--help")
   _usage
   ;;

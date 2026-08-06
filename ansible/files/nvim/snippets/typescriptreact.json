@@ -10,5 +10,10 @@
       "export const ${1} = ({$2}: Props) => {", "  $0", "};"
     ],
     "description": "Create a functional component with props"
+  },
+  "create checkbox input": {
+    "prefix": "icb",
+    "body": ["<input type=\"checkbox\" value=\"\" />"],
+    "description": "Create checkbox"
   }
 }

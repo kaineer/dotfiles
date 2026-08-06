@@ -1,0 +1,18 @@
+{
+"items": [
+{
+"source": "recognized",
+"labelCode": "knife",
+"markedRelevant": false,
+"objectId": "string",
+"description": "string",
+"photoBase64": "string",
+"geo": {
+"lat": 0,
+"lon": 0,
+"demo": true
+}
+}
+],
+"finishedAt": "string"
+}
