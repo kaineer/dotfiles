@@ -47,3 +47,5 @@ assign(vim.g, {
 		"json",
 	},
 })
+
+vim.o.winborder = "double"

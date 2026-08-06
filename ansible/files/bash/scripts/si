@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: search installed packages
+#
+__usage() {
+  echo " $ si <term>  # list installed packages"
+}
+
+TERM=$1
+
+if [[ "$TERM" == "" ]]; then
+  __usage
+else
+  apt search $TERM 2>/dev/null | grep installed
+fi
