@@ -54,6 +54,7 @@ _usage() {
   echo " $ $BASE init -- create bin dir etc"
   echo " $ $BASE ls -- list created scripts"
   echo " $ $BASE e[dit] -- edit .envrc"
+  echo " $ $BASE footprint|fp -- store .envrc for current user@host"
   echo " $ $BASE [scriptname] -- create/edit a script"
 }
 
