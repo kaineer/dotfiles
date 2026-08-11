@@ -4,6 +4,9 @@ return {
     "https://github.com/mason-org/mason.nvim",
     "https://github.com/mason-org/mason-lspconfig.nvim",
     "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim",
+
+    -- trying to use prettier
+    "https://github.com/stevearc/conform.nvim",
   },
   setup = function()
     require("mason").setup()
@@ -48,5 +51,25 @@ return {
         "cssmodules_ls",
       },
     }
+
+    -- Настройка conform.nvim для форматирования
+    require("conform").setup({
+      formatters_by_ft = {
+        javascriptreact = { "prettier" },  -- JSX файлы (.jsx)
+        typescriptreact = { "prettier" },  -- TSX файлы (.tsx)
+      },
+    })
+
+    -- АВТОКОМАНДА ДЛЯ ФОРМАТИРОВАНИЯ ПРИ СОХРАНЕНИИ
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      pattern = { "*.js", "*.jsx", "*.ts", "*.tsx", "*.json", "*.css", "*.scss", "*.html", "*.md" },
+      callback = function(args)
+        require("conform").format({
+          bufnr = args.buf,
+          timeout_ms = 3000,
+          lsp_fallback = true,
+        })
+      end,
+    })
   end,
 }
