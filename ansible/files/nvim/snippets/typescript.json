@@ -19,13 +19,13 @@
     "body": [
       "import { createSlice } from '@reduxjs/toolkit';",
       "",
-      "interface ${1}Content {",
+      "interface SliceState {",
       "}",
       "",
-      "const initialState: ${1}Content = {}",
+      "const initialState: SliceState = {}",
       "",
       "export const ${1}Slice = createSlice({",
-      "  name: '${1}',",
+      "  name: \"${1}\",",
       "  initialState,",
       "  reducers: {},",
       "})"
@@ -86,37 +86,58 @@
   },
   "export type": {
     "prefix": "et",
-    "body": ["export type $1 = $2;"],
+    "body": [
+      "export type $1 = $2;"
+    ],
     "description": "export type shortcut"
   },
   "export interface": {
     "prefix": "ei",
-    "body": ["export interace $1 {", "  $0", "}"],
+    "body": [
+      "export interace $1 {",
+      "  $0",
+      "}"
+    ],
     "description": "export interface shortcut"
   },
   "export function": {
     "prefix": "ef",
-    "body": ["export const $1 = ($0) => {", "}" ],
+    "body": [
+      "export const $1 = ($0) => {",
+      "}"
+    ],
     "description": "export function shortcut"
   },
   "payload action": {
     "prefix": "pla",
-    "body": ["action: PayloadAction<$1>"],
+    "body": [
+      "action: PayloadAction<$1>"
+    ],
     "description": "payload action argument"
   },
   "set payload": {
     "prefix": "setpl",
-    "body": ["set${1}: (state, action: PayloadAction<$1>) => {", "  state.$2 = action.payload;", "}"],
+    "body": [
+      "set${1}: (state, action: PayloadAction<$1>) => {",
+      "  state.$2 = action.payload;",
+      "}"
+    ],
     "description": "set state field with payload"
   },
   "get field": {
     "prefix": "getfld",
-    "body": ["get${1}: (state) => state.$2,"],
+    "body": [
+      "get${1}: (state) => state.$2,"
+    ],
     "description": "selector for getting field"
   },
   "endpoints build": {
     "prefix": "epb",
-    "body": ["endpoints: (build) => ({", "  $0", "})"],
+    "body": [
+      "endpoints: (build) => ({",
+      "  $0",
+      "})"
+    ],
     "description": "api endpoints"
   },
   "create api": {
@@ -131,5 +152,4 @@
     ],
     "description": "api object shortcut"
   }
-
 }
