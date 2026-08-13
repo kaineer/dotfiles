@@ -3,7 +3,7 @@
 [[ "$1" != "-i" ]] && return
 
 list_possible_editors() {
-  echo "neovide"
+  # echo "neovide"
   echo "nvui"
   echo "nvim"
   echo "vi"
