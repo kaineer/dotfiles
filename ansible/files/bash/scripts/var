@@ -12,14 +12,6 @@
 ROOT_DIR="${VAR_ROOT:-$HOME/var}"
 SDIR="$ROOT_DIR/vars"
 
-# NOTE: Do not use debug/info here
-#   (it will ruin your shell)
-if [[ "$DEBUG" != "" ]]; then
-  echo "ROOT_DIR=$ROOT_DIR"
-  echo "SDIR=$SDIR"
-  echo "args: $@"
-fi
-
 ensure_storage() {
   [ ! -d $SDIR ] && mkdir -p $SDIR
 }
@@ -121,11 +113,6 @@ case "$1" in
   fi
   ;;
 *)
-  if [[ "$DEBUG" != "" ]]; then
-    echo "args count: ${#@}"
-    echo "\$@: \"$@\""
-  fi
-
   if [[ "${#@}" == "1" ]]; then
     get_var "$1"
   # elif [[ "${#@}" == "2" ]]; then
