@@ -151,5 +151,14 @@
       "});"
     ],
     "description": "api object shortcut"
+  },
+  "if state field is of type": {
+    "prefix": "ifft",
+    "body": [
+      "if (typeof state.$1 === \"$2\") {",
+      "  state.$1 = $1;",
+      "}"
+    ],
+    "description": "if state field is of selected type"
   }
 }

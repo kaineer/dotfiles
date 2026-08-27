@@ -1,0 +1,12 @@
+connection
+keep-alive
+content-length
+169
+content-type
+text/html
+date
+Wed, 26 Aug 2026 11:25:03 GMT
+location
+http://police.teddy/exam-api/
+server
+nginx/1.22.1
