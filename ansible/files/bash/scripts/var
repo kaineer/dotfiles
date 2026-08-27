@@ -34,7 +34,8 @@ get_var() {
 
 set_var() {
   NAME=$1
-  VALUE=$2
+  shift
+  VALUE="$@"
   FNAME="$SDIR/$NAME"
 
   if [[ "$VALUE" == "" ]]; then
@@ -122,6 +123,7 @@ case "$1" in
 *)
   if [[ "$DEBUG" != "" ]]; then
     echo "args count: ${#@}"
+    echo "\$@: \"$@\""
   fi
 
   if [[ "${#@}" == "1" ]]; then
@@ -130,7 +132,7 @@ case "$1" in
   elif [[ "$2" != "" ]]; then
     NAME="$1"
     shift
-    set_var "$NAME" "$@"
+    set_var "$NAME" $@
   fi
   ;;
 esac
