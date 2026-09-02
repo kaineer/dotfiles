@@ -13,6 +13,7 @@ __list_actions() {
   if __inside_work_tree; then
     echo "commit"
     echo "commit-all"
+    echo "fetch"
     echo "amend"
     echo "status"
     echo "diff"
@@ -51,6 +52,7 @@ __run_action() {
     "commit") git commit --edit ;;
     "commit-all") git add . && git commit --edit ;;
     "amend") git commit --amend --edit ;;
+    "fetch") git fetch ;;
     "diff") git diff ;;
     "diff-cached") git diff --cached ;;
     "status") git status ;;

@@ -75,7 +75,7 @@ elif [ -f "$1" ]; then
   *.ts) bun $1 ;;
   *.js) bun $1 ;;
   *.json) \cat $1 | jq . ;;
-  *) echo " * Unknown file [$1]" ;;
+  *) echo " * Unknown file type [$1]" ;;
   esac
 else
   TARGET="$(list_actions | fzf -1 -q "$1")"

@@ -24,6 +24,14 @@ get_var() {
   fi
 }
 
+edit_var() {
+  NAME=$1
+  FNAME="$SDIR/$NAME"
+  if [ -f "$FNAME" ]; then
+    $EDITOR "$FNAME"
+  fi
+}
+
 set_var() {
   NAME=$1
   shift
@@ -104,6 +112,10 @@ case "$1" in
 "-i" | "clip")
   shift
   store_clip $@
+  ;;
+"e" | "edit")
+  shift
+  edit_var $@
   ;;
 "" | "-h" | "--help" | "h" | "help")
   if [[ "$(which bat)" != "" ]]; then
