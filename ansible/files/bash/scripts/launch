@@ -50,7 +50,13 @@ start_or_activate_by_classname() {
   BINARY=$1
   CLASSNAME=$2
 
-  WINID=$(xdotool search --classname "$CLASSNAME" | tail -n1)
+  ORDER=${3:-last}
+
+  if [[ "$ORDER" == "last" ]]; then
+    WINID=$(xdotool search --classname "$CLASSNAME" | tail -n1)
+  else
+    WINID=$(xdotool search --classname "$CLASSNAME" | head -n${ORDER} | tail -n1)
+  fi
 
   if [[ "$WINID" == "" ]]; then
     $BINARY &

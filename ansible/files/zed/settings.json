@@ -58,7 +58,7 @@
     "light": "One Light",
     "dark": "Nordic Syntax",
   },
-  "vim_mode": true,
+  "vim_mode": false,
   "agent": {
     "tool_permissions": {
       "tools": {
