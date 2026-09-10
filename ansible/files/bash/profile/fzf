@@ -26,14 +26,26 @@ export FZF_CTRL_R_OPTS="--with-nth 2.."
 #
 # Theme sandbox:
 # @link: https://vitormv.github.io/fzf-themes/
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
-  --color=fg:-1,fg+:#d0d0d0,bg:#2e3440,bg+:#262626
-  --color=hl:#ebcb8b,hl+:#5fd7ff,info:#88c0d0,marker:#ebcb8b
-  --color=prompt:#a3be8b,spinner:#b48dac,pointer:#88c0d0,header:#a3be8b
-  --color=gutter:#2e3440,border:#262626,separator:#3b4252,label:#aeaeae
-  --color=query:#d9d9d9
-  --border="rounded" --border-label="" --preview-window="border-rounded" --prompt="> "
-  --marker="+ " --pointer="»" --separator="-" --scrollbar="|"'
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+  export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+    --color=fg:-1,fg+:#141414,bg:-1,bg+:#eaeaea
+    --color=hl:#3b7e84,hl+:#0064b0,info:#176c74,marker:#007041
+    --color=prompt:#007041,spinner:#92156a,pointer:#2778c1,header:#176c74
+    --color=gutter:-1,border:#d4d4d4,separator:#e0e0e0,label:#6b6b6b
+    --color=query:#141414,preview-fg:-1,preview-bg:-1,scrollbar:#c8c8c8
+    --border="rounded" --border-label="" --preview-window="border-rounded" --prompt="> "
+    --marker="+ " --pointer="»" --separator="-" --scrollbar="|"'
+else
+  export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+    --color=fg:-1,fg+:#d0d0d0,bg:#2e3440,bg+:#262626
+    --color=hl:#ebcb8b,hl+:#5fd7ff,info:#88c0d0,marker:#ebcb8b
+    --color=prompt:#a3be8b,spinner:#b48dac,pointer:#88c0d0,header:#a3be8b
+    --color=gutter:#2e3440,border:#262626,separator:#3b4252,label:#aeaeae
+    --color=query:#d9d9d9
+    --border="rounded" --border-label="" --preview-window="border-rounded" --prompt="> "
+    --marker="+ " --pointer="»" --separator="-" --scrollbar="|"'
+fi
 
 source $HOME/.config/fzf/fzf.completion
 bind -x '"\t": fzf_bash_completion'
+
