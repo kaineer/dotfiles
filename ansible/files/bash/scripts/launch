@@ -52,11 +52,7 @@ start_or_activate_by_classname() {
 
   ORDER=${3:-last}
 
-  if [[ "$ORDER" == "last" ]]; then
-    WINID=$(xdotool search --classname "$CLASSNAME" | tail -n1)
-  else
-    WINID=$(xdotool search --classname "$CLASSNAME" | head -n${ORDER} | tail -n1)
-  fi
+  WINID=$(xdotool search --onlyvisible --classname "$CLASSNAME" | tail -n1)
 
   if [[ "$WINID" == "" ]]; then
     $BINARY &
