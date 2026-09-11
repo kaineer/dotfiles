@@ -45,6 +45,8 @@
 - include_tasks: ./cli/doppler/dopper.yml
 - include_tasks: ./cli/neovim.yml
 - include_tasks: ./cli/node.yml
+- include_tasks: ./cli/rustup.yml
+
 - include_tasks: ./media/mocp.yml
 - include_tasks: ./media/rmpc.yml
 - include_tasks: ./browsers/brave.yml

@@ -1,0 +1,22 @@
+- name: Check rustup presence
+  stat:
+    path: "{{ ansible_env.HOME }}/.cargo/bin/rustup"
+  register: rustup_bin
+
+- name: Install rustup
+  when: not rustup_bin.stat.exists
+  block:
+    - name: Download rustup-init
+      get_url:
+        url: https://sh.rustup.rs
+        dest: /tmp/rustup-init.sh
+        mode: "0755"
+
+    - name: Run rustup-init
+      command: /tmp/rustup-init.sh -y --no-modify-path --default-toolchain stable
+
+    - name: Remove rustup-init script
+      file:
+        path: /tmp/rustup-init.sh
+        state: absent
+
