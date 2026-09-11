@@ -32,7 +32,7 @@ start_or_select_from_list() {
   CLASSNAME=$2
   PROMPT=$3
 
-  CONTENT=$(xdotool search --class $CLASSNAME)
+  CONTENT=$(xdotool search --onlyvisible --class $CLASSNAME)
   COUNT="$(echo "$CONTENT" | sed "s/ *$//" | grep -v "^$" | wc -l)"
 
   if [[ "$COUNT" == "0" ]]; then
@@ -40,7 +40,7 @@ start_or_select_from_list() {
   elif [[ "$COUNT" == "1" ]]; then
     xdotool windowactivate "$CONTENT"
   else
-    OUTPUT=$(__list_windows "$CONTENT" | rofi -dmenu -p ${PROMPT:-application})
+    OUTPUT=$(__list_windows "$CONTENT" | rofi -i -dmenu -p ${PROMPT:-application})
     WID=$(echo "$OUTPUT" | sed "s/ .*$//")
     xdotool windowactivate "$WID"
   fi
