@@ -6,6 +6,14 @@
 //
 // Zed editor settings
 {
+  "agent_servers": {
+    "Qwen Code": {
+      "type": "custom",
+      "command": "qwen",
+      "args": ["--acp"],
+      "env": {}
+    }
+  },
   "icon_theme": {
     "mode": "dark",
     "light": "Zed (Default)",
@@ -30,11 +38,27 @@
   },
   "language_models": {
     "ollama": {
-      "api_url": "http://localhost:11434",
+      "api_url": "http://localhost:8000",
+      "available_models": [
+        {
+          "name": "qwen2.5-coder:7b",
+          "display_name": "Qwen 2.5 coder",
+          "max_tokens": 32768,
+          "supports_tools": true
+        }
+      ]
     },
   },
   "edit_predictions": {
-    "provider": "none",
+    "open_ai_compatible_api": {
+      "api_url": "http://localhost:8000/v1",
+      "prompt_format": "qwen"
+    },
+    "ollama": {
+      "prompt_format": "qwen",
+      "api_url": "http://localhost:8000"
+    },
+    "provider": "ollama",
   },
   "lsp": {
     "vtsls": {
@@ -60,21 +84,77 @@
   },
   "vim_mode": true,
   "agent": {
-    "tool_permissions": {
-      "tools": {
-        "terminal": {
-          "default": "allow"
-        }
+    "thinking_display": "preview",
+    "play_sound_when_agent_done": "always",
+    "profiles": {
+      "write": {
+        "name": "Write",
+        "tools": {
+          "copy_path": true,
+          "create_directory": true,
+          "create_thread": true,
+          "delete_path": true,
+          "diagnostics": true,
+          "apply_code_action": true,
+          "ask_user": true,
+          "edit_file": true,
+          "write_file": true,
+          "fetch": true,
+          "find_path": true,
+          "find_references": true,
+          "get_code_actions": true,
+          "go_to_definition": true,
+          "list_agents_and_models": true,
+          "list_directory": true,
+          "move_path": true,
+          "rename_symbol": true,
+          "read_file": true,
+          "grep": true,
+          "skill": true,
+          "spawn_agent": true,
+          "terminal": true,
+          "search_web": true
+        },
+        "enable_all_context_servers": true,
+        "context_servers": {}
       }
+    },
+    "tool_permissions": {
+      "default": "allow",
+      "tools": {
+        "search_web": {
+          "default": "confirm"
+        },
+        "create_directory": {
+          "default": "confirm"
+        },
+        "delete_path": {
+          "default": "confirm"
+        },
+        "terminal": {
+          "default": "allow",
+        },
+        "list_directory": {
+          "default": "allow",
+        },
+        "read_file": {
+          "default": "allow",
+        },
+        "write_file": {
+          "default": "allow",
+        },
+        "edit_file": {
+          "default": "confirm",
+        },
+      },
     },
     "enabled": true,
     "dock": "right",
     "default_profile": "write",
     "default_model": {
-      "effort": "high",
-      "provider": "deepseek",
-      "model": "deepseek-v4-flash",
-      "enable_thinking": true,
+      "provider": "ollama",
+      "model": "qwen2.5-coder:7b",
+      "enable_thinking": false,
     },
     "favorite_models": [],
     "model_parameters": [],

@@ -69,7 +69,7 @@ done
 # tag: /config-profile
 
 # export OLLAMA_BASE_URL="http://10.1.0.72:11434"
-export OLLAMA_BASE_URL="http://10.1.0.242:11434"
+export OLLAMA_BASE_URL="http://thinkpot:11434/v1"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
