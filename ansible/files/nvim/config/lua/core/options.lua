@@ -33,6 +33,8 @@ assign(vim.opt, {
 	hidden = true,
 
 	cmdheight = 0,
+
+  laststatus = 0,
 })
 
 -- Global options

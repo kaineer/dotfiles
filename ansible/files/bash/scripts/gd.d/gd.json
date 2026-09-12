@@ -242,5 +242,9 @@
   "cfg:profiles": {
     "dir": "/home/kaineer/git/config/dotfiles/ansible/files/bash/profile",
     "bin": "nvim"
+  },
+  "cfg:yazi": {
+    "dir": "/home/kaineer/.config/yazi",
+    "bin": "nvim"
   }
 }

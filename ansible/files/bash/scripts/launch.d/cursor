@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+export CURSOR_BINARY="/usr/bin/cursor"
+
+start_or_activate_by_classname "$CURSOR_BINARY" "Cursor"

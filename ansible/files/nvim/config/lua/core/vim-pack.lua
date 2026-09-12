@@ -5,7 +5,7 @@ require("core.vim-pack.config")({
   "plugins.telescope.pack",
   "plugins.lsp.pack",
   "plugins.git.pack",
-  "plugins.lualine.pack",
+  -- "plugins.lualine.pack",
   "plugins.completion.pack",
   "plugins.snippets.pack",
 })

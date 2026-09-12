@@ -1,0 +1,44 @@
+<form onSubmit={handleSubmit} className={styles.form}>
+<div className={styles.fieldGroup}>
+<label className={styles.label}>
+Использованные технические средства
+</label>
+<textarea
+name="technicalMeans"
+value={formData.technicalMeans}
+onChange={handleChange}
+placeholder="Введите использованные технические средства..."
+rows="3"
+className={styles.textarea}
+/>
+</div>
+<div className={styles.fieldGroup}>
+<label className={styles.label}>
+Условия проведения осмотра (в т.ч. освещение)
+</label>
+<textarea
+name="inspectionConditions"
+value={formData.inspectionConditions}
+onChange={handleChange}
+placeholder="Введите условия проведения осмотра..."
+rows="4"
+className={styles.textarea}
+/>
+</div>
+<div className={styles.fieldGroup}>
+<label className={styles.label}>
+Заключение по результатам осмотра
+</label>
+<textarea
+name="conclusion"
+value={formData.conclusion}
+onChange={handleChange}
+placeholder="Введите заключение..."
+rows="5"
+className={styles.textarea}
+/>
+</div>
+<button type="submit" className={styles.button}>
+Сохранить
+</button>
+</form>

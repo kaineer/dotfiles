@@ -12,11 +12,6 @@
 ROOT_DIR="${VAR_ROOT:-$HOME/var}"
 SDIR="$ROOT_DIR/vars"
 
-# NOTE: Do not use debug/info here
-#   (it will ruin your shell)
-[[ "$DEBUG" != "" ]] && echo "ROOT_DIR=$ROOT_DIR
-SDIR=$SDIR"
-
 ensure_storage() {
   [ ! -d $SDIR ] && mkdir -p $SDIR
 }
@@ -29,9 +24,18 @@ get_var() {
   fi
 }
 
+edit_var() {
+  NAME=$1
+  FNAME="$SDIR/$NAME"
+  if [ -f "$FNAME" ]; then
+    $EDITOR "$FNAME"
+  fi
+}
+
 set_var() {
   NAME=$1
-  VALUE=$2
+  shift
+  VALUE="$@"
   FNAME="$SDIR/$NAME"
 
   if [[ "$VALUE" == "" ]]; then
@@ -109,6 +113,10 @@ case "$1" in
   shift
   store_clip $@
   ;;
+"e" | "edit")
+  shift
+  edit_var $@
+  ;;
 "" | "-h" | "--help" | "h" | "help")
   if [[ "$(which bat)" != "" ]]; then
     usage | bat -lsh -p
@@ -119,8 +127,11 @@ case "$1" in
 *)
   if [[ "${#@}" == "1" ]]; then
     get_var "$1"
-  elif [[ "${#@}" == "2" ]]; then
-    set_var "$1" "$2"
+  # elif [[ "${#@}" == "2" ]]; then
+  elif [[ "$2" != "" ]]; then
+    NAME="$1"
+    shift
+    set_var "$NAME" $@
   fi
   ;;
 esac

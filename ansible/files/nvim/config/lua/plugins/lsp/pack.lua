@@ -17,12 +17,15 @@ return {
     vim.lsp.config['lua_ls'] = require("plugins.lsp.opts.lua")
     vim.lsp.config['jsonls'] = require("plugins.lsp.opts.json")
     vim.lsp.config['cssmodules_ls'] = require("plugins.lsp.opts.cssmodules")
+    vim.lsp.config['rust_analyzer'] = require("plugins.lsp.opts.rust")
+
 
     -- Включаем LSP серверы
     vim.lsp.enable('ts_ls')
     vim.lsp.enable('lua_ls')
     vim.lsp.enable('jsonls')
     vim.lsp.enable('cssmodules_ls')
+    vim.lsp.enable('rust_analyzer')
 
     -- Настройка автокоманд для on_attach
     vim.api.nvim_create_autocmd('LspAttach', {
@@ -49,6 +52,7 @@ return {
         "ts_ls",
         "jinja_lsp",
         "cssmodules_ls",
+        "rust_analyzer",
       },
     }
 
@@ -62,7 +66,7 @@ return {
 
     -- АВТОКОМАНДА ДЛЯ ФОРМАТИРОВАНИЯ ПРИ СОХРАНЕНИИ
     vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = { "*.js", "*.jsx", "*.ts", "*.tsx", "*.json", "*.css", "*.scss", "*.html", "*.md" },
+      pattern = { "*.js", "*.jsx", "*.ts", "*.tsx", "*.json", "*.css", "*.scss", "*.html", "*.md", "*.rs", },
       callback = function(args)
         require("conform").format({
           bufnr = args.buf,

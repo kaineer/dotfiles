@@ -80,8 +80,6 @@ end
 
 local tmux = {
 	rename = mkcmd("!n"),
-  split = function(vertical)
-  end,
   splitH = function()
     tmuxSplit(false)
   end,
@@ -111,6 +109,8 @@ map.normal({
 	{ "<leader>w2", window.splith },
 	{ "<leader>wv", window.splitv },
 	{ "<leader>w3", window.splitv },
+  { "<leader><leader>l", window.splitv },
+  { "<leader><leader>j", window.splith },
 	{ "<leader>wc", window.close },
 	{ "<leader>w0", window.close },
 	{ "<leader>w1", window.only },

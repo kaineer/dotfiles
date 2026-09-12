@@ -173,7 +173,18 @@ def cmd_move(args):
             for file_path in files:
                 dest_file = dest_subdir / file_path.name
                 try:
-                    shutil.move(str(file_path), str(dest_file))
+                    if dest_file.exists():
+                        if file_path.suffix.lower() in MARKDOWN_EXTENSIONS:
+                            # append to destination
+                            with open(dest_file, 'a', encoding='utf-8') as dest:
+                                with open(file_path, 'r', encoding='utf-8') as src:
+                                    dest.write('\n\n')  # разделитель между файлами
+                                    dest.write(src.read())
+                            file_path.unlink()  # удаляем исходный файл после объединения
+                        else:
+                            shutil.move(str(file_path), str(dest_file))
+                    else:
+                        shutil.move(str(file_path), str(dest_file))
                 except Exception as e:
                     print(f"Error moving {file_path}: {e}", file=sys.stderr)
 
@@ -198,7 +209,7 @@ def cmd_move(args):
 def main():
     """Main command processing function"""
     if len(sys.argv) < 2:
-        print("Usage: script.py <command> [arguments...]", file=sys.stderr)
+        print("Usage: aid.py <command> [arguments...]", file=sys.stderr)
         print("Commands:", file=sys.stderr)
         print("  nomad - check if /media/$USER/nomad directory exists", file=sys.stderr)
         print(

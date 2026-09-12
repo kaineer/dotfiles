@@ -64,12 +64,18 @@ if [[ "$1" == "ls" ]]; then
   list_actions
 elif [[ "$1" == "aliases" ]]; then
   list_aliases $@
+elif [[ "$1" == "b" ]]; then
+  $BIN build
+elif [[ "$1" == "t" ]]; then
+  $BIN test
+elif [[ "$1" == "i" ]]; then
+  $BIN install
 elif [ -f "$1" ]; then
   case "$1" in
   *.ts) bun $1 ;;
   *.js) bun $1 ;;
   *.json) \cat $1 | jq . ;;
-  *) echo " * Unknown file [$1]" ;;
+  *) echo " * Unknown file type [$1]" ;;
   esac
 else
   TARGET="$(list_actions | fzf -1 -q "$1")"
