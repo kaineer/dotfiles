@@ -62,6 +62,7 @@ if [ "${TMUX}" != "" ]; then ## TMUX bindings
 fi
 
 # __ctrl_ "o" "lf ." "open lf filemanager"
+
 __ctrl_ "o" "yazi ." "open yazi filemanager"
 
 __ctrl_ "u" "cd -" "move directory back"
