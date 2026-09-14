@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 # Supported file extensions
-MEDIA_EXTENSIONS = {".png", ".jpg", ".jpeg", ".mp4"}
+MEDIA_EXTENSIONS = {".webp", ".png", ".jpg", ".jpeg", ".mp4"}
 MARKDOWN_EXTENSIONS = {".md"}
 SUPPORTED_EXTENSIONS = MEDIA_EXTENSIONS | MARKDOWN_EXTENSIONS
 

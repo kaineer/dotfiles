@@ -1,0 +1,353 @@
+#!/usr/bin/env python3
+"""
+shedevrum image generator
+
+Usage:
+    python3 shps --curl-file curl.txt --prompt-file prompt.txt [--outdir ./out]
+
+Логика:
+    1. Парсим curl-файл: CSRF-токен, Cookie, User-Agent, Origin, Referer.
+    2. Читаем промпт (JSON или plain text).
+    3. POST /routes/image с JSON.
+       - Если в теле {"error":{"status":409}} (при HTTP 200) ->
+         DELETE /routes/image?kind=image&appPlatform=web, затем повторный POST.
+       - Иначе HTTP >= 400 -> ошибка.
+    4. Поллинг GET /routes/image?kind=image&appPlatform=web,
+       пока не найдём URL'ы masterpiecer-images.s3.yandex.net/...:N.
+    5. Скачиваем картинки в outdir.
+"""
+
+import argparse
+import json
+import re
+import sys
+import time
+from pathlib import Path
+
+import requests
+
+
+BASE = "https://shedevrum.ai"
+IMAGE_URL = BASE + "/routes/image"
+IMAGE_URL_KIND = BASE + "/routes/image?kind=image&appPlatform=web"
+
+DEFAULT_MODEL = "v11"
+DEFAULT_ASPECT = "9/16"
+
+IMAGE_HOST_MARKER = "masterpiecer-images.s3.yandex.net"
+
+
+# ---------- парсинг curl ----------
+
+def parse_curl_file(path: Path) -> dict:
+    """
+    Возвращает dict с ключами: headers (dict), cookies (dict).
+    Берёт первый curl-блок в файле, который содержит shedevrum.ai/routes/image
+    и не является DELETE-запросом.
+    """
+    text = path.read_text(encoding="utf-8")
+    blocks = re.split(r"\n(?=curl\s)", text)
+
+    target = None
+    # сначала ищем POST-блок
+    for b in blocks:
+        if "/routes/image" not in b:
+            continue
+        if "-X 'DELETE'" in b or "-X \"DELETE\"" in b:
+            continue
+        target = b
+        break
+    # fallback: любой блок с routes/image
+    if target is None:
+        for b in blocks:
+            if "/routes/image" in b:
+                target = b
+                break
+    if target is None:
+        raise RuntimeError("Не найден curl-блок с /routes/image")
+
+    headers = {}
+    cookies = {}
+
+    # Заголовки -H 'Name: value'
+    for m in re.finditer(r"-H\s+'([^']+)'", target):
+        line = m.group(1)
+        if ":" in line:
+            k, v = line.split(":", 1)
+            headers[k.strip()] = v.strip()
+
+    # Куки -b '...'
+    m = re.search(r"-b\s+'([^']+)'", target)
+    if m:
+        raw = m.group(1)
+        for part in raw.split(";"):
+            part = part.strip()
+            if not part:
+                continue
+            if "=" in part:
+                k, v = part.split("=", 1)
+                cookies[k.strip()] = v.strip()
+
+    # Если X-CSRF-Token нет в заголовках, но есть в куках — синтезируем
+    if "X-CSRF-Token" not in headers and "csrf_token" in cookies:
+        headers["X-CSRF-Token"] = cookies["csrf_token"]
+
+    if "X-CSRF-Token" not in headers:
+        raise RuntimeError("Не найден CSRF-токен ни в заголовках, ни в куках")
+
+    return {"headers": headers, "cookies": cookies}
+
+
+# ---------- промпт ----------
+
+def load_prompt(path: Path) -> dict:
+    """
+    Если файл — валидный JSON с полем prompt, возвращаем его как payload.
+    Иначе считаем, что это текст промпта, и оборачиваем в стандартный JSON.
+    """
+    text = path.read_text(encoding="utf-8").strip()
+    try:
+        obj = json.loads(text)
+        if isinstance(obj, dict) and "prompt" in obj:
+            obj.setdefault("kind", "image")
+            obj.setdefault("aspectRatio", DEFAULT_ASPECT)
+            obj.setdefault("modelVersionID", DEFAULT_MODEL)
+            obj.setdefault("withExtraImages", True)
+            return obj
+    except json.JSONDecodeError:
+        pass
+
+    return {
+        "kind": "image",
+        "prompt": text,
+        "aspectRatio": DEFAULT_ASPECT,
+        "modelVersionID": DEFAULT_MODEL,
+        "withExtraImages": True,
+    }
+
+
+# ---------- сессия и запросы ----------
+
+def build_session(parsed: dict) -> requests.Session:
+    s = requests.Session()
+    s.headers.update({
+        "Accept": "*/*",
+        "Accept-Language": "en-US,en;q=0.9,ru;q=0.8",
+        "Connection": "keep-alive",
+        "Origin": "https://shedevrum.ai",
+        "Referer": "https://shedevrum.ai/text-to-image/",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-origin",
+        "Sec-GPC": "1",
+        "User-Agent": parsed["headers"].get(
+            "User-Agent",
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+        ),
+        "X-CSRF-Token": parsed["headers"]["X-CSRF-Token"],
+    })
+    for k, v in parsed["cookies"].items():
+        s.cookies.set(k, v, domain="shedevrum.ai")
+    return s
+
+
+def post_image(session: requests.Session, payload: dict) -> requests.Response:
+    return session.post(
+        IMAGE_URL,
+        params={"appPlatform": "web"},
+        json=payload,
+        headers={"content-type": "application/json"},
+        timeout=30,
+    )
+
+
+def delete_image(session: requests.Session) -> requests.Response:
+    return session.delete(
+        IMAGE_URL,
+        params={"kind": "image", "appPlatform": "web"},
+        timeout=30,
+    )
+
+
+def get_status(session: requests.Session) -> requests.Response:
+    return session.get(IMAGE_URL_KIND, timeout=30)
+
+
+# ---------- разбор ответов ----------
+
+IMAGE_RE = re.compile(
+    r"https://masterpiecer-images\.s3\.yandex\.net/[^\s\"'\\]+?:\d+"
+)
+
+
+def parse_body(resp: requests.Response):
+    """
+    Возвращает (is_json, obj) — obj это dict/list или None.
+    """
+    ct = resp.headers.get("content-type", "")
+    if "application/json" not in ct:
+        return False, None
+    try:
+        return True, resp.json()
+    except Exception:
+        return True, None
+
+
+def is_conflict(obj) -> bool:
+    """
+    Распознаём {"error":{"status":409}} и похожие варианты.
+    """
+    if not isinstance(obj, dict):
+        return False
+    err = obj.get("error")
+    if isinstance(err, dict) and err.get("status") == 409:
+        return True
+    if obj.get("status") == 409:
+        return True
+    return False
+
+
+def is_empty_ok(obj) -> bool:
+    """{} — задача принята, результата пока нет."""
+    return isinstance(obj, dict) and len(obj) == 0
+
+
+def extract_image_urls(obj) -> list:
+    """Рекурсивно ищем URL'ы картинок в JSON-структуре."""
+    found = []
+
+    def walk(x):
+        if isinstance(x, str):
+            if IMAGE_HOST_MARKER in x and x not in found:
+                found.append(x)
+        elif isinstance(x, dict):
+            for v in x.values():
+                walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+
+    walk(obj)
+    return found
+
+
+# ---------- основной флоу ----------
+
+def create_task(session: requests.Session, payload: dict) -> None:
+    """
+    POST -> (409 в теле -> DELETE -> POST).
+    """
+    resp = post_image(session, payload)
+    is_json, obj = parse_body(resp)
+    print(f"[POST #1] http={resp.status_code} json={is_json} body={str(obj)[:200]}")
+
+    if is_conflict(obj):
+        print("[POST #1] conflict 409 in body -> DELETE")
+        d = delete_image(session)
+        _, dobj = parse_body(d)
+        print(f"[DELETE] http={d.status_code} body={str(dobj)[:200]}")
+
+        resp2 = post_image(session, payload)
+        is_json2, obj2 = parse_body(resp2)
+        print(f"[POST #2] http={resp2.status_code} json={is_json2} body={str(obj2)[:200]}")
+
+        if is_conflict(obj2):
+            raise RuntimeError("POST #2 снова вернул conflict 409")
+        if resp2.status_code >= 400:
+            raise RuntimeError(f"POST #2 failed: http={resp2.status_code}")
+        return
+
+    if resp.status_code >= 400:
+        raise RuntimeError(f"POST #1 failed: http={resp.status_code}")
+
+    # неожиданное тело — предупредим, но не падаем
+    if is_json and obj not in (None, {}) and not isinstance(obj, (dict, list)):
+        print("[warn] неожиданное тело POST #1:", obj)
+
+
+def poll_until_ready(session: requests.Session, timeout_s: int = 300) -> list:
+    """
+    Поллинг GET, пока не найдём URL'ы картинок.
+    """
+    deadline = time.time() + timeout_s
+    attempt = 0
+    while time.time() < deadline:
+        attempt += 1
+        resp = get_status(session)
+        _, data = parse_body(resp)
+
+        if is_conflict(data):
+            raise RuntimeError(
+                f"GET #{attempt}: conflict 409 в теле — нужен повторный DELETE+POST"
+            )
+
+        urls = extract_image_urls(data) if data is not None else []
+        print(
+            f"[GET #{attempt}] http={resp.status_code} urls={len(urls)} "
+            f"body={str(data)[:200]}"
+        )
+        if urls:
+            return urls
+
+        time.sleep(2)
+
+    raise TimeoutError("Картинки не появились за отведённое время")
+
+
+def download_images(session: requests.Session, urls: list, outdir: Path) -> None:
+    outdir.mkdir(parents=True, exist_ok=True)
+    for url in urls:
+        name = url.rsplit("/", 1)[-1].replace(":", "-")
+        if not name.lower().endswith((".jpg", ".jpeg", ".png", ".webp")):
+            name += ".jpg"
+        dest = outdir / name
+
+        r = session.get(url, timeout=60, stream=True)
+        r.raise_for_status()
+        with open(dest, "wb") as f:
+            for chunk in r.iter_content(8192):
+                f.write(chunk)
+        print(f"[DL] {dest}")
+
+def default_outdir() -> Path:
+    """
+    /home/$USER/Pictures/shedevrum/YYYYMMDD
+    Fallback: Path.home()/Pictures/shedevrum/YYYYMMDD
+    """
+    user = os.environ.get("USER") or os.environ.get("LOGNAME")
+    if user:
+        base = Path("/home") / user
+    else:
+        base = Path.home()
+    return base / "Pictures" / "shedevrum" / datetime.now().strftime("%Y%m%d")
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--curl-file", required=True, type=Path)
+    ap.add_argument("--prompt-file", required=True, type=Path)
+    ap.add_argument("--outdir", default=default_outdir(), type=Path)
+    ap.add_argument("--poll-timeout", default=1000, type=int)
+    args = ap.parse_args()
+
+    parsed = parse_curl_file(args.curl_file)
+    print(f"[init] CSRF найден: {parsed['headers']['X-CSRF-Token'][:16]}...")
+    print(f"[init] кук: {len(parsed['cookies'])}")
+
+    payload = load_prompt(args.prompt_file)
+    print(f"[init] промпт: {payload['prompt'][:80]!r}")
+
+    session = build_session(parsed)
+
+    create_task(session, payload)
+    urls = poll_until_ready(session, timeout_s=args.poll_timeout)
+    print(f"[poll] найдено картинок: {len(urls)}")
+    download_images(session, urls, args.outdir)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print(f"[error] {e}", file=sys.stderr)
+        sys.exit(1)
