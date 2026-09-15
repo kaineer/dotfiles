@@ -22,6 +22,8 @@ import json
 import re
 import sys
 import time
+import os
+from datetime import datetime
 from pathlib import Path
 import os
 from datetime import datetime
@@ -33,10 +35,56 @@ BASE = "https://shedevrum.ai"
 IMAGE_URL = BASE + "/routes/image"
 IMAGE_URL_KIND = BASE + "/routes/image?kind=image&appPlatform=web"
 
-DEFAULT_MODEL = "v11"
+# DEFAULT_MODEL = "v11"
+DEFAULT_MODEL = "v2025_10_16_cheburashka"
 DEFAULT_ASPECT = "9/16"
 
 IMAGE_HOST_MARKER = "masterpiecer-images.s3.yandex.net"
+
+
+def _write(text: str, *, newline: bool = True, file=sys.stdout) -> None:
+    end = "\n" if newline else ""
+    print(text, end=end, file=file, flush=True)
+
+
+def _rewrite(text: str) -> None:
+    """Одна живая строка: предыдущее содержимое затирается."""
+    sys.stdout.write("\r\033[K" + text)
+    sys.stdout.flush()
+
+
+def _clear_live() -> None:
+    sys.stdout.write("\r\033[K")
+    sys.stdout.flush()
+
+
+def _break_live() -> None:
+    """Оставить текущую живую строку и перейти на следующую."""
+    sys.stdout.write("\n")
+    sys.stdout.flush()
+
+
+def fmt_elapsed(seconds: float) -> str:
+    total = max(0, int(seconds))
+    m, s = divmod(total, 60)
+    if m >= 60:
+        h, m = divmod(m, 60)
+        return f"{h}:{m:02d}:{s:02d}"
+    return f"{m}:{s:02d}"
+
+
+def http_brief(resp: requests.Response, obj) -> str:
+    if obj is not None:
+        body = json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
+        if len(body) > 80:
+            body = body[:77] + "..."
+        return f"http={resp.status_code} {body}"
+    text = (resp.text or "").replace("\n", " ").strip()
+    if text:
+        if len(text) > 80:
+            text = text[:77] + "..."
+        return f"http={resp.status_code} {text}"
+    return f"http={resp.status_code}"
 
 
 # ---------- парсинг curl ----------
@@ -195,6 +243,16 @@ def parse_body(resp: requests.Response):
     except Exception:
         return True, None
 
+def is_adult(obj) -> bool:
+    """
+    Распознаём {"error":{"status":422}}
+    """
+    if not isinstance(obj, dict):
+        return False
+    err = obj.get("error")
+    if isinstance(err, dict) and err.get("status") == 422:
+        return True
+    return False
 
 def is_conflict(obj) -> bool:
     """
@@ -236,81 +294,138 @@ def extract_image_urls(obj) -> list:
 
 # ---------- основной флоу ----------
 
-def create_task(session: requests.Session, payload: dict) -> None:
+def create_task(session: requests.Session, payload: dict) -> tuple[int, float]:
     """
     POST -> (409 в теле -> DELETE -> POST).
+    Возвращает (номер успешного POST, unix-время успешной отправки).
     """
+    chain: list[str] = []
+
+    def stop(where: str, detail: str) -> None:
+        shown = " → ".join(chain) if chain else where
+        raise RuntimeError(f"[task] {shown}  STOPPED at {where}: {detail}")
+
     resp = post_image(session, payload)
-    is_json, obj = parse_body(resp)
-    print(f"[POST #1] http={resp.status_code} json={is_json} body={str(obj)[:200]}")
+    _, obj = parse_body(resp)
+    chain.append(f"POST#1 {http_brief(resp, obj)}")
+
+    if is_adult(obj):
+        stop("POST#1", "adult content")
 
     if is_conflict(obj):
-        print("[POST #1] conflict 409 in body -> DELETE")
         d = delete_image(session)
         _, dobj = parse_body(d)
-        print(f"[DELETE] http={d.status_code} body={str(dobj)[:200]}")
+        chain.append(f"DELETE {http_brief(d, dobj)}")
+        if d.status_code >= 400:
+            stop("DELETE", f"http={d.status_code}")
 
         resp2 = post_image(session, payload)
-        is_json2, obj2 = parse_body(resp2)
-        print(f"[POST #2] http={resp2.status_code} json={is_json2} body={str(obj2)[:200]}")
+        _, obj2 = parse_body(resp2)
+        chain.append(f"POST#2 {http_brief(resp2, obj2)}")
 
         if is_conflict(obj2):
-            raise RuntimeError("POST #2 снова вернул conflict 409")
+            stop("POST#2", "conflict 409")
+        if is_adult(obj2):
+            stop("POST#2", "adult content")
         if resp2.status_code >= 400:
-            raise RuntimeError(f"POST #2 failed: http={resp2.status_code}")
-        return
+            stop("POST#2", f"http={resp2.status_code}")
+
+        _write("[task] " + " → ".join(chain))
+        return 2, time.time()
 
     if resp.status_code >= 400:
-        raise RuntimeError(f"POST #1 failed: http={resp.status_code}")
+        stop("POST#1", f"http={resp.status_code}")
 
-    # неожиданное тело — предупредим, но не падаем
-    if is_json and obj not in (None, {}) and not isinstance(obj, (dict, list)):
-        print("[warn] неожиданное тело POST #1:", obj)
+    _write("[task] " + " → ".join(chain))
+    return 1, time.time()
 
 
-def poll_until_ready(session: requests.Session, timeout_s: int = 300) -> list:
+def poll_until_ready(
+    session: requests.Session,
+    post_n: int,
+    post_ts: float,
+    timeout_s: int = 300,
+) -> list:
     """
     Поллинг GET, пока не найдём URL'ы картинок.
+    Одна строка: номер последнего GET и время с успешного POST.
     """
     deadline = time.time() + timeout_s
     attempt = 0
-    while time.time() < deadline:
-        attempt += 1
-        resp = get_status(session)
-        _, data = parse_body(resp)
-
-        if is_conflict(data):
-            raise RuntimeError(
-                f"GET #{attempt}: conflict 409 в теле — нужен повторный DELETE+POST"
+    try:
+        while time.time() < deadline:
+            attempt += 1
+            resp = get_status(session)
+            _, data = parse_body(resp)
+            elapsed = fmt_elapsed(time.time() - post_ts)
+            _rewrite(
+                f"[poll] GET #{attempt}  +{elapsed} since POST#{post_n}"
             )
 
-        urls = extract_image_urls(data) if data is not None else []
-        print(
-            f"[GET #{attempt}] http={resp.status_code} urls={len(urls)} "
-            f"body={str(data)[:200]}"
+            if resp.status_code >= 400:
+                raise RuntimeError(
+                    f"[poll] GET #{attempt}  STOPPED: http={resp.status_code}"
+                )
+            if is_conflict(data):
+                raise RuntimeError(
+                    f"[poll] GET #{attempt}  STOPPED: conflict 409 "
+                    "(нужен повторный DELETE+POST)"
+                )
+
+            urls = extract_image_urls(data) if data is not None else []
+            if urls:
+                _clear_live()
+                return urls
+
+            time.sleep(2)
+
+        raise TimeoutError(
+            f"[poll] GET #{attempt}  STOPPED: картинки не появились "
+            f"за {timeout_s}s (POST#{post_n})"
         )
-        if urls:
-            return urls
-
-        time.sleep(2)
-
-    raise TimeoutError("Картинки не появились за отведённое время")
+    except Exception:
+        _break_live()
+        raise
 
 
 def download_images(session: requests.Session, urls: list, outdir: Path) -> None:
     outdir.mkdir(parents=True, exist_ok=True)
-    for url in urls:
-        name = url.rsplit("/", 1)[-1].replace(":", "-")
-        if not name.lower().endswith((".jpg", ".jpeg", ".png", ".webp")):
-            name += ".jpg"
-        dest = outdir / name
+    total = len(urls)
+    show_progress = total == 6
+    last_name = ""
+    dest = None
+    try:
+        for i, url in enumerate(urls, start=1):
+            name = url.rsplit("/", 1)[-1].replace(":", "-")
+            if not name.lower().endswith((".jpg", ".jpeg", ".png", ".webp")):
+                name += ".jpg"
+            dest = outdir / name
+            last_name = name
 
-        r = session.get(url, timeout=60, stream=True)
-        r.raise_for_status()
-        with open(dest, "wb") as f:
-            for chunk in r.iter_content(8192):
-                f.write(chunk)
-        print(f"[DL] {dest}")
+            if show_progress:
+                _rewrite(f"[dl] {i - 1}/{total}")
+
+            r = session.get(url, timeout=60, stream=True)
+            r.raise_for_status()
+            with open(dest, "wb") as f:
+                for chunk in r.iter_content(8192):
+                    f.write(chunk)
+
+            if show_progress:
+                _rewrite(f"[dl] {i}/{total}")
+    except Exception as e:
+        done = i - 1 if "i" in locals() else 0
+        if show_progress:
+            _break_live()
+        where = dest.name if dest is not None else "?"
+        raise RuntimeError(
+            f"[dl] STOPPED at {done}/{total} ({where}): {e}"
+        ) from e
+
+    if show_progress:
+        _clear_live()
+    _write(str(outdir.resolve()))
+    _write(last_name)
 
 def default_outdir() -> Path:
     """
@@ -329,21 +444,34 @@ def main():
     ap.add_argument("--curl-file", required=True, type=Path)
     ap.add_argument("--prompt-file", required=True, type=Path)
     ap.add_argument("--outdir", default=default_outdir(), type=Path)
-    ap.add_argument("--poll-timeout", default=1000, type=int)
+    ap.add_argument("--poll-timeout", default=5000, type=int)
     args = ap.parse_args()
 
-    parsed = parse_curl_file(args.curl_file)
-    print(f"[init] CSRF найден: {parsed['headers']['X-CSRF-Token'][:16]}...")
-    print(f"[init] кук: {len(parsed['cookies'])}")
+    try:
+        parsed = parse_curl_file(args.curl_file)
+    except Exception as e:
+        raise RuntimeError(f"[cred] STOPPED at curl: {e}") from e
 
-    payload = load_prompt(args.prompt_file)
-    print(f"[init] промпт: {payload['prompt'][:80]!r}")
+    try:
+        payload = load_prompt(args.prompt_file)
+    except Exception as e:
+        raise RuntimeError(f"[cred] STOPPED at prompt: {e}") from e
+
+    csrf = parsed["headers"]["X-CSRF-Token"]
+    prompt_preview = payload["prompt"].replace("\n", " ")
+    if len(prompt_preview) > 60:
+        prompt_preview = prompt_preview[:57] + "..."
+    _write(
+        f"[cred] csrf={csrf[:12]}…  cookies={len(parsed['cookies'])}  "
+        f"prompt={prompt_preview!r}"
+    )
 
     session = build_session(parsed)
 
-    create_task(session, payload)
-    urls = poll_until_ready(session, timeout_s=args.poll_timeout)
-    print(f"[poll] найдено картинок: {len(urls)}")
+    post_n, post_ts = create_task(session, payload)
+    urls = poll_until_ready(
+        session, post_n, post_ts, timeout_s=args.poll_timeout
+    )
     download_images(session, urls, args.outdir)
     with open(args.outdir / "README.md", "a") as f:
         f.write(f"---\n{payload['prompt']}\n")
@@ -352,5 +480,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        print(f"[error] {e}", file=sys.stderr)
+        _write(str(e), file=sys.stderr)
         sys.exit(1)
