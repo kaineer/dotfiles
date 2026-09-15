@@ -23,6 +23,8 @@ import re
 import sys
 import time
 from pathlib import Path
+import os
+from datetime import datetime
 
 import requests
 
@@ -343,7 +345,8 @@ def main():
     urls = poll_until_ready(session, timeout_s=args.poll_timeout)
     print(f"[poll] найдено картинок: {len(urls)}")
     download_images(session, urls, args.outdir)
-
+    with open(args.outdir / "README.md", "a") as f:
+        f.write(f"---\n{payload['prompt']}\n")
 
 if __name__ == "__main__":
     try:
