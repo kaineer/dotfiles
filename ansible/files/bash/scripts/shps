@@ -25,8 +25,6 @@ import time
 import os
 from datetime import datetime
 from pathlib import Path
-import os
-from datetime import datetime
 
 import requests
 
@@ -35,8 +33,7 @@ BASE = "https://shedevrum.ai"
 IMAGE_URL = BASE + "/routes/image"
 IMAGE_URL_KIND = BASE + "/routes/image?kind=image&appPlatform=web"
 
-# DEFAULT_MODEL = "v11"
-DEFAULT_MODEL = "v2025_10_16_cheburashka"
+DEFAULT_MODEL = "v11"
 DEFAULT_ASPECT = "9/16"
 
 IMAGE_HOST_MARKER = "masterpiecer-images.s3.yandex.net"
@@ -473,8 +470,7 @@ def main():
         session, post_n, post_ts, timeout_s=args.poll_timeout
     )
     download_images(session, urls, args.outdir)
-    with open(args.outdir / "README.md", "a") as f:
-        f.write(f"---\n{payload['prompt']}\n")
+
 
 if __name__ == "__main__":
     try:
