@@ -74,6 +74,7 @@ system_packages:
   - zip
   - yq
   - xsel
+  - xclip
   - xxd
   # Development
   # - libx11-dev
