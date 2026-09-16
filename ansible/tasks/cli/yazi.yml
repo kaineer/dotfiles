@@ -1,10 +1,10 @@
 ---
 # Yazi settings
 #   * yazi.toml / keymap.toml / theme.toml
-#   * binaries: yazi + ya
+#   * binaries: yazi + ya (cargo → ~/.cargo/bin → symlink в ~/bin)
 #
 # @link: https://yazi-rs.github.io/docs/installation
-# @link: https://github.com/sxyazi/yazi/releases
+# @link: https://crates.io/crates/yazi-build
 
 - name: Mkdir for yazi config
   file:
@@ -38,27 +38,25 @@
     state: directory
     mode: "755"
 
-- name: Check if yazi is installed
-  stat:
-    path: "/home/{{ user.name }}/bin/yazi"
-  register: "yazi_binary"
+- name: Install yazi via cargo
+  become_user: "{{ user.name }}"
+  environment:
+    PATH: "/home/{{ user.name }}/.cargo/bin:{{ ansible_env.PATH }}"
+    HOME: "/home/{{ user.name }}"
+    CARGO_HOME: "/home/{{ user.name }}/.cargo"
+    RUSTUP_HOME: "/home/{{ user.name }}/.rustup"
+  community.general.cargo:
+    name:
+      - yazi-build
 
-- name: Install yazi as github release
-  when: "not yazi_binary.stat.exists"
-  include_role:
-    name: "ansible-role-github-release"
-  vars:
-    yazi_version: "26.9.1"
-    yazi_arch: "x86_64-unknown-linux-gnu"
-    yazi_repository: "https://github.com/sxyazi/yazi"
+- name: Link yazi binaries into ~/bin
+  file:
+    src: "/home/{{ user.name }}/.cargo/bin/{{ item }}"
+    dest: "/home/{{ user.name }}/bin/{{ item }}"
+    state: link
+    force: true
     owner: "{{ user.name }}"
-    ghr_install_dir: "/home/{{ user.name }}/bin"
-    ghr_releases:
-      - url: "{{ yazi_repository }}/releases/download/v{{ yazi_version }}/yazi-{{ yazi_arch }}.zip"
-        copy_src: "{{ ghr_tmp_dir }}/yazi-{{ yazi_arch }}/yazi"
-        copy_dest: "{{ ghr_install_dir }}/yazi"
-        extract_dir: ""
-      - url: "{{ yazi_repository }}/releases/download/v{{ yazi_version }}/yazi-{{ yazi_arch }}.zip"
-        copy_src: "{{ ghr_tmp_dir }}/yazi-{{ yazi_arch }}/ya"
-        copy_dest: "{{ ghr_install_dir }}/ya"
-        extract_dir: ""
+    group: "{{ user.name }}"
+  with_items:
+    - yazi
+    - ya
