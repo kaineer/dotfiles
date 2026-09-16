@@ -15,35 +15,19 @@
     state: directory
     mode: "755"
 
-- name: Link yazi.toml
+- name: Link yazi config files
   file:
-    src: "{{ playbook_dir }}/files/yazi/yazi.toml"
-    dest: "/home/{{ user.name }}/.config/yazi/yazi.toml"
+    src: "{{ playbook_dir }}/files/yazi/{{ item }}"
+    dest: "/home/{{ user.name }}/.config/yazi/{{ item }}"
     state: "link"
     force: true
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     mode: "644"
-
-- name: Link keymap.toml
-  file:
-    src: "{{ playbook_dir }}/files/yazi/keymap.toml"
-    dest: "/home/{{ user.name }}/.config/yazi/keymap.toml"
-    state: "link"
-    force: true
-    owner: "{{ user.name }}"
-    group: "{{ user.name }}"
-    mode: "644"
-
-- name: Link theme.toml
-  file:
-    src: "{{ playbook_dir }}/files/yazi/theme.toml"
-    dest: "/home/{{ user.name }}/.config/yazi/theme.toml"
-    state: "link"
-    force: true
-    owner: "{{ user.name }}"
-    group: "{{ user.name }}"
-    mode: "644"
+  with_items:
+    - yazi.toml
+    - keymap.toml
+    - theme.toml
 
 - name: Mkdir for bin scripts
   file:
