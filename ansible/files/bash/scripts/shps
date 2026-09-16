@@ -33,8 +33,7 @@ BASE = "https://shedevrum.ai"
 IMAGE_URL = BASE + "/routes/image"
 IMAGE_URL_KIND = BASE + "/routes/image?kind=image&appPlatform=web"
 
-# DEFAULT_MODEL = "v11"
-DEFAULT_MODEL = "v2025_10_16_cheburashka"
+DEFAULT_MODEL = "v11"
 DEFAULT_ASPECT = "9/16"
 
 IMAGE_HOST_MARKER = "masterpiecer-images.s3.yandex.net"
