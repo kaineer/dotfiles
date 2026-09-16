@@ -1,0 +1,80 @@
+---
+# Yazi settings
+#   * yazi.toml / keymap.toml / theme.toml
+#   * binaries: yazi + ya
+#
+# @link: https://yazi-rs.github.io/docs/installation
+# @link: https://github.com/sxyazi/yazi/releases
+
+- name: Mkdir for yazi config
+  file:
+    path: "/home/{{ user.name }}/.config/yazi"
+    recurse: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    mode: "755"
+
+- name: Link yazi.toml
+  file:
+    src: "{{ playbook_dir }}/files/yazi/yazi.toml"
+    dest: "/home/{{ user.name }}/.config/yazi/yazi.toml"
+    state: "link"
+    force: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "644"
+
+- name: Link keymap.toml
+  file:
+    src: "{{ playbook_dir }}/files/yazi/keymap.toml"
+    dest: "/home/{{ user.name }}/.config/yazi/keymap.toml"
+    state: "link"
+    force: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "644"
+
+- name: Link theme.toml
+  file:
+    src: "{{ playbook_dir }}/files/yazi/theme.toml"
+    dest: "/home/{{ user.name }}/.config/yazi/theme.toml"
+    state: "link"
+    force: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "644"
+
+- name: Mkdir for bin scripts
+  file:
+    path: "/home/{{ user.name }}/bin"
+    recurse: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    mode: "755"
+
+- name: Check if yazi is installed
+  stat:
+    path: "/home/{{ user.name }}/bin/yazi"
+  register: "yazi_binary"
+
+- name: Install yazi as github release
+  when: "not yazi_binary.stat.exists"
+  include_role:
+    name: "ansible-role-github-release"
+  vars:
+    yazi_version: "26.9.1"
+    yazi_arch: "x86_64-unknown-linux-gnu"
+    yazi_repository: "https://github.com/sxyazi/yazi"
+    owner: "{{ user.name }}"
+    ghr_install_dir: "/home/{{ user.name }}/bin"
+    ghr_releases:
+      - url: "{{ yazi_repository }}/releases/download/v{{ yazi_version }}/yazi-{{ yazi_arch }}.zip"
+        copy_src: "{{ ghr_tmp_dir }}/yazi-{{ yazi_arch }}/yazi"
+        copy_dest: "{{ ghr_install_dir }}/yazi"
+        extract_dir: ""
+      - url: "{{ yazi_repository }}/releases/download/v{{ yazi_version }}/yazi-{{ yazi_arch }}.zip"
+        copy_src: "{{ ghr_tmp_dir }}/yazi-{{ yazi_arch }}/ya"
+        copy_dest: "{{ ghr_install_dir }}/ya"
+        extract_dir: ""

@@ -1,0 +1,8 @@
+[mgr]
+
+prepend_keymap = [
+  { on = "Y", 
+    run = 'shell "xclip -selection clipboard -t image/png -i < %s && notify-send yazi \"image is yanked\""', 
+    desc = "Копировать изображение" },
+]
+

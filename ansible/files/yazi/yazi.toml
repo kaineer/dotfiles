@@ -1,0 +1,22 @@
+[opener]
+play-video-cli = [
+  { run = "mplayer -noborder %s", orphan = true, desc = "Play video with mplayer" },
+]
+jless-view = [
+  { run = "/home/kaineer/bin/jless %s" },
+]
+neovim-edit = [
+  { run = "nvim %s" },
+]
+
+[open]
+prepend_rules = [
+  { mime = "video/*", use = "play-video-cli" },
+  { mime = "application/json", use = ["jless-view", "neovim-edit"] },
+]
+
+[mgr]
+
+sort_by = "mtime"
+show_hidden = true
+show_symlink = true

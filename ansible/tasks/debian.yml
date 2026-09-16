@@ -41,6 +41,7 @@
 - include_tasks: ./cli/rofi.yml
 - include_tasks: ./cli/starship.yml
 - include_tasks: ./cli/lf.yml
+- include_tasks: ./cli/yazi.yml
 - include_tasks: ./cli/fzf.yml
 - include_tasks: ./cli/doppler/dopper.yml
 - include_tasks: ./cli/neovim.yml
