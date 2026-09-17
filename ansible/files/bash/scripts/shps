@@ -88,6 +88,21 @@ def http_brief(resp: requests.Response, obj) -> str:
     return f"http={resp.status_code}"
 
 
+CURL_REFRESH_HINT = (
+    "сессия протухла (499) — скопируйте свежий curl из DevTools "
+    "и обновите curl-файл"
+)
+
+
+def parse_cookie_pairs(raw: str, cookies: dict) -> None:
+    for part in raw.split(";"):
+        part = part.strip()
+        if not part or "=" not in part:
+            continue
+        k, v = part.split("=", 1)
+        cookies[k.strip()] = v.strip()
+
+
 # ---------- парсинг curl ----------
 
 def parse_curl_file(path: Path) -> dict:
@@ -130,21 +145,15 @@ def parse_curl_file(path: Path) -> dict:
     # Куки -b '...'
     m = re.search(r"-b\s+'([^']+)'", target)
     if m:
-        raw = m.group(1)
-        for part in raw.split(";"):
-            part = part.strip()
-            if not part:
-                continue
-            if "=" in part:
-                k, v = part.split("=", 1)
-                cookies[k.strip()] = v.strip()
+        parse_cookie_pairs(m.group(1), cookies)
+
+    cookie_header = headers.get("Cookie") or headers.get("cookie")
+    if cookie_header:
+        parse_cookie_pairs(cookie_header, cookies)
 
     # Если X-CSRF-Token нет в заголовках, но есть в куках — синтезируем
     if "X-CSRF-Token" not in headers and "csrf_token" in cookies:
         headers["X-CSRF-Token"] = cookies["csrf_token"]
-
-    if "X-CSRF-Token" not in headers:
-        raise RuntimeError("Не найден CSRF-токен ни в заголовках, ни в куках")
 
     return {"headers": headers, "cookies": cookies}
 
@@ -269,6 +278,21 @@ def is_conflict(obj) -> bool:
     return False
 
 
+def is_auth_stale(resp: requests.Response, obj=None) -> bool:
+    """
+    499 — креды протухли, генерация не пойдёт.
+    Смотрим и HTTP-код, и status в теле.
+    """
+    if resp.status_code == 499:
+        return True
+    if not isinstance(obj, dict):
+        return False
+    err = obj.get("error")
+    if isinstance(err, dict) and err.get("status") == 499:
+        return True
+    return obj.get("status") == 499
+
+
 def is_empty_ok(obj) -> bool:
     """{} — задача принята, результата пока нет."""
     return isinstance(obj, dict) and len(obj) == 0
@@ -310,6 +334,8 @@ def create_task(session: requests.Session, payload: dict) -> tuple[int, float]:
     _, obj = parse_body(resp)
     chain.append(f"POST#1 {http_brief(resp, obj)}".rstrip())
 
+    if is_auth_stale(resp, obj):
+        stop("POST#1", CURL_REFRESH_HINT)
     if is_adult(obj):
         stop("POST#1", "adult content")
 
@@ -317,6 +343,8 @@ def create_task(session: requests.Session, payload: dict) -> tuple[int, float]:
         d = delete_image(session)
         _, dobj = parse_body(d)
         chain.append(f"DELETE {http_brief(d, dobj)}".rstrip())
+        if is_auth_stale(d, dobj):
+            stop("DELETE", CURL_REFRESH_HINT)
         if d.status_code >= 400:
             stop("DELETE", f"http={d.status_code}")
 
@@ -324,6 +352,8 @@ def create_task(session: requests.Session, payload: dict) -> tuple[int, float]:
         _, obj2 = parse_body(resp2)
         chain.append(f"POST#2 {http_brief(resp2, obj2)}".rstrip())
 
+        if is_auth_stale(resp2, obj2):
+            stop("POST#2", CURL_REFRESH_HINT)
         if is_conflict(obj2):
             stop("POST#2", "conflict 409")
         if is_adult(obj2):
@@ -364,6 +394,10 @@ def poll_until_ready(
                 f"{frame} GET #{attempt}  +{elapsed} since POST#{post_n}"
             )
 
+            if is_auth_stale(resp, data):
+                raise RuntimeError(
+                    f"[poll] GET #{attempt}  STOPPED: {CURL_REFRESH_HINT}"
+                )
             if resp.status_code >= 400:
                 raise RuntimeError(
                     f"[poll] GET #{attempt}  STOPPED: http={resp.status_code}"
@@ -459,14 +493,16 @@ def main():
     except Exception as e:
         raise RuntimeError(f"[cred] STOPPED at prompt: {e}") from e
 
-    csrf = parsed["headers"]["X-CSRF-Token"]
-    prompt_preview = payload["prompt"].replace("\n", " ")
-    if len(prompt_preview) > 60:
-        prompt_preview = prompt_preview[:57] + "..."
+    csrf_ok = bool(parsed["headers"].get("X-CSRF-Token"))
+    n_cookies = len(parsed["cookies"])
     _write(
-        f"[cred] csrf={csrf[:12]}…  cookies={len(parsed['cookies'])}  "
-        f"prompt={prompt_preview!r}"
+        f"[cred] csrf={'ok' if csrf_ok else 'missing'}  "
+        f"cookies={n_cookies}  prompt={args.prompt_file.name}"
     )
+    if not csrf_ok:
+        raise RuntimeError("[cred] STOPPED: CSRF missing")
+    if n_cookies == 0:
+        raise RuntimeError("[cred] STOPPED: no cookies")
 
     session = build_session(parsed)
 
@@ -476,8 +512,7 @@ def main():
     )
     download_images(session, urls, args.outdir)
     with open(args.outdir / "README.md", "a") as f:
-        f.write(f"---\n{payload['prompt']}\n")
-
+        f.write(f"---\n{ payload['prompt'] }\n")
     ntfy(payload['prompt'])
 
 if __name__ == "__main__":

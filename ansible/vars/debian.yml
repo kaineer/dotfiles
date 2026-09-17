@@ -9,6 +9,7 @@ gui_packages:
   - gnome-text-editor
   - libnotify-bin
   - lightdm-gtk-greeter-settings
+  - libimage-exiftool-perl
   - mediainfo
   - moc
   - mplayer

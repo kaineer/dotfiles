@@ -1,7 +1,8 @@
 ---
 # Yazi settings
 #   * yazi.toml / keymap.toml / theme.toml
-#   * binaries: yazi + ya (cargo → ~/.cargo/bin → symlink в ~/bin)
+#   * plugins → ~/.config/yazi/plugins/*.yazi
+#   * binaries: yazi + ya в ~/.cargo/bin (PATH уже включает)
 #
 # @link: https://yazi-rs.github.io/docs/installation
 # @link: https://crates.io/crates/yazi-build
@@ -29,14 +30,25 @@
     - keymap.toml
     - theme.toml
 
-- name: Mkdir for bin scripts
+- name: Mkdir for yazi plugins
   file:
-    path: "/home/{{ user.name }}/bin"
+    path: "/home/{{ user.name }}/.config/yazi/plugins"
     recurse: true
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
     state: directory
     mode: "755"
+
+- name: Link yazi plugins
+  file:
+    src: "{{ playbook_dir }}/files/yazi/plugins/{{ item }}"
+    dest: "/home/{{ user.name }}/.config/yazi/plugins/{{ item }}"
+    state: "link"
+    force: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+  with_items:
+    - on-enter.yazi
 
 - name: Install yazi via cargo
   become_user: "{{ user.name }}"
@@ -49,14 +61,10 @@
     name:
       - yazi-build
 
-- name: Link yazi binaries into ~/bin
+- name: Remove stale yazi binaries from ~/bin
   file:
-    src: "/home/{{ user.name }}/.cargo/bin/{{ item }}"
-    dest: "/home/{{ user.name }}/bin/{{ item }}"
-    state: link
-    force: true
-    owner: "{{ user.name }}"
-    group: "{{ user.name }}"
+    path: "/home/{{ user.name }}/bin/{{ item }}"
+    state: absent
   with_items:
     - yazi
     - ya
