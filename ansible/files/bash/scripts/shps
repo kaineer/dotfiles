@@ -37,7 +37,9 @@ DEFAULT_MODEL = "v11"
 DEFAULT_ASPECT = "9/16"
 
 IMAGE_HOST_MARKER = "masterpiecer-images.s3.yandex.net"
+POLL_FRAMES = ("[    ]", "[   ]", "[  ]", "[ ]", "[]")
 
+NTFY_PUB = "shps-9938ec9e"
 
 def _write(text: str, *, newline: bool = True, file=sys.stdout) -> None:
     end = "\n" if newline else ""
@@ -71,16 +73,18 @@ def fmt_elapsed(seconds: float) -> str:
 
 
 def http_brief(resp: requests.Response, obj) -> str:
+    extra = ""
     if obj is not None:
-        body = json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
-        if len(body) > 80:
-            body = body[:77] + "..."
-        return f"http={resp.status_code} {body}"
-    text = (resp.text or "").replace("\n", " ").strip()
-    if text:
-        if len(text) > 80:
-            text = text[:77] + "..."
-        return f"http={resp.status_code} {text}"
+        extra = json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
+    else:
+        extra = (resp.text or "").replace("\n", " ").strip()
+    if len(extra) > 80:
+        extra = extra[:77] + "..."
+
+    if resp.status_code == 200:
+        return extra
+    if extra:
+        return f"http={resp.status_code} {extra}"
     return f"http={resp.status_code}"
 
 
@@ -304,7 +308,7 @@ def create_task(session: requests.Session, payload: dict) -> tuple[int, float]:
 
     resp = post_image(session, payload)
     _, obj = parse_body(resp)
-    chain.append(f"POST#1 {http_brief(resp, obj)}")
+    chain.append(f"POST#1 {http_brief(resp, obj)}".rstrip())
 
     if is_adult(obj):
         stop("POST#1", "adult content")
@@ -312,13 +316,13 @@ def create_task(session: requests.Session, payload: dict) -> tuple[int, float]:
     if is_conflict(obj):
         d = delete_image(session)
         _, dobj = parse_body(d)
-        chain.append(f"DELETE {http_brief(d, dobj)}")
+        chain.append(f"DELETE {http_brief(d, dobj)}".rstrip())
         if d.status_code >= 400:
             stop("DELETE", f"http={d.status_code}")
 
         resp2 = post_image(session, payload)
         _, obj2 = parse_body(resp2)
-        chain.append(f"POST#2 {http_brief(resp2, obj2)}")
+        chain.append(f"POST#2 {http_brief(resp2, obj2)}".rstrip())
 
         if is_conflict(obj2):
             stop("POST#2", "conflict 409")
@@ -355,8 +359,9 @@ def poll_until_ready(
             resp = get_status(session)
             _, data = parse_body(resp)
             elapsed = fmt_elapsed(time.time() - post_ts)
+            frame = POLL_FRAMES[(attempt - 1) % len(POLL_FRAMES)]
             _rewrite(
-                f"[poll] GET #{attempt}  +{elapsed} since POST#{post_n}"
+                f"{frame} GET #{attempt}  +{elapsed} since POST#{post_n}"
             )
 
             if resp.status_code >= 400:
@@ -388,7 +393,6 @@ def poll_until_ready(
 def download_images(session: requests.Session, urls: list, outdir: Path) -> None:
     outdir.mkdir(parents=True, exist_ok=True)
     total = len(urls)
-    show_progress = total == 6
     last_name = ""
     dest = None
     try:
@@ -399,8 +403,7 @@ def download_images(session: requests.Session, urls: list, outdir: Path) -> None
             dest = outdir / name
             last_name = name
 
-            if show_progress:
-                _rewrite(f"[dl] {i - 1}/{total}")
+            _rewrite(f"[dl] {i - 1}/{total}")
 
             r = session.get(url, timeout=60, stream=True)
             r.raise_for_status()
@@ -408,19 +411,16 @@ def download_images(session: requests.Session, urls: list, outdir: Path) -> None
                 for chunk in r.iter_content(8192):
                     f.write(chunk)
 
-            if show_progress:
-                _rewrite(f"[dl] {i}/{total}")
+            _rewrite(f"[dl] {i}/{total}")
     except Exception as e:
         done = i - 1 if "i" in locals() else 0
-        if show_progress:
-            _break_live()
+        _break_live()
         where = dest.name if dest is not None else "?"
         raise RuntimeError(
             f"[dl] STOPPED at {done}/{total} ({where}): {e}"
         ) from e
 
-    if show_progress:
-        _clear_live()
+    _clear_live()
     _write(str(outdir.resolve()))
     _write(last_name)
 
@@ -435,6 +435,11 @@ def default_outdir() -> Path:
     else:
         base = Path.home()
     return base / "Pictures" / "shedevrum" / datetime.now().strftime("%Y%m%d")
+
+def ntfy(prompt):
+    message = f"[COMPLETE] {datetime.now().strftime('%Y.%m.%d -- %H:%M')}\n\n{prompt}"
+    requests.post(f"https://ntfy.sh/{NTFY_PUB}",
+      data=message.encode(encoding='utf-8'))
 
 def main():
     ap = argparse.ArgumentParser()
@@ -470,7 +475,10 @@ def main():
         session, post_n, post_ts, timeout_s=args.poll_timeout
     )
     download_images(session, urls, args.outdir)
+    with open(args.outdir / "README.md", "a") as f:
+        f.write(f"---\n{payload['prompt']}\n")
 
+    ntfy(payload['prompt'])
 
 if __name__ == "__main__":
     try:
