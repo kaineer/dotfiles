@@ -2,7 +2,6 @@
 return {
 	entry = function()
 		local h = cx.active.current.hovered
-
     if h then
 		  if h.link_to then
 		  	ya.emit("follow", {})
