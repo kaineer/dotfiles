@@ -1,0 +1,33 @@
+---
+# Eye of GNOME
+#   * plugins → ~/.local/share/eog/plugins/
+#   * dconf: org.gnome.eog.plugins active-plugins
+#
+# @link: https://wiki.gnome.org/Apps/EyeOfGnome/Plugins/
+
+- name: Mkdir for eog plugins
+  file:
+    path: "/home/{{ user.name }}/.local/share/eog/plugins"
+    recurse: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+    mode: "755"
+
+- name: Link eog plugins
+  file:
+    src: "{{ playbook_dir }}/files/eog/{{ item }}"
+    dest: "/home/{{ user.name }}/.local/share/eog/plugins/{{ item }}"
+    state: "link"
+    force: true
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+  with_items:
+    - jk-nav.plugin
+    - jk-nav.py
+
+- name: Enable eog jk-nav plugin
+  become_user: "{{ user.name }}"
+  dconf:
+    key: "/org/gnome/eog/plugins/active-plugins"
+    value: "['fullscreen', 'jk-nav']"

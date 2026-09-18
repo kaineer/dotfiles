@@ -39,6 +39,28 @@
     state: directory
     mode: "755"
 
+# file(state=link, force=true) не заменяет каталоги — отсюда
+# "refusing to convert it", если on-enter.yazi уже обычная папка.
+# Удаляем dest только когда это не нужный симлинк.
+- name: Stat yazi plugins
+  ansible.builtin.stat:
+    path: "/home/{{ user.name }}/.config/yazi/plugins/{{ item }}"
+  loop:
+    - on-enter.yazi
+  register: yazi_plugin_stats
+
+- name: Remove yazi plugin dest unless already linked
+  ansible.builtin.file:
+    path: "/home/{{ user.name }}/.config/yazi/plugins/{{ item.item }}"
+    state: absent
+  loop: "{{ yazi_plugin_stats.results }}"
+  when:
+    - item.stat.exists | default(false)
+    - not (
+        (item.stat.islnk | default(false))
+        and item.stat.lnk_source == (playbook_dir ~ '/files/yazi/plugins/' ~ item.item)
+      )
+
 - name: Link yazi plugins
   file:
     src: "{{ playbook_dir }}/files/yazi/plugins/{{ item }}"
@@ -47,7 +69,7 @@
     force: true
     owner: "{{ user.name }}"
     group: "{{ user.name }}"
-  with_items:
+  loop:
     - on-enter.yazi
 
 - name: Install yazi via cargo
