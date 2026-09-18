@@ -5,10 +5,11 @@ class JkNavPlugin(GObject.Object, Eog.WindowActivatable):
     window = GObject.property(type=Eog.Window)
 
     actions = (
-        ("win.go-next", "j"),
-        ("win.go-previous", "k"),
-        ("win.go-first", "g"),
-        ("win.go-last", "<Shift>g"),
+        ("win.go-next", "J"),
+        ("win.go-previous", "K"),
+        ("app.quit", "Q"),
+        ("win.go-first", "G"),
+        ("win.go-last", "<Shift>G"),
     )
 
     def do_activate(self):
