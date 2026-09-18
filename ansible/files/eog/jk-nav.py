@@ -11,6 +11,7 @@ class JkNavPlugin(GObject.Object, Eog.WindowActivatable):
         ("win.go-first", "G"),
         ("win.go-last", "<Shift>G"),
         ("win.copy", "<Shift>Y"),
+        ("win.delete", "<Shift>D"),
     )
 
     def do_activate(self):
