@@ -510,6 +510,7 @@ def main():
     urls = poll_until_ready(
         session, post_n, post_ts, timeout_s=args.poll_timeout
     )
+
     download_images(session, urls, args.outdir)
     with open(args.outdir / "README.md", "a") as f:
         f.write(f"---\n{ payload['prompt'] }\n")

@@ -8,11 +8,15 @@ jless-view = [
 neovim-edit = [
   { run = "nvim %s" },
 ]
+image-view = [
+  { run = "eog -f %s" },
+]
 
 [open]
 prepend_rules = [
   { mime = "video/*", use = "play-video-cli" },
   { mime = "application/json", use = ["jless-view", "neovim-edit"] },
+  { mime = "image/*", use = "image-view" },
 ]
 
 [mgr]
