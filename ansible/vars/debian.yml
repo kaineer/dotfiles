@@ -53,7 +53,9 @@ system_packages:
   - pass
   - pkg-config
   - python3
+  - python3-gi
   - python3-pip
+  - python3-psutil
   - python3-venv
   - python3-pytest
   - python3-cmarkgfm
@@ -61,6 +63,8 @@ system_packages:
   ### Python3 templates
   - python3-jinja2
   - python3-jinja2-time
+  - eog
+  - eog-plugins
   - podman
   - podman-compose
   - rsync

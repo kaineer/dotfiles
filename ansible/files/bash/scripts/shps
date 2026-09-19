@@ -37,7 +37,8 @@ DEFAULT_MODEL = "v11"
 DEFAULT_ASPECT = "9/16"
 
 IMAGE_HOST_MARKER = "masterpiecer-images.s3.yandex.net"
-POLL_FRAMES = ("[    ]", "[   ]", "[  ]", "[ ]", "[]")
+POLL_FRAMES = ("[    ]", "[󰨓   ]", "[󰨓󰨓  ]", "[󰨓󰨓󰨓 ]", "[󰨓󰨓󰨓󰨓]")
+# 󰨓
 
 NTFY_PUB = "shps-9938ec9e"
 
@@ -413,7 +414,7 @@ def poll_until_ready(
                 _clear_live()
                 return urls
 
-            time.sleep(2)
+            time.sleep(5)
 
         raise TimeoutError(
             f"[poll] GET #{attempt}  STOPPED: картинки не появились "
@@ -455,8 +456,10 @@ def download_images(session: requests.Session, urls: list, outdir: Path) -> None
         ) from e
 
     _clear_live()
-    _write(str(outdir.resolve()))
-    _write(last_name)
+    _write(f" file://{str(outdir.resolve())}")
+    for i, url in enumerate(urls):
+        name = url.rsplit("/", 1)[-1]
+        _write(f" `- {name}") 
 
 def default_outdir() -> Path:
     """
@@ -480,7 +483,7 @@ def main():
     ap.add_argument("--curl-file", required=True, type=Path)
     ap.add_argument("--prompt-file", required=True, type=Path)
     ap.add_argument("--outdir", default=default_outdir(), type=Path)
-    ap.add_argument("--poll-timeout", default=5000, type=int)
+    ap.add_argument("--poll-timeout", default=600, type=int)
     args = ap.parse_args()
 
     try:
@@ -496,8 +499,8 @@ def main():
     csrf_ok = bool(parsed["headers"].get("X-CSRF-Token"))
     n_cookies = len(parsed["cookies"])
     _write(
-        f"[cred] csrf={'ok' if csrf_ok else 'missing'}  "
-        f"cookies={n_cookies}  prompt={args.prompt_file.name}"
+        f"[cred] csrf={'ok' if csrf_ok else 'missing'}, "
+        f"prompt={args.prompt_file}"
     )
     if not csrf_ok:
         raise RuntimeError("[cred] STOPPED: CSRF missing")

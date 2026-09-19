@@ -1,0 +1,7 @@
+[Plugin]
+Module=jk-nav
+Loader=python3
+IAge=2
+Name=Vim j/k navigation
+Description=j — next image, k — previous
+Authors=kaineer
