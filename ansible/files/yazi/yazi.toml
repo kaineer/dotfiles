@@ -17,6 +17,7 @@ prepend_rules = [
   { mime = "image/*", use = "image-view" },
   { mime = "video/*", use = "play-video-cli" },
   { mime = "application/json", use = ["jless-view", "neovim-edit"] },
+  { mime = "image/*", use = "image-view" },
 ]
 
 [mgr]
