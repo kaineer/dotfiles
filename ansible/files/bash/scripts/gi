@@ -10,35 +10,57 @@
 #   add remote into github
 #   push into remote
 
-if [ ! -d ./.git ]; then
-  echo " * Initialize git repository"
-  git init &>/dev/null
-fi
+_i() {
+  echo -e " $(ansi cyan)$(icon log info)$(ansi reset) $@"
+}
 
-if [ -f ./.gitignore ]; then
-  echo " ! Setup file .gitignore and run again"
-  exit 1
-fi
+_w() {
+  echo -e " $(ansi yellow)$(icon log warn)$(ansi reset) $@"
+}
 
 REPO=$(basename $(pwd))
 INITIALIZED="$(git remote -v 2>/dev/null | wc -l)"
 
+if [[ "$1" == "h" || "$1" == "--help" ]]; then
+  echo "$(ansi yellow bold) $ gi   $(ansi reset)$(ansi cyan)# Run this script to initialize a repository$(ansi reset)"
+  echo ""
+  echo "$(ansi cyan) $(icon log info) Repository name: $(ansi bold)$USER/$REPO$(ansi reset)"
+  if [[ "$INITIALIZED" == "0" ]]; then
+    echo "$(ansi cyan) $(icon log info) Remote is not attached$(ansi reset)"
+  else
+    echo "$(ansi cyan) $(icon log info) Remote is attached$(ansi reset)"
+  fi
+  exit 0
+fi
+
+if [ ! -d ./.git ]; then
+  _i "Initialize git repository"
+  git init &>/dev/null
+fi
+
+if [ ! -f ./.gitignore ]; then
+  _w "Setup file .gitignore and run again"
+  exit 1
+fi
+
 initial_commit() {
+  MESSAGE="Push repository to remote"
+  if [[ "$1" != "" ]]; then
+    MESSAGE="$@"
+  fi
+
   git add .
   git commit -m "Initial commit"
 
-  echo " * Push repository to remote"
+  _i "$MESSAGE"
   git push -u origin master
 }
 
 if [[ "$INITIALIZED" == "0" ]]; then
   REPO_NAME="$USER/$REPO"
-  gh repo create "$REPO_NAME" --private
-
-  echo " * Add origin remote"
-  git remote add origin "git@github.com:$REPO_NAME.git"
-
   initial_commit
+
+  gh repo create "$REPO_NAME" --public --push --source="." --remote="origin"
 elif [[ "$FORCED" == "true" ]]; then
-  initial_commit
+  initial_commit "Forced commit"
 fi

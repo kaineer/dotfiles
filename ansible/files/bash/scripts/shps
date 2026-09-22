@@ -3,18 +3,19 @@
 shedevrum image generator
 
 Usage:
-    python3 shps --curl-file curl.txt --prompt-file prompt.txt [--outdir ./out]
+    python3 shps --curl-file curl.txt [--prompt-file prompt.txt] [--outdir ./out]
 
 Логика:
     1. Парсим curl-файл: CSRF-токен, Cookie, User-Agent, Origin, Referer.
-    2. Читаем промпт (JSON или plain text).
-    3. POST /routes/image с JSON.
+    2. Если указан --prompt-file — читаем промпт (JSON или plain text)
+       и POST /routes/image с JSON.
        - Если в теле {"error":{"status":409}} (при HTTP 200) ->
          DELETE /routes/image?kind=image&appPlatform=web, затем повторный POST.
        - Иначе HTTP >= 400 -> ошибка.
-    4. Поллинг GET /routes/image?kind=image&appPlatform=web,
+       Без --prompt-file POST не отправляется: только забираем уже доступное.
+    3. Поллинг GET /routes/image?kind=image&appPlatform=web,
        пока не найдём URL'ы masterpiecer-images.s3.yandex.net/...:N.
-    5. Скачиваем картинки в outdir.
+    4. Скачиваем картинки в outdir.
 """
 
 import argparse
@@ -318,6 +319,22 @@ def extract_image_urls(obj) -> list:
     return found
 
 
+def extract_result_prompt(obj) -> str | None:
+    """Достаём .result.params.prompt из ответа GET/POST."""
+    if not isinstance(obj, dict):
+        return None
+    result = obj.get("result")
+    if not isinstance(result, dict):
+        return None
+    params = result.get("params")
+    if not isinstance(params, dict):
+        return None
+    prompt = params.get("prompt")
+    if isinstance(prompt, str) and prompt.strip():
+        return prompt
+    return None
+
+
 # ---------- основной флоу ----------
 
 def create_task(session: requests.Session, payload: dict) -> tuple[int, float]:
@@ -374,16 +391,19 @@ def create_task(session: requests.Session, payload: dict) -> tuple[int, float]:
 
 def poll_until_ready(
     session: requests.Session,
-    post_n: int,
+    post_n: int | None,
     post_ts: float,
     timeout_s: int = 300,
-) -> list:
+) -> tuple[list, str | None]:
     """
     Поллинг GET, пока не найдём URL'ы картинок.
-    Одна строка: номер последнего GET и время с успешного POST.
+    Возвращает (urls, prompt из .result.params.prompt или None).
+    Одна строка: номер последнего GET и время с опорной точки
+    (успешный POST или старт get-only режима).
     """
     deadline = time.time() + timeout_s
     attempt = 0
+    since = f"POST#{post_n}" if post_n is not None else "start"
     try:
         while time.time() < deadline:
             attempt += 1
@@ -392,7 +412,7 @@ def poll_until_ready(
             elapsed = fmt_elapsed(time.time() - post_ts)
             frame = POLL_FRAMES[(attempt - 1) % len(POLL_FRAMES)]
             _rewrite(
-                f"{frame} GET #{attempt}  +{elapsed} since POST#{post_n}"
+                f"{frame} GET #{attempt}  +{elapsed} since {since}"
             )
 
             if is_auth_stale(resp, data):
@@ -412,13 +432,13 @@ def poll_until_ready(
             urls = extract_image_urls(data) if data is not None else []
             if urls:
                 _clear_live()
-                return urls
+                return urls, extract_result_prompt(data)
 
             time.sleep(5)
 
         raise TimeoutError(
             f"[poll] GET #{attempt}  STOPPED: картинки не появились "
-            f"за {timeout_s}s (POST#{post_n})"
+            f"за {timeout_s}s ({since})"
         )
     except Exception:
         _break_live()
@@ -481,7 +501,7 @@ def ntfy(prompt):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--curl-file", required=True, type=Path)
-    ap.add_argument("--prompt-file", required=True, type=Path)
+    ap.add_argument("--prompt-file", type=Path)
     ap.add_argument("--outdir", default=default_outdir(), type=Path)
     ap.add_argument("--poll-timeout", default=600, type=int)
     args = ap.parse_args()
@@ -491,16 +511,19 @@ def main():
     except Exception as e:
         raise RuntimeError(f"[cred] STOPPED at curl: {e}") from e
 
-    try:
-        payload = load_prompt(args.prompt_file)
-    except Exception as e:
-        raise RuntimeError(f"[cred] STOPPED at prompt: {e}") from e
+    payload = None
+    if args.prompt_file is not None:
+        try:
+            payload = load_prompt(args.prompt_file)
+        except Exception as e:
+            raise RuntimeError(f"[cred] STOPPED at prompt: {e}") from e
 
     csrf_ok = bool(parsed["headers"].get("X-CSRF-Token"))
     n_cookies = len(parsed["cookies"])
+    prompt_label = args.prompt_file if args.prompt_file else "(get-only)"
     _write(
         f"[cred] csrf={'ok' if csrf_ok else 'missing'}, "
-        f"prompt={args.prompt_file}"
+        f"prompt={prompt_label}"
     )
     if not csrf_ok:
         raise RuntimeError("[cred] STOPPED: CSRF missing")
@@ -509,15 +532,27 @@ def main():
 
     session = build_session(parsed)
 
-    post_n, post_ts = create_task(session, payload)
-    urls = poll_until_ready(
+    if payload is not None:
+        post_n, post_ts = create_task(session, payload)
+    else:
+        post_n, post_ts = None, time.time()
+        _write("[task] skip POST (no --prompt-file)")
+
+    urls, result_prompt = poll_until_ready(
         session, post_n, post_ts, timeout_s=args.poll_timeout
     )
 
     download_images(session, urls, args.outdir)
-    with open(args.outdir / "README.md", "a") as f:
-        f.write(f"---\n{ payload['prompt'] }\n")
-    ntfy(payload['prompt'])
+
+    prompt_text = None
+    if payload is not None:
+        prompt_text = payload.get("prompt")
+    if not prompt_text:
+        prompt_text = result_prompt
+    if prompt_text:
+        with open(args.outdir / "README.md", "a") as f:
+            f.write(f"---\n{prompt_text}\n")
+        ntfy(prompt_text)
 
 if __name__ == "__main__":
     try:

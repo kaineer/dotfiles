@@ -12,10 +12,10 @@
 #  * read from bash
 
 usage() {
-  echo "# Browse to first parameter or stdin"
+  echo "$(ansi yellow bold)Browse to first parameter or stdin$(ansi reset)"
   echo ""
-  echo " $ echo https://google.com | b   # open google.com"
-  echo " $ b https://google.com          # same thing"
+  echo "$(ansi cyan) $ echo https://google.com | b   # open google.com"
+  echo " $ b https://google.com          # same thing$(ansi reset)"
 }
 
 main() {
@@ -26,6 +26,6 @@ main() {
 }
 
 case "$1" in
-"h" | "help") usage ;;
+"h" | "help" | "--help") usage ;;
 *) main $@ ;;
 esac

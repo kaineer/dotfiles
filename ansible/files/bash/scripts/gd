@@ -18,15 +18,15 @@ SOURCE_FILE=$(readlink -f $CONFIG_FILE)
 EDITOR=nvim
 
 usage() {
-  echo " » Go to Dir and..."
+  echo "$(ansi yellow bold) » Go to Dir and...$(ansi reset)"
   echo ""
-  echo " $ gd .                      # add current dir to list"
+  echo "$(ansi cyan) $ gd .                      # add current dir to list"
   echo " $ gd add nemo               # add current dir with command"
   echo " $ gd <name fragment>        # find dir and open with command"
   echo " $ gd e[dit]                 # edit directories file"
   echo " $ gd f                      # output config file"
   echo " $ gd                        # display full list and select with fzf"
-  echo " $ gd h[elp]                 # show this text"
+  echo " $ gd h[elp]                 # show this text$(ansi reset)"
 }
 
 output_config() {
@@ -103,7 +103,7 @@ fzf_directory() {
 ensure_config_file
 
 case "$1" in
-"h" | "help") usage ;;
+"h" | "help" | "--help") usage ;;
 "e" | "edit") edit_config_file ;;
 "f") output_config ;;
 "." | "add") add_directory $PWD $2 ;;
