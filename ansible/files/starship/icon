@@ -22,6 +22,11 @@ ICON_LINUX_DEBIAN=""
 ICON_LINUX_UNKNOWN=" "
 ICON_LINUX_FEDORA=" "
 
+LOG_INFO=" "
+LOG_ERROR=" "
+LOG_WARNING=" "
+LOG_DEBUG=" "
+
 __linux_is() {
   COUNT=$(cat /etc/issue | grep "$1" | wc -l)
   [[ "$COUNT" == "1" ]]
@@ -48,17 +53,42 @@ __linux_release() {
 # Icon for linux distribution
 #
 linux_icon() {
-  RELEASE=$(__linux_release)
+  RELEASE=${1:-$(__linux_release)}
   case "$RELEASE" in
     "linuxmint")  echo "$ICON_LINUX_MINT" ;;
     "ubuntu")     echo "$ICON_LINUX_UBUNTU" ;;
     "debian")     echo "$ICON_LINUX_DEBIAN" ;;
     "fedora")     echo "$ICON_LINUX_FEDORA" ;;
+    "all") 
+      echo "Linux icons:"
+      echo "  Mint: $ICON_LINUX_MINT"
+      echo "Ubuntu: $ICON_LINUX_UBUNTU"
+      echo "Debian: $ICON_LINUX_DEBIAN"
+      echo "Fedora: $ICON_LINUX_FEDORA"
+      ;;
     *)            echo "$ICON_LINUX_UNKNOWN" ;;
   esac
 }
 
+log_icon() {
+  case "$1" in
+    "info") echo "$LOG_INFO" ;;
+    "error") echo "$LOG_ERROR" ;;
+    "warn"|"warning") echo "$LOG_WARNING" ;;
+    "debug") echo "$LOG_DEBUG" ;;
+    "all")
+      echo "Log icons:"
+      echo " DEBUG: $LOG_DEBUG"
+      echo "  INFO: $LOG_INFO"
+      echo "  WARN: $LOG_WARNING"
+      echo " ERROR: $LOG_ERROR"
+      ;;
+    *) echo "$LOG_DEBUG" ;;
+  esac
+}
+
 case "$1" in
-  "linux") linux_icon ;;
+  "linux") linux_icon $2 ;;
+  "log") log_icon $2 ;;
   *) linux_icon ;;
 esac
