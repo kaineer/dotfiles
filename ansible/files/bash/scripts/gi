@@ -18,6 +18,21 @@ _w() {
   echo -e " $(ansi yellow)$(icon log warn)$(ansi reset) $@"
 }
 
+REPO=$(basename $(pwd))
+INITIALIZED="$(git remote -v 2>/dev/null | wc -l)"
+
+if [[ "$1" == "h" || "$1" == "--help" ]]; then
+  echo "$(ansi yellow bold) $ gi   $(ansi reset)$(ansi cyan)# Run this script to initialize a repository$(ansi reset)"
+  echo ""
+  echo "$(ansi cyan) $(icon log info) Repository name: $(ansi bold)$USER/$REPO$(ansi reset)"
+  if [[ "$INITIALIZED" == "0" ]]; then
+    echo "$(ansi cyan) $(icon log info) Remote is not attached$(ansi reset)"
+  else
+    echo "$(ansi cyan) $(icon log info) Remote is attached$(ansi reset)"
+  fi
+  exit 0
+fi
+
 if [ ! -d ./.git ]; then
   _i "Initialize git repository"
   git init &>/dev/null
@@ -27,9 +42,6 @@ if [ ! -f ./.gitignore ]; then
   _w "Setup file .gitignore and run again"
   exit 1
 fi
-
-REPO=$(basename $(pwd))
-INITIALIZED="$(git remote -v 2>/dev/null | wc -l)"
 
 initial_commit() {
   MESSAGE="Push repository to remote"
