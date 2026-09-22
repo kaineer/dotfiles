@@ -98,7 +98,7 @@ list_ssh_hosts() {
   done < <(list_available_hosts)
 }
 
-find_port_user() {
+find_or_kill_port_user() {
   if [[ "$1" != "" ]]; then
     LINES=$(lsof -i ":$1" -sTCP:LISTEN)
     if [[ "$2" == "kill" ]]; then
@@ -130,6 +130,6 @@ case "$1" in
 "arch") echo_architecture ;;
 "kill") kill_selected ;;
 "ssh") list_ssh_hosts ;;
-"port") shift; find_port_user $@ ;;
+"port") shift; find_or_kill_port_user $@ ;;
 "h" | "") echo_usage ;;
 esac
