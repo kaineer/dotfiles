@@ -319,6 +319,22 @@ def extract_image_urls(obj) -> list:
     return found
 
 
+def extract_result_prompt(obj) -> str | None:
+    """Достаём .result.params.prompt из ответа GET/POST."""
+    if not isinstance(obj, dict):
+        return None
+    result = obj.get("result")
+    if not isinstance(result, dict):
+        return None
+    params = result.get("params")
+    if not isinstance(params, dict):
+        return None
+    prompt = params.get("prompt")
+    if isinstance(prompt, str) and prompt.strip():
+        return prompt
+    return None
+
+
 # ---------- основной флоу ----------
 
 def create_task(session: requests.Session, payload: dict) -> tuple[int, float]:
@@ -378,9 +394,10 @@ def poll_until_ready(
     post_n: int | None,
     post_ts: float,
     timeout_s: int = 300,
-) -> list:
+) -> tuple[list, str | None]:
     """
     Поллинг GET, пока не найдём URL'ы картинок.
+    Возвращает (urls, prompt из .result.params.prompt или None).
     Одна строка: номер последнего GET и время с опорной точки
     (успешный POST или старт get-only режима).
     """
@@ -415,7 +432,7 @@ def poll_until_ready(
             urls = extract_image_urls(data) if data is not None else []
             if urls:
                 _clear_live()
-                return urls
+                return urls, extract_result_prompt(data)
 
             time.sleep(5)
 
@@ -521,15 +538,21 @@ def main():
         post_n, post_ts = None, time.time()
         _write("[task] skip POST (no --prompt-file)")
 
-    urls = poll_until_ready(
+    urls, result_prompt = poll_until_ready(
         session, post_n, post_ts, timeout_s=args.poll_timeout
     )
 
     download_images(session, urls, args.outdir)
+
+    prompt_text = None
     if payload is not None:
+        prompt_text = payload.get("prompt")
+    if not prompt_text:
+        prompt_text = result_prompt
+    if prompt_text:
         with open(args.outdir / "README.md", "a") as f:
-            f.write(f"---\n{ payload['prompt'] }\n")
-        ntfy(payload['prompt'])
+            f.write(f"---\n{prompt_text}\n")
+        ntfy(prompt_text)
 
 if __name__ == "__main__":
     try:
