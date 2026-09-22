@@ -13,8 +13,7 @@ _usage() {
   echo "\`\`\`sh"
   echo " $ the path        # all parts of current executables path"
   echo " $ the net         # address of current available network"
-  echo " $ the net restart"
-  echo "                   # restart network services"
+  echo " $ the net restart # restart network services"
   echo " $ the ssh         # list all ssh hosts, check availability"
   echo " $ the uname       # uname active parts"
   echo " $ the arch        # architecture for binaries"
@@ -34,7 +33,13 @@ echo_usage() {
 }
 
 echo_path() {
-  echo "$PATH" | sed "s/:/\\n/g" | grep -v "^$"
+  LINES=$(echo "$PATH" | sed "s/:/\\n/g" | grep -v "^$")
+
+  if [[ "$1" == "local" ]]; then
+    echo "$LINES" | grep "$HOME"
+  else
+    echo "$LINES"
+  fi
 }
 
 net_functions() {
@@ -91,14 +96,14 @@ list_ssh_hosts() {
     printf " * %-10s " "$host:"
 
     if __check_ssh "$host"; then
-      echo "✅ online"
+      echo "$(ansi green)$(icon ok)$(ansi reset)online"
     else
-      echo "❌ offline"
+      echo "$(ansi red)$(icon fail)$(ansi reset)offline"
     fi
   done < <(list_available_hosts)
 }
 
-find_or_kill_port_user() {
+handle_port() {
   if [[ "$1" != "" ]]; then
     LINES=$(lsof -i ":$1" -sTCP:LISTEN)
     if [[ "$2" == "kill" ]]; then
@@ -124,12 +129,12 @@ find_or_kill_port_user() {
 }
 
 case "$1" in
-"path") echo_path ;;
+"path") echo_path $2 ;;
 "net") shift && net_functions $@ ;;
 "uname") echo_uname ;;
 "arch") echo_architecture ;;
 "kill") kill_selected ;;
 "ssh") list_ssh_hosts ;;
-"port") shift; find_or_kill_port_user $@ ;;
+"port") shift; handle_port $@ ;;
 "h" | "") echo_usage ;;
 esac

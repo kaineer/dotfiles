@@ -27,6 +27,9 @@ LOG_ERROR=" "
 LOG_WARNING=" "
 LOG_DEBUG=" "
 
+RESULT_SUCCESS=" "
+RESULT_FAILURE=" "
+
 __linux_is() {
   COUNT=$(cat /etc/issue | grep "$1" | wc -l)
   [[ "$COUNT" == "1" ]]
@@ -87,8 +90,28 @@ log_icon() {
   esac
 }
 
+result_icon() {
+  case "$1" in
+    "ok"|"success") echo "$RESULT_SUCCESS" ;;
+    "fail"|"failure") echo "$RESULT_FAILURE" ;;
+    "all")
+      echo "Result icons:"
+      echo "  Ok: $RESULT_SUCCESS"
+      echo "Fail: $RESULT_FAILURE"
+      ;;
+    *) echo "$RESULT_SUCCESS" ;;
+  esac
+}
+
+open_nerdfonts() {
+  open "https://www.nerdfonts.com/cheat-sheet"
+}
+
 case "$1" in
   "linux") linux_icon $2 ;;
   "log") log_icon $2 ;;
+  "result") result_icon $2 ;;
+  "ok"|"fail") result_icon $1 ;;
+  "bro"|"browse") open_nerdfonts ;;
   *) linux_icon ;;
 esac
