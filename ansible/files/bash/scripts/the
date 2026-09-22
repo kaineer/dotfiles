@@ -11,14 +11,17 @@
 _usage() {
   echo "## THE WHAT"
   echo "\`\`\`sh"
-  echo " $ the path      # all parts of current executables path"
-  echo " $ the net       # address of current available network"
+  echo " $ the path        # all parts of current executables path"
+  echo " $ the net         # address of current available network"
   echo " $ the net restart"
-  echo "                 # restart network services"
-  echo " $ the ssh       # list all ssh hosts, check availability"
-  echo " $ the uname     # uname active parts"
-  echo " $ the arch      # architecture for binaries"
-  echo " $ the kill      # kill selected process"
+  echo "                   # restart network services"
+  echo " $ the ssh         # list all ssh hosts, check availability"
+  echo " $ the uname       # uname active parts"
+  echo " $ the arch        # architecture for binaries"
+  echo " $ the kill        # kill selected process"
+  echo " $ the port <num>  # who is using port"
+  echo " $ the port <num> kill"
+  echo " $                 # kill the port user process"
   echo "\`\`\`"
 }
 
@@ -95,6 +98,31 @@ list_ssh_hosts() {
   done < <(list_available_hosts)
 }
 
+find_port_user() {
+  if [[ "$1" != "" ]]; then
+    LINES=$(lsof -i ":$1" -sTCP:LISTEN)
+    if [[ "$2" == "kill" ]]; then
+      if [[ -n "$LINES" ]]; then
+        PID=$(echo "$LINES" | grep -v "^COMMAND" | head -n1 | awk '{ print $2 }')
+        if [[ -n "$PID" ]]; then
+          kill -9 "$PID"
+          echo " $(icon log warn) You've killed him!"
+        else
+          echo " $(icon log warn) Can not free port"
+        fi
+      else
+        echo " $(icon log info) Port is free already"
+      fi
+    else
+      if [[ -z "$LINES" ]]; then
+        echo " $(icon log info) Port is free"
+      else
+        echo -e "$LINES"
+      fi
+    fi
+  fi
+}
+
 case "$1" in
 "path") echo_path ;;
 "net") shift && net_functions $@ ;;
@@ -102,5 +130,6 @@ case "$1" in
 "arch") echo_architecture ;;
 "kill") kill_selected ;;
 "ssh") list_ssh_hosts ;;
+"port") shift; find_port_user $@ ;;
 "h" | "") echo_usage ;;
 esac
