@@ -74,6 +74,16 @@ def fmt_elapsed(seconds: float) -> str:
     return f"{m}:{s:02d}"
 
 
+def fmt_eta(seconds: int) -> str:
+    """Эстимейт из .result.time: SSs если < 60, иначе MMm; 0 — готово."""
+    total = max(0, int(seconds))
+    if total == 0:
+        return "should be ready"
+    if total > 60:
+        return f"{total // 60}m"
+    return f"{total}s"
+
+
 def http_brief(resp: requests.Response, obj) -> str:
     extra = ""
     if obj is not None:
@@ -335,6 +345,19 @@ def extract_result_prompt(obj) -> str | None:
     return None
 
 
+def extract_result_time(obj) -> int | None:
+    """Эстимейт секунд до конца генерации из .result.time."""
+    if not isinstance(obj, dict):
+        return None
+    result = obj.get("result")
+    if not isinstance(result, dict):
+        return None
+    t = result.get("time")
+    if isinstance(t, bool) or not isinstance(t, (int, float)):
+        return None
+    return max(0, int(t))
+
+
 # ---------- основной флоу ----------
 
 def create_task(session: requests.Session, payload: dict) -> tuple[int, float]:
@@ -411,8 +434,15 @@ def poll_until_ready(
             _, data = parse_body(resp)
             elapsed = fmt_elapsed(time.time() - post_ts)
             frame = POLL_FRAMES[(attempt - 1) % len(POLL_FRAMES)]
+            eta = extract_result_time(data)
+            if eta is None:
+                eta_part = ""
+            elif eta == 0:
+                eta_part = f"  {fmt_eta(eta)}"
+            else:
+                eta_part = f"  ~{fmt_eta(eta)}"
             _rewrite(
-                f"{frame} GET #{attempt}  +{elapsed} since {since}"
+                f"{frame} GET #{attempt}  +{elapsed} since {since}{eta_part}"
             )
 
             if is_auth_stale(resp, data):
