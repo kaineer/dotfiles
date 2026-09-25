@@ -3,7 +3,7 @@ play-video-cli = [
   { run = "mplayer -noborder %s", orphan = true, desc = "Play video with mplayer" },
 ]
 play-audio-cli = [
-  { run = "mplayer %s", orphan = false, desc = "Play audio with mplayer" },
+  { run = "mplayer %s", desc = "Play audio with mplayer" },
 ]
 jless-view = [
   { run = "/home/kaineer/bin/jless %s" },
