@@ -532,9 +532,9 @@ def download_images(session: requests.Session, urls: list, outdir: Path) -> None
     l = len(urls)
     for i, url in enumerate(urls):
         name = url.rsplit("/", 1)[-1]
-        prefix = "├─"
+        prefix = "|-" # "├─"
         if l - 1 == i:
-            prefix = "╰─"
+            prefix = "`-" # "╰─"
         filename = name.replace(":", "-")
         _write(f" {prefix}./{filename}.jpg") 
 
