@@ -2,6 +2,8 @@
 # Install rust CLI tools from ~/git/config/cli-rs into ~/.cargo/bin.
 # Any leftover ~/bin/<name> symlink (from the old bash scripts install)
 # is removed so it does not shadow the cargo binary.
+#
+# pe crate is named project-env; rename the installed binary to pe.
 
 - name: Install rust CLIs from cli-rs via cargo
   become_user: "{{ user.name }}"
@@ -17,6 +19,15 @@
       --force
   loop: "{{ rust_scripts }}"
   changed_when: true
+
+- name: Rename project-env binary to pe
+  become_user: "{{ user.name }}"
+  ansible.builtin.command:
+    cmd: >-
+      mv /home/{{ user.name }}/.cargo/bin/project-env
+      /home/{{ user.name }}/.cargo/bin/pe
+  args:
+    removes: "/home/{{ user.name }}/.cargo/bin/project-env"
 
 - name: Stat leftover ~/bin entries for rust CLIs
   ansible.builtin.stat:

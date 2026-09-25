@@ -20,7 +20,6 @@ scripts:
   - note
   - nord
   - opendir
-  - pe
   - pm
   - the
   - tmux-status
@@ -59,3 +58,4 @@ scripts:
 # Packages under ~/git/config/cli-rs/<name>, installed with cargo.
 rust_scripts:
   - wf
+  - pe
