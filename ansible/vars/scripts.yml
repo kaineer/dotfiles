@@ -1,3 +1,5 @@
+# Bash scripts linked into ~/bin (see tasks/cli/scripts.yml).
+# Rust rewrites live in cli-rs and are installed via tasks/rust/cli.yml.
 scripts:
   - ai
   - aid
@@ -52,3 +54,8 @@ scripts:
   - shps
   - shps
   - shps
+  - shps
+
+# Packages under ~/git/config/cli-rs/<name>, installed with cargo.
+rust_scripts:
+  - wf

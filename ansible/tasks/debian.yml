@@ -42,6 +42,8 @@
 - include_tasks: ./cli/starship.yml
 - include_tasks: ./cli/lf.yml
 - include_tasks: ./cli/rustup.yml
+- include_tasks: ./rust/repo.yml
+- include_tasks: ./rust/cli.yml
 - include_tasks: ./cli/yazi.yml
 - include_tasks: ./cli/fzf.yml
 - include_tasks: ./cli/doppler/dopper.yml

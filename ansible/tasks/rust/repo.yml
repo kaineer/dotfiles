@@ -1,0 +1,21 @@
+---
+# Clone rust CLI sources (cli-rs)
+
+- name: Ensure ~/git/config directory exists
+  file:
+    path: "/home/{{ user.name }}/git/config"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "755"
+
+- name: Clone cli-rs repository
+  become_user: "{{ user.name }}"
+  environment:
+    HOME: "/home/{{ user.name }}"
+  ansible.builtin.git:
+    repo: git@github.com:kaineer/cli-rs.git
+    dest: "/home/{{ user.name }}/git/config/cli-rs"
+    version: master
+    accept_hostkey: true
+    update: true
