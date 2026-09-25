@@ -59,3 +59,4 @@ scripts:
 rust_scripts:
   - wf
   - pe
+  - rx

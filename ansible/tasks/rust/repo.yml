@@ -1,5 +1,6 @@
 ---
-# Clone rust CLI sources (cli-rs)
+# Clone rust CLI sources (cli-rs).
+# Skip clone when the repo already exists; pull master instead.
 
 - name: Ensure ~/git/config directory exists
   file:
@@ -9,7 +10,13 @@
     group: "{{ user.name }}"
     mode: "755"
 
+- name: Check if cli-rs repository exists
+  ansible.builtin.stat:
+    path: "/home/{{ user.name }}/git/config/cli-rs/.git"
+  register: cli_rs_git
+
 - name: Clone cli-rs repository
+  when: not cli_rs_git.stat.exists
   become_user: "{{ user.name }}"
   environment:
     HOME: "/home/{{ user.name }}"
@@ -18,4 +25,15 @@
     dest: "/home/{{ user.name }}/git/config/cli-rs"
     version: master
     accept_hostkey: true
-    update: true
+    update: false
+
+- name: Pull cli-rs repository
+  when: cli_rs_git.stat.exists
+  become_user: "{{ user.name }}"
+  environment:
+    HOME: "/home/{{ user.name }}"
+  ansible.builtin.command:
+    cmd: git pull origin master
+    chdir: "/home/{{ user.name }}/git/config/cli-rs"
+  register: cli_rs_pull
+  changed_when: "'Already up to date' not in cli_rs_pull.stdout"
