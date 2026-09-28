@@ -53,6 +53,7 @@ scripts:
   - shps
   - shps
   - shps
+  - shps
 rust_scripts:
   - wf
   - pe
