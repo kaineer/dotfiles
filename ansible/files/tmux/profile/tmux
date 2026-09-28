@@ -55,9 +55,7 @@ complete -W "help jump detach quit dev teach media rename-session rename-window"
 
 __fzf_command() {
     CMD=$(__list_commands | fzf)
-    if [[ "$CMD" != "" ]]; then
-        t $CMD
-    fi
+    [[ "$CMD" != "" ]] && t $CMD
 }
 
 __outside_tmux() {

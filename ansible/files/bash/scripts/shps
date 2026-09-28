@@ -380,6 +380,13 @@ def extract_result_time(obj) -> int | None:
     return max(0, int(t))
 
 
+def poll_sleep_seconds(eta: int | None) -> float:
+    """Пауза между GET: не меньше 5с, иначе 80% от эстимейта."""
+    if eta is None:
+        return 5.0
+    return max(5.0, 0.8 * eta)
+
+
 # ---------- основной флоу ----------
 
 def create_task(session: requests.Session, payload: dict) -> tuple[int, float]:
@@ -486,7 +493,7 @@ def poll_until_ready(
                 _clear_live()
                 return urls, extract_result_prompt(data)
 
-            time.sleep(5)
+            time.sleep(poll_sleep_seconds(eta))
 
         raise TimeoutError(
             f"[poll] GET #{attempt}  STOPPED: картинки не появились "
@@ -532,9 +539,9 @@ def download_images(session: requests.Session, urls: list, outdir: Path) -> None
     l = len(urls)
     for i, url in enumerate(urls):
         name = url.rsplit("/", 1)[-1]
-        prefix = "|-" # "├─"
+        prefix = "├─"
         if l - 1 == i:
-            prefix = "`-" # "╰─"
+            prefix = "╰─"
         filename = name.replace(":", "-")
         _write(f" {prefix}./{filename}.jpg") 
 
