@@ -16,8 +16,7 @@ DOCKER_BIN=""
 
 if [[ "$(which podman)" != "" ]]; then
   DOCKER_BIN="podman"
-  # alias dc=podman-compose
-  alias dc="~/.podman-compose-venv/bin/podman-compose"
+  alias dc=podman-compose
   alias d=podman
   alias dps="podman ps"
   alias dpsf='podman ps --format "{{.ID}}|{{.Names}}|{{.Status}}" | awk -F"|" '\''{printf "%-15s | %-25s | %s\n", $1, $2, $3}'\'
