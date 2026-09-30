@@ -27,8 +27,16 @@ ggpull() {
   git pull origin $(git_current_branch)
 }
 
+ggpl() {
+  ggpull
+}
+
 ggpush() {
   git push origin $(git_current_branch)
+}
+
+ggpsh() {
+  ggpush
 }
 
 add() {

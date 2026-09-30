@@ -66,6 +66,76 @@ __session_exists() {
     tmux has -t "$1" &>/dev/null
 }
 
+__edit_pane() {
+  F=".tmux/$1.sh"
+  mkdir -p .tmux
+  $EDITOR $F
+  [ -f "$F" ] && chmod 755 $F
+}
+
+__four_panes() {
+    if [[ "$1" != "" ]]; then
+      __edit_pane $1
+      return 0
+    fi
+
+    local pane_count=$(tmux list-panes | wc -l)
+    
+    if [ "$pane_count" -ne 1 ]; then
+        echo "Working only in one-pane window"
+        return 1
+    fi
+    
+    # Сохраняем ID текущего pane
+    local current=$(tmux display-message -p '#{pane_id}')
+    
+    # Разделяем по вертикали, получаем ID нового pane
+    local right=$(tmux split-window -h -t "$current" -P -F '#{pane_id}')
+    
+    # Разделяем каждый по горизонтали
+    tmux split-window -v -t "$current"
+    tmux split-window -v -t "$right"
+}
+
+__four_panes_x() {
+    if [[ "$1" != "" ]]; then
+        __edit_pane $1
+        return 0
+    fi
+
+    if [ -z "$TMUX" ]; then
+        echo "Works inside tmux only"
+        return 1
+    fi
+
+    local pane_count=$(tmux list-panes | wc -l)
+    if [ "$pane_count" -ne 1 ]; then
+        echo "Does not work with more than one pane"
+        return 1
+    fi
+
+    local dir="$PWD/.tmux"
+    local p0=$(tmux display-message -p '#{pane_id}')
+
+    # Команда для каждого pane (пустая строка = обычный shell)
+    local cmd0=""; [ -f "$dir/0.sh" ] && cmd0="$dir/0.sh"
+    local cmd1=""; [ -f "$dir/1.sh" ] && cmd1="$dir/1.sh"
+    local cmd2=""; [ -f "$dir/2.sh" ] && cmd2="$dir/2.sh"
+    local cmd3=""; [ -f "$dir/3.sh" ] && cmd3="$dir/3.sh"
+
+    # Создаём pane сразу с командами.
+    # Флаг -d (detached) подавляет переключение фокуса при создании —
+    # это ускоряет работу и уменьшает мерцание.
+    local p1=$(tmux split-window -h -d -t "$p0" $cmd1 -P -F '#{pane_id}')
+    local p2=$(tmux split-window -v -d -t "$p0" $cmd2 -P -F '#{pane_id}')
+    local p3=$(tmux split-window -v -d -t "$p1" $cmd3 -P -F '#{pane_id}')
+
+    # Для исходного pane — только send-keys (его нельзя "пересоздать")
+    [ -n "$cmd0" ] && tmux send-keys -t "$p0" "$cmd0" C-m
+
+    tmux select-pane -t "$p0"
+}
+
 ta() {
     # $ ta <session-name> - attach to session, even if it does not exist
     #
@@ -154,6 +224,8 @@ t() {
     "lswa") __list_all_windows ;;
     "x" | "q" | "exit" | "quit") tmux kill-server ;;
     "j" | "jump") __jump ;;
+    "4") shift; __four_panes $@ ;;
+    "4x") __four_panes_x ;;
     "dev") ta dev ;;
     "teach") ta teach ;;
     "media") ta media ;;

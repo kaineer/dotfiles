@@ -1,3 +1,6 @@
+[preview]
+image_adapter = "iip"
+
 [opener]
 play-video-cli = [
   { run = "mplayer -noborder %s", orphan = true, desc = "Play video with mplayer" },

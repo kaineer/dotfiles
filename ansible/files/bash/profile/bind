@@ -67,6 +67,7 @@ __ctrl_ "o" "yazi ." "open yazi filemanager"
 
 __ctrl_ "u" "cd -" "move directory back"
 __ctrl_ "x" "exit" "exit"
+__ctrl_ "k" "!!" "redo"
 
 __alt_ "O" "nemo . >/dev/null 2>&1 &" "open gui filemanager"
 __alt_ "H" "cd" "open home directory"
