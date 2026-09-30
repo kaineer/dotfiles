@@ -27,6 +27,8 @@ Usage:
 import argparse
 import json
 import re
+import shutil
+import subprocess
 import sys
 import time
 import os
@@ -563,18 +565,36 @@ def ntfy(prompt):
       data=message.encode(encoding='utf-8'))
 
 
+def desktop_notify(prompt):
+    notify_send = shutil.which("notify-send")
+    if not notify_send:
+        return
+    message = f"[COMPLETE] {datetime.now().strftime('%Y.%m.%d -- %H:%M')}\n\n{prompt}"
+    subprocess.run(
+        [notify_send, "shps", message],
+        check=False,
+    )
+
+
+def notify_complete(prompt):
+    if os.environ.get("SHED_NTFY") == "true":
+        ntfy(prompt)
+    if os.environ.get("SHED_DESKTOP") == "true":
+        desktop_notify(prompt)
+
+
 def save_result(
     session: requests.Session,
     urls: list,
     outdir: Path,
     prompt_text: str | None,
 ) -> None:
-    """Скачать картинки и при наличии промпта дописать README + ntfy."""
+    """Скачать картинки и при наличии промпта дописать README + уведомления."""
     download_images(session, urls, outdir)
     if prompt_text:
         with open(outdir / "README.md", "a") as f:
             f.write(f"---\n{prompt_text}\n")
-        ntfy(prompt_text)
+        notify_complete(prompt_text)
 
 
 def watch_remote(
