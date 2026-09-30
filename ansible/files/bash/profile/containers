@@ -16,8 +16,15 @@ DOCKER_BIN=""
 
 if [[ "$(which podman)" != "" ]]; then
   DOCKER_BIN="podman"
-  alias dc=podman-compose
-  alias d=podman
+
+  if [[ "$(which podman-compose)" != "" ]]; then
+    alias dc=podman-compose
+  elif [ -f "~/.podman-compose/venv/bin/podman-compose" ]; then
+    alias dc="~/.podman-compose/venv/bin/podman-compose"
+  fi
+
+  fi
+  alias d="$DOCKER_BIN"
   alias dps="podman ps"
   alias dpsf='podman ps --format "{{.ID}}|{{.Names}}|{{.Status}}" | awk -F"|" '\''{printf "%-15s | %-25s | %s\n", $1, $2, $3}'\'
   alias dpsi="podman ps --format \"{{.ID}}\""
@@ -51,7 +58,7 @@ if [[ "$(which podman)" != "" ]]; then
     fi
   }
 
-elif [[ "$(which docker)" == "" ]]; then
+elif [[ "$(which docker)" != "" ]]; then
   DOCKER_BIN="docker"
   alias dc=docker-compose
   alias d=docker
