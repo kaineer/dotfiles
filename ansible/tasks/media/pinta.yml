@@ -1,0 +1,38 @@
+# https://github.com/pkgforge-dev/Pinta-AppImage/releases/download/3.1.2%402026-09-07_1788768837/Pinta-3.1.2-anylinux-x86_64.AppImage
+
+- name: Create appimages dir
+  file:
+    path: "/home/{{ user.name }}/bin/appimages"
+    state: "directory"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "755"
+
+- name: Check if pinta is installed
+  stat:
+    path: "/home/{{ user.name }}/bin/pinta"
+    follow: true
+  register: "pinta_binary"
+
+- name: Download pinta appimage
+  when: "not pinta_binary.stat.exists"
+  vars:
+    image_name: "Pinta-3.1.2-anylinux-x86_64.AppImage"
+  get_url:
+    url: "https://github.com/pkgforge-dev/Pinta-AppImage/releases/download/3.1.2%402026-09-07_1788768837/{{ image_name }}"
+    dest: "/home/{{ user.name }}/bin/appimages/{{ image_name }}"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "755"
+
+- name: Link pinta appimage
+  when: "not pinta_binary.stat.exists"
+  vars:
+    image_name: "Pinta-3.1.2-anylinux-x86_64.AppImage"
+  file:
+    src: "/home/{{ user.name }}/bin/appimages/{{ image_name }}"
+    dest: "/home/{{ user.name }}/bin/pinta"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: "link"
+    force: true
