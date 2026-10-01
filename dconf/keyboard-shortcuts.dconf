@@ -1,5 +1,5 @@
 [/]
-custom-list=['custom17', 'custom15', 'custom10', 'custom9', 'custom6', 'custom4', 'custom0', 'custom2', '__dummy__', 'custom1', 'custom3', 'custom5', 'custom7', 'custom8', 'custom11', 'custom12', 'custom13', 'custom14', 'custom16']
+custom-list=['custom16', 'custom14', 'custom13', 'custom12', 'custom11', 'custom8', 'custom7', 'custom5', 'custom3', 'custom1', '__dummy__', 'custom2', 'custom0', 'custom4', 'custom6', 'custom9', 'custom10', 'custom15', 'custom17']
 looking-glass-keybinding=@as []
 show-desklets=@as []
 
@@ -49,7 +49,7 @@ command='/home/kaineer/bin/neovide'
 name='launch neovide'
 
 [custom-keybindings/custom17]
-binding=['<Super>h']
+binding=['<Alt>v']
 command='/home/kaineer/bin/pinta'
 name='paste image'
 
