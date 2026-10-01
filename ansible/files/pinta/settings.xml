@@ -1,4 +1,4 @@
-<settings>
+﻿<settings>
   <setting name="new-image-width" type="System.Int32">10</setting>
   <setting name="new-image-height" type="System.Int32">10</setting>
   <setting name="dock-layers-minimized" type="System.Boolean">True</setting>
@@ -31,9 +31,9 @@
   <setting name="recolortool-brush-width" type="System.Int32">2</setting>
   <setting name="recolortool-antialias" type="System.Int32">0</setting>
   <setting name="recolor-tolerance" type="System.Int32">50</setting>
-  <setting name="show-canvas-grid" type="System.Boolean">True</setting>
+  <setting name="show-canvas-grid" type="System.Boolean">False</setting>
   <setting name="canvas-grid-width" type="System.Int32">64</setting>
   <setting name="canvas-grid-height" type="System.Int32">64</setting>
-  <setting name="show-canvas-axonometric-grid" type="System.Boolean">True</setting>
+  <setting name="show-canvas-axonometric-grid" type="System.Boolean">False</setting>
   <setting name="canvas-axonometric-grid-width" type="System.Int32">64</setting>
 </settings>
