@@ -21,7 +21,7 @@
   environment:
     HOME: "/home/{{ user.name }}"
   ansible.builtin.git:
-    repo: git@github.com:kaineer/cli-rs.git
+    repo: "git@github.com:kaineer/cli-rs.git"
     dest: "/home/{{ user.name }}/git/config/cli-rs"
     version: master
     accept_hostkey: true
