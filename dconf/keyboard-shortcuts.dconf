@@ -1,5 +1,5 @@
 [/]
-custom-list=['custom15', 'custom10', 'custom9', 'custom6', 'custom4', 'custom0', 'custom2', '__dummy__', 'custom1', 'custom3', 'custom5', 'custom7', 'custom8', 'custom11', 'custom12', 'custom13', 'custom14']
+custom-list=['custom17', 'custom15', 'custom10', 'custom9', 'custom6', 'custom4', 'custom0', 'custom2', '__dummy__', 'custom1', 'custom3', 'custom5', 'custom7', 'custom8', 'custom11', 'custom12', 'custom13', 'custom14', 'custom16']
 looking-glass-keybinding=@as []
 show-desklets=@as []
 
@@ -42,6 +42,16 @@ name='save clipboard'
 binding=['<Super>v']
 command='/home/kaineer/bin/lc fzf'
 name='restore clipboard'
+
+[custom-keybindings/custom16]
+binding=['<Super>w']
+command='/home/kaineer/bin/neovide'
+name='launch neovide'
+
+[custom-keybindings/custom17]
+binding=['<Super>h']
+command='/home/kaineer/bin/pinta'
+name='paste image'
 
 [custom-keybindings/custom2]
 binding=['<Super>x']
@@ -86,7 +96,7 @@ name='zed'
 [media-keys]
 area-screenshot-clip=['<Primary><Shift>a']
 screensaver=['<Control><Alt>l', '<Super>l']
-screenshot=['<Primary><Shift>p']
+screenshot=['<Alt><Super>a']
 screenshot-clip=['<Super>p']
 
 [wm]
