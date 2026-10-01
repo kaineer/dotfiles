@@ -36,3 +36,20 @@
     group: "{{ user.name }}"
     state: "link"
     force: true
+
+- name: Create pinta config dir
+  file:
+    path: "/home/{{ user.name }}/.config/Pinta"
+    state: directory
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    mode: "755"
+
+- name: Link pinta settings.xml
+  file:
+    src: "{{ playbook_dir }}/files/pinta/settings.xml"
+    dest: "/home/{{ user.name }}/.config/Pinta/settings.xml"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: "link"
+    force: true
