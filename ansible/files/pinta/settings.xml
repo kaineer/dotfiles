@@ -15,7 +15,7 @@
   <setting name="menubar-shown" type="System.Boolean">False</setting>
   <setting name="statusbar-shown" type="System.Boolean">False</setting>
   <setting name="toolbox-shown" type="System.Boolean">False</setting>
-  <setting name="last-dialog-directory" type="System.String">file:///home/kaineer/Pictures</setting>
+  <setting name="last-dialog-directory" type="System.String">file:///home/kaineer/Pictures/shedevrum/20260929</setting>
   <setting name="last-selected-tool" type="System.String">RectangleSelectTool</setting>
   <setting name="primary-color" type="System.String">FF000000</setting>
   <setting name="secondary-color" type="System.String">FFFFFFFF</setting>
