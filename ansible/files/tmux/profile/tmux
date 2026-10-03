@@ -12,7 +12,7 @@ __tmux_usage() {
     echo " $ t x  -- tmux kill-server"
     echo " $ t s  -- tmux rename-session ..."
     echo " $ t w  -- tmux rename-window ..."
-    echo " $ t wk -- tmux kill-window"
+    echo " $ t kw -- tmux kill-window"
     echo " $ t j  -- select window and switch to it"
     echo " $ t a <session-name> -- tmux attach -t <session-name>"
     echo " $ t ks <session-name> -- tmux kill-session -t <session-name>"
@@ -136,7 +136,7 @@ __four_panes_x() {
     tmux select-pane -t "$p0"
 }
 
-ta() {
+__session_attach() {
     # $ ta <session-name> - attach to session, even if it does not exist
     #
     if [[ "$1" != "" ]]; then
@@ -211,10 +211,11 @@ t() {
     "e" | "edit")
       te
       ;;
-    "wk" | "kw") tmux kill-window ;;
+    "kw") tmux kill-window ;;
     "a" | "attach")
         shift
-        tmux attach -t $@
+        __session_attach $@
+        # tmux attach -t $@
         ;;
     "ks")
         shift
