@@ -74,6 +74,20 @@ __edit_pane() {
 }
 
 __four_panes() {
+    if [[ "$1" == "x" ]]; then
+      IDX=$(tmux display-message -p '#{pane_index}')
+      if [ -f ".tmux/$IDX.sh" ]; then
+        . ./.tmux/$IDX.sh
+        return 0
+      fi
+    elif [[ "$1" == "e" ]]; then
+      IDX=$(tmux display-message -p '#{pane_index}')
+      if [ -f ".tmux/$IDX.sh" ]; then
+        e ./.tmux/$IDX.sh
+        return 0
+      fi
+    fi
+
     if [[ "$1" != "" ]]; then
       __edit_pane $1
       return 0

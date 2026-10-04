@@ -42,8 +42,7 @@ choose_with_rofi() {
   rofi -dmenu -matching normal $@
 }
 
-if [[ "$TERM" == "screen-256color" ]]; then
-  choose_with_fzf $@
-else
-  choose_with_rofi $@
-fi
+case "$TERM" in
+  *-256color) choose_with_fzf $@ ;;
+  *) choose_with_rofi $@ ;;
+esac

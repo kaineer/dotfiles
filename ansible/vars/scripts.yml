@@ -54,6 +54,8 @@ scripts:
   - shps
   - shps
   - shps
+  - :q
+  - :on
 rust_scripts:
   - wf
   - pe
