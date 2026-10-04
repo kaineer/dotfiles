@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+command_not_found_handle() {
+  # $1 - имя команды
+  # $@ - все аргументы, включая имя команды
+
+  LAT="abcdefghijklmnopqrstuvwxyz"
+  RUS="фисвуапршолдьтщзйкыегмцчня"
+
+  LC=$(sed "y|${RUS}|${LAT}|" <<<"$1")
+  if [[ "$1" != "$LC" ]]; then
+    if command -v "$LC" &>/dev/null; then
+      shift
+      # command "$LC" "$@"
+      eval "$LC" "$@"
+      return $?
+    else
+      echo "Command $LC not found"
+      return 127
+    fi
+  fi
+
+  echo "Command $1 not found"
+
+  # Возвращаем 127, как это делает Bash по умолчанию,
+  # если мы не можем обработать команду.
+  return 127
+}
