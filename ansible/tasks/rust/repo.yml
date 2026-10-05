@@ -20,6 +20,7 @@
   become_user: "{{ user.name }}"
   environment:
     HOME: "/home/{{ user.name }}"
+    SSH_AUTH_SOCK: "{{ lookup('env', 'SSH_AUTH_SOCK') }}"
   ansible.builtin.git:
     repo: "git@github.com:kaineer/cli-rs.git"
     dest: "/home/{{ user.name }}/git/config/cli-rs"
@@ -32,6 +33,7 @@
   become_user: "{{ user.name }}"
   environment:
     HOME: "/home/{{ user.name }}"
+    SSH_AUTH_SOCK: "{{ lookup('env', 'SSH_AUTH_SOCK') }}"
   ansible.builtin.command:
     cmd: git pull origin master
     chdir: "/home/{{ user.name }}/git/config/cli-rs"

@@ -1,6 +1,7 @@
 require("core.vim-pack.config")({
   "plugins.colors.pack",
   "plugins.edit.colorizer",
+  "plugins.filename.init",
   "plugins.navigation.pack",
   "plugins.telescope.pack",
   "plugins.lsp.pack",

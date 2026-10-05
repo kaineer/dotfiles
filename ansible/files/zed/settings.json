@@ -160,10 +160,10 @@
     "model_parameters": [],
   },
   "buffer_font_family": "FiraCode Nerd Font",
-  "buffer_font_size": 16,
+  "buffer_font_size": 25.0,
   "terminal": {
     "font_family": "FiraCode Nerd Font",
-    "font_size": 16,
+    "font_size": 25.0,
   },
   "tab_bar": { "show": false },
   "file_scan_exclusions": ["ai/responses/**/*.md"],

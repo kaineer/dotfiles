@@ -136,6 +136,17 @@ __four_panes_x() {
     tmux select-pane -t "$p0"
 }
 
+__move_and_switch() {
+  if __session_exists "$1"; then
+    tmux move-window -t $1
+    tmux switch-client -t $1
+  else
+    tmux new -d -s "$1"
+    tmux move-window -t $1
+    tmux switch-client -t $1
+  fi
+}
+
 ta() {
     # $ ta <session-name> - attach to session, even if it does not exist
     #
@@ -226,6 +237,7 @@ t() {
     "j" | "jump") __jump ;;
     "4") shift; __four_panes $@ ;;
     "4x") __four_panes_x ;;
+    "mv") shift; __move_and_switch $@ ;;
     "dev") ta dev ;;
     "teach") ta teach ;;
     "media") ta media ;;

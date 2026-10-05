@@ -1,4 +1,4 @@
-<settings>
+﻿<settings>
   <setting name="new-image-width" type="System.Int32">10</setting>
   <setting name="new-image-height" type="System.Int32">10</setting>
   <setting name="dock-layers-minimized" type="System.Boolean">True</setting>
@@ -7,7 +7,7 @@
   <setting name="window-size-height" type="System.Int32">750</setting>
   <setting name="ruler-metric" type="System.Int32">0</setting>
   <setting name="color-scheme" type="System.Int32">0</setting>
-  <setting name="window-maximized" type="System.Boolean">True</setting>
+  <setting name="window-maximized" type="System.Boolean">False</setting>
   <setting name="ruler-shown" type="System.Boolean">False</setting>
   <setting name="image-tabs-shown" type="System.Boolean">False</setting>
   <setting name="tool-windows-shown" type="System.Boolean">False</setting>
@@ -16,10 +16,10 @@
   <setting name="statusbar-shown" type="System.Boolean">False</setting>
   <setting name="toolbox-shown" type="System.Boolean">False</setting>
   <setting name="last-dialog-directory" type="System.String">file:///home/kaineer/Pictures</setting>
-  <setting name="last-selected-tool" type="System.String">RectangleSelectTool</setting>
-  <setting name="primary-color" type="System.String">FF000000</setting>
+  <setting name="last-selected-tool" type="System.String">MoveSelectedTool</setting>
+  <setting name="primary-color" type="System.String">FFF0ECE4</setting>
   <setting name="secondary-color" type="System.String">FFFFFFFF</setting>
-  <setting name="recently-used-colors" type="System.String">FFE6E6E6,FFE6E6E6,FFE6E6E6,FFE6E6E6,FFE6E6E6,FFE6E6E6,FFE6E6E6,FFE6E6E6,FFE6E6E6,FFE6E6E6</setting>
+  <setting name="recently-used-colors" type="System.String">FFF0ECE4,FFE8E4DC,FFDCD9D1,FFF5F1E9,FFE6E6E6,FFE6E6E6,FFE6E6E6,FFE6E6E6,FFE6E6E6,FFE6E6E6</setting>
   <setting name="selection-combine-mode" type="System.Int32">0</setting>
   <setting name="paintbrushtool-antialias" type="System.Int32">0</setting>
   <setting name="paintbrushtool-brush-width" type="System.Int32">2</setting>
@@ -31,9 +31,13 @@
   <setting name="recolortool-brush-width" type="System.Int32">2</setting>
   <setting name="recolortool-antialias" type="System.Int32">0</setting>
   <setting name="recolor-tolerance" type="System.Int32">50</setting>
-  <setting name="show-canvas-grid" type="System.Boolean">True</setting>
+  <setting name="show-canvas-grid" type="System.Boolean">False</setting>
   <setting name="canvas-grid-width" type="System.Int32">64</setting>
   <setting name="canvas-grid-height" type="System.Int32">64</setting>
-  <setting name="show-canvas-axonometric-grid" type="System.Boolean">True</setting>
+  <setting name="show-canvas-axonometric-grid" type="System.Boolean">False</setting>
   <setting name="canvas-axonometric-grid-width" type="System.Int32">64</setting>
+  <setting name="color-picker-tool-selection" type="System.Int32">0</setting>
+  <setting name="color-picker-sample-type" type="System.Int32">0</setting>
+  <setting name="jpg-quality" type="System.Int32">95</setting>
+  <setting name="default-image-type" type="System.String">jpg</setting>
 </settings>

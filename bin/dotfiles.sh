@@ -64,6 +64,7 @@ play_ansible_playbook() {
   sudo \
     LC_ALL="C.UTF-8" \
     ANSIBLE_ROLES_PATH="$ROLE_PATH:$ANSIBLE_ROLES_PATH" \
+    SSH_AUTH_SOCK="$SSH_AUTH_SOCK" \
     ansible-playbook $VERBOSITY -e @$EXTRA_VARS local.yml
 }
 
