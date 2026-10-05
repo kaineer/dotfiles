@@ -1,6 +1,6 @@
 ﻿<settings>
-  <setting name="new-image-width" type="System.Int32">10</setting>
-  <setting name="new-image-height" type="System.Int32">10</setting>
+  <setting name="new-image-width" type="System.Int32">640</setting>
+  <setting name="new-image-height" type="System.Int32">480</setting>
   <setting name="dock-layers-minimized" type="System.Boolean">True</setting>
   <setting name="dock-history-minimized" type="System.Boolean">True</setting>
   <setting name="window-size-width" type="System.Int32">1100</setting>
@@ -15,9 +15,15 @@
   <setting name="menubar-shown" type="System.Boolean">False</setting>
   <setting name="statusbar-shown" type="System.Boolean">False</setting>
   <setting name="toolbox-shown" type="System.Boolean">False</setting>
+<<<<<<< HEAD
   <setting name="last-dialog-directory" type="System.String">file:///home/kaineer/Pictures</setting>
   <setting name="last-selected-tool" type="System.String">MoveSelectedTool</setting>
   <setting name="primary-color" type="System.String">FFF0ECE4</setting>
+=======
+  <setting name="last-dialog-directory" type="System.String">file:///home/kaineer/Pictures/shedevrum/20260929</setting>
+  <setting name="last-selected-tool" type="System.String">RectangleSelectTool</setting>
+  <setting name="primary-color" type="System.String">FF000000</setting>
+>>>>>>> 84e759c8cbf4147f12192f9f5ec1c4288adb2812
   <setting name="secondary-color" type="System.String">FFFFFFFF</setting>
   <setting name="recently-used-colors" type="System.String">FFF0ECE4,FFE8E4DC,FFDCD9D1,FFF5F1E9,FFE6E6E6,FFE6E6E6,FFE6E6E6,FFE6E6E6,FFE6E6E6,FFE6E6E6</setting>
   <setting name="selection-combine-mode" type="System.Int32">0</setting>

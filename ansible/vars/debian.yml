@@ -21,6 +21,7 @@ gui_packages:
   - xdotool
   - zathura
   - ffmpeg
+  - libgtk-4-dev
 
 awesome_packages:
   - awesome
