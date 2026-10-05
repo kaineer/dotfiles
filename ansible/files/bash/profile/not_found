@@ -11,6 +11,7 @@ command_not_found_handle() {
   if [[ "$1" != "$LC" ]]; then
     if command -v "$LC" &>/dev/null; then
       shift
+      ### command вызывает встроенную команду
       # command "$LC" "$@"
       eval "$LC" "$@"
       return $?

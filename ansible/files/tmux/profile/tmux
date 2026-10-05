@@ -18,6 +18,7 @@ __tmux_usage() {
     echo " $ t ks <session-name> -- tmux kill-session -t <session-name>"
     echo " $ t <tmux-command>… -- execute tmux command"
     echo " $ t e -- edit config"
+    echo " $ t mv <session-name> -- move window to session"
 }
 
 __jump() {
@@ -168,7 +169,9 @@ __move_and_switch() {
 ta() {
   # $ ta <session-name> - attach to session, even if it does not exist
   #
-  if [[ "$1" != "" ]]; then
+  if [ -z "$1" ]; then
+    __jump_session
+  else
     # there should be a session name
     SESSION="$1"
 
@@ -193,8 +196,6 @@ ta() {
         tmux switch-client -t "$SESSION"
       fi
     fi
-  else
-    __jump_session
   fi
 }
 
