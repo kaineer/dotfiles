@@ -151,13 +151,17 @@ __four_panes_x() {
 }
 
 __move_and_switch() {
-  if __session_exists "$1"; then
-    tmux move-window -t $1
-    tmux switch-client -t $1
+  if [ -z "$1" ]; then
+    echo " $(ansi red)$(icon log error)$(ansi reset) $(ansi cyan)$ t mv <session-name>$(ansi reset)"
+    echo "    provide session name"
+    return 1
   else
-    tmux new -d -s "$1"
-    tmux move-window -t $1
-    tmux switch-client -t $1
+    if ! __session_exists "$1"; then
+      tmux new-session -d -s "$1"
+      tmux kill-window -t "$1:0"
+    fi
+
+    tmux move-window -t "$1" && tmux switch-client -t "$1"
   fi
 }
 
