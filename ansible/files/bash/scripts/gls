@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+__list_files() {
+  STATUS="$1"
+  PREFIX="$2"
+  KEY="$3"
+
+  LINES=$(echo -e "$STATUS" | grep "${PREFIX}" | awk '{ print $2 }' | sed "s/^/    - /")
+  if [[ "$LINES" != "" ]]; then
+    echo "  ${KEY}:"
+    echo "$LINES"
+  fi
+}
+
+__list_props() {
+  NAME=$(basename $PWD)
+  ORIGIN=$(git remote -v | grep origin | head -n1 | awk '{ print $2 }')
+  STATUS=$(git status --porcelain)
+
+  NO_CHANGES=$(echo $STATUS | wc -l)
+
+  echo "name: \"$NAME\""
+  echo "path: \"${PWD}\""
+  echo "origin: \"$ORIGIN\""
+  echo "status:"
+  if [[ "$NO_CHANGES" == "0" ]]; then
+    echo "  no_changes: true"
+  else
+    echo "  no_changes: false"
+
+    __list_files "$STATUS" "?? " "untraced"
+    __list_files "$STATUS" "M  " "added"
+    __list_files "$STATUS" " M " "modified"
+  fi
+}
+
+if [[ -d ".git" ]]; then
+  __list_props | bat -p -lyaml
+fi
+
