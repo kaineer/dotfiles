@@ -40,10 +40,10 @@ if [[ "$DF_NOTIFY" != "" ]]; then
 else
   notify() {
     if [[ "$DF_NOTIFY_WARNING" == "false" ]]; then
-      echo " [WARN :AX] Please, install libnotify"
+      echo " $(ansi yellow)$(icon log warn)$(ansi reset) Please, install libnotify"
       export DF_NOTIFY_WARNING="true"
     fi
-    echo " [DEBUG:AX]" $@
+    echo " $(ansi red)$(icon log debug)$(ansi reset)" $@
   }
 fi
 

@@ -13,6 +13,7 @@ scripts:
   - fl
   - gateway
   - gd
+  - kk
   - launch
   - lc
   - note
@@ -29,10 +30,6 @@ scripts:
   - xtm
   - nc
   - zed-copy-lines
-  - var
-  - var
-  - var
-  - var
   - urlo
   - onsave
   - gi
@@ -47,3 +44,5 @@ rust_scripts:
   - wf
   - pe
   - rx
+  - kana-converter
+  - smartlist

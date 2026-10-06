@@ -88,3 +88,4 @@ fi
 # Проверяем результат
 NEW_CURRENT=$(ip route | grep default | awk '{print $3}')
 echo "Новый gateway успешно установлен: $NEW_CURRENT"
+

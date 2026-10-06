@@ -11,8 +11,6 @@
 #   * EDITOR env variable
 #   * fzf - [fuzzy finder](https://github.com/junegunn/fzf)
 #
-# State: actively used
-#
 
 BINDIR="$HOME/bin"
 EDITOR=${EDITOR:-vi}

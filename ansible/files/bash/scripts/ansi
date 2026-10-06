@@ -111,7 +111,7 @@ help | --help | -h)
   ;;
 
 # Palette
-palette)
+palette|ks|kitchen-sink)
   show_palette
   ;;
 

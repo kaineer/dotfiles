@@ -43,6 +43,11 @@ choose_with_rofi() {
 }
 
 case "$TERM" in
+  # tmux-256color in tmux
+  # term-256color in simple terminal
+  # xterm-256color in cursor
+  # --------------------------------
   *-256color) choose_with_fzf $@ ;;
+  # else
   *) choose_with_rofi $@ ;;
 esac

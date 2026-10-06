@@ -15,7 +15,7 @@ __list_files() {
 __list_props() {
   ROOT=$1
   if [[ "$ROOT" == "" ]]; then
-    echo "message: Not a git repository"
+    echo "message: \"Not a git repository\""
     return 0
   fi
 
@@ -42,7 +42,5 @@ __list_props() {
 }
 
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
-if [[ -n "$ROOT" ]]; then
-  __list_props "$ROOT" | bat -p -lyaml
-fi
+__list_props "$ROOT" | bat -p -lyaml
 

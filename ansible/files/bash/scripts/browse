@@ -11,6 +11,7 @@
 #   * BROWSER env variable
 #   * BROWSER_CLASS env variable
 #   * $1 should be an url
+#
 
 open_browser() {
   BROWSER=${BROWSER:-$(which brave-browser)}
