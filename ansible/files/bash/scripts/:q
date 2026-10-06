@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
-if [[ "$TMUX" != "" ]]; then
-  tmux kill-pane
-fi
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: analog of ":q" for tmux
+#
+
+[ -n "$TMUX" ] && tmux kill-pane
