@@ -5,7 +5,7 @@ __list_files() {
   PREFIX="$2"
   KEY="$3"
 
-  LINES=$(echo -e "$STATUS" | grep "${PREFIX}" | awk '{ print $2 }' | sed "s/^/    - /")
+  LINES=$(echo -e "$STATUS" | grep "${PREFIX}" | awk '{ print $2 }' | sed "s/^/    - \"/;s/$/\"/")
   if [[ "$LINES" != "" ]]; then
     echo "  ${KEY}:"
     echo "$LINES"
