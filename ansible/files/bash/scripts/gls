@@ -5,7 +5,7 @@ __list_files() {
   PREFIX="$2"
   KEY="$3"
 
-  LINES=$(echo -e "$STATUS" | grep "${PREFIX}" | awk '{ print $2 }' | sed "s/^/    - \"/;s/$/\"/")
+  LINES=$(echo -e "$STATUS" | grep "^${PREFIX}" | awk '{ print $2 }' | sed "s/^/    - \"/;s/$/\"/")
   if [[ "$LINES" != "" ]]; then
     echo "  ${KEY}:"
     echo "$LINES"
@@ -13,7 +13,14 @@ __list_files() {
 }
 
 __list_props() {
-  NAME=$(basename $PWD)
+  ROOT=$1
+  if [[ "$ROOT" == "" ]]; then
+    echo "message: Not a git repository"
+    return 0
+  fi
+
+  cd "$ROOT"
+  NAME=$(basename $ROOT)
   ORIGIN=$(git remote -v | grep origin | head -n1 | awk '{ print $2 }')
   STATUS=$(git status --porcelain)
 
@@ -34,7 +41,8 @@ __list_props() {
   fi
 }
 
-if [[ -d ".git" ]]; then
-  __list_props | bat -p -lyaml
+ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
+if [[ -n "$ROOT" ]]; then
+  __list_props "$ROOT" | bat -p -lyaml
 fi
 

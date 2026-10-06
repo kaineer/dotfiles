@@ -13,20 +13,42 @@
 [[ "$1" != "-i" ]] && return
 
 DOCKER_BIN=""
+DOCKER_COMPOSE_BIN=""
+
+### detect compose file
+COMPOSE_FILE=""
+if [ -f "docker-compose.yml" ]; then
+  COMPOSE_FILE="docker-compose.yml"
+fi
+if [ -f "docker-compose.yaml" ]; then
+  COMPOSE_FILE="docker-compose.yaml"
+fi
+if [ -f "compose.yml" ]; then
+  COMPOSE_FILE="compose.yml"
+fi
+if [ -f "compose.yaml" ]; then
+  COMPOSE_FILE="compose.yaml"
+fi
 
 if [[ "$(which podman)" != "" ]]; then
   DOCKER_BIN="podman"
+  DOCKER_COMPOSE_BIN="podman-compose"
 
   if [[ "$(which podman-compose)" != "" ]]; then
     alias dc=podman-compose
-  elif [ -f "~/.podman-compose/venv/bin/podman-compose" ]; then
-    alias dc="~/.podman-compose/venv/bin/podman-compose"
   fi
 
   alias d="$DOCKER_BIN"
   alias dps="podman ps"
   alias dpsf='podman ps --format "{{.ID}}|{{.Names}}|{{.Status}}" | awk -F"|" '\''{printf "%-15s | %-25s | %s\n", $1, $2, $3}'\'
   alias dpsi="podman ps --format \"{{.ID}}\""
+
+  dup() {
+    if [ -n "$COMPOSE_FILE" ]; then
+      SERVICE=$(cat "${COMPOSE_FILE}" | yq -r '.services | keys[]' | fzf -dmenu) 
+      "$DOCKER_COMPOSE_BIN" up "$SERVICE" -d
+    fi
+  }
 
   dk() {
     LINE=$(podman ps --format "{{.ID}} | {{.Names}}" | fzf -0)
@@ -49,7 +71,6 @@ if [[ "$(which podman)" != "" ]]; then
         echo -n ""
         echo ":$LL"
         # ID=$(echo $LL | awk '{ print $1 }')
-  
       done
       # ID=$(echo $LINE | awk '{ print $1 }')
       # $DOCKER_BIN kill $ID
