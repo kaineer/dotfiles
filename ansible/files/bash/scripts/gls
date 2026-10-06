@@ -17,7 +17,7 @@ __list_props() {
   ORIGIN=$(git remote -v | grep origin | head -n1 | awk '{ print $2 }')
   STATUS=$(git status --porcelain)
 
-  NO_CHANGES=$(echo $STATUS | wc -l)
+  NO_CHANGES=$(echo $STATUS | grep -c .)
 
   echo "name: \"$NAME\""
   echo "path: \"${PWD}\""
