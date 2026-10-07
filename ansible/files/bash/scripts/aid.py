@@ -188,6 +188,17 @@ def cmd_move(args):
                 except Exception as e:
                     print(f"Error moving {file_path}: {e}", file=sys.stderr)
 
+    # Remove empty date-named source directories (after moves, or when nothing to move)
+    if not is_dry_run():
+        for item in src_dir.iterdir():
+            if not item.is_dir() or not date_pattern.match(item.name):
+                continue
+            try:
+                if not any(item.iterdir()):
+                    item.rmdir()
+            except Exception as e:
+                print(f"Error removing empty directory {item}: {e}", file=sys.stderr)
+
     # Display totals
     if total_image_files + total_md_files > 0:
         print("### Totals:")

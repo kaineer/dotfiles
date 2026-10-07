@@ -1,0 +1,3 @@
+(A) 2026-10-07 task list for today +none @itc rec:1b
+(A) 2026-10-07 synchronize in morning +config rec:1b
+(A) 2026-10-07 synchronize in evening +config rec:1b
