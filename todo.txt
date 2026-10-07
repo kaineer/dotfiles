@@ -1,3 +1,10 @@
+(A) 2026-10-07 prepare lessons @itc rec:1w
+x 2026-10-07 2026-10-07 synchronize in morning +config rec:1b
+x 2026-10-07 2026-10-07 synchronize in morning +config rec:1b due:2026-10-08
+x 2026-10-07 2026-10-07 synchronize in morning +config rec:1b due:2026-10-08
+(A) 2026-10-07 synchronize in morning +config rec:1b due:2026-10-08
 (A) 2026-10-07 task list for today +none @itc rec:1b
-(A) 2026-10-07 synchronize in morning +config rec:1b
 (A) 2026-10-07 synchronize in evening +config rec:1b
+x 2026-10-07 2026-10-07 add streets into buildings.json +maps.ai @itc
+(C) 2026-10-07 add behaviours +ocr-shell @home
+(C) 2026-10-07 provide workplace for ocr-shell with webcam +ocr-shell @home @handwork
