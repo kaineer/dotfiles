@@ -383,10 +383,12 @@ def extract_result_time(obj) -> int | None:
 
 
 def poll_sleep_seconds(eta: int | None) -> float:
-    """Пауза между GET: не меньше 5с, иначе 80% от эстимейта."""
+    """Пауза между GET: не меньше 5с, иначе 80% от эстимейта.
+      При eta значительно больше минуты, ограничивать 60s сверху.
+    """
     if eta is None:
         return 5.0
-    return max(5.0, 0.8 * eta)
+    return max(5.0, min(60, 0.8 * eta))
 
 
 # ---------- основной флоу ----------
