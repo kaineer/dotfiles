@@ -29,8 +29,20 @@ fi
 
 NEW_GATEWAY="$1"
 
+__cmd_ip_r() {
+  ip route
+}
+
+__cmd_default_gw() {
+  __cmd_ip_r | grep default | awk '{ print $3 }'
+}
+
+__cmd_default_if() {
+  __cmd_ip_r | grep default | awk '{ print $5 }'
+}
+
 # Получаем текущий default gateway
-CURRENT_GATEWAY=$(ip route | grep default | awk '{print $3}')
+CURRENT_GATEWAY=$(__cmd_default_gw)
 
 if [ -z "$CURRENT_GATEWAY" ]; then
   echo "не найден default gateway"
@@ -60,7 +72,7 @@ if [ "$NEW_GATEWAY" = "$CURRENT_GATEWAY" ]; then
 fi
 
 # Получаем интерфейс для default gateway
-INTERFACE=$(ip route | grep default | awk '{print $5}')
+INTERFACE=$(__cmd_default_if)
 
 if [ -z "$INTERFACE" ]; then
   echo "не удалось определить интерфейс"
@@ -86,6 +98,6 @@ if ! sudo ip route add default via $NEW_GATEWAY dev $INTERFACE; then
 fi
 
 # Проверяем результат
-NEW_CURRENT=$(ip route | grep default | awk '{print $3}')
+NEW_CURRENT=$(__cmd_default_gw)
 echo "Новый gateway успешно установлен: $NEW_CURRENT"
 

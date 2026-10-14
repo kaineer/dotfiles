@@ -37,8 +37,6 @@ scripts:
   - si
   - osid
   - shps
-  - :q
-  - :on
   - gls
 rust_scripts:
   - wf

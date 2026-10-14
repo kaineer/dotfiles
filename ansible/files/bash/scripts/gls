@@ -38,6 +38,7 @@ __list_props() {
     __list_files "$STATUS" "?? " "untraced"
     __list_files "$STATUS" "M  " "added"
     __list_files "$STATUS" " M " "modified"
+    __list_files "$STATUS" "AA " "conflict"
   fi
 }
 

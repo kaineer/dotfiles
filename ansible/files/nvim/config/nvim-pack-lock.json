@@ -53,7 +53,7 @@
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "mason-lspconfig.nvim": {
-      "rev": "b3298993d55fa194279b5eb9dbfb3a43da65cadf",
+      "rev": "00b5473cca4db5b410ff4bae724e3b6e21f2687f",
       "src": "https://github.com/mason-org/mason-lspconfig.nvim"
     },
     "mason-tool-installer.nvim": {
@@ -77,7 +77,7 @@
       "src": "https://github.com/norcalli/nvim-colorizer.lua"
     },
     "nvim-filename": {
-      "rev": "8f90bcf879737ed84ede15245e341568dc5cba71",
+      "rev": "2576aaa201c8109dad2637e302499a3627289e0b",
       "src": "https://github.com/kaineer/nvim-filename"
     },
     "nvim-highlight-colors": {
@@ -85,7 +85,7 @@
       "src": "https://github.com/brenoprata10/nvim-highlight-colors"
     },
     "nvim-lspconfig": {
-      "rev": "3e8d598d3b5f8338a41699c436e5fa11d2666cf0",
+      "rev": "ac062d0d01c019c0dbdb798968f3e5d8b35c3853",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-snippets": {
@@ -93,7 +93,7 @@
       "src": "https://github.com/garymjr/nvim-snippets"
     },
     "nvim-web-devicons": {
-      "rev": "58447c1fca354bbf184425e4a8d01deecbd6f3c4",
+      "rev": "ec309a0eaff6ea967e58c275996155ab5c16938d",
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "plenary.nvim": {
