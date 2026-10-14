@@ -37,6 +37,8 @@ assign(vim.opt, {
   laststatus = 0,
 })
 
+vim.opt.fillchars:append({ vert = "┃" })
+
 -- Global options
 assign(vim.g, {
 	markdown_fenced_languages = {
