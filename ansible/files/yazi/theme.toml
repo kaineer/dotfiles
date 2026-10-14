@@ -56,7 +56,7 @@ count_selected = { fg = "#2E3440", bg = "#EBCB8B" } # nord0 on nord13
 
 # Border - Use a subtle Polar Night color
 border_symbol = "┃"
-border_style = { fg = "#5e81ac" }
+border_style = { fg = "#4C566A" }
 
 # : }}}
 
