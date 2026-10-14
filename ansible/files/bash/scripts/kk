@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+smartlist kana-converter | xsel -ib
