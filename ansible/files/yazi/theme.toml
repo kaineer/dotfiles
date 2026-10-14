@@ -145,9 +145,9 @@ border = { fg = "#81a1c1" } # nord9
 
 [tasks]
 # Tasks window - Frost blue border, Aurora purple for hovered task
-border = { fg = "#81A1C1" }                    # nord9
-title = { fg = "#ECEFF4" }                     # nord6
-hovered = { fg = "#B48EAD", underline = true } # nord15 (Purple)
+border = { fg = "#81a1c1" }                    # nord9
+title = { fg = "#eceff4" }                     # nord6
+hovered = { fg = "#b48ead", underline = true } # nord15 (Purple)
 
 # : }}}
 
