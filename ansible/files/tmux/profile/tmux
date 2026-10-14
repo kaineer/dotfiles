@@ -226,6 +226,40 @@ __list_all_windows() {
     tmux list-windows -a -F "#S: #I -> #W"
 }
 
+if [ -n "$TMUX" ]; then
+  te() {
+    $EDITOR $TMUX_CFG/$TMUX_FILE
+  }
+
+  tw() { 
+    tmux select-window -t "$1" 
+  } 
+
+  th() {
+    tmux split-window -h "$@"
+  }
+  
+  tv() {
+    tmux split-window -v "$@"
+  }
+  
+  :on() {
+    tmux kill-pane -a
+  }
+  
+  :q() {
+    tmux kill-pane
+  }
+  
+  :vs() {
+    tmux splitw -h
+  }
+  
+  :sp() {
+    tmux splitw
+  }
+fi
+
 t() {
     case "$1" in
     "h" | "help") __tmux_usage ;;
@@ -265,36 +299,4 @@ t() {
     "") __fzf_command ;;
     *) tmux "$@" ;;
     esac
-}
-
-te() {
-  $EDITOR $TMUX_CFG/$TMUX_FILE
-}
-
-tw() {
-  tmux select-window -t "$1"
-}
-
-th() {
-  tmux split-window -h "$@"
-}
-
-tv() {
-  tmux split-window -v "$@"
-}
-
-:on() {
-  tmux kill-pane -a
-}
-
-:q() {
-  tmux kill-pane
-}
-
-:vs() {
-  tmux splitw -h
-}
-
-:sp() {
-  tmux splitw
 }
