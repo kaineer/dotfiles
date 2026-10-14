@@ -272,13 +272,29 @@ te() {
 }
 
 tw() {
-    tmux select-window -t "$1"
+  tmux select-window -t "$1"
 }
 
 th() {
-    tmux split-window -h "$@"
+  tmux split-window -h "$@"
 }
 
 tv() {
-    tmux split-window -v "$@"
+  tmux split-window -v "$@"
+}
+
+:on() {
+  tmux kill-pane -a
+}
+
+:q() {
+  tmux kill-pane
+}
+
+:vs() {
+  tmux splitw -h
+}
+
+:sp() {
+  tmux splitw
 }
