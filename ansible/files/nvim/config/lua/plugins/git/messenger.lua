@@ -9,10 +9,10 @@ return {
 
 		local mkcmd = require("core.utils").buildMkcmd("WTF")
 		require("which-key").add({
-			{ " gs", mkcmd("G"), desc = "Git status" },
-			{ " ga", mkcmd("Git add ."), desc = "Git add current file" },
-			{ " gl", mkcmd("GV"), desc = "Git log" },
-			{ " gm", mkcmd("GitMessenger"), desc = "Annotate current line" },
+			{ "<leader>gs", mkcmd("G"), desc = "Git status" },
+			{ "<leader>ga", mkcmd("Git add ."), desc = "Git add current file" },
+			{ "<leader>gl", mkcmd("GV"), desc = "Git log" },
+			{ "<leader>gm", mkcmd("GitMessenger"), desc = "Annotate current line" },
 		})
 
 		require("core.map").visual({

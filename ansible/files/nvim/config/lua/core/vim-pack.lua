@@ -12,7 +12,7 @@ require("core.vim-pack.config")({
 })
 
 require("which-key").add({
-  { " pu", function() 
+  { "<leader>pu", function() 
     vim.pack.update(nil, { force = true })
     vim.schedule(function()
       vim.notify("vim.pack: update finished", vim.log.levels.INFO)
