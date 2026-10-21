@@ -8,6 +8,8 @@ configuration {
   display-window: "";
   display-combi:  "";
   show-icons:     true;
+
+  modi: "window,drun,run,filebrowser,keys";
 }
 
 @theme "~/.config/rofi/nord.rasi"

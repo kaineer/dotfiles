@@ -246,5 +246,9 @@
   "cfg:yazi": {
     "dir": "/home/kaineer/.config/yazi",
     "bin": "nvim"
+  },
+  "cfg:rofi": {
+    "dir": "/home/kaineer/.config/rofi",
+    "bin": "nvim"
   }
 }
