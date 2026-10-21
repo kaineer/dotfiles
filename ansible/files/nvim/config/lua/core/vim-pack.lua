@@ -1,12 +1,12 @@
 require("core.vim-pack.config")({
   "plugins.colors.pack",
   "plugins.edit.colorizer",
+  "plugins.incline.pack",
   "plugins.filename.init",
   "plugins.navigation.pack",
   "plugins.telescope.pack",
   "plugins.lsp.pack",
   "plugins.git.pack",
-  -- "plugins.lualine.pack",
   "plugins.completion.pack",
   "plugins.snippets.pack",
 })

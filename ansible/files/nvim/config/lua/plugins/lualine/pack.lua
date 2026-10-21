@@ -87,5 +87,8 @@ return {
       tabline = {},
       extensions = { "fugitive" },
     })
+
+    require("lualine").hide({ place = { "statusline" } })
+    vim.opt.laststatus = 0
   end,
 }
