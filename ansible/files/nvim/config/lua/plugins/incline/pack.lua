@@ -23,6 +23,30 @@ return {
       return nil
     end
 
+    local function git_diff(buf)
+      local ok, summary = pcall(function()
+        return vim.api.nvim_buf_call(buf, function()
+          return vim.fn.GitGutterGetHunkSummary()
+        end)
+      end)
+      if not ok or type(summary) ~= "table" then
+        return {}
+      end
+
+      local icons = {
+        { n = summary[1], icon = " ", guifg = "#a3be8c" }, -- added
+        { n = summary[2], icon = " ", guifg = "#ebcb8b" }, -- modified
+        { n = summary[3], icon = " ", guifg = "#bf616a" }, -- removed
+      }
+      local parts = {}
+      for _, item in ipairs(icons) do
+        if type(item.n) == "number" and item.n > 0 then
+          table.insert(parts, { item.icon .. item.n .. " ", guifg = item.guifg })
+        end
+      end
+      return parts
+    end
+
     local function filetype(buf)
       local ft = vim.bo[buf].filetype
       if type(ft) == "string" and ft ~= "" then
@@ -77,16 +101,18 @@ return {
         local modified = vim.bo[props.buf].modified
         local name = filename(props.buf)
         local branch = git_branch(props.buf)
+        local diff = git_diff(props.buf)
         local ft = filetype(props.buf)
         local loc = location(props.win)
         local width = vim.api.nvim_win_get_width(props.win)
 
         local left = {
           " ",
-          branch and { " " .. branch .. " ", guifg = "#d8dee9" } or "",
+          modified and { " ", guifg = "#2e3440" } or "",
           { name, gui = modified and "bold,italic" or "bold" },
-          modified and { " ●", guifg = "#ebcb8b" } or "",
-          ft and { "  " .. ft, guifg = "#eceff4" } or "",
+          branch and { "  " .. branch .. " ", guifg = "#d8dee9" } or " ",
+          { diff },
+          ft and { ft, guifg = "#eceff4" } or "",
         }
 
         local right = {
