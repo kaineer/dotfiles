@@ -5,7 +5,7 @@
 # (мой личный форк, позволяющий не скачивать шрифты,
 #  если они уже были скачаны)
 #
-- src: https://github.com/kaineer/ansible-role-nerdfonts
+# - src: https://github.com/kaineer/ansible-role-nerdfonts
 
 # Устанавливаем релизы из github
 #

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+[[ "$1" != "-i" ]] && return
+
+__tmux_4x() {
+  if [ -d ".tmux" ]; then
+    t 4x
+  fi
+}
+
+precmd_functions+=(__tmux_4x)

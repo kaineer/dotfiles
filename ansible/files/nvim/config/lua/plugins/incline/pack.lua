@@ -34,9 +34,9 @@ return {
       end
 
       local icons = {
-        { n = summary[1], icon = " ", guifg = "#a3be8c" }, -- added
-        { n = summary[2], icon = " ", guifg = "#ebcb8b" }, -- modified
-        { n = summary[3], icon = " ", guifg = "#bf616a" }, -- removed
+        { n = summary[1], icon = " ", guifg = "#21261c" }, -- added
+        { n = summary[3], icon = " ", guifg = "#261315" }, -- removed
+        { n = summary[2], icon = " ", guifg = "#2f291c" }, -- modified
       }
       local parts = {}
       for _, item in ipairs(icons) do
@@ -53,6 +53,29 @@ return {
         return ft
       end
       return nil
+    end
+
+    local function filetype_icon(buf)
+      local name = vim.api.nvim_buf_get_name(buf)
+      local ft = vim.bo[buf].filetype
+      local ok, devicons = pcall(require, "nvim-web-devicons")
+      if not ok then
+        return ft ~= "" and { ft, guifg = "#eceff4" } or nil
+      end
+      local icon, color
+      if name ~= "" then
+        icon, color = devicons.get_icon_color(name)
+      end
+      if not icon and ft ~= "" then
+        icon, color = devicons.get_icon_color_by_filetype(ft)
+      end
+      if icon then
+        return { icon .. " ", guifg = color or "#eceff4" }
+      end
+      if ft ~= "" then
+        return { ft .. " ", guifg = "#eceff4" }
+      end
+      return nil    
     end
 
     local function location(win)
@@ -103,16 +126,18 @@ return {
         local branch = git_branch(props.buf)
         local diff = git_diff(props.buf)
         local ft = filetype(props.buf)
+        local fti = filetype_icon(props.buf)
         local loc = location(props.win)
         local width = vim.api.nvim_win_get_width(props.win)
 
         local left = {
           " ",
           modified and { " ", guifg = "#2e3440" } or "",
+          fti or "",
           { name, gui = modified and "bold,italic" or "bold" },
           branch and { "  " .. branch .. " ", guifg = "#d8dee9" } or " ",
           { diff },
-          ft and { ft, guifg = "#eceff4" } or "",
+          -- ft and { ft, guifg = "#eceff4" } or "",
         }
 
         local right = {
