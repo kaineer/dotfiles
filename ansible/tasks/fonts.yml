@@ -1,20 +1,6 @@
 ---
 # Nerd fonts for terminal
-#  * link: https://github.com/ctorgalson/ansible-role-nerdfonts
 #
-# - name: Install fira nerd
-#   include_role:
-#     name: "ansible-role-nerdfonts"
-#   vars:
-#     nf_user: "{{ user.name }}"
-#     nf_group: "{{ user.name }}"
-#     nf_linux_fonts_dir: "/home/{{ user.name }}/.fonts"
-#     nf_overwrite: false
-#     nf_single_fonts:
-#       - "FiraCode/Bold/FiraCodeNerdFont-Bold.ttf"
-#       - "FiraCode/Medium/FiraCodeNerdFont-Medium.ttf"
-#       - "FiraCode/Regular/FiraCodeNerdFont-Regular.ttf"
-#       - "FiraCode/Light/FiraCodeNerdFont-Light.ttf"
 
 - name: Prepare folder for fira code fonts
   file:
@@ -30,6 +16,11 @@
     dest: "/home/{{ user.name }}/.local/share/fonts/FiraCode"
     remote_src: true
     creates: "/home/{{ user.name }}/.local/share/fonts/FiraCode/FiraCodeNerdFont-Regular.ttf"
+- name: Remove .fonts dir
+  file:
+    path: "/home/{{ user.name }}/.fonts"
+    state: "absent"
+
 - name: Prepare fonts cache
   ansible.builtin.command: fc-cache -f
   changed_when: false
