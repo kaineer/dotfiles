@@ -6,6 +6,7 @@ return {
     require("nvim-filename").setup({
       timeout = 500,
       highlight = "FilenameFloat",
+      source = "incline",
     })
   end,
 }

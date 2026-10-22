@@ -15,6 +15,7 @@
     state: "link"
   with_items:
     - aliases
+    - autocd
     - browser
     - bind
     - direnv

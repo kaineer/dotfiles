@@ -6,12 +6,37 @@ x 2026-10-08 2026-10-07 synchronize in morning +config rec:1b due:2026-10-08
 x 2026-10-09 2026-10-08 synchronize in morning +config rec:1b due:2026-10-09
 x 2026-10-12 2026-10-09 synchronize in morning +config rec:1b due:2026-10-12
 x 2026-10-13 2026-10-12 synchronize in morning +config rec:1b due:2026-10-13
-(A) 2026-10-13 synchronize in morning +config rec:1b due:2026-10-14
+x 2026-10-16 2026-10-13 synchronize in morning +config rec:1b due:2026-10-14
+x 2026-10-20 2026-10-16 synchronize in morning +config rec:1b due:2026-10-19
+x 2026-10-21 2026-10-20 synchronize in morning +config rec:1b due:2026-10-21
+x 2026-10-21 2026-10-21 synchronize in morning +config rec:1b due:2026-10-22
+x 2026-10-21 2026-10-21 synchronize in morning +config rec:1b due:2026-10-22
+x 2026-10-21 2026-10-21 synchronize in morning +config rec:1b due:2026-10-22
+(A) 2026-10-21 synchronize in morning +config rec:1b due:2026-10-22
 (A) 2026-10-07 task list for today +none @itc rec:1b
 x 2026-10-07 2026-10-07 synchronize in evening +config rec:1b
 x 2026-10-08 2026-10-07 synchronize in evening +config rec:1b due:2026-10-08
 x 2026-10-09 2026-10-08 synchronize in evening +config rec:1b due:2026-10-09
 (A) 2026-10-09 synchronize in evening +config rec:1b due:2026-10-12
 x 2026-10-07 2026-10-07 add streets into buildings.json +maps.ai @itc
-(C) 2026-10-07 add behaviours +ocr-shell @home
-(C) 2026-10-07 provide workplace for ocr-shell with webcam +ocr-shell @home @handwork
+(U) 2026-10-07 add behaviours +ocr-shell @home
+(U) 2026-10-07 provide workplace for ocr-shell with webcam +ocr-shell @home @handwork
+x 2026-10-20 2026-10-20 display current B-task in tmux @itc note:projects/tuxedo-tasks/display-current-b-task-in-tmux.md
+x 2026-10-20 2026-10-20 classwork for @itc
+x 2026-10-20 2026-10-20 dinner @itc
+x 2026-10-21 2026-10-20 homework for japanese @home +nihon
+(U) 2026-10-20 redmine access @itc due:2026-10-21
+(B) new application of ekbmaps @itc
+x 2026-10-21 2026-10-21 dinner rec:1b note:projects/tuxedo-tasks/dinner.md
+x 2026-10-21 2026-10-21 dinner rec:1b note:projects/tuxedo-tasks/dinner.md due:2026-10-22
+x 2026-10-21 2026-10-21 dinner rec:1b note:projects/tuxedo-tasks/dinner.md due:2026-10-22
+x 2026-10-21 2026-10-21 dinner rec:1b note:projects/tuxedo-tasks/dinner.md due:2026-10-22
+x 2026-10-21 2026-10-21 dinner rec:1b note:projects/tuxedo-tasks/dinner.md due:2026-10-22
+x 2026-10-22 2026-10-22 dinner rec:1b due:2026-10-22
+(B) 2026-10-22 dinner rec:1b due:2026-10-23
+x 2026-10-21 2026-10-21 wednesday lesson rec:1w
+x 2026-10-21 2026-10-21 wednesday lesson rec:1w due:2026-10-28
+x 2026-10-21 2026-10-21 wednesday lesson rec:1w due:2026-10-28
+(W) 2026-10-21 wednesday lesson rec:1w due:2026-10-28
+x 2026-10-21 2026-10-21 monday lesson rec:1w
+(W) 2026-10-21 monday lesson rec:1w due:2026-10-26
