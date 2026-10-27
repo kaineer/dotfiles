@@ -1,10 +1,16 @@
 # MOCP keymap
-# @link: https://github.com/gokcehan/lf/blob/master/etc/lfrc.example
+# @link: https://github.com/lipnitsk/mocp/blob/master/keymap.example
 
-go = o
+go = l
+go_up = h
 
 menu_up = k
 menu_down = j
+menu_page_up = K
+menu_page_down = J
+
+menu_first_item = g
+menu_last_item = G
 
 quit_client = q escape
 quit = Q
