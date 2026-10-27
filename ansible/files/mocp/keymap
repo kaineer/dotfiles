@@ -1,6 +1,6 @@
 # MOCP keymap
 # @link: https://github.com/lipnitsk/mocp/blob/master/keymap.example
-
+#
 go = l
 go_up = h
 
