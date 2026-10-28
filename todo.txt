@@ -26,7 +26,7 @@ x 2026-10-20 2026-10-20 display current B-task in tmux @itc note:projects/tuxedo
 x 2026-10-20 2026-10-20 classwork for @itc
 x 2026-10-20 2026-10-20 dinner @itc
 x 2026-10-21 2026-10-20 homework for japanese @home +nihon
-(U) 2026-10-20 redmine access @itc due:2026-10-21
+(U) 2026-10-20 redmine access @itc due:2026-10-21 note:projects/tuxedo-tasks/redmine-access.md
 (B) new application of ekbmaps @itc
 x 2026-10-21 2026-10-21 dinner rec:1b note:projects/tuxedo-tasks/dinner.md
 x 2026-10-21 2026-10-21 dinner rec:1b note:projects/tuxedo-tasks/dinner.md due:2026-10-22
@@ -35,10 +35,13 @@ x 2026-10-21 2026-10-21 dinner rec:1b note:projects/tuxedo-tasks/dinner.md due:2
 x 2026-10-21 2026-10-21 dinner rec:1b note:projects/tuxedo-tasks/dinner.md due:2026-10-22
 x 2026-10-22 2026-10-22 dinner rec:1b due:2026-10-22
 x 2026-10-26 2026-10-22 dinner rec:1b due:2026-10-23
-(B) 2026-10-26 dinner rec:1b due:2026-10-27
+x 2026-10-28 2026-10-26 dinner rec:1b due:2026-10-27
+(B) 2026-10-28 dinner rec:1b due:2026-10-29
 x 2026-10-21 2026-10-21 wednesday lesson rec:1w
 x 2026-10-21 2026-10-21 wednesday lesson rec:1w due:2026-10-28
 x 2026-10-21 2026-10-21 wednesday lesson rec:1w due:2026-10-28
-(W) 2026-10-21 wednesday lesson rec:1w due:2026-10-28
+x 2026-10-28 2026-10-21 wednesday lesson rec:1w due:2026-10-28
+(W) 2026-10-28 wednesday lesson rec:1w due:2026-11-04
 x 2026-10-21 2026-10-21 monday lesson rec:1w
-(W) 2026-10-21 monday lesson rec:1w due:2026-10-26
+x 2026-10-28 2026-10-21 monday lesson rec:1w due:2026-10-26
+(W) 2026-10-28 monday lesson rec:1w due:2026-11-04
