@@ -31,12 +31,10 @@
 
 # Paths use playbook_dir: after include_tasks of absolute tasks.json,
 # Ansible's basedir shifts and bare ./... resolves under ansible/.
-- include_tasks: "{{ playbook_dir }}/tasks/wezterm.yml"
-- include_tasks: "{{ playbook_dir }}/tasks/ghostty.yml"
-# Migrated cli (+ gnome) → jsonnet → ansible/tasks.json
+#
+# ghostty: unused — not included
+# wezterm + other GUI → jsonnet/tasks/desktop/ (gui_workstations)
 - include_tasks: "{{ tasks_file | default(playbook_dir + '/tasks.json') }}"
-- include_tasks: "{{ playbook_dir }}/tasks/rust/repo.yml"
-- include_tasks: "{{ playbook_dir }}/tasks/rust/cli.yml"
 
 - include_tasks: "{{ playbook_dir }}/tasks/media/mocp.yml"
 - include_tasks: "{{ playbook_dir }}/tasks/media/rmpc.yml"
