@@ -1,6 +1,8 @@
-// Creating DConf task
+// Creating DConf task (username from ctx by default)
 //
-function(username, title, key, value) {
+local ctx = import 'ctx.jsonnet';
+
+function(title, key, value, username=ctx.user.name) {
   name: title,
   become_user: username,
   dconf: {

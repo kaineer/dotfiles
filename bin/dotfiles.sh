@@ -49,7 +49,18 @@ install_ansible_roles() {
   fi
 }
 
+TASKS_FILE="${TASKS_FILE:-$DOTFILES_DIR/ansible/tasks.json}"
+
+build_ansible_tasks() {
+  USER="$USER" \
+    PLAYBOOK_DIR="$DOTFILES_DIR/ansible" \
+    TASKS_OUT="$TASKS_FILE" \
+    "$DOTFILES_DIR/jsonnet/build.sh"
+}
+
 play_ansible_playbook() {
+  build_ansible_tasks
+
   cd "$DOTFILES_DIR/ansible"
 
   VERBOSITY=""
@@ -65,7 +76,10 @@ play_ansible_playbook() {
     LC_ALL="C.UTF-8" \
     ANSIBLE_ROLES_PATH="$ROLE_PATH:$ANSIBLE_ROLES_PATH" \
     SSH_AUTH_SOCK="$SSH_AUTH_SOCK" \
-    ansible-playbook $VERBOSITY -e @$EXTRA_VARS local.yml
+    ansible-playbook $VERBOSITY \
+      -e @$EXTRA_VARS \
+      -e "tasks_file=$TASKS_FILE" \
+      local.yml
 }
 
 restart_x_server() {

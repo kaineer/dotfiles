@@ -10,3 +10,6 @@ lazy-lock.json
 
 ansible/files/nvim/plugin/
 ansible/files/nvim/config/log/
+
+### Generated from jsonnet (do not edit)
+ansible/tasks.json

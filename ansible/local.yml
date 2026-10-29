@@ -20,7 +20,7 @@
     - include_vars: ./vars/logs.yml
 
     # --- tasks
+    # Migrated jsonnet tasks are pulled in from {{ tasks_file }} (see debian.yml).
     #
     - include_tasks: ./tasks/debian.yml
     - include_tasks: ./tasks/fonts.yml
-    - include_tasks: ./tasks/gnome.yml

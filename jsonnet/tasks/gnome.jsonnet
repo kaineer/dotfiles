@@ -1,24 +1,18 @@
-// tasks/gnome.yml
-
+local ctx = import 'ctx.jsonnet';
 local DconfTask = import 'dconf-task.jsonnet';
 local Pkg = import 'package-task.jsonnet';
 
 local keyboardTitle = 'Set keyboard ';
 local keyboardPath = '/org/gnome/libgnomekbd/keyboard/';
 
-local KeyboardDconfTask(username, suffix, data) = DconfTask(
-  username,
+local Kbd(suffix, data) = DconfTask(
   keyboardTitle + suffix,
   keyboardPath + suffix,
-  data
+  data,
 );
 
-local Kbd = KeyboardDconfTask;
-
-local GnomeTask(username) = [
+[
   Pkg('Install dconf requirements', 'python3-psutil'),
-  Kbd(username, 'options', "['lv3\tlv3:switch', 'compat\tmisc:typo', 'grp\tgrp:caps_toggle']"),
-  Kbd(username, 'layouts', "['us', 'ru']"),
-];
-
-GnomeTask('kaineer')
+  Kbd('options', "['lv3\tlv3:switch', 'compat\tmisc:typo', 'grp\tgrp:caps_toggle']"),
+  Kbd('layouts', "['us', 'ru']"),
+]
