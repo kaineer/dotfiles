@@ -29,31 +29,22 @@
     path: "/home/{{ user.name }}/bin"
     state: "directory"
 
-- include_tasks: ./wezterm.yml
-- include_tasks: ./ghostty.yml
-# Migrated → jsonnet → ansible/tasks.json (override with -e tasks_file=...)
+# Paths use playbook_dir: after include_tasks of absolute tasks.json,
+# Ansible's basedir shifts and bare ./... resolves under ansible/.
+- include_tasks: "{{ playbook_dir }}/tasks/wezterm.yml"
+- include_tasks: "{{ playbook_dir }}/tasks/ghostty.yml"
+# Migrated cli (+ gnome) → jsonnet → ansible/tasks.json
 - include_tasks: "{{ tasks_file | default(playbook_dir + '/tasks.json') }}"
-- include_tasks: ./cli/text.yml
-- include_tasks: ./cli/ytdl.yml
-- include_tasks: ./cli/rofi.yml
-- include_tasks: ./cli/starship.yml
-- include_tasks: ./cli/lf.yml
-- include_tasks: ./cli/rustup.yml
-- include_tasks: ./rust/repo.yml
-- include_tasks: ./rust/cli.yml
-- include_tasks: ./cli/yazi.yml
-- include_tasks: ./cli/fzf.yml
-- include_tasks: ./cli/doppler/dopper.yml
-- include_tasks: ./cli/neovim.yml
-- include_tasks: ./cli/node.yml
+- include_tasks: "{{ playbook_dir }}/tasks/rust/repo.yml"
+- include_tasks: "{{ playbook_dir }}/tasks/rust/cli.yml"
 
-- include_tasks: ./media/mocp.yml
-- include_tasks: ./media/rmpc.yml
-- include_tasks: ./media/pinta.yml
-- include_tasks: ./browsers/brave.yml
+- include_tasks: "{{ playbook_dir }}/tasks/media/mocp.yml"
+- include_tasks: "{{ playbook_dir }}/tasks/media/rmpc.yml"
+- include_tasks: "{{ playbook_dir }}/tasks/media/pinta.yml"
+- include_tasks: "{{ playbook_dir }}/tasks/browsers/brave.yml"
 
-- include_tasks: ./gui/eog.yml
-- include_tasks: ./gui/obsidian.yml
-- include_tasks: ./gui/telegram.yml
-- include_tasks: ./gui/zathura.yml
-- include_tasks: ./gui/zed.yml
+- include_tasks: "{{ playbook_dir }}/tasks/gui/eog.yml"
+- include_tasks: "{{ playbook_dir }}/tasks/gui/obsidian.yml"
+- include_tasks: "{{ playbook_dir }}/tasks/gui/telegram.yml"
+- include_tasks: "{{ playbook_dir }}/tasks/gui/zathura.yml"
+- include_tasks: "{{ playbook_dir }}/tasks/gui/zed.yml"

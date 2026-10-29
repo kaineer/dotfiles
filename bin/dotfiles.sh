@@ -53,27 +53,40 @@ TASKS_FILE="${TASKS_FILE:-$DOTFILES_DIR/ansible/tasks.json}"
 TASKS_MD5="${TASKS_MD5:-$DOTFILES_DIR/ansible/tasks.md5}"
 
 build_ansible_tasks() {
+  echo "[INFO] building $TASKS_FILE"
   USER="$USER" \
     PLAYBOOK_DIR="$DOTFILES_DIR/ansible" \
     TASKS_OUT="$TASKS_FILE" \
     "$DOTFILES_DIR/jsonnet/build.sh"
+
+  if [ ! -s "$TASKS_FILE" ]; then
+    echo "[ERROR] build produced empty or missing $TASKS_FILE" >&2
+    exit 1
+  fi
 }
 
 tasks_md5sum() {
-  md5sum "$TASKS_FILE" | awk '{print $1}'
+  md5sum "$1" | awk '{print $1}'
 }
 
 tasks_unchanged() {
-  [ -f "$TASKS_MD5" ] || return 1
-  [ "$(tasks_md5sum)" = "$(cat "$TASKS_MD5")" ]
+  if [ ! -f "$TASKS_MD5" ]; then
+    return 1
+  fi
+  if [ "$(tasks_md5sum "$TASKS_FILE")" = "$(cat "$TASKS_MD5")" ]; then
+    return 0
+  fi
+  return 1
 }
 
 save_tasks_md5() {
-  tasks_md5sum >"$TASKS_MD5"
+  tasks_md5sum "$TASKS_FILE" >"$TASKS_MD5"
+  echo "[INFO] saved $TASKS_MD5"
 }
 
 cleanup_tasks_json() {
   rm -f "$TASKS_FILE"
+  echo "[INFO] removed $TASKS_FILE"
 }
 
 play_ansible_playbook() {
@@ -84,6 +97,9 @@ play_ansible_playbook() {
     cleanup_tasks_json
     return 0
   fi
+
+  echo "[INFO] tasks changed or no $TASKS_MD5 — running ansible"
+  echo "[INFO] tasks_file=$TASKS_FILE"
 
   cd "$DOTFILES_DIR/ansible"
 
@@ -96,6 +112,9 @@ play_ansible_playbook() {
     EXTRA_VARS="$HOST_EXTRA_VARS"
   fi
 
+  ANSIBLE_LOG="${ANSIBLE_LOG:-$DOTFILES_DIR/ansible/ansible-run.log}"
+
+  set +e
   sudo \
     LC_ALL="C.UTF-8" \
     ANSIBLE_ROLES_PATH="$ROLE_PATH:$ANSIBLE_ROLES_PATH" \
@@ -103,10 +122,25 @@ play_ansible_playbook() {
     ansible-playbook $VERBOSITY \
       -e @$EXTRA_VARS \
       -e "tasks_file=$TASKS_FILE" \
-      local.yml
+      local.yml 2>&1 | tee "$ANSIBLE_LOG"
+  # tee hides ansible exit code; recover from PIPESTATUS
+  ansible_rc=${PIPESTATUS[0]}
+  set -e
+
+  if [ "$ansible_rc" -ne 0 ]; then
+    echo "[ERROR] ansible-playbook failed with exit code $ansible_rc" >&2
+    echo "[ERROR] tasks.json kept for inspection: $TASKS_FILE" >&2
+    echo "[ERROR] tasks.md5 NOT updated" >&2
+    echo "[ERROR] ---- failed task excerpt (from $ANSIBLE_LOG) ----" >&2
+    # Show the failure block: task header + following lines until blank/recap
+    grep -n -i -E '^(fatal:|failed:|ERROR!|TASK \[)' "$ANSIBLE_LOG" | tail -n 40 >&2 || true
+    echo "[ERROR] ---- full log: $ANSIBLE_LOG ----" >&2
+    exit "$ansible_rc"
+  fi
 
   save_tasks_md5
   cleanup_tasks_json
+  echo "[INFO] ansible finished successfully"
 }
 
 restart_x_server() {

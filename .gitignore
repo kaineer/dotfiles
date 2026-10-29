@@ -14,3 +14,4 @@ ansible/files/nvim/config/log/
 ### Local ansible build artifacts (jsonnet → tasks.json)
 ansible/tasks.json
 ansible/tasks.md5
+ansible/ansible-run.log
