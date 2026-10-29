@@ -29,7 +29,11 @@
     "shotwell",
     "tali",
     "thunderbird",
+    // rmpc experiment — moc is enough
+    "mpd",
+    "mpc",
     # Development
     // libx11-dev
   ]
 }
+

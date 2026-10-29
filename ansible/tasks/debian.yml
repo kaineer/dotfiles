@@ -36,9 +36,6 @@
 # wezterm + other GUI → jsonnet/tasks/desktop/ (gui_workstations)
 - include_tasks: "{{ tasks_file | default(playbook_dir + '/tasks.json') }}"
 
-- include_tasks: "{{ playbook_dir }}/tasks/media/mocp.yml"
-- include_tasks: "{{ playbook_dir }}/tasks/media/rmpc.yml"
-- include_tasks: "{{ playbook_dir }}/tasks/media/pinta.yml"
 - include_tasks: "{{ playbook_dir }}/tasks/browsers/brave.yml"
 
 - include_tasks: "{{ playbook_dir }}/tasks/gui/eog.yml"

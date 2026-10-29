@@ -1,4 +1,3 @@
-local ctx = import 'ctx.jsonnet';
 local DconfTask = import 'dconf-task.jsonnet';
 local Pkg = import 'package-task.jsonnet';
 
