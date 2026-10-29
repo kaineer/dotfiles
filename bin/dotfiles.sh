@@ -50,6 +50,7 @@ install_ansible_roles() {
 }
 
 TASKS_FILE="${TASKS_FILE:-$DOTFILES_DIR/ansible/tasks.json}"
+TASKS_MD5="${TASKS_MD5:-$DOTFILES_DIR/ansible/tasks.md5}"
 
 build_ansible_tasks() {
   USER="$USER" \
@@ -58,8 +59,31 @@ build_ansible_tasks() {
     "$DOTFILES_DIR/jsonnet/build.sh"
 }
 
+tasks_md5sum() {
+  md5sum "$TASKS_FILE" | awk '{print $1}'
+}
+
+tasks_unchanged() {
+  [ -f "$TASKS_MD5" ] || return 1
+  [ "$(tasks_md5sum)" = "$(cat "$TASKS_MD5")" ]
+}
+
+save_tasks_md5() {
+  tasks_md5sum >"$TASKS_MD5"
+}
+
+cleanup_tasks_json() {
+  rm -f "$TASKS_FILE"
+}
+
 play_ansible_playbook() {
   build_ansible_tasks
+
+  if tasks_unchanged; then
+    echo "[INFO] tasks.json unchanged (md5 matches $TASKS_MD5), skipping ansible"
+    cleanup_tasks_json
+    return 0
+  fi
 
   cd "$DOTFILES_DIR/ansible"
 
@@ -80,6 +104,9 @@ play_ansible_playbook() {
       -e @$EXTRA_VARS \
       -e "tasks_file=$TASKS_FILE" \
       local.yml
+
+  save_tasks_md5
+  cleanup_tasks_json
 }
 
 restart_x_server() {

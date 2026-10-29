@@ -1,6 +1,7 @@
 require("core.vim-pack.config")({
   "plugins.colors.pack",
   "plugins.edit.colorizer",
+  "plugins.edit/jsonnet",
   "plugins.incline.pack",
   "plugins.filename.init",
   "plugins.navigation.pack",
