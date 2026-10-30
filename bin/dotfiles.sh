@@ -50,66 +50,71 @@ install_ansible_roles() {
 }
 
 TASKS_FILE="${TASKS_FILE:-$DOTFILES_DIR/ansible/tasks.json}"
+VARS_FILE="${VARS_FILE:-$DOTFILES_DIR/ansible/vars.json}"
 TASKS_MD5="${TASKS_MD5:-$DOTFILES_DIR/ansible/tasks.md5}"
 
 build_ansible_tasks() {
-  echo "[INFO] building $TASKS_FILE"
+  echo "[INFO] building $TASKS_FILE and $VARS_FILE"
   USER="$USER" \
     PLAYBOOK_DIR="$DOTFILES_DIR/ansible" \
     TASKS_OUT="$TASKS_FILE" \
+    VARS_OUT="$VARS_FILE" \
     "$DOTFILES_DIR/jsonnet/build.sh"
 
-  if [ ! -s "$TASKS_FILE" ]; then
-    echo "[ERROR] build produced empty or missing $TASKS_FILE" >&2
+  if [ ! -s "$TASKS_FILE" ] || [ ! -s "$VARS_FILE" ]; then
+    echo "[ERROR] build produced empty or missing tasks/vars json" >&2
     exit 1
   fi
 }
 
-tasks_md5sum() {
-  md5sum "$1" | awk '{print $1}'
+artifacts_md5sum() {
+  md5sum "$TASKS_FILE" "$VARS_FILE" | md5sum | awk '{print $1}'
 }
 
 tasks_unchanged() {
   if [ ! -f "$TASKS_MD5" ]; then
     return 1
   fi
-  if [ "$(tasks_md5sum "$TASKS_FILE")" = "$(cat "$TASKS_MD5")" ]; then
+  if [ "$(artifacts_md5sum)" = "$(cat "$TASKS_MD5")" ]; then
     return 0
   fi
   return 1
 }
 
 save_tasks_md5() {
-  tasks_md5sum "$TASKS_FILE" >"$TASKS_MD5"
+  artifacts_md5sum >"$TASKS_MD5"
   echo "[INFO] saved $TASKS_MD5"
 }
 
 cleanup_tasks_json() {
-  rm -f "$TASKS_FILE"
-  echo "[INFO] removed $TASKS_FILE"
+  rm -f "$TASKS_FILE" "$VARS_FILE"
+  echo "[INFO] removed $TASKS_FILE and $VARS_FILE"
 }
 
 play_ansible_playbook() {
   build_ansible_tasks
 
-  if tasks_unchanged; then
-    echo "[INFO] tasks.json unchanged (md5 matches $TASKS_MD5), skipping ansible"
-    cleanup_tasks_json
-    return 0
+  if [[ "$1" != "forced" ]]; then
+    if tasks_unchanged; then
+      echo "[INFO] tasks.json unchanged (md5 matches $TASKS_MD5), skipping ansible"
+      cleanup_tasks_json
+      return 0
+    fi
   fi
 
-  echo "[INFO] tasks changed or no $TASKS_MD5 — running ansible"
-  echo "[INFO] tasks_file=$TASKS_FILE"
+  echo "[INFO] tasks/vars changed or no $TASKS_MD5 — running ansible"
+  echo "[INFO] tasks_file=$TASKS_FILE vars_file=$VARS_FILE"
 
   cd "$DOTFILES_DIR/ansible"
 
   VERBOSITY=""
   [[ "$DEBUG" == "true" ]] && VERBOSITY="-vvv"
 
-  EXTRA_VARS="$DOTFILES_DIR/ansible/vars/user.yml"
+  # Optional per-host user override (merges over vars.json).
   HOST_EXTRA_VARS="$DOTFILES_DIR/ansible/vars/user/$HOSTNAME.yml"
+  EXTRA_ARGS=()
   if [ -f "$HOST_EXTRA_VARS" ]; then
-    EXTRA_VARS="$HOST_EXTRA_VARS"
+    EXTRA_ARGS+=(-e @"$HOST_EXTRA_VARS")
   fi
 
   ANSIBLE_LOG="${ANSIBLE_LOG:-$DOTFILES_DIR/ansible/ansible-run.log}"
@@ -120,8 +125,9 @@ play_ansible_playbook() {
     ANSIBLE_ROLES_PATH="$ROLE_PATH:$ANSIBLE_ROLES_PATH" \
     SSH_AUTH_SOCK="$SSH_AUTH_SOCK" \
     ansible-playbook $VERBOSITY \
-      -e @$EXTRA_VARS \
+      "${EXTRA_ARGS[@]}" \
       -e "tasks_file=$TASKS_FILE" \
+      -e "vars_file=$VARS_FILE" \
       local.yml 2>&1 | tee "$ANSIBLE_LOG"
   # tee hides ansible exit code; recover from PIPESTATUS
   ansible_rc=${PIPESTATUS[0]}
@@ -175,8 +181,8 @@ main() {
   ensure_ansible
   ensure_ssh_keys
   install_ansible_roles
-  play_ansible_playbook
+  play_ansible_playbook $1
   restart_x_server
 }
 
-main
+main $1

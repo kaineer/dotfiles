@@ -5,22 +5,11 @@
   environment:
     PRESERVED_USER: "{{ lookup('ansible.builtin.env', 'USER') }}"
 
-  # vars:
-  #   user_attributes: &user_attributes
-  #     owner: "{{ user.name }}"
-  #     group: "{{ user.name }}"
-
   tasks:
-    # --- variables
+    # --- variables (jsonnet → vars.json; optional host override via -e @vars/user/<host>.yml)
     #
-    - include_vars: ./vars/user.yml
-    - include_vars: ./vars/debian.yml
-    - include_vars: ./vars/workstations.yml
-    - include_vars: ./vars/scripts.yml
-    - include_vars: ./vars/logs.yml
+    - include_vars: "{{ vars_file | default(playbook_dir + '/vars.json') }}"
 
-    # --- tasks
-    # Migrated jsonnet tasks are pulled in from {{ tasks_file }} (see debian.yml).
+    # --- tasks (jsonnet → tasks.json)
     #
-    - include_tasks: ./tasks/debian.yml
-    - include_tasks: ./tasks/fonts.yml
+    - include_tasks: "{{ tasks_file | default(playbook_dir + '/tasks.json') }}"

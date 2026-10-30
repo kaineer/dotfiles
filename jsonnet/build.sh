@@ -1,23 +1,16 @@
 #!/usr/bin/env bash
-# Compile jsonnet/tasks/main.jsonnet → ansible/tasks.json (JSON ⊂ YAML).
+# Compile jsonnet → ansible/tasks.json and ansible/vars.json (JSON ⊂ YAML).
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 JSONNET_DIR="$ROOT/jsonnet"
-OUT="${TASKS_OUT:-$ROOT/ansible/tasks.json}"
+TASKS_OUT="${TASKS_OUT:-$ROOT/ansible/tasks.json}"
+VARS_OUT="${VARS_OUT:-$ROOT/ansible/vars.json}"
 PLAYBOOK_DIR="${PLAYBOOK_DIR:-$ROOT/ansible}"
 USER_NAME="${USER:-kaineer}"
 
-mkdir -p "$(dirname "$OUT")"
-
-jsonnet \
-  -J "$JSONNET_DIR/lib" \
-  -J "$JSONNET_DIR/config" \
-  -J "$JSONNET_DIR/tasks" \
-  --ext-str "USER=$USER_NAME" \
-  --ext-str "PLAYBOOK_DIR=$PLAYBOOK_DIR" \
-  "$JSONNET_DIR/tasks/main.jsonnet" \
-  | python3 -c '
+json_dump() {
+  python3 -c '
 import json, sys
 
 def prefer_name(obj):
@@ -32,6 +25,25 @@ def prefer_name(obj):
 
 json.dump(prefer_name(json.load(sys.stdin)), sys.stdout, indent=2, ensure_ascii=False)
 print()
-' > "$OUT"
+'
+}
 
-echo "Built $OUT (USER=$USER_NAME PLAYBOOK_DIR=$PLAYBOOK_DIR)"
+build_one() {
+  local src="$1"
+  local dest="$2"
+  mkdir -p "$(dirname "$dest")"
+  jsonnet \
+    -J "$JSONNET_DIR/lib" \
+    -J "$JSONNET_DIR/config" \
+    -J "$JSONNET_DIR/tasks" \
+    --ext-str "USER=$USER_NAME" \
+    --ext-str "PLAYBOOK_DIR=$PLAYBOOK_DIR" \
+    "$src" \
+    | json_dump >"$dest"
+  echo "  $src -> $dest"
+}
+
+echo "Building ansible artifacts (USER=$USER_NAME PLAYBOOK_DIR=$PLAYBOOK_DIR)"
+build_one "$JSONNET_DIR/tasks/main.jsonnet" "$TASKS_OUT"
+build_one "$JSONNET_DIR/config/vars.jsonnet" "$VARS_OUT"
+echo "Done."

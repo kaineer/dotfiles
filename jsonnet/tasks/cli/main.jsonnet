@@ -1,4 +1,5 @@
-// CLI tools and shell setup (order matters: profile/bin before dependents).
+// CLI tools and shell setup (order matters: packages/bin before dependents).
+local packages = import 'packages.jsonnet';
 local bash = import 'bash.jsonnet';
 local profile = import 'profile.jsonnet';
 local scripts = import 'scripts.jsonnet';
@@ -15,7 +16,8 @@ local doppler = import 'doppler.jsonnet';
 local neovim = import 'neovim.jsonnet';
 local node = import 'node.jsonnet';
 
-bash
+packages
++ bash
 + profile
 + scripts
 + git
