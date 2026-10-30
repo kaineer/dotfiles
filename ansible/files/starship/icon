@@ -21,6 +21,7 @@ ICON_LINUX_UBUNTU=" "
 ICON_LINUX_DEBIAN=""
 ICON_LINUX_UNKNOWN=" "
 ICON_LINUX_FEDORA=" "
+ICON_LINUX_NIX=""
 
 LOG_INFO=" "
 LOG_ERROR=" "
@@ -62,12 +63,14 @@ linux_icon() {
     "ubuntu")     echo "$ICON_LINUX_UBUNTU" ;;
     "debian")     echo "$ICON_LINUX_DEBIAN" ;;
     "fedora")     echo "$ICON_LINUX_FEDORA" ;;
+    "nix")        echo "$ICON_LINUX_NIX" ;;
     "all") 
       echo "Linux icons:"
       echo "  Mint: $ICON_LINUX_MINT"
       echo "Ubuntu: $ICON_LINUX_UBUNTU"
       echo "Debian: $ICON_LINUX_DEBIAN"
       echo "Fedora: $ICON_LINUX_FEDORA"
+      echo "   Nix: $ICON_LINUX_NIX"
       ;;
     *)            echo "$ICON_LINUX_UNKNOWN" ;;
   esac
@@ -112,6 +115,7 @@ case "$1" in
   "log") log_icon $2 ;;
   "result") result_icon $2 ;;
   "ok"|"fail") result_icon $1 ;;
+  "fox") echo $ICON_FOX ;;
   "bro"|"browse") open_nerdfonts ;;
   *) linux_icon ;;
 esac

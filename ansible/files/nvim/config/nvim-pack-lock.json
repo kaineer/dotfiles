@@ -136,6 +136,10 @@
       "rev": "90b75207bd9b55d8ac4af15f72b4e935462014d0",
       "src": "https://github.com/airblade/vim-gitgutter"
     },
+    "vim-jsonnet": {
+      "rev": "4ebc6619ddce5d032a985b42a9864154c3d20e4a",
+      "src": "https://github.com/google/vim-jsonnet"
+    },
     "vim-projectionist": {
       "rev": "5ff7bf79a6ef741036d2038a226bcb5f8b1cd296",
       "src": "https://github.com/tpope/vim-projectionist"
