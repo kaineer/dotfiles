@@ -1,8 +1,7 @@
-{
-  gui_workstations: [
-    'teddy',
-    'myrkur',
-    // 'murahainen', // RIP
-    'hyouka',
-  ],
-}
+// -- gui workstations
+[
+  'teddy',
+  'myrkur',
+  // 'murahainen', // RIP
+  'hyouka',
+]

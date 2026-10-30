@@ -1,5 +1,5 @@
 local ctx = import 'ctx.jsonnet';
-local data = import 'scripts-data.jsonnet';
+local rust_scripts = import 'rust-scripts.jsonnet';
 
 local cargoEnv = {
   PATH: ctx.home + '/.cargo/bin:{{ ansible_env.PATH }}',
@@ -20,14 +20,14 @@ local cliRs = ctx.home + '/git/config/cli-rs';
       creates: ctx.home + '/.cargo/bin/' + name,
     },
   }
-  for name in data.rust_scripts
+  for name in rust_scripts
 ] + [
   {
     name: 'Stat leftover ~/bin entries for rust CLIs',
     'ansible.builtin.stat': {
       path: ctx.home + '/bin/{{ item }}',
     },
-    loop: data.rust_scripts,
+    loop: rust_scripts,
     register: 'rust_scripts_bin_stats',
   },
   {

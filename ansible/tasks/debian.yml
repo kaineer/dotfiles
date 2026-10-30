@@ -1,3 +1,0 @@
----
-# Kept as a thin alias if something still includes it.
-- include_tasks: "{{ tasks_file | default(playbook_dir + '/tasks.json') }}"

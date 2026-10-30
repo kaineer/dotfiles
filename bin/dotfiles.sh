@@ -54,7 +54,7 @@ VARS_FILE="${VARS_FILE:-$DOTFILES_DIR/ansible/vars.json}"
 TASKS_MD5="${TASKS_MD5:-$DOTFILES_DIR/ansible/tasks.md5}"
 
 build_ansible_tasks() {
-  echo "[INFO] building $TASKS_FILE and $VARS_FILE"
+  echo "[info ] building $TASKS_FILE and $VARS_FILE"
   USER="$USER" \
     PLAYBOOK_DIR="$DOTFILES_DIR/ansible" \
     TASKS_OUT="$TASKS_FILE" \
@@ -62,7 +62,7 @@ build_ansible_tasks() {
     "$DOTFILES_DIR/jsonnet/build.sh"
 
   if [ ! -s "$TASKS_FILE" ] || [ ! -s "$VARS_FILE" ]; then
-    echo "[ERROR] build produced empty or missing tasks/vars json" >&2
+    echo "[error] build produced empty or missing tasks/vars json" >&2
     exit 1
   fi
 }
@@ -83,12 +83,12 @@ tasks_unchanged() {
 
 save_tasks_md5() {
   artifacts_md5sum >"$TASKS_MD5"
-  echo "[INFO] saved $TASKS_MD5"
+  echo "[info ] saved $TASKS_MD5"
 }
 
 cleanup_tasks_json() {
   rm -f "$TASKS_FILE" "$VARS_FILE"
-  echo "[INFO] removed $TASKS_FILE and $VARS_FILE"
+  echo "[info ] removed $TASKS_FILE and $VARS_FILE"
 }
 
 play_ansible_playbook() {
@@ -96,14 +96,14 @@ play_ansible_playbook() {
 
   if [[ "$1" != "forced" ]]; then
     if tasks_unchanged; then
-      echo "[INFO] tasks.json unchanged (md5 matches $TASKS_MD5), skipping ansible"
+      echo "[info ] tasks.json unchanged (md5 matches $TASKS_MD5), skipping ansible"
       cleanup_tasks_json
       return 0
     fi
   fi
 
-  echo "[INFO] tasks/vars changed or no $TASKS_MD5 — running ansible"
-  echo "[INFO] tasks_file=$TASKS_FILE vars_file=$VARS_FILE"
+  echo "[info ] tasks/vars changed or no $TASKS_MD5 — running ansible"
+  echo "[info ] tasks_file=$TASKS_FILE vars_file=$VARS_FILE"
 
   cd "$DOTFILES_DIR/ansible"
 
@@ -134,19 +134,19 @@ play_ansible_playbook() {
   set -e
 
   if [ "$ansible_rc" -ne 0 ]; then
-    echo "[ERROR] ansible-playbook failed with exit code $ansible_rc" >&2
-    echo "[ERROR] tasks.json kept for inspection: $TASKS_FILE" >&2
-    echo "[ERROR] tasks.md5 NOT updated" >&2
-    echo "[ERROR] ---- failed task excerpt (from $ANSIBLE_LOG) ----" >&2
+    echo "[error] ansible-playbook failed with exit code $ansible_rc" >&2
+    echo "[error] tasks.json kept for inspection: $TASKS_FILE" >&2
+    echo "[error] tasks.md5 NOT updated" >&2
+    echo "[error] ---- failed task excerpt (from $ANSIBLE_LOG) ----" >&2
     # Show the failure block: task header + following lines until blank/recap
     grep -n -i -E '^(fatal:|failed:|ERROR!|TASK \[)' "$ANSIBLE_LOG" | tail -n 40 >&2 || true
-    echo "[ERROR] ---- full log: $ANSIBLE_LOG ----" >&2
+    echo "[error] ---- full log: $ANSIBLE_LOG ----" >&2
     exit "$ansible_rc"
   fi
 
   save_tasks_md5
   cleanup_tasks_json
-  echo "[INFO] ansible finished successfully"
+  echo "$I ansible finished successfully"
 }
 
 restart_x_server() {
@@ -171,7 +171,7 @@ restart_x_server() {
     sudo systemctl restart mdm
     ;;
   *)
-    echo " [INFO ] Could not restart your display manager"
+    echo " [info ] Could not restart your display manager"
     ;;
   esac
 }

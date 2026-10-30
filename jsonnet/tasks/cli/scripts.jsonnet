@@ -1,6 +1,7 @@
 local ctx = import 'ctx.jsonnet';
 local F = import 'file-task.jsonnet';
-local data = import 'scripts-data.jsonnet';
+local scripts = import 'bash-scripts.jsonnet';
+local logs = import 'logs.jsonnet';
 
 [
   F.Dir(
@@ -13,14 +14,14 @@ local data = import 'scripts-data.jsonnet';
     ctx.home + '/bin/' + item,
     name='Link scripts: ' + item,
   )
-  for item in data.scripts
+  for item in scripts
 ] + [
   F.Link(
     ctx.files + '/bash/scripts/log',
     ctx.home + '/bin/' + item,
     name='Link logs: ' + item,
   )
-  for item in data.logs
+  for item in logs
 ] + [
   F.Link(
     ctx.files + '/bash/scripts/gd.d/gd.json',
