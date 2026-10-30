@@ -32,7 +32,7 @@ build_ssh_keys() {
   mkdir -p $SSH_HOSTS_DIR
 
   ssh-keygen -b 4096 -t rsa -f "$SSH_DIR/id_rsa" -N "" \
-    -C "$USER@$HOSTNAME"
+    -C "${USER}@${HOSTNAME}"
 
   cat "$SSH_DIR/id_rsa.pub" >>"$SSH_DIR/authorized_keys"
 
@@ -184,6 +184,7 @@ restart_x_server() {
 
 main() {
   ensure_git
+  ensure_jsonnet
   ensure_ansible
   ensure_ssh_keys
   install_ansible_roles
