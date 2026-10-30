@@ -15,3 +15,5 @@ ansible/files/nvim/config/log/
 ansible/tasks.json
 ansible/tasks.md5
 ansible/ansible-run.log
+
+~""/
