@@ -21,6 +21,12 @@ ensure_ansible() {
   fi
 }
 
+ensure_jsonnet() {
+  if ! [ -x "$(command -v jsonnet)" ]; then
+    sudo apt install jsonnet --yes
+  fi
+}
+
 build_ssh_keys() {
   SSH_HOSTS_DIR="$SSH_DIR/hosts"
   mkdir -p $SSH_HOSTS_DIR
