@@ -125,7 +125,7 @@ __four_panes_x() {
 
     local pane_count=$(tmux list-panes | wc -l)
     if [ "$pane_count" -ne 1 ]; then
-        echo "Does not work with more than one pane"
+        [[ "$DEBUG" == "true" ]] && echo "Does not work with more than one pane"
         return 1
     fi
 

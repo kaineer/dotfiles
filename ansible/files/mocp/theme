@@ -1,4 +1,5 @@
 # @link: https://github.com/lipnitsk/mocp/blob/master/themes/darkdot_theme
+# (darkdot as base theme)
 #
 background		= default	default
 frame			= cyan		default

@@ -1,3 +1,5 @@
+# MOCP config
+# @link: https://github.com/lipnitsk/mocp/blob/master/config.example.in
 #
 Keymap = ${HOME}/.moc/keymap
 Theme = ${HOME}/.moc/themes/theme

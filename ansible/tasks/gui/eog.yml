@@ -31,3 +31,4 @@
   dconf:
     key: "/org/gnome/eog/plugins/active-plugins"
     value: "['fullscreen', 'jk-nav']"
+
