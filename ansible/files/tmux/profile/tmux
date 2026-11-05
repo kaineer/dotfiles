@@ -113,13 +113,14 @@ __four_panes() {
 }
 
 __four_panes_x() {
+
     if [[ "$1" != "" ]]; then
         __edit_pane $1
         return 0
     fi
 
     if [ -z "$TMUX" ]; then
-        echo "Works inside tmux only"
+        [[ "$DEBUG" == "true" ]] && echo "Works inside tmux only"
         return 1
     fi
 

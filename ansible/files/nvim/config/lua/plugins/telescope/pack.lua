@@ -26,7 +26,6 @@ return {
     local base_dirs = filter({
       "/git",
       "/devel/kaineer",
-      "/devel/htmlacademy",
       "/devel/itc",
     }, function(dir)
       local path = vim.fn.expand("~") .. dir

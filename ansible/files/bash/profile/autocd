@@ -3,9 +3,7 @@
 [[ "$1" != "-i" ]] && return
 
 __tmux_4x() {
-  if [ -d ".tmux" ]; then
-    t 4x
-  fi
+  [ -d ".tmux" ] && t 4x
 }
 
 precmd_functions+=(__tmux_4x)

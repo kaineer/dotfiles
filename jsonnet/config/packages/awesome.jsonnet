@@ -1,7 +1,0 @@
-{
-  awesome: [
-    // "awesome",
-    "dunst",
-    "arandr",
-  ]
-}
