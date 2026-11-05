@@ -250,5 +250,9 @@
   "cfg:rofi": {
     "dir": "/home/kaineer/.config/rofi",
     "bin": "nvim"
+  },
+  "cfg:herdr": {
+    "dir": "/home/kaineer/.config/herdr-app",
+    "bin": "nvim"
   }
 }
