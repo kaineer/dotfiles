@@ -10,6 +10,7 @@ local tmux = import 'tmux.jsonnet';
 local starship = import 'starship.jsonnet';
 local lf = import 'lf.jsonnet';
 local rustup = import 'rustup.jsonnet';
+local herdr = import 'herdr.jsonnet';
 local yazi = import 'yazi.jsonnet';
 local fzf = import 'fzf.jsonnet';
 local doppler = import 'doppler.jsonnet';
@@ -27,6 +28,7 @@ packages
 + starship
 + lf
 + rustup
++ herdr
 + yazi
 + fzf
 + doppler
