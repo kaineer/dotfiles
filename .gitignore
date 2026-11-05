@@ -2,6 +2,7 @@ tmp/
 dump/
 settings.txt
 .*
+!ansible/files/nvim/config/lua/plugins/git/.gitignore
 
 ### Neovim config innards
 #
