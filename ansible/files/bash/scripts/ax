@@ -61,7 +61,7 @@ edit_script_list() {
 
 apply_dotfiles() {
   cd $DF_DIR
-  ./bin/dotfiles.sh
+  ./bin/dotfiles.sh $1
 }
 
 edit_debian_vars() {
@@ -78,7 +78,7 @@ case "$1" in
   ;;
 "sel") edit_script_list ;;
 "update")
-  apply_dotfiles
+  apply_dotfiles $2
   ;;
 "")
   source $DIR/ax.d/help
