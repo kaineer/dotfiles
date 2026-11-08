@@ -9,22 +9,18 @@ local herdr_files = ctx.files + '/herdr';
 // Disabled until work machine has its keys.json sorted; flip when to true then.
 local link_herdr_config = false;
 
-local herdr_dirs = [
+local link_dirs = [
   'themes',
   'layouts',
   'mods/tabs-nord',
 ];
 
 local link_files = [
-  'settings.json',
-  'themes/nord.json',
-  'layouts/main-nord.json',
-  'mods/tabs-nord/main.js',
-  'mods/tabs-nord/mod.json',
-  'mods/tabs-nord/win-close.svg',
-  'mods/tabs-nord/win-max.svg',
-  'mods/tabs-nord/win-min.svg',
-  'mods/tabs-nord/win-restore.svg',
+  { path: 'settings.json', name: 'settings' },
+  { path: 'themes/nord.json', name: 'nord theme' },
+  { path: 'layouts/main-nord.json', name: 'main-nord layout' },
+  { path: 'mods/tabs-nord/main.js', name: 'tabs-nord main.js' },
+  { path: 'mods/tabs-nord/mod.json', name: 'tabs-nord mod.json' },
 ];
 
 [
@@ -73,14 +69,14 @@ local link_files = [
           herdr_home + '/' + dir,
           name='Ensure herdr ' + dir + ' dir',
         )
-        for dir in herdr_dirs
+        for dir in link_dirs
       ] + [
         F.Link(
-          herdr_files + '/' + path,
-          herdr_home + '/' + path,
-          name='Link herdr ' + path,
+          herdr_files + '/' + item.path,
+          herdr_home + '/' + item.path,
+          name='Link herdr ' + item.name,
         )
-        for path in link_files
+        for item in link_files
       ],
   },
 ]
