@@ -9,6 +9,24 @@ local herdr_files = ctx.files + '/herdr';
 // Disabled until work machine has its keys.json sorted; flip when to true then.
 local link_herdr_config = false;
 
+local link_dirs = [
+  'themes',
+  'layouts',
+  'mods/tabs-nord',
+];
+
+local link_files = [
+  'settings.json',
+  'themes/nord.json',
+  'layouts/main-nord.json',
+  'mods/tabs-nord/main.js',
+  'mods/tabs-nord/mod.json',
+  'mods/tabs-nord/win-close.svg',
+  'mods/tabs-nord/win-max.svg',
+  'mods/tabs-nord/win-min.svg',
+  'mods/tabs-nord/win-restore.svg',
+];
+
 [
   {
     name: 'Check herdr presence',
@@ -49,55 +67,20 @@ local link_herdr_config = false;
   {
     name: 'Link herdr personal config',
     when: link_herdr_config,
-    block: [
-      F.Dir(herdr_home + '/themes', name='Ensure herdr themes dir'),
-      F.Dir(herdr_home + '/layouts', name='Ensure herdr layouts dir'),
-      F.Dir(herdr_home + '/mods/tabs-nord', name='Ensure herdr tabs-nord dir'),
-      F.Link(
-        herdr_files + '/settings.json',
-        herdr_home + '/settings.json',
-        name='Link herdr settings.json',
-      ),
-      F.Link(
-        herdr_files + '/themes/nord.json',
-        herdr_home + '/themes/nord.json',
-        name='Link herdr nord theme',
-      ),
-      F.Link(
-        herdr_files + '/layouts/main-nord.json',
-        herdr_home + '/layouts/main-nord.json',
-        name='Link herdr main-nord layout',
-      ),
-      F.Link(
-        herdr_files + '/mods/tabs-nord/main.js',
-        herdr_home + '/mods/tabs-nord/main.js',
-        name='Link herdr tabs-nord main.js',
-      ),
-      F.Link(
-        herdr_files + '/mods/tabs-nord/mod.json',
-        herdr_home + '/mods/tabs-nord/mod.json',
-        name='Link herdr tabs-nord mod.json',
-      ),
-      F.Link(
-        herdr_files + '/mods/tabs-nord/win-close.svg',
-        herdr_home + '/mods/tabs-nord/win-close.svg',
-        name='Link herdr tabs-nord win-close.svg',
-      ),
-      F.Link(
-        herdr_files + '/mods/tabs-nord/win-max.svg',
-        herdr_home + '/mods/tabs-nord/win-max.svg',
-        name='Link herdr tabs-nord win-max.svg',
-      ),
-      F.Link(
-        herdr_files + '/mods/tabs-nord/win-min.svg',
-        herdr_home + '/mods/tabs-nord/win-min.svg',
-        name='Link herdr tabs-nord win-min.svg',
-      ),
-      F.Link(
-        herdr_files + '/mods/tabs-nord/win-restore.svg',
-        herdr_home + '/mods/tabs-nord/win-restore.svg',
-        name='Link herdr tabs-nord win-restore.svg',
-      ),
-    ],
+    block:
+      [
+        F.Dir(
+          herdr_home + '/' + dir,
+          name='Ensure herdr ' + dir + ' dir',
+        )
+        for dir in link_dirs
+      ] + [
+        F.Link(
+          herdr_files + '/' + path,
+          herdr_home + '/' + path,
+          name='Link herdr ' + path,
+        )
+        for path in link_files
+      ],
   },
 ]
