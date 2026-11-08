@@ -18,9 +18,9 @@ local link_dirs = [
 local link_files = [
   { path: 'settings.json', name: 'settings' },
   { path: 'themes/nord.json', name: 'nord theme' },
-  { path: 'layouts/main-nord.json', name: 'main-nord layout' },
-  { path: 'mods/tabs-nord/main.js', name: 'tabs-nord main.js' },
-  { path: 'mods/tabs-nord/mod.json', name: 'tabs-nord mod.json' },
+  { path: 'layouts/main-nord.json', name: 'nord theme layout' },
+  { path: 'mods/tabs-nord/main.js', name: 'nord theme tabs main.js' },
+  { path: 'mods/tabs-nord/mod.json', name: 'nord theme tabs mod.json' },
 ];
 
 [
