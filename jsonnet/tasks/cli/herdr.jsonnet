@@ -9,7 +9,7 @@ local herdr_files = ctx.files + '/herdr';
 // Disabled until work machine has its keys.json sorted; flip when to true then.
 local link_herdr_config = false;
 
-local link_dirs = [
+local herdr_dirs = [
   'themes',
   'layouts',
   'mods/tabs-nord',
@@ -73,7 +73,7 @@ local link_files = [
           herdr_home + '/' + dir,
           name='Ensure herdr ' + dir + ' dir',
         )
-        for dir in link_dirs
+        for dir in herdr_dirs
       ] + [
         F.Link(
           herdr_files + '/' + path,
