@@ -4,10 +4,8 @@ local F = import 'file-task.jsonnet';
 local herdr_home = ctx.home + '/.config/herdr-app';
 local herdr_files = ctx.files + '/herdr';
 
-// Personal Nord overlay (settings, theme, layout, tabs-nord).
-// Intentionally omits keys.json — keep machine-local keybindings.
-// Disabled until work machine has its keys.json sorted; flip when to true then.
-local link_herdr_config = false;
+// Personal Nord overlay (settings, keys, theme, layout, tabs-nord).
+local link_herdr_config = true;
 
 local link_dirs = [
   'themes',
@@ -17,6 +15,7 @@ local link_dirs = [
 
 local link_files = [
   { path: 'settings.json', name: 'settings' },
+  { path: 'keys.json', name: 'keys' },
   { path: 'themes/nord.json', name: 'nord theme' },
   { path: 'layouts/main-nord.json', name: 'nord theme layout' },
   { path: 'mods/tabs-nord/main.js', name: 'nord theme tabs main.js' },
