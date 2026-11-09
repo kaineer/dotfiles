@@ -19,7 +19,8 @@ assign(vim.opt, {
 	-- Interface
 	splitbelow = true,
 	splitright = true,
-	number = true, -- sure
+	-- number = true, -- sure
+  number = false, -- why should i?
 	relativenumber = false, -- I am not a fan of relative numbering
 	cursorline = true, -- because it is convenient
 	wrap = true, -- code should not hide after right edge

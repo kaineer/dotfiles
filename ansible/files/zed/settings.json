@@ -82,7 +82,7 @@
     "light": "One Light",
     "dark": "Nordic Syntax",
   },
-  "vim_mode": false,
+  "vim_mode": true,
   "agent": {
     "thinking_display": "preview",
     "play_sound_when_agent_done": "always",

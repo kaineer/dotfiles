@@ -1,5 +1,6 @@
 local dirvish = require("plugins.navigation.dirvish")
-local tmuxNavigator = require("plugins.navigation.tmux-navigator")
+-- local tmuxNavigator = require("plugins.navigation.tmux-navigator")
+-- local herdrNav = require("plugins.navigation.herdr-navigator")
 local projectionist = require("plugins.navigation.projectionist")
 local webIcons = require("plugins.navigation.web-icons")
 local whichKey = require("plugins.navigation.which-key")
@@ -7,7 +8,9 @@ local whichKey = require("plugins.navigation.which-key")
 return {
   urls = {
     webIcons.url, whichKey.url,
-    dirvish.url, tmuxNavigator.url,
+    dirvish.url, 
+    -- tmuxNavigator.url,
+    -- herdrNav.url,
     projectionist.url,
   },
   setup = function()
@@ -15,8 +18,9 @@ return {
     whichKey.config()
 
     dirvish.config()
-    tmuxNavigator.setup()
-    tmuxNavigator.config()
+    -- tmuxNavigator.setup()
+    -- tmuxNavigator.config()
+    -- herdrNav.setup()
 
     projectionist.config()
   end,
