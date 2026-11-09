@@ -32,6 +32,14 @@ select_and_edit_script() {
   cd - >/dev/null
 }
 
+__usage() {
+  echo "$(ansi yellow bold)Edit script in ~/bin/$(ansi reset)"
+  echo ""
+  echo "$(ansi cyan) $ be <script name>    # edit script and set executable$(ansi reset)"
+  echo "$(ansi cyan) $ be rm <script name> # remove script$(ansi reset)"
+  echo "$(ansi cyan) $ be --help           # show this message$(ansi reset)"
+}
+
 case "$1" in
 "") select_and_edit_script ;;
 "rm" | "remove")
@@ -40,6 +48,9 @@ case "$1" in
   else
     echo " $ be rm <script_name> # remove script"
   fi
+  ;;
+"--help")
+  __usage
   ;;
 *)
   FILENAME="$BINDIR/$1"

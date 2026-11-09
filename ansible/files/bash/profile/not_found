@@ -16,12 +16,13 @@ command_not_found_handle() {
       eval "$LC" "$@"
       return $?
     else
-      echo "Command $LC not found"
+      echo "Команды $1 здесь нет"
+      echo "      и $LC тоже"
       return 127
     fi
   fi
 
-  echo "Command $1 not found"
+  echo "Команды $1 здесь нет"
 
   # Возвращаем 127, как это делает Bash по умолчанию,
   # если мы не можем обработать команду.
