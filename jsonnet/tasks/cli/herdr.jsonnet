@@ -7,12 +7,15 @@ local herdr_files = ctx.files + '/herdr';
 // Personal Nord overlay (settings, keys, theme, layout, tabs-nord).
 local link_herdr_config = true;
 
-local link_dirs = [
+local herdr_dirs = [
   'themes',
   'layouts',
-  'mods/tabs-nord',
-  'mods/files-toggle',
-  'mods/changes-toggle',
+  /**
+   * Themes and panel shortcuts
+   */
+  'mods/tabs-nord',  // nord theme
+  'mods/files-toggle',  // files panel
+  'mods/changes-toggle',  // changes panel
 ];
 
 local link_files = [
@@ -23,10 +26,10 @@ local link_files = [
   { path: 'layouts/main-nord.json', name: 'nord theme layout' },
   { path: 'mods/tabs-nord/main.js', name: 'nord theme tabs main.js' },
   { path: 'mods/tabs-nord/mod.json', name: 'nord theme tabs mod.json' },
-  { path: 'mods/files-toggle/main.js', name: 'files-toggle main.js' },
-  { path: 'mods/files-toggle/mod.json', name: 'files-toggle mod.json' },
-  { path: 'mods/changes-toggle/main.js', name: 'changes-toggle main.js' },
-  { path: 'mods/changes-toggle/mod.json', name: 'changes-toggle mod.json' },
+  { path: 'mods/files-toggle/main.js', name: 'files panel main.js' },
+  { path: 'mods/files-toggle/mod.json', name: 'files panel mod.json' },
+  { path: 'mods/changes-toggle/main.js', name: 'changes panel main.js' },
+  { path: 'mods/changes-toggle/mod.json', name: 'changes panel mod.json' },
 ];
 
 [
@@ -75,7 +78,7 @@ local link_files = [
           herdr_home + '/' + dir,
           name='Ensure herdr ' + dir + ' dir',
         )
-        for dir in link_dirs
+        for dir in herdr_dirs
       ] + [
         F.Link(
           herdr_files + '/' + item.path,
