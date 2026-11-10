@@ -11,15 +11,22 @@ local link_dirs = [
   'themes',
   'layouts',
   'mods/tabs-nord',
+  'mods/files-toggle',
+  'mods/changes-toggle',
 ];
 
 local link_files = [
   { path: 'settings.json', name: 'settings' },
   { path: 'keys.json', name: 'keys' },
+  { path: 'programs.json', name: 'programs' },
   { path: 'themes/nord.json', name: 'nord theme' },
   { path: 'layouts/main-nord.json', name: 'nord theme layout' },
   { path: 'mods/tabs-nord/main.js', name: 'nord theme tabs main.js' },
   { path: 'mods/tabs-nord/mod.json', name: 'nord theme tabs mod.json' },
+  { path: 'mods/files-toggle/main.js', name: 'files-toggle main.js' },
+  { path: 'mods/files-toggle/mod.json', name: 'files-toggle mod.json' },
+  { path: 'mods/changes-toggle/main.js', name: 'changes-toggle main.js' },
+  { path: 'mods/changes-toggle/mod.json', name: 'changes-toggle mod.json' },
 ];
 
 [

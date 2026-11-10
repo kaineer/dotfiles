@@ -1,0 +1,16 @@
+{
+  "programs": {
+    "cursor": {
+      "run": ["cursor-agent"]
+    },
+    "bash": {
+      "name": "Bash",
+      "icon": "icons/shell.svg",
+      "tint": true,
+      "run": ["bash"]
+    },
+    "nvim": {
+      "run": ["nvim"]
+    }
+  }
+}

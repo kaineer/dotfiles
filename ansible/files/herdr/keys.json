@@ -46,12 +46,53 @@
     "ctrl-space o m": "mod.open:machine-add",
     "ctrl-space o ,": "app.settings",
     "ctrl-space o s": "layout.toggle:sidebar",
+    "ctrl-space o f": "mod.open:files-toggle",
+    "ctrl-space o g": "mod.open:changes-toggle",
     "ctrl-space ctrl-space": "app.palette",
     "ctrl-space ctrl-l": "pane.split:right",
     "ctrl-space ctrl-j": "pane.split:down",
     "ctrl-space ctrl-w": "pane.close",
     "ctrl-space z": "pane.zoom",
     "ctrl-space t r": "tab.rename",
+    "ctrl-space ctrl-v": {
+      "command": "pane.split",
+      "args": {
+        "direction": "right",
+        "argv": [
+          "/home/kaineer/bin/nvim",
+          "."
+        ]
+      }
+    },
+    "ctrl-space ctrl-y": {
+      "command": "pane.split",
+      "args": {
+        "direction": "right",
+        "argv": [
+          "/home/kaineer/.cargo/bin/yazi",
+          "."
+        ]
+      }
+    },
+    "ctrl-space ctrl-a": {
+      "command": "pane.split",
+      "args": {
+        "direction": "right",
+        "argv": [
+          "/home/kaineer/.local/bin/agent",
+          "--continue"
+        ]
+      }
+    },
+    "ctrl-space a": {
+      "command": "pane.split",
+      "args": {
+        "direction": "right",
+        "argv": [
+          "/home/kaineer/.local/bin/agent"
+        ]
+      }
+    },
     "f2": "tab.rename",
     "shift-f2": "space.rename"
   },
