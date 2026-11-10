@@ -56,8 +56,12 @@ export default class Tabs extends View {
       const program = panes().find(p => p.tab === c.id && p.program?.agent)?.program ?? panes().find(p => p.tab === c.id)?.program;
       const name = /^tb\d+$/.test(c.name) ? program?.name ?? "Terminal" : c.name;
       return h_flex().id(`tab-${c.id}`).h(29).px(10).gap(7).rounded(7).items_center().flex_none().text_size(12.8)
-        .border(1).border_color(c.active ? t.border : t.background).bg(c.active ? t.raised : t.background).text_color(c.active ? t.foreground : t.muted)
-        .hover(s => s.bg(t.hover))
+        .border(1)
+        .border_color(c.active ? t.accent : t.background)
+        .bg(t.background)
+        .text_color(c.active ? t.foreground : t.muted)
+        // Keep active look under the cursor: default hover uses raised gray and hides the accent.
+        .hover(s => c.active ? s.border_color(t.accent).bg(t.background) : s.bg(t.hover))
         .on_mouse_down("left", (e, cx) => { cx.stop_propagation(); this.pressed = i; if (e.click_count === 2) run("tab.rename", { id: c.id }); })
         .on_mouse_up("left", () => {
           const from = this.pressed; this.pressed = null;
@@ -82,7 +86,7 @@ export default class Tabs extends View {
     const panelButton = (id, label, icon) => {
       const on = panel && !panel.hidden && body?.active === id;
       return h_flex().id(`panel-${id}`).h(26).px(8).gap(5).flex_none().items_center().rounded(6)
-        .text_size(12).bg(on ? t.selected : t.background).text_color(on ? t.foreground : t.muted)
+        .text_size(12).border(1).border_color(on ? t.border : t.background).bg(on ? t.raised : t.background).text_color(on ? t.foreground : t.muted)
         .hover(s => s.bg(t.hover)).on_mouse_down("left", stop)
         .on_click(() => {
           if (on) run("layout.hide", { id: "panel" });
