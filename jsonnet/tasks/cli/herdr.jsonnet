@@ -15,6 +15,7 @@ local herdr_dirs = [
    * Themes and panel shortcuts
    */
   'mods/tabs-nord',  // nord theme
+  'mods/spaces-nord',  // nord theme spaces
   'mods/files-toggle',  // files panel
   'mods/changes-toggle',  // changes panel
 ];
@@ -27,6 +28,8 @@ local link_files = [
   { path: 'layouts/main-nord.json', name: 'nord theme layout' },
   { path: 'mods/tabs-nord/main.js', name: 'nord theme tabs main.js' },
   { path: 'mods/tabs-nord/mod.json', name: 'nord theme tabs mod.json' },
+  { path: 'mods/spaces-nord/main.js', name: 'nord theme spaces main.js' },
+  { path: 'mods/spaces-nord/mod.json', name: 'nord theme spaces mod.json' },
   { path: 'mods/files-toggle/main.js', name: 'files panel main.js' },
   { path: 'mods/files-toggle/mod.json', name: 'files panel mod.json' },
   { path: 'mods/changes-toggle/main.js', name: 'changes panel main.js' },
