@@ -1,6 +1,6 @@
 import { View, div, svg, image } from "gpui-kit";
 import { h_flex } from "gpui-base";
-import { spaces, panes, run, openOverlay, theme, window, shared, layout, settings } from "herdr";
+import { spaces, panes, run, openOverlay, theme, window, shared, setShared, layout, settings } from "herdr";
 
 function find(node, id) {
   if (node?.id === id) return node;
@@ -81,12 +81,15 @@ export default class Tabs extends View {
       ? Math.max(10, (root.traffic_lights[0] + 64) / settings().zoom - (sidebar?.hidden ? 0 : sidebar?.size?.px ?? 0))
       : 10;
     const panel = find(root, "panel"), body = find(root, "panel-body");
-    const enabled = shared("workspace.panels") ?? ["files", "changes"];
+    // Welcome-skip stores workspace.panels as []; ?? only covers null/undefined.
+    const raw = shared("workspace.panels");
+    const enabled = Array.isArray(raw) && raw.length ? raw : ["files", "changes"];
+    if (!Array.isArray(raw) || raw.length === 0) setShared("workspace.panels", enabled);
     this.syncPanel(space, panel, body, enabled);
     const panelButton = (id, label, icon) => {
       const on = panel && !panel.hidden && body?.active === id;
       return h_flex().id(`panel-${id}`).h(26).px(8).gap(5).flex_none().items_center().rounded(6)
-        .text_size(12).border(1).border_color(on ? t.border : t.background).bg(on ? t.raised : t.background).text_color(on ? t.foreground : t.muted)
+        .text_size(12).border(1).border_color(on ? t.border : t.input).bg(on ? t.raised : t.background).text_color(on ? t.foreground : t.muted)
         .hover(s => s.bg(t.hover)).on_mouse_down("left", stop)
         .on_click(() => {
           if (on) run("layout.hide", { id: "panel" });
