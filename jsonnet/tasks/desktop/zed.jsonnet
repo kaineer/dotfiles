@@ -1,40 +1,53 @@
 local ctx = import 'ctx.jsonnet';
+local DL = import 'download-install.jsonnet';
 local F = import 'file-task.jsonnet';
+
+local zed_home = ctx.home + '/.config/zed';
+local zed_src = ctx.files + '/zed';
+
+local zed_dirs = [
+  zed_home,
+  zed_home + '/themes',
+];
+
+local zed_files = [
+  { path: 'settings.json', name: 'settings' },
+  { path: 'keymap.json', name: 'user bindings' },
+];
 
 [
   {
-    name: 'Install Zed using the official install script',
-    become_user: ctx.user.name,
-    shell: 'curl -fsSL https://zed.dev/install.sh | sh',
-    args: {
-      creates: ctx.home + '/.local/bin/zed',
+    name: 'Check zed presence',
+    stat: {
+      path: ctx.home + '/.local/bin/zed',
     },
+    register: 'zed_bin',
   },
+  DL.Install(
+    'zed',
+    binary='zed_bin',
+    url='https://zed.dev/install.sh',
+  ),
+] + [
   F.Dir(
-    ctx.home + '/.config/zed',
-    name='Create configuration dir',
+    dir,
+    name='Ensure zed dir ' + dir,
     mode='0755',
-  ),
+  )
+  for dir in zed_dirs
+] + [
   F.Link(
-    ctx.files + '/zed/settings.json',
-    ctx.home + '/.config/zed/settings.json',
-    name='Create link to settings.json',
-  ),
-  F.Link(
-    ctx.files + '/zed/keymap.json',
-    ctx.home + '/.config/zed/keymap.json',
-    name='Create link to keymap.json',
-  ),
-  F.Dir(
-    ctx.home + '/.config/zed/themes',
-    name='Create theme directory',
-    mode='0755',
-  ),
+    zed_src + '/' + item.path,
+    zed_home + '/' + item.path,
+    name='Link zed ' + item.name,
+  )
+  for item in zed_files
+] + [
   {
     name: 'Download nordic theme',
     get_url: {
       url: 'https://raw.githubusercontent.com/bIaqat/nordic-theme-zed/refs/heads/main/themes/nordic.json',
-      dest: ctx.home + '/.config/zed/themes/nordic.json',
+      dest: zed_home + '/themes/nordic.json',
       owner: ctx.user.name,
       group: ctx.user.name,
       force: false,

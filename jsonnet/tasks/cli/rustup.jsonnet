@@ -1,4 +1,5 @@
 local ctx = import 'ctx.jsonnet';
+local DL = import 'download-install.jsonnet';
 
 [
   {
@@ -8,35 +9,14 @@ local ctx = import 'ctx.jsonnet';
     },
     register: 'rustup_bin',
   },
-  {
-    name: 'Install rustup',
-    when: 'not rustup_bin.stat.exists',
-    block: [
-      {
-        name: 'Download rustup-init',
-        get_url: {
-          url: 'https://sh.rustup.rs',
-          dest: '/tmp/rustup-init.sh',
-          mode: '0755',
-        },
-      },
-      {
-        name: 'Run rustup-init',
-        become_user: ctx.user.name,
-        environment: {
-          HOME: ctx.home,
-          CARGO_HOME: ctx.home + '/.cargo',
-          RUSTUP_HOME: ctx.home + '/.rustup',
-        },
-        command: '/tmp/rustup-init.sh -y --no-modify-path --default-toolchain stable',
-      },
-      {
-        name: 'Remove rustup-init script',
-        file: {
-          path: '/tmp/rustup-init.sh',
-          state: 'absent',
-        },
-      },
-    ],
-  },
+  DL.Install(
+    'rustup',
+    binary='rustup_bin',
+    url='https://sh.rustup.rs',
+    environment={
+      CARGO_HOME: ctx.home + '/.cargo',
+      RUSTUP_HOME: ctx.home + '/.rustup',
+    },
+    argv=['-y', '--no-modify-path', '--default-toolchain', 'stable'],
+  ),
 ]
