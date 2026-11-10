@@ -51,6 +51,7 @@
     "ctrl-space ctrl-j": "pane.split:down",
     "ctrl-space ctrl-w": "pane.close",
     "ctrl-space z": "pane.zoom",
+    "ctrl-space t r": "tab.rename",
     "f2": "tab.rename",
     "shift-f2": "space.rename"
   },

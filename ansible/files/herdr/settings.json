@@ -1,7 +1,9 @@
 {
   "zoom": 1.0,
   "sounds": {
-    "enabled": true
+    "enabled": true,
+    "blocked": "/home/kaineer/Music/notifications/ttsol-chuishite-keita.mp3",
+    "done": "/home/kaineer/Music/notifications/ttsol-dekimashita-keita.mp3"
   },
   "font": "FiraCode Nerd Font Mono",
   "font_size": 16.0,
