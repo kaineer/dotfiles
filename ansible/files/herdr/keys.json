@@ -60,7 +60,7 @@
         "direction": "right",
         "argv": [
           "/home/kaineer/bin/nvim",
-          "."
+          "+Telescope find_files"
         ]
       }
     },

@@ -2,6 +2,18 @@
 
 local assign = require("core.utils").assign
 
+-- Herdr (and other GUIs) start nvim with a short PATH. Mason LSP wrappers use
+-- `#!/usr/bin/env node`, and fnm's node is not on that PATH otherwise.
+do
+  local fnm_bin = vim.fn.expand("~/.local/share/fnm/aliases/default/bin")
+  if vim.fn.isdirectory(fnm_bin) == 1 then
+    local path = vim.env.PATH or ""
+    if not path:find(fnm_bin, 1, true) then
+      vim.env.PATH = fnm_bin .. ":" .. path
+    end
+  end
+end
+
 -- Options
 assign(vim.opt, {
 	-- Indent
