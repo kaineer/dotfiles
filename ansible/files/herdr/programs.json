@@ -1,7 +1,8 @@
 {
   "programs": {
     "cursor": {
-      "run": ["cursor-agent"]
+      "run": ["cursor-agent"],
+      "match": ["agent", "cursor-agent"]
     },
     "bash": {
       "name": "Bash",
