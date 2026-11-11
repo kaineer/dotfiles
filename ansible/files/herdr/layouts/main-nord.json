@@ -35,17 +35,6 @@
                 "weight": 1
               },
               "min": 90
-            },
-            {
-              "id": "agents",
-              "type": "block",
-              "content": {
-                "mod": "agents"
-              },
-              "size": {
-                "weight": 1
-              },
-              "min": 90
             }
           ]
         },
@@ -164,6 +153,16 @@
           },
           "size": {
             "px": 28
+          }
+        },
+        {
+          "id": "vim-nav",
+          "type": "block",
+          "content": {
+            "mod": "vim-nav"
+          },
+          "size": {
+            "px": 1
           }
         }
       ],
