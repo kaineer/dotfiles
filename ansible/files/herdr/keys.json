@@ -94,7 +94,8 @@
       }
     },
     "f2": "tab.rename",
-    "shift-f2": "space.rename"
+    "shift-f2": "space.rename",
+    "ctrl-shift-o": "mod.open:on-screen"
   },
   "terminal": {
     "alt-h": "terminal",
