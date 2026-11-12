@@ -18,6 +18,7 @@ local herdr_dirs = [
   'mods/spaces-nord',  // nord theme spaces
   'mods/files-toggle',  // files panel
   'mods/changes-toggle',  // changes panel
+  'mods/cursor-status',  // Cursor Agent CLI → Herdr Agents
 ];
 
 local link_files = [
@@ -34,6 +35,10 @@ local link_files = [
   { path: 'mods/files-toggle/mod.json', name: 'files panel mod.json' },
   { path: 'mods/changes-toggle/main.js', name: 'changes panel main.js' },
   { path: 'mods/changes-toggle/mod.json', name: 'changes panel mod.json' },
+  { path: 'mods/cursor-status/main.js', name: 'cursor-status main.js' },
+  { path: 'mods/cursor-status/mod.json', name: 'cursor-status mod.json' },
+  { path: 'mods/cursor-status/package.json', name: 'cursor-status package.json' },
+  { path: 'mods/cursor-status/status.mjs', name: 'cursor-status status.mjs' },
 ];
 
 [
