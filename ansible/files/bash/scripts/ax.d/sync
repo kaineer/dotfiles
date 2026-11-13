@@ -37,10 +37,10 @@ if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
   esac
 fi
 
-__try_to "git pull origin master" "Pulling changes from github"
+__try_to "git pull origin master" "Pulling changes from origin/master"
 # ax dconf import
 __try_to "ax dconf import" "Importing dconf data"
 
 if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
-  __try_to "git push origin master" "Pushing changes to github"
+  __try_to "git push origin master" "Pushing changes to origin/master"
 fi
