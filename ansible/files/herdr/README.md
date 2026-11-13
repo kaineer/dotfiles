@@ -31,8 +31,9 @@
 
 - `scripts/install-cursor-status-hooks.sh` — `node …/status.mjs install`
   (хуки в `~/.cursor/hooks.json`; нужен `node`).
-- `scripts/install-gitview.sh` — если нет
-  `mods/gitview/bin/herdr-gitview`: клонирует
+- `scripts/install-gitview.sh` — **только если нет**
+  `mods/gitview/bin/herdr-gitview` (`stat` + `when` в jsonnet; повторные
+  `ax update` скрипт не вызывают). Клонирует
   [herdr-gitview](https://github.com/ChmaraX/herdr-gitview), собирает
   бинарь (`cargo`) и ставит моды. Когда Herdr запущен — upstream
   `herdr-app/install.sh`; иначе — копирование без `app-setup` (слот

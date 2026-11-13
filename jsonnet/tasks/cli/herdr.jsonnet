@@ -95,7 +95,15 @@ local user_path =
           script: herdr_files + '/scripts/install-cursor-status-hooks.sh',
         },
         {
+          name: 'Check herdr-gitview binary',
+          stat: {
+            path: herdr_home + '/mods/gitview/bin/herdr-gitview',
+          },
+          register: 'gitview_bin',
+        },
+        {
           name: 'Install herdr-gitview when missing',
+          when: 'not gitview_bin.stat.exists',
           become_user: ctx.user.name,
           environment: {
             HOME: ctx.home,
