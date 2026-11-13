@@ -13,6 +13,7 @@
 | Путь | Назначение |
 |---|---|
 | `settings.json` | Nord, FiraCode, telemetry off, звуки |
+| `sounds/` | done/blocked mp3 (пути в settings относительно `~/.config/herdr-app`) |
 | `keys.json` | `ctrl-space …`, Alt+hjkl, on-screen, gitview, сплиты |
 | `programs.json` | `cursor` → `cursor-agent` (+ match `agent`) |
 | `themes/nord.json` | палитра |

@@ -41,6 +41,7 @@ local link_files = [
   { path: 'mods/cursor-status/status.mjs', name: 'cursor-status status.mjs' },
   // Whole folder: relative imports stay inside the mod.
   { path: 'mods/on-screen', name: 'on-screen mod' },
+  { path: 'sounds', name: 'notification sounds' },
 ];
 
 local user_path =
