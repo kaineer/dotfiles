@@ -48,6 +48,16 @@
     "ctrl-space o s": "layout.toggle:sidebar",
     "ctrl-space o f": "mod.open:files-toggle",
     "ctrl-space o g": "mod.open:changes-toggle",
+    "ctrl-space o k": {
+      "command": "pane.split",
+      "args": {
+        "direction": "right",
+        "argv": [
+          "/home/kaineer/bin/nvim",
+          "/home/kaineer/.config/herdr-app/keys.json"
+        ]
+      }
+    },
     "ctrl-space ctrl-space": "app.palette",
     "ctrl-space ctrl-l": "pane.split:right",
     "ctrl-space ctrl-j": "pane.split:down",
@@ -95,7 +105,9 @@
     },
     "f2": "tab.rename",
     "shift-f2": "space.rename",
-    "ctrl-shift-o": "mod.open:on-screen"
+    "ctrl-shift-o": "mod.open:on-screen",
+    "ctrl-alt-shift-g": "mod.open:gitview-sidebar",
+    "ctrl-alt-g": "mod.open:gitview-tab"
   },
   "terminal": {
     "alt-h": "terminal",

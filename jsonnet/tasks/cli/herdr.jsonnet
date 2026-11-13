@@ -5,20 +5,20 @@ local DL = import 'download-install.jsonnet';
 local herdr_home = ctx.home + '/.config/herdr-app';
 local herdr_files = ctx.files + '/herdr';
 
-// Personal Nord overlay (settings, keys, theme, layout, tabs-nord).
+// Personal Nord overlay (settings, keys, theme, layout, mods).
 local link_herdr_config = true;
 
+// Dirs that hold per-file links. Multi-file mods with relative imports
+// (on-screen) must be a directory symlink — Herdr rejects ./foo.js that
+// resolves outside the mod folder through file symlinks.
 local herdr_dirs = [
   'themes',
   'layouts',
-  /**
-   * Themes and panel shortcuts
-   */
-  'mods/tabs-nord',  // nord theme
-  'mods/spaces-nord',  // nord theme spaces
-  'mods/files-toggle',  // files panel
-  'mods/changes-toggle',  // changes panel
-  'mods/cursor-status',  // Cursor Agent CLI → Herdr Agents
+  'mods/tabs-nord',
+  'mods/spaces-nord',
+  'mods/files-toggle',
+  'mods/changes-toggle',
+  'mods/cursor-status',
 ];
 
 local link_files = [
@@ -39,7 +39,15 @@ local link_files = [
   { path: 'mods/cursor-status/mod.json', name: 'cursor-status mod.json' },
   { path: 'mods/cursor-status/package.json', name: 'cursor-status package.json' },
   { path: 'mods/cursor-status/status.mjs', name: 'cursor-status status.mjs' },
+  // Whole folder: relative imports stay inside the mod.
+  { path: 'mods/on-screen', name: 'on-screen mod' },
 ];
+
+local user_path =
+  ctx.home + '/.cargo/bin:'
+  + ctx.home + '/.local/bin:'
+  + ctx.home + '/bin:'
+  + '{{ ansible_env.PATH }}';
 
 [
   {
@@ -71,6 +79,34 @@ local link_files = [
           name='Link herdr ' + item.name,
         )
         for item in link_files
+      ] + [
+        F.Absent(
+          herdr_home + '/mods/vim-nav',
+          name='Remove unused vim-nav mod',
+        ),
+        {
+          name: 'Install cursor-status Cursor hooks',
+          become_user: ctx.user.name,
+          environment: {
+            HOME: ctx.home,
+            PATH: user_path,
+            HERDR_APP_HOME: herdr_home,
+          },
+          script: herdr_files + '/scripts/install-cursor-status-hooks.sh',
+        },
+        {
+          name: 'Install herdr-gitview when missing',
+          become_user: ctx.user.name,
+          environment: {
+            HOME: ctx.home,
+            PATH: user_path,
+            HERDR_APP_HOME: herdr_home,
+            HERDR_APP_BIN: ctx.home + '/.local/bin/herdr-app',
+            CARGO_HOME: ctx.home + '/.cargo',
+            RUSTUP_HOME: ctx.home + '/.rustup',
+          },
+          script: herdr_files + '/scripts/install-gitview.sh',
+        },
       ],
   },
 ]

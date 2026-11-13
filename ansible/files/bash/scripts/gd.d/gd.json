@@ -254,5 +254,13 @@
   "cfg:herdr": {
     "dir": "/home/kaineer/.config/herdr-app",
     "bin": "nvim"
+  },
+  "translate:jp": {
+    "url": "https://translate.google.com/?sl=ja&tl=ru&op=translate",
+    "bin": "open"
+  },
+  "translate:en": {
+    "url": "https://translate.google.com/?sl=ru&tl=en&op=translate",
+    "bin": "open"
   }
 }

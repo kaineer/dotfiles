@@ -1,0 +1,33 @@
+{
+  "_": "Settings for the On screen mod. paths.home_only: list only paths under your home (agents' scratch folders under /tmp stay out). paths.ignore: never list these folders or anything in them (~ is your home). commands.enter: what Enter does on a command: run-split (run it in a new terminal beside the pane), paste-split, paste or copy. letters: one character per action, editor id or browser id; browser letters apply to links, editor letters to paths, command letters to commands, so they may overlap. Save to apply.",
+  "paths": {
+    "home_only": true,
+    "ignore": [
+      "/tmp",
+      "/private/tmp",
+      "~/Library",
+      "~/.cache",
+      "~/.Trash"
+    ]
+  },
+  "commands": {
+    "enter": "run-split"
+  },
+  "letters": {
+    "reveal": "o",
+    "copy": "y",
+    "paste": "p",
+    "paste-split": "n",
+    "run-split": "r",
+    "nvim": "v",
+    "safari": "s",
+    "brave": "b",
+    "chrome": "c",
+    "chromium": "c",
+    "firefox": "f",
+    "arc": "a",
+    "edge": "e",
+    "zen": "z",
+    "tor": "t"
+  }
+}

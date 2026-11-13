@@ -138,7 +138,7 @@
                       "id": "changes",
                       "type": "block",
                       "content": {
-                        "mod": "changes"
+                        "mod": "gitview"
                       }
                     }
                   ],
@@ -164,16 +164,6 @@
           },
           "size": {
             "px": 28
-          }
-        },
-        {
-          "id": "vim-nav",
-          "type": "block",
-          "content": {
-            "mod": "vim-nav"
-          },
-          "size": {
-            "px": 1
           }
         }
       ],
