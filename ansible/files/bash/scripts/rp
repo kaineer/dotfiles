@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# Run command in right panel
+#
+
+__run_in_tmux() {
+  FE="$1"
+  FE2="$(which $FE)"
+  [[ "$FE2" != "" ]] && FE="$FE2"
+  shift
+  CMD="$@"
+  tmux split-window -h -c '#{pane_directory}' "bash -c \"$FE $CMD\""
+}
+
+__run_in_herdr() {
+  FE="$1"
+  FE2="$(which $FE)"
+  [[ "$FE2" != "" ]] && FE="$FE2"
+  shift
+  CMD="$@"
+  herdr-app do pane.split --direction right --argv "[\"bash\", \"-c\", \"$FE $CMD\"]"
+}
+
+if [[ "$TMUX" != "" ]]; then
+  __run_in_tmux $@
+elif [[ "$HC_TERMINAL_SOCKET" != "" ]]; then
+  __run_in_herdr $@
+fi 

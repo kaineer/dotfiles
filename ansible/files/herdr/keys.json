@@ -69,7 +69,7 @@
       "args": {
         "direction": "right",
         "argv": [
-          "/home/kaineer/.cargo/bin/yazi",
+          "/home/kaineer/bin/.cargo/bin/yazi",
           "."
         ]
       }

@@ -16,6 +16,9 @@ nothing_to_commit() {
 
 __header "Synchronizing dotfiles"
 
+# save dconf changes
+ax dconf export
+
 cd $REPO_DIR
 DF_NOTHING_TO_COMMIT=$(nothing_to_commit)
 if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
@@ -33,7 +36,10 @@ if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
     ;;
   esac
 fi
+
 __try_to "git pull origin master" "Pulling changes from github"
+ax dconf import
+
 if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
   __try_to "git push origin master" "Pushing changes to github"
 fi
