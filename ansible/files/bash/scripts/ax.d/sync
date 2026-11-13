@@ -20,6 +20,7 @@ __header "Synchronizing dotfiles"
 __try_to "ax dconf export" "Exporting dconf data"
 
 cd $REPO_DIR
+RB="$(git branch --show-current)"
 DF_NOTHING_TO_COMMIT=$(nothing_to_commit)
 if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
   git add .
@@ -37,10 +38,10 @@ if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
   esac
 fi
 
-__try_to "git pull origin master" "Pulling changes from origin/master"
+__try_to "git pull origin $RB" "Pulling changes from origin/$RB"
 # ax dconf import
 __try_to "ax dconf import" "Importing dconf data"
 
 if [[ "$DF_NOTHING_TO_COMMIT" == "0" ]]; then
-  __try_to "git push origin master" "Pushing changes to origin/master"
+  __try_to "git push origin $RB" "Pushing changes to origin/$RB"
 fi
