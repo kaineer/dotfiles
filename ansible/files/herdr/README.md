@@ -23,7 +23,9 @@
 | `mods/files-toggle` | `ctrl-space o f` — Files |
 | `mods/changes-toggle` | `ctrl-space o g` — Changes/gitview |
 | `mods/cursor-status` | статус Cursor Agent → Agents |
-| `mods/on-screen` | terminal right-click / `ctrl-shift-o` (symlink на весь каталог: у мода есть `import "./…"`) |
+| `mods/on-screen` | terminal right-click / `ctrl-shift-o` (symlink на весь каталог) |
+| `mods/markdown-reader` | Markdown reader (дерево + поиск; авто README.md в корне; ↑↓/hjkl, Enter прячет сайдбар, h открывает) |
+| `mods/markdown-reader-pane` | сплит reader справа от focused pane |
 
 `vim-nav` не используется (навигация в `keys.json` + neovim); каталог
 удаляется при прогоне.
@@ -47,6 +49,8 @@
 | `ctrl-alt-g` | gitview во вкладке |
 | `ctrl-alt-shift-g` | панель Changes/gitview |
 | `ctrl-shift-o` | on-screen |
+| `ctrl-shift-m` | markdown-reader (диалог) |
+| `ctrl-shift-r` / `ctrl-space o v` | markdown-reader-pane (сплит) |
 | `ctrl-space o f` / `o g` | Files / Changes |
 
 `on-screen`: только Neovim (`letters.nvim: "v"`), без VS Code/Zed.
@@ -56,6 +60,7 @@
 - `herdr-app` / `hc` (ставится тем же jsonnet, если нет)
 - `node` — хуки cursor-status
 - `git` + `cargo` — первая установка gitview
+- `rg` — индекс файлов markdown-reader
 - `nvim`, `agent`/`cursor-agent` — бинды и статус агентов
 - FiraCode Nerd Font Mono — `settings.font`
 
