@@ -17,6 +17,7 @@
   'kk',
   'launch',
   'lc',
+  'lig',
   'note',
   'nord',
   'opendir',
