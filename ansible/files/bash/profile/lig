@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+## disable it for now
 return 
 
 [[ "$1" != "-i" ]] && return

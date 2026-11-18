@@ -23,6 +23,8 @@ if [[ "$1" == "-i" ]]; then
 else
   # 1. remove duplicates, remove $HOME/bin
   # 2. prepend with $HOME/bin
+  #
+  export PATH="$HOME/.cargo/bin:$PATH"
   
   FIXED_PATH=$(echo $PATH | tr ':' '\n' | grep -v "^$" | grep -v "$HOME/bin" | sort | uniq | tr '\n' ':')
   

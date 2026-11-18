@@ -13,6 +13,7 @@
   'codef',
   'fl',
   'gateway',
+  'ei',
   'gd',
   'kk',
   'launch',
