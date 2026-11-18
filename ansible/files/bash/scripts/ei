@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+#
+# What: inspect aliases, functions and variables via fzf
+#
+# Dependencies:
+#  * fzf
+#  * bat
+#
+
+# Interactive shell is required so profile aliases/functions are loaded
+if [[ $- != *i* ]]; then
+  exec bash -i "$0" "$@"
+fi
+
+list_items() {
+  compgen -a | sed 's/^/alias:/'
+  compgen -A function | sed 's/^/fn:/'
+  compgen -v | sed 's/^/env:/'
+}
+
+# Aliases/vars: snapshot here (restore via source is unreliable / can abort).
+# Functions: dump once, render on demand in preview.
+EI_DIR=$(mktemp -d)
+trap 'rm -rf "$EI_DIR"' EXIT
+mkdir -p "$EI_DIR/cache"
+
+while IFS= read -r name; do
+  type "$name" >"$EI_DIR/cache/alias:$name" 2>&1
+done < <(compgen -a)
+
+while IFS= read -r name; do
+  declare -p "$name" >"$EI_DIR/cache/env:$name" 2>/dev/null \
+    || printf '%s=%s\n' "$name" "${!name}" >"$EI_DIR/cache/env:$name"
+done < <(compgen -v)
+
+declare -f >"$EI_DIR/functions"
+
+show_item() {
+  local kind="${1%%:*}"
+  local name="${1#*:}"
+  local cache="$EI_DIR/cache/$1"
+
+  [[ -f "$cache" ]] && {
+    cat "$cache"
+    return
+  }
+
+  case "$kind" in
+  fn)
+    (
+      # declare -f bodies may use extglob (e.g. !(...)); without it source aborts
+      shopt -s extglob
+      source "$EI_DIR/functions" 2>/dev/null
+      # drop "<name> is a function" — name is already in the fzf list
+      type "$name" 2>&1 | tail -n +2
+    ) | bat --color=always -pl bash >"$cache"
+    ;;
+  esac
+
+  cat "$cache" 2>/dev/null || printf '(not found: %s)\n' "$1"
+}
+export -f show_item
+export EI_DIR
+
+FZF_ARGS=(--prompt 'ei> ' -e --preview 'show_item {}')
+[[ -n "$1" ]] && FZF_ARGS+=(-1 -q "$1")
+
+SELECTED=$(list_items | fzf "${FZF_ARGS[@]}") || exit 0
+
+[[ -n "$SELECTED" ]] && show_item "$SELECTED"
+
