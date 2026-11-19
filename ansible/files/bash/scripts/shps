@@ -21,10 +21,12 @@ Usage:
        Без --prompt-file POST не отправляется: только забираем уже доступное.
     4. Поллинг GET /routes/image?kind=image&appPlatform=web,
        пока не найдём URL'ы masterpiecer-images.s3.yandex.net/...:N.
-    5. Скачиваем картинки в outdir.
+    5. Скачиваем картинки в outdir и обновляем meta.yaml
+       (md5 промпта → текст + список id файлов).
 """
 
 import argparse
+import hashlib
 import json
 import re
 import shutil
@@ -36,6 +38,7 @@ from datetime import datetime
 from pathlib import Path
 
 import requests
+import yaml
 
 
 BASE = "https://shedevrum.ai"
@@ -508,6 +511,89 @@ def poll_until_ready(
         raise
 
 
+def extract_file_id(urls: list) -> str | None:
+    """
+    ID из URL картинки: .../ID:N → ID (файлы ID-1.jpg … ID-6.jpg).
+    """
+    if not urls:
+        return None
+    name = urls[0].rsplit("/", 1)[-1].split("?", 1)[0]
+    if ":" in name:
+        base = name.rsplit(":", 1)[0].strip()
+        return base or None
+    m = re.match(r"^(.+)-\d+(?:\.(?:jpe?g|png|webp))?$", name, re.I)
+    return m.group(1) if m else None
+
+
+def prompt_md5(prompt_text: str) -> str:
+    return hashlib.md5(prompt_text.encode("utf-8")).hexdigest()
+
+
+class _MetaDumper(yaml.SafeDumper):
+    """Dumper с literal-блоком и нормальными отступами списков."""
+
+    def increase_indent(self, flow=False, indentless=False):
+        return super().increase_indent(flow, False)
+
+
+def _represent_str(dumper, data):
+    style = "|" if "\n" in data else None
+    return dumper.represent_scalar("tag:yaml.org,2002:str", data, style=style)
+
+
+_MetaDumper.add_representer(str, _represent_str)
+
+
+def update_meta_yaml(
+    outdir: Path,
+    prompt_text: str,
+    file_id: str | None,
+) -> None:
+    """
+    meta.yaml:
+      <md5(prompt)>:
+        prompt: |
+          ...
+        id:
+          - <file_id>
+    Один промпт — одна запись; повторные генерации только дополняют id.
+    """
+    outdir.mkdir(parents=True, exist_ok=True)
+    meta_path = outdir / "meta.yaml"
+    data: dict = {}
+    if meta_path.exists():
+        loaded = yaml.safe_load(meta_path.read_text(encoding="utf-8"))
+        if isinstance(loaded, dict):
+            data = loaded
+
+    key = prompt_md5(prompt_text)
+    entry = data.get(key)
+    if not isinstance(entry, dict):
+        entry = {}
+    entry["prompt"] = prompt_text
+
+    ids = entry.get("id")
+    if not isinstance(ids, list):
+        ids = []
+    ids = [str(x) for x in ids if x is not None and str(x).strip()]
+    if file_id and file_id not in ids:
+        ids.append(file_id)
+    entry["id"] = ids
+    data[key] = entry
+
+    meta_path.write_text(
+        yaml.dump(
+            data,
+            Dumper=_MetaDumper,
+            allow_unicode=True,
+            default_flow_style=False,
+            sort_keys=False,
+            width=1000,
+        ),
+        encoding="utf-8",
+    )
+
+
 def download_images(session: requests.Session, urls: list, outdir: Path) -> None:
     outdir.mkdir(parents=True, exist_ok=True)
     total = len(urls)
@@ -590,12 +676,13 @@ def save_result(
     urls: list,
     outdir: Path,
     prompt_text: str | None,
+    result_id: str | None = None,
 ) -> None:
-    """Скачать картинки и при наличии промпта дописать README + уведомления."""
+    """Скачать картинки и при наличии промпта обновить meta.yaml + уведомления."""
     download_images(session, urls, outdir)
     if prompt_text:
-        with open(outdir / "README.md", "a") as f:
-            f.write(f"---\n{prompt_text}\n")
+        file_id = result_id or extract_file_id(urls)
+        update_meta_yaml(outdir, prompt_text, file_id)
         notify_complete(prompt_text)
 
 
@@ -669,7 +756,7 @@ def watch_remote(
                 )
                 if ready_prompt:
                     prompt = ready_prompt
-            save_result(session, urls, outdir, prompt)
+            save_result(session, urls, outdir, prompt, result_id=rid)
             saved_ids.add(rid)
             _write(f"[watch] saved {len(saved_ids)} id(s), listening…")
 
