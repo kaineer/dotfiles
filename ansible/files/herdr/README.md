@@ -19,7 +19,9 @@
 | `themes/nord.json` | палитра |
 | `layouts/main-nord.json` | окно: spaces-nord, agents, tabs-nord, Files/gitview |
 | `mods/spaces-nord` | сайдбар spaces |
-| `mods/tabs-nord` | табы + память панели по space |
+| `mods/tabs-nord` | табы + память панели по space; chrome dim при `!window().active` |
+| `mods/workspace-chrome-nord` | бренд/футер; «inactive» когда окно без фокуса |
+| `mods/workspace-status-nord` | статус; подсказка «click to focus» без фокуса окна |
 | `mods/files-toggle` | `ctrl-space o f` — Files |
 | `mods/changes-toggle` | `ctrl-space o g` — Changes/gitview |
 | `mods/cursor-status` | статус Cursor Agent → Agents |
