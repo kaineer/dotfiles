@@ -20,7 +20,6 @@
   'lc',
   'lig',
   'note',
-  'nord',
   'opendir',
   'pm',
   'the',
