@@ -49,6 +49,15 @@
     "ctrl-space ctrl-space": "app.palette",
     "ctrl-space ctrl-l": "pane.split:right",
     "ctrl-space ctrl-j": "pane.split:down",
+    "ctrl-space alt-l": {
+      "command": "pane.split",
+      "args": {
+        "direction": "right",
+        "argv": [
+          "/home/kaineer/.cargo/bin/yazi"
+        ]
+      }
+    },
     "ctrl-space ctrl-w": "pane.close",
     "ctrl-space z": "pane.zoom",
     "ctrl-space t r": "tab.rename",
