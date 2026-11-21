@@ -1,4 +1,5 @@
 // CLI tools and shell setup (order matters: packages/bin before dependents).
+local S = import 'split.jsonnet';
 local packages = import 'packages.jsonnet';
 local bash = import 'bash.jsonnet';
 local profile = import 'profile.jsonnet';
@@ -17,20 +18,22 @@ local doppler = import 'doppler.jsonnet';
 local neovim = import 'neovim.jsonnet';
 local node = import 'node.jsonnet';
 
-packages
-+ bash
-+ profile
-+ scripts
-+ git
-+ text
-+ ytdl
-+ tmux
-+ starship
-+ lf
-+ rustup
-+ herdr
-+ yazi
-+ fzf
-+ doppler
-+ neovim
-+ node
+S.Merge([
+  packages,
+  bash,
+  profile,
+  scripts,
+  git,
+  text,
+  ytdl,
+  tmux,
+  starship,
+  lf,
+  rustup,
+  herdr,
+  yazi,
+  fzf,
+  doppler,
+  neovim,
+  node,
+])

@@ -22,7 +22,6 @@ local userEnv = {
   {
     name: 'Clone cli-rs repository',
     when: 'not cli_rs_git.stat.exists',
-    become_user: ctx.user.name,
     environment: userEnv,
     'ansible.builtin.git': {
       repo: 'git@github.com:kaineer/cli-rs.git',
@@ -35,7 +34,6 @@ local userEnv = {
   {
     name: 'Pull cli-rs repository',
     when: 'cli_rs_git.stat.exists',
-    become_user: ctx.user.name,
     environment: userEnv,
     'ansible.builtin.command': {
       cmd: 'git pull origin master',

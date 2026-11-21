@@ -1,3 +1,4 @@
+local S = import 'split.jsonnet';
 local DconfTask = import 'dconf-task.jsonnet';
 local Pkg = import 'package-task.jsonnet';
 
@@ -10,8 +11,12 @@ local Kbd(suffix, data) = DconfTask(
   data,
 );
 
-[
-  Pkg('Install dconf requirements', 'python3-psutil'),
-  Kbd('options', "['lv3\tlv3:switch', 'compat\tmisc:typo', 'grp\tgrp:caps_toggle']"),
-  Kbd('layouts', "['us', 'ru']"),
-]
+S.Merge([
+  S.System([
+    Pkg('Install dconf requirements', 'python3-psutil'),
+  ]),
+  S.User([
+    Kbd('options', "['lv3\tlv3:switch', 'compat\tmisc:typo', 'grp\tgrp:caps_toggle']"),
+    Kbd('layouts', "['us', 'ru']"),
+  ]),
+])

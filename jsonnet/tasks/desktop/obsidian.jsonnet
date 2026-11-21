@@ -1,45 +1,20 @@
 local ctx = import 'ctx.jsonnet';
 local F = import 'file-task.jsonnet';
+local AI = import 'appimage-task.jsonnet';
 
 local obsidian_version = '1.14.4';
 local obsidian_repo = 'https://github.com/obsidianmd/obsidian-releases';
-local appimage = ctx.home + '/bin/appimages/Obsidian-' + obsidian_version + '.AppImage';
+local image_name = 'Obsidian-' + obsidian_version + '.AppImage';
+local image_url = obsidian_repo + '/releases/download/v' + obsidian_version + '/' + image_name;
 local obsidian_bin = ctx.home + '/bin/obsidian';
 local icon_src = ctx.files + '/obsidian/obsidian.svg';
 local icon_dest = ctx.home + '/.local/share/icons/hicolor/scalable/apps/obsidian.svg';
 
-[
-  {
-    name: 'Check if obsidian is installed',
-    stat: { path: obsidian_bin },
-    register: 'obsidian_link',
-  },
-  F.Dir(
-    ctx.home + '/bin/appimages',
-    name='Create appimages dir',
-  ),
-  {
-    name: 'Install Obsidian appimage',
-    when: 'not obsidian_link.stat.exists',
-    block: [
-      {
-        name: 'Download obsidian appimage',
-        get_url: {
-          url: obsidian_repo + '/releases/download/v' + obsidian_version
-               + '/Obsidian-' + obsidian_version + '.AppImage',
-          dest: appimage,
-          owner: ctx.user.name,
-          group: ctx.user.name,
-          mode: '755',
-        },
-      },
-      F.Link(
-        appimage,
-        obsidian_bin,
-        name='Link to obsidian appimage',
-      ),
-    ],
-  },
+AI.Install(
+  'obsidian',
+  url=image_url,
+  image=image_name,
+) + [
   F.Dir(
     ctx.home + '/.local/share/icons/hicolor/scalable/apps',
     name='Create icons dir for obsidian',
@@ -114,7 +89,6 @@ local icon_dest = ctx.home + '/.local/share/icons/hicolor/scalable/apps/obsidian
   },
   {
     name: 'Refresh icon and desktop caches',
-    become_user: ctx.user.name,
     shell: |||
       gtk-update-icon-cache -f "%(home)s/.local/share/icons/hicolor" 2>/dev/null || true
       update-desktop-database "%(home)s/.local/share/applications" 2>/dev/null || true
