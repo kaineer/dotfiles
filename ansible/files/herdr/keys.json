@@ -107,7 +107,8 @@
     "shift-f2": "space.rename",
     "ctrl-shift-o": "mod.open:on-screen",
     "ctrl-alt-shift-g": "mod.open:gitview-sidebar",
-    "ctrl-alt-g": "mod.open:gitview-tab"
+    "ctrl-alt-g": "mod.open:gitview-tab",
+    "ctrl-shift-m": "mod.open:markdown-reader-pane"
   },
   "terminal": {
     "alt-h": "terminal",
