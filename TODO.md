@@ -17,8 +17,3 @@
 
  * Возможно, стоит разнести ключи для разных хостингов
  * Возможно, есть смысл добавить другие хостинги для исходников
-
- * Установить oculante из релизов
-   * https://github.com/woelper/oculante
-
- * [Debian info](https://github.com/David17c/Dfetch/releases)

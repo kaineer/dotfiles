@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+## disable it for now
+return 
+
+[[ "$1" != "-i" ]] && return
+
+# >>> lig pre >>>
+eval "$("/usr/bin/lig" init bash pre)"
+# <<< lig pre <<<
+#
+
+eval "$("/usr/bin/lig" init bash post)"

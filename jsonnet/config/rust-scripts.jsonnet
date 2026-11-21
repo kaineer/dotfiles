@@ -2,6 +2,7 @@
 [
   'wf',
   'pe',
+  'nord',
   'rx',
   'kana-converter',
   'smartlist',

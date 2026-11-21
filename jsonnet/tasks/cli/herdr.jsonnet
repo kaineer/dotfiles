@@ -39,8 +39,13 @@ local link_files = [
   { path: 'mods/cursor-status/mod.json', name: 'cursor-status mod.json' },
   { path: 'mods/cursor-status/package.json', name: 'cursor-status package.json' },
   { path: 'mods/cursor-status/status.mjs', name: 'cursor-status status.mjs' },
-  // Whole folder: relative imports stay inside the mod.
+  // Whole folders: relative imports must stay inside the mod.
   { path: 'mods/on-screen', name: 'on-screen mod' },
+  { path: 'mods/markdown-reader', name: 'markdown-reader mod' },
+  { path: 'mods/markdown-reader-pane', name: 'markdown-reader-pane mod' },
+  // Whole folders: icons + main.js stay together (chrome-nord svgs).
+  { path: 'mods/workspace-chrome-nord', name: 'nord workspace chrome' },
+  { path: 'mods/workspace-status-nord', name: 'nord workspace status' },
   { path: 'sounds', name: 'notification sounds' },
 ];
 

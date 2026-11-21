@@ -64,7 +64,7 @@ assign(vim.g, {
 	},
 })
 
-vim.o.winborder = "double"
+vim.o.winborder = vim.g.neopane and "" or "double"
 
 vim.filetype.add {
   extension = { j2 = 'jinja' },

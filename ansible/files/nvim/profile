@@ -4,6 +4,7 @@
 
 list_possible_editors() {
   # echo "neovide"
+  echo "neopane"
   echo "nvui"
   echo "nvim"
   echo "vi"
@@ -33,20 +34,25 @@ detect_editor() {
 export DETECTED_EDITOR=$(detect_editor)
 
 run_editor() {
-  if [[ "$TMUX" != "" ]]; then
-    DIR="$(basename $PWD)"
-    EDITOR=$(basename $DETECTED_EDITOR)
-    printf -v WIN_NAME "%.3s:%.4s" $DIR $EDITOR
-    tmux rename-window "$WIN_NAME"
-  fi
+  # if [[ "$TMUX" != "" ]]; then
+  #   DIR="$(basename $PWD)"
+  #   EDITOR=$(basename $DETECTED_EDITOR)
+  #   printf -v WIN_NAME "%.3s:%.4s" $DIR $EDITOR
+  #   tmux rename-window "$WIN_NAME"
+  # fi
+  # if [[ "$1" == "" ]]; then
+  #   if [ -f $PWD/now ]; then
+  #     $DETECTED_EDITOR $PWD/now
+  #   else
+  #     $DETECTED_EDITOR $PWD
+  #   fi
+  # else
+  #   $DETECTED_EDITOR $@
+  # fi
   if [[ "$1" == "" ]]; then
-    if [ -f $PWD/now ]; then
-      $DETECTED_EDITOR $PWD/now
-    else
-      $DETECTED_EDITOR $PWD
-    fi
+    $EDITOR "."
   else
-    $DETECTED_EDITOR $@
+    $EDITOR $@
   fi
 }
 

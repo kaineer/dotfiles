@@ -13,25 +13,14 @@
     "alt-j": "pane.go:down",
     "alt-k": "pane.go:up",
     "alt-l": "pane.go:right",
-    "alt-shift-h": "pane.go:left",
-    "alt-shift-j": "pane.go:down",
-    "alt-shift-k": "pane.go:up",
-    "alt-shift-l": "pane.go:right",
+    "alt-shift-h": "pane.swap:left",
+    "alt-shift-j": "pane.swap:down",
+    "alt-shift-k": "pane.swap:up",
+    "alt-shift-l": "pane.swap:right",
     "ctrl-+": "app.zoom_in",
     "ctrl--": "app.zoom_out",
     "ctrl-0": "app.zoom_reset",
     "ctrl-=": "app.zoom_in",
-    "ctrl-space 1": "tab.select:1",
-    "ctrl-space 2": "tab.select:2",
-    "ctrl-space 3": "tab.select:3",
-    "ctrl-space 4": "tab.select:4",
-    "ctrl-space 5": "tab.select:5",
-    "ctrl-space 6": "tab.select:6",
-    "ctrl-space 7": "tab.select:7",
-    "ctrl-space 8": "tab.select:8",
-    "ctrl-space 9": "tab.select:9",
-    "ctrl-space n": "tab.next",
-    "ctrl-space p": "tab.prev",
     "ctrl-tab": "tab.next",
     "ctrl-shift-tab": "tab.prev",
     "ctrl-space ctrl-n": "space.next",
@@ -39,9 +28,8 @@
     "ctrl-?": "app.help",
     "ctrl-shift-/": "app.help",
     "ctrl-shift-?": "app.help",
-    "ctrl-shift-n": "space.new",
-    "ctrl-space s": "space.new",
-    "ctrl-space c": "tab.new",
+    "ctrl-space c s": "space.new",
+    "ctrl-space c t": "tab.new",
     "ctrl-space o p": "mod.open:picker",
     "ctrl-space o m": "mod.open:machine-add",
     "ctrl-space o ,": "app.settings",
@@ -61,6 +49,15 @@
     "ctrl-space ctrl-space": "app.palette",
     "ctrl-space ctrl-l": "pane.split:right",
     "ctrl-space ctrl-j": "pane.split:down",
+    "ctrl-space alt-l": {
+      "command": "pane.split",
+      "args": {
+        "direction": "right",
+        "argv": [
+          "/home/kaineer/.cargo/bin/yazi"
+        ]
+      }
+    },
     "ctrl-space ctrl-w": "pane.close",
     "ctrl-space z": "pane.zoom",
     "ctrl-space t r": "tab.rename",
@@ -84,25 +81,6 @@
         ]
       }
     },
-    "ctrl-space ctrl-a": {
-      "command": "pane.split",
-      "args": {
-        "direction": "right",
-        "argv": [
-          "/home/kaineer/.local/bin/agent",
-          "--continue"
-        ]
-      }
-    },
-    "ctrl-space a": {
-      "command": "pane.split",
-      "args": {
-        "direction": "right",
-        "argv": [
-          "/home/kaineer/.local/bin/agent"
-        ]
-      }
-    },
     "f2": "tab.rename",
     "shift-f2": "space.rename",
     "ctrl-shift-o": "mod.open:on-screen",
@@ -111,14 +89,10 @@
     "ctrl-shift-m": "mod.open:markdown-reader-pane"
   },
   "terminal": {
-    "alt-h": "terminal",
-    "alt-j": "terminal",
-    "alt-k": "terminal",
-    "alt-l": "terminal",
-    "alt-shift-h": "pane.go:left",
-    "alt-shift-j": "pane.go:down",
-    "alt-shift-k": "pane.go:up",
-    "alt-shift-l": "pane.go:right",
+    "alt-h": "pane.go:left",
+    "alt-j": "pane.go:down",
+    "alt-k": "pane.go:up",
+    "alt-l": "pane.go:right",
     "ctrl-backspace": "send:\u0017",
     "ctrl-left": "send:\u001bb",
     "ctrl-right": "send:\u001bf",

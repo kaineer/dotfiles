@@ -23,7 +23,8 @@ export BIN=$(readlink -f $0)
 export DIR=$(dirname $BIN)
 export DF_DIR=$DIR/../../../..
 export EDITOR=${EDITOR:-vi}
-[ -x $HOME/bin/nvim ] && EDITOR=$HOME/bin/nvim
+
+# [ -x $HOME/bin/nvim ] && EDITOR=$HOME/bin/nvim
 ## bootstrap
 
 debug() {

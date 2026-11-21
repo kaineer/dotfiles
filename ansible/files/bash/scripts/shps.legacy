@@ -1,0 +1,756 @@
+#!/usr/bin/env python3
+"""
+shedevrum image generator
+
+Usage:
+    python3 shps --curl-file curl.txt [--prompt-file prompt.txt] [--outdir ./out]
+    python3 shps --curl-file curl.txt --watch="подстрока" [--outdir ./out]
+
+Логика:
+    1. Парсим curl-файл: CSRF-токен, Cookie, User-Agent, Origin, Referer.
+    2. Если указан --watch=PREFIX — режим наблюдения за чужими генерациями:
+       раз в минуту GET /routes/image?kind=image&appPlatform=web;
+       если .result.params.prompt начинается с PREFIX и .result.id
+       ещё не сохраняли — сразу берём этот id (включая первый) и
+       сохраняем картинки как обычно (при необходимости дожидаясь URL).
+    3. Иначе: если указан --prompt-file — читаем промпт (JSON или plain text)
+       и POST /routes/image с JSON.
+       - Если в теле {"error":{"status":409}} (при HTTP 200) ->
+         DELETE /routes/image?kind=image&appPlatform=web, затем повторный POST.
+       - Иначе HTTP >= 400 -> ошибка.
+       Без --prompt-file POST не отправляется: только забираем уже доступное.
+    4. Поллинг GET /routes/image?kind=image&appPlatform=web,
+       пока не найдём URL'ы masterpiecer-images.s3.yandex.net/...:N.
+    5. Скачиваем картинки в outdir.
+"""
+
+import argparse
+import json
+import re
+import shutil
+import subprocess
+import sys
+import time
+import os
+from datetime import datetime
+from pathlib import Path
+
+import requests
+
+
+BASE = "https://shedevrum.ai"
+IMAGE_URL = BASE + "/routes/image"
+IMAGE_URL_KIND = BASE + "/routes/image?kind=image&appPlatform=web"
+
+DEFAULT_MODEL = "v11"
+DEFAULT_ASPECT = "9/16"
+
+IMAGE_HOST_MARKER = "masterpiecer-images.s3.yandex.net"
+POLL_FRAMES = ("[    ]", "[󰨓   ]", "[󰨓󰨓  ]", "[󰨓󰨓󰨓 ]", "[󰨓󰨓󰨓󰨓]")
+# 󰨓
+
+NTFY_PUB = "shps-9938ec9e"
+
+def _write(text: str, *, newline: bool = True, file=sys.stdout) -> None:
+    end = "\n" if newline else ""
+    print(text, end=end, file=file, flush=True)
+
+
+def _rewrite(text: str) -> None:
+    """Одна живая строка: предыдущее содержимое затирается."""
+    sys.stdout.write("\r\033[K" + text)
+    sys.stdout.flush()
+
+
+def _clear_live() -> None:
+    sys.stdout.write("\r\033[K")
+    sys.stdout.flush()
+
+
+def _break_live() -> None:
+    """Оставить текущую живую строку и перейти на следующую."""
+    sys.stdout.write("\n")
+    sys.stdout.flush()
+
+
+def fmt_elapsed(seconds: float) -> str:
+    total = max(0, int(seconds))
+    m, s = divmod(total, 60)
+    if m >= 60:
+        h, m = divmod(m, 60)
+        return f"{h}:{m:02d}:{s:02d}"
+    return f"{m}:{s:02d}"
+
+
+def fmt_eta(seconds: int) -> str:
+    """Эстимейт из .result.time: SSs если < 60, иначе MMm; 0 — готово."""
+    total = max(0, int(seconds))
+    if total == 0:
+        return "should be ready"
+    if total > 60:
+        return f"{total // 60}m"
+    return f"{total}s"
+
+
+def http_brief(resp: requests.Response, obj) -> str:
+    extra = ""
+    if obj is not None:
+        extra = json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
+    else:
+        extra = (resp.text or "").replace("\n", " ").strip()
+    if len(extra) > 80:
+        extra = extra[:77] + "..."
+
+    if resp.status_code == 200:
+        return extra
+    if extra:
+        return f"http={resp.status_code} {extra}"
+    return f"http={resp.status_code}"
+
+
+CURL_REFRESH_HINT = (
+    "сессия протухла (499) — скопируйте свежий curl из DevTools "
+    "и обновите curl-файл"
+)
+
+
+def parse_cookie_pairs(raw: str, cookies: dict) -> None:
+    for part in raw.split(";"):
+        part = part.strip()
+        if not part or "=" not in part:
+            continue
+        k, v = part.split("=", 1)
+        cookies[k.strip()] = v.strip()
+
+
+# ---------- парсинг curl ----------
+
+def parse_curl_file(path: Path) -> dict:
+    """
+    Возвращает dict с ключами: headers (dict), cookies (dict).
+    Берёт первый curl-блок в файле, который содержит shedevrum.ai/routes/image
+    и не является DELETE-запросом.
+    """
+    text = path.read_text(encoding="utf-8")
+    blocks = re.split(r"\n(?=curl\s)", text)
+
+    target = None
+    # сначала ищем POST-блок
+    for b in blocks:
+        if "/routes/image" not in b:
+            continue
+        if "-X 'DELETE'" in b or "-X \"DELETE\"" in b:
+            continue
+        target = b
+        break
+    # fallback: любой блок с routes/image
+    if target is None:
+        for b in blocks:
+            if "/routes/image" in b:
+                target = b
+                break
+    if target is None:
+        raise RuntimeError("Не найден curl-блок с /routes/image")
+
+    headers = {}
+    cookies = {}
+
+    # Заголовки -H 'Name: value'
+    for m in re.finditer(r"-H\s+'([^']+)'", target):
+        line = m.group(1)
+        if ":" in line:
+            k, v = line.split(":", 1)
+            headers[k.strip()] = v.strip()
+
+    # Куки -b '...'
+    m = re.search(r"-b\s+'([^']+)'", target)
+    if m:
+        parse_cookie_pairs(m.group(1), cookies)
+
+    cookie_header = headers.get("Cookie") or headers.get("cookie")
+    if cookie_header:
+        parse_cookie_pairs(cookie_header, cookies)
+
+    # Если X-CSRF-Token нет в заголовках, но есть в куках — синтезируем
+    if "X-CSRF-Token" not in headers and "csrf_token" in cookies:
+        headers["X-CSRF-Token"] = cookies["csrf_token"]
+
+    return {"headers": headers, "cookies": cookies}
+
+
+# ---------- промпт ----------
+
+def load_prompt(path: Path) -> dict:
+    """
+    Если файл — валидный JSON с полем prompt, возвращаем его как payload.
+    Иначе считаем, что это текст промпта, и оборачиваем в стандартный JSON.
+    """
+    text = path.read_text(encoding="utf-8").strip()
+    try:
+        obj = json.loads(text)
+        if isinstance(obj, dict) and "prompt" in obj:
+            obj.setdefault("kind", "image")
+            obj.setdefault("aspectRatio", DEFAULT_ASPECT)
+            obj.setdefault("modelVersionID", DEFAULT_MODEL)
+            obj.setdefault("withExtraImages", True)
+            return obj
+    except json.JSONDecodeError:
+        pass
+
+    return {
+        "kind": "image",
+        "prompt": text,
+        "aspectRatio": DEFAULT_ASPECT,
+        "modelVersionID": DEFAULT_MODEL,
+        "withExtraImages": True,
+    }
+
+
+# ---------- сессия и запросы ----------
+
+def build_session(parsed: dict) -> requests.Session:
+    s = requests.Session()
+    s.headers.update({
+        "Accept": "*/*",
+        "Accept-Language": "en-US,en;q=0.9,ru;q=0.8",
+        "Connection": "keep-alive",
+        "Origin": "https://shedevrum.ai",
+        "Referer": "https://shedevrum.ai/text-to-image/",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-origin",
+        "Sec-GPC": "1",
+        "User-Agent": parsed["headers"].get(
+            "User-Agent",
+            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36",
+        ),
+        "X-CSRF-Token": parsed["headers"]["X-CSRF-Token"],
+    })
+    for k, v in parsed["cookies"].items():
+        s.cookies.set(k, v, domain="shedevrum.ai")
+    return s
+
+
+def post_image(session: requests.Session, payload: dict) -> requests.Response:
+    return session.post(
+        IMAGE_URL,
+        params={"appPlatform": "web"},
+        json=payload,
+        headers={"content-type": "application/json"},
+        timeout=30,
+    )
+
+
+def delete_image(session: requests.Session) -> requests.Response:
+    return session.delete(
+        IMAGE_URL,
+        params={"kind": "image", "appPlatform": "web"},
+        timeout=30,
+    )
+
+
+def get_status(session: requests.Session) -> requests.Response:
+    return session.get(IMAGE_URL_KIND, timeout=30)
+
+
+# ---------- разбор ответов ----------
+
+IMAGE_RE = re.compile(
+    r"https://masterpiecer-images\.s3\.yandex\.net/[^\s\"'\\]+?:\d+"
+)
+
+
+def parse_body(resp: requests.Response):
+    """
+    Возвращает (is_json, obj) — obj это dict/list или None.
+    """
+    ct = resp.headers.get("content-type", "")
+    if "application/json" not in ct:
+        return False, None
+    try:
+        return True, resp.json()
+    except Exception:
+        return True, None
+
+def is_adult(obj) -> bool:
+    """
+    Распознаём {"error":{"status":422}}
+    """
+    if not isinstance(obj, dict):
+        return False
+    err = obj.get("error")
+    if isinstance(err, dict) and err.get("status") == 422:
+        return True
+    return False
+
+def is_conflict(obj) -> bool:
+    """
+    Распознаём {"error":{"status":409}} и похожие варианты.
+    """
+    if not isinstance(obj, dict):
+        return False
+    err = obj.get("error")
+    if isinstance(err, dict) and err.get("status") == 409:
+        return True
+    if obj.get("status") == 409:
+        return True
+    return False
+
+
+def is_auth_stale(resp: requests.Response, obj=None) -> bool:
+    """
+    499 — креды протухли, генерация не пойдёт.
+    Смотрим и HTTP-код, и status в теле.
+    """
+    if resp.status_code == 499:
+        return True
+    if not isinstance(obj, dict):
+        return False
+    err = obj.get("error")
+    if isinstance(err, dict) and err.get("status") == 499:
+        return True
+    return obj.get("status") == 499
+
+
+def is_empty_ok(obj) -> bool:
+    """{} — задача принята, результата пока нет."""
+    return isinstance(obj, dict) and len(obj) == 0
+
+
+def extract_image_urls(obj) -> list:
+    """Рекурсивно ищем URL'ы картинок в JSON-структуре."""
+    found = []
+
+    def walk(x):
+        if isinstance(x, str):
+            if IMAGE_HOST_MARKER in x and x not in found:
+                found.append(x)
+        elif isinstance(x, dict):
+            for v in x.values():
+                walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+
+    walk(obj)
+    return found
+
+
+def extract_result_prompt(obj) -> str | None:
+    """Достаём .result.params.prompt из ответа GET/POST."""
+    if not isinstance(obj, dict):
+        return None
+    result = obj.get("result")
+    if not isinstance(result, dict):
+        return None
+    params = result.get("params")
+    if not isinstance(params, dict):
+        return None
+    prompt = params.get("prompt")
+    if isinstance(prompt, str) and prompt.strip():
+        return prompt
+    return None
+
+
+def extract_result_id(obj) -> str | None:
+    """Достаём .result.id из ответа GET."""
+    if not isinstance(obj, dict):
+        return None
+    result = obj.get("result")
+    if not isinstance(result, dict):
+        return None
+    rid = result.get("id")
+    if rid is None or isinstance(rid, bool):
+        return None
+    if isinstance(rid, (str, int, float)):
+        s = str(rid).strip()
+        return s or None
+    return None
+
+
+def extract_result_time(obj) -> int | None:
+    """Эстимейт секунд до конца генерации из .result.time."""
+    if not isinstance(obj, dict):
+        return None
+    result = obj.get("result")
+    if not isinstance(result, dict):
+        return None
+    t = result.get("time")
+    if isinstance(t, bool) or not isinstance(t, (int, float)):
+        return None
+    return max(0, int(t))
+
+
+def poll_sleep_seconds(eta: int | None) -> float:
+    """Пауза между GET: не меньше 5с, иначе 80% от эстимейта.
+      При eta значительно больше минуты, ограничивать 60s сверху.
+    """
+    if eta is None:
+        return 5.0
+    return max(5.0, min(60, 0.8 * eta))
+
+
+# ---------- основной флоу ----------
+
+def create_task(session: requests.Session, payload: dict) -> tuple[int, float]:
+    """
+    POST -> (409 в теле -> DELETE -> POST).
+    Возвращает (номер успешного POST, unix-время успешной отправки).
+    """
+    chain: list[str] = []
+
+    def stop(where: str, detail: str) -> None:
+        shown = " → ".join(chain) if chain else where
+        raise RuntimeError(f"[task] {shown}  STOPPED at {where}: {detail}")
+
+    resp = post_image(session, payload)
+    _, obj = parse_body(resp)
+    chain.append(f"POST#1 {http_brief(resp, obj)}".rstrip())
+
+    if is_auth_stale(resp, obj):
+        stop("POST#1", CURL_REFRESH_HINT)
+    if is_adult(obj):
+        stop("POST#1", "adult content")
+
+    if is_conflict(obj):
+        d = delete_image(session)
+        _, dobj = parse_body(d)
+        chain.append(f"DELETE {http_brief(d, dobj)}".rstrip())
+        if is_auth_stale(d, dobj):
+            stop("DELETE", CURL_REFRESH_HINT)
+        if d.status_code >= 400:
+            stop("DELETE", f"http={d.status_code}")
+
+        resp2 = post_image(session, payload)
+        _, obj2 = parse_body(resp2)
+        chain.append(f"POST#2 {http_brief(resp2, obj2)}".rstrip())
+
+        if is_auth_stale(resp2, obj2):
+            stop("POST#2", CURL_REFRESH_HINT)
+        if is_conflict(obj2):
+            stop("POST#2", "conflict 409")
+        if is_adult(obj2):
+            stop("POST#2", "adult content")
+        if resp2.status_code >= 400:
+            stop("POST#2", f"http={resp2.status_code}")
+
+        _write("[task] " + " → ".join(chain))
+        return 2, time.time()
+
+    if resp.status_code >= 400:
+        stop("POST#1", f"http={resp.status_code}")
+
+    _write("[task] " + " → ".join(chain))
+    return 1, time.time()
+
+
+def poll_until_ready(
+    session: requests.Session,
+    post_n: int | None,
+    post_ts: float,
+    timeout_s: int = 300,
+) -> tuple[list, str | None]:
+    """
+    Поллинг GET, пока не найдём URL'ы картинок.
+    Возвращает (urls, prompt из .result.params.prompt или None).
+    Одна строка: номер последнего GET и время с опорной точки
+    (успешный POST или старт get-only режима).
+    """
+    deadline = time.time() + timeout_s
+    attempt = 0
+    since = f"POST#{post_n}" if post_n is not None else "start"
+    try:
+        while time.time() < deadline:
+            attempt += 1
+            resp = get_status(session)
+            _, data = parse_body(resp)
+            elapsed = fmt_elapsed(time.time() - post_ts)
+            frame = POLL_FRAMES[(attempt - 1) % len(POLL_FRAMES)]
+            eta = extract_result_time(data)
+            if eta is None:
+                eta_part = ""
+            elif eta == 0:
+                eta_part = f"  {fmt_eta(eta)}"
+            else:
+                eta_part = f"  ~{fmt_eta(eta)}"
+            _rewrite(
+                f"{frame} GET #{attempt}  +{elapsed} since {since}{eta_part}"
+            )
+
+            if is_auth_stale(resp, data):
+                raise RuntimeError(
+                    f"[poll] GET #{attempt}  STOPPED: {CURL_REFRESH_HINT}"
+                )
+            if resp.status_code >= 400:
+                raise RuntimeError(
+                    f"[poll] GET #{attempt}  STOPPED: http={resp.status_code}"
+                )
+            if is_conflict(data):
+                raise RuntimeError(
+                    f"[poll] GET #{attempt}  STOPPED: conflict 409 "
+                    "(нужен повторный DELETE+POST)"
+                )
+
+            urls = extract_image_urls(data) if data is not None else []
+            if urls:
+                _clear_live()
+                return urls, extract_result_prompt(data)
+
+            time.sleep(poll_sleep_seconds(eta))
+
+        raise TimeoutError(
+            f"[poll] GET #{attempt}  STOPPED: картинки не появились "
+            f"за {timeout_s}s ({since})"
+        )
+    except Exception:
+        _break_live()
+        raise
+
+
+def download_images(session: requests.Session, urls: list, outdir: Path) -> None:
+    outdir.mkdir(parents=True, exist_ok=True)
+    total = len(urls)
+    last_name = ""
+    dest = None
+    try:
+        for i, url in enumerate(urls, start=1):
+            name = url.rsplit("/", 1)[-1].replace(":", "-")
+            if not name.lower().endswith((".jpg", ".jpeg", ".png", ".webp")):
+                name += ".jpg"
+            dest = outdir / name
+            last_name = name
+
+            _rewrite(f"[dl] {i - 1}/{total}: {name}")
+
+            r = session.get(url, timeout=60, stream=True)
+            r.raise_for_status()
+            with open(dest, "wb") as f:
+                for chunk in r.iter_content(8192):
+                    f.write(chunk)
+
+            _rewrite(f"[dl] {i}/{total}")
+    except Exception as e:
+        done = i - 1 if "i" in locals() else 0
+        _break_live()
+        where = dest.name if dest is not None else "?"
+        raise RuntimeError(
+            f"[dl] STOPPED at {done}/{total} ({where}): {e}"
+        ) from e
+
+    _clear_live()
+    _write(f" file://{str(outdir.resolve())}")
+    l = len(urls)
+    for i, url in enumerate(urls):
+        name = url.rsplit("/", 1)[-1]
+        prefix = "├─"
+        if l - 1 == i:
+            prefix = "╰─"
+        filename = name.replace(":", "-")
+        _write(f" {prefix}./{filename}.jpg") 
+
+def default_outdir() -> Path:
+    """
+    /home/$USER/Pictures/shedevrum/YYYYMMDD
+    Fallback: Path.home()/Pictures/shedevrum/YYYYMMDD
+    """
+    user = os.environ.get("USER") or os.environ.get("LOGNAME")
+    if user:
+        base = Path("/home") / user
+    else:
+        base = Path.home()
+    return base / "Pictures" / "shedevrum" / datetime.now().strftime("%Y%m%d")
+
+def ntfy(prompt):
+    message = f"[COMPLETE] {datetime.now().strftime('%Y.%m.%d -- %H:%M')}\n\n{prompt}"
+    requests.post(f"https://ntfy.sh/{NTFY_PUB}",
+      data=message.encode(encoding='utf-8'))
+
+
+def desktop_notify(prompt):
+    notify_send = shutil.which("notify-send")
+    if not notify_send:
+        return
+    message = f"[COMPLETE] {datetime.now().strftime('%Y.%m.%d -- %H:%M')}\n\n{prompt}"
+    subprocess.run(
+        [notify_send, "shps", message],
+        check=False,
+    )
+
+
+def notify_complete(prompt):
+    if os.environ.get("SHED_NTFY") == "true":
+        ntfy(prompt)
+    if os.environ.get("SHED_DESKTOP") == "true":
+        desktop_notify(prompt)
+
+
+def save_result(
+    session: requests.Session,
+    urls: list,
+    outdir: Path,
+    prompt_text: str | None,
+) -> None:
+    """Скачать картинки и при наличии промпта дописать README + уведомления."""
+    download_images(session, urls, outdir)
+    if prompt_text:
+        with open(outdir / "README.md", "a") as f:
+            f.write(f"---\n{prompt_text}\n")
+        notify_complete(prompt_text)
+
+
+def watch_remote(
+    session: requests.Session,
+    prefix: str,
+    outdir: Path,
+    interval_s: int = 60,
+    poll_timeout_s: int = 600,
+) -> None:
+    """
+    Раз в interval_s секунд GET; если prompt начинается с prefix
+    и .result.id ещё не сохраняли — сразу берём этот id (в том числе
+    первый увиденный) и сохраняем картинки. Если URL'ов ещё нет —
+    дожидаемся обычным поллингом, id не пропускаем.
+    """
+    saved_ids: set[str] = set()
+    attempt = 0
+    started = time.time()
+    _write(f"[watch] prefix={prefix!r}  every {interval_s}s")
+
+    while True:
+        attempt += 1
+        resp = get_status(session)
+        _, data = parse_body(resp)
+        elapsed = fmt_elapsed(time.time() - started)
+        frame = POLL_FRAMES[(attempt - 1) % len(POLL_FRAMES)]
+        rid = extract_result_id(data)
+        prompt = extract_result_prompt(data)
+        urls = extract_image_urls(data) if data is not None else []
+
+        status = "idle"
+        if rid and rid in saved_ids:
+            status = f"done id={rid}"
+        elif prompt is not None and prompt.startswith(prefix):
+            if rid:
+                status = f"match id={rid}"
+            else:
+                status = "match (no id)"
+        elif prompt is not None:
+            status = "other prompt"
+        elif rid:
+            status = f"id={rid}"
+
+        _rewrite(
+            f"{frame} watch GET #{attempt}  +{elapsed}  {status}"
+        )
+
+        if is_auth_stale(resp, data):
+            _break_live()
+            raise RuntimeError(
+                f"[watch] GET #{attempt}  STOPPED: {CURL_REFRESH_HINT}"
+            )
+        if resp.status_code >= 400:
+            _break_live()
+            raise RuntimeError(
+                f"[watch] GET #{attempt}  STOPPED: http={resp.status_code}"
+            )
+
+        if (
+            prompt is not None
+            and prompt.startswith(prefix)
+            and rid is not None
+            and rid not in saved_ids
+        ):
+            _clear_live()
+            _write(f"[watch] save id={rid}")
+            if not urls:
+                urls, ready_prompt = poll_until_ready(
+                    session, None, time.time(), timeout_s=poll_timeout_s
+                )
+                if ready_prompt:
+                    prompt = ready_prompt
+            save_result(session, urls, outdir, prompt)
+            saved_ids.add(rid)
+            _write(f"[watch] saved {len(saved_ids)} id(s), listening…")
+
+        time.sleep(interval_s)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--curl-file", required=True, type=Path)
+    ap.add_argument("--prompt-file", type=Path)
+    ap.add_argument(
+        "--watch",
+        type=str,
+        metavar="PREFIX",
+        help="следить за чужими генерациями: GET раз в минуту, "
+             "сохранять если prompt начинается с PREFIX",
+    )
+    ap.add_argument("--outdir", default=default_outdir(), type=Path)
+    ap.add_argument("--poll-timeout", default=600, type=int)
+    args = ap.parse_args()
+
+    try:
+        parsed = parse_curl_file(args.curl_file)
+    except Exception as e:
+        raise RuntimeError(f"[cred] STOPPED at curl: {e}") from e
+
+    payload = None
+    if args.watch is None and args.prompt_file is not None:
+        try:
+            payload = load_prompt(args.prompt_file)
+        except Exception as e:
+            raise RuntimeError(f"[cred] STOPPED at prompt: {e}") from e
+
+    csrf_ok = bool(parsed["headers"].get("X-CSRF-Token"))
+    n_cookies = len(parsed["cookies"])
+    if args.watch is not None:
+        prompt_label = f"(watch {args.watch!r})"
+    elif args.prompt_file:
+        prompt_label = args.prompt_file
+    else:
+        prompt_label = "(get-only)"
+    _write(
+        f"[cred] csrf={'ok' if csrf_ok else 'missing'}, "
+        f"prompt={prompt_label}"
+    )
+    if not csrf_ok:
+        raise RuntimeError("[cred] STOPPED: CSRF missing")
+    if n_cookies == 0:
+        raise RuntimeError("[cred] STOPPED: no cookies")
+
+    session = build_session(parsed)
+
+    if args.watch is not None:
+        watch_remote(
+            session,
+            args.watch,
+            args.outdir,
+            poll_timeout_s=args.poll_timeout,
+        )
+        return
+
+    if payload is not None:
+        post_n, post_ts = create_task(session, payload)
+    else:
+        post_n, post_ts = None, time.time()
+        _write("[task] skip POST (no --prompt-file)")
+
+    urls, result_prompt = poll_until_ready(
+        session, post_n, post_ts, timeout_s=args.poll_timeout
+    )
+
+    prompt_text = None
+    if payload is not None:
+        prompt_text = payload.get("prompt")
+    if not prompt_text:
+        prompt_text = result_prompt
+    save_result(session, urls, args.outdir, prompt_text)
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        _write(str(e), file=sys.stderr)
+        sys.exit(1)

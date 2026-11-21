@@ -5,12 +5,30 @@
 #  / / / /___   github: https://github.com/kaineer
 #  \/  \____/   twitter: https://twitter.com/kaineer
 #
+# What: detects env EDITOR
+#   Before that: detects NEOPANE_PROVIDER if any
+#
 ### NOTE: this line means we should not load editor env
 ###   for non-interactive shell
 [[ "$1" != "-i" ]] && return
 
+## Should be run right before EDITOR selection
+#  so I couldn't put in into separate script
+# 
+if [[ "$(which neopane)" != "" ]]; then
+  if [[ "$TMUX" != "" ]]; then
+    export NEOPANE_PROVIDER="tmux"
+  elif [[ "$HC_TERMINAL_SOCKET" != "" ]]; then
+    export NEOPANE_PROVIDER="herdr"
+  else
+    export NEOPANE_PROVIDER=""
+  fi
+fi
+
 if [[ "$TERM_PROGRAM" == "zed" ]]; then
   export EDITOR="zed --wait"
+elif [[ "$NEOPANE_PROVIDER" != "" ]]; then
+  export EDITOR="neopane --provider $NEOPANE_PROVIDER"
 elif [ -x "$(command -v nvim)" ]; then
   export EDITOR=nvim
 elif [ -x "$(command -v vi)" ]; then

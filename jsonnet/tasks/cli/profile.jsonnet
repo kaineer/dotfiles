@@ -11,6 +11,7 @@ local profiles = [
   'fasd',
   'fzf',
   'node',
+  'lig',
   'path',
   'containers',
   'ssh',
