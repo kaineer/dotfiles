@@ -12,6 +12,7 @@ local starship = import 'starship.jsonnet';
 local lf = import 'lf.jsonnet';
 local rustup = import 'rustup.jsonnet';
 local herdr = import 'herdr.jsonnet';
+local neopane = import 'neopane.jsonnet';
 local yazi = import 'yazi.jsonnet';
 local fzf = import 'fzf.jsonnet';
 local doppler = import 'doppler.jsonnet';
@@ -31,9 +32,11 @@ S.Merge([
   lf,
   rustup,
   herdr,
+  neopane,
   yazi,
   fzf,
   doppler,
   neovim,
   node,
 ])
+

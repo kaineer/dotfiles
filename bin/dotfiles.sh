@@ -55,26 +55,28 @@ install_ansible_roles() {
   fi
 }
 
-TASKS_FILE="${TASKS_FILE:-$DOTFILES_DIR/ansible/tasks.json}"
+TASKS_SYSTEM_FILE="${TASKS_SYSTEM_FILE:-$DOTFILES_DIR/ansible/tasks-system.json}"
+TASKS_USER_FILE="${TASKS_USER_FILE:-$DOTFILES_DIR/ansible/tasks-user.json}"
 VARS_FILE="${VARS_FILE:-$DOTFILES_DIR/ansible/vars.json}"
 TASKS_MD5="${TASKS_MD5:-$DOTFILES_DIR/ansible/tasks.md5}"
 
 build_ansible_tasks() {
-  echo "[info ] building $TASKS_FILE and $VARS_FILE"
+  echo "[info ] building $TASKS_SYSTEM_FILE, $TASKS_USER_FILE and $VARS_FILE"
   USER="$USER" \
     PLAYBOOK_DIR="$DOTFILES_DIR/ansible" \
-    TASKS_OUT="$TASKS_FILE" \
+    TASKS_SYSTEM_OUT="$TASKS_SYSTEM_FILE" \
+    TASKS_USER_OUT="$TASKS_USER_FILE" \
     VARS_OUT="$VARS_FILE" \
     "$DOTFILES_DIR/jsonnet/build.sh"
 
-  if [ ! -s "$TASKS_FILE" ] || [ ! -s "$VARS_FILE" ]; then
+  if [ ! -s "$TASKS_SYSTEM_FILE" ] || [ ! -s "$TASKS_USER_FILE" ] || [ ! -s "$VARS_FILE" ]; then
     echo "[error] build produced empty or missing tasks/vars json" >&2
     exit 1
   fi
 }
 
 artifacts_md5sum() {
-  md5sum "$TASKS_FILE" "$VARS_FILE" | md5sum | awk '{print $1}'
+  md5sum "$TASKS_SYSTEM_FILE" "$TASKS_USER_FILE" "$VARS_FILE" | md5sum | awk '{print $1}'
 }
 
 tasks_unchanged() {
@@ -93,23 +95,47 @@ save_tasks_md5() {
 }
 
 cleanup_tasks_json() {
-  rm -f "$TASKS_FILE" "$VARS_FILE"
-  echo "[info ] removed $TASKS_FILE and $VARS_FILE"
+  rm -f "$TASKS_SYSTEM_FILE" "$TASKS_USER_FILE" "$VARS_FILE"
+  echo "[info ] removed tasks/vars json artifacts"
+}
+
+# Parse: full|home [forced]  — also accept bare "forced" as full+forced.
+parse_mode_args() {
+  MODE=full
+  FORCE=""
+  for arg in "$@"; do
+    case "$arg" in
+    full | home) MODE=$arg ;;
+    forced) FORCE=forced ;;
+    "") ;;
+    *)
+      echo "[error] unknown mode '$arg' (expected full|home|forced)" >&2
+      exit 1
+      ;;
+    esac
+  done
 }
 
 play_ansible_playbook() {
+  parse_mode_args "$@"
+
   build_ansible_tasks
 
-  if [[ "$1" != "forced" ]]; then
+  if [[ "$FORCE" != "forced" ]]; then
     if tasks_unchanged; then
-      echo "[info ] tasks.json unchanged (md5 matches $TASKS_MD5), skipping ansible"
+      echo "[info ] tasks unchanged (md5 matches $TASKS_MD5), skipping ansible"
       cleanup_tasks_json
       return 0
     fi
   fi
 
-  echo "[info ] tasks/vars changed or no $TASKS_MD5 — running ansible"
-  echo "[info ] tasks_file=$TASKS_FILE vars_file=$VARS_FILE"
+  local run_system=true
+  if [[ "$MODE" == "home" ]]; then
+    run_system=false
+  fi
+
+  echo "[info ] mode=$MODE run_system=$run_system force=${FORCE:-no}"
+  echo "[info ] tasks_system=$TASKS_SYSTEM_FILE tasks_user=$TASKS_USER_FILE vars=$VARS_FILE"
 
   cd "$DOTFILES_DIR/ansible"
 
@@ -123,28 +149,32 @@ play_ansible_playbook() {
     EXTRA_ARGS+=(-e @"$HOST_EXTRA_VARS")
   fi
 
+  # Cache sudo credentials so system play's become works without -K.
+  if [[ "$run_system" == "true" ]]; then
+    sudo -v
+  fi
+
   ANSIBLE_LOG="${ANSIBLE_LOG:-$DOTFILES_DIR/ansible/ansible-run.log}"
 
   set +e
-  sudo \
-    LC_ALL="C.UTF-8" \
-    ANSIBLE_ROLES_PATH="$ROLE_PATH:$ANSIBLE_ROLES_PATH" \
+  LC_ALL="C.UTF-8" \
+    ANSIBLE_ROLES_PATH="$ROLE_PATH${ANSIBLE_ROLES_PATH:+:$ANSIBLE_ROLES_PATH}" \
     SSH_AUTH_SOCK="$SSH_AUTH_SOCK" \
     ansible-playbook $VERBOSITY \
       "${EXTRA_ARGS[@]}" \
-      -e "tasks_file=$TASKS_FILE" \
+      -e "tasks_system_file=$TASKS_SYSTEM_FILE" \
+      -e "tasks_user_file=$TASKS_USER_FILE" \
       -e "vars_file=$VARS_FILE" \
+      -e "run_system=$run_system" \
       local.yml 2>&1 | tee "$ANSIBLE_LOG"
-  # tee hides ansible exit code; recover from PIPESTATUS
   ansible_rc=${PIPESTATUS[0]}
   set -e
 
   if [ "$ansible_rc" -ne 0 ]; then
     echo "[error] ansible-playbook failed with exit code $ansible_rc" >&2
-    echo "[error] tasks.json kept for inspection: $TASKS_FILE" >&2
+    echo "[error] tasks/vars json kept for inspection" >&2
     echo "[error] tasks.md5 NOT updated" >&2
     echo "[error] ---- failed task excerpt (from $ANSIBLE_LOG) ----" >&2
-    # Show the failure block: task header + following lines until blank/recap
     grep -n -i -E '^(fatal:|failed:|ERROR!|TASK \[)' "$ANSIBLE_LOG" | tail -n 40 >&2 || true
     echo "[error] ---- full log: $ANSIBLE_LOG ----" >&2
     exit "$ansible_rc"
@@ -152,7 +182,7 @@ play_ansible_playbook() {
 
   save_tasks_md5
   cleanup_tasks_json
-  echo "$I ansible finished successfully"
+  echo "[info ] ansible finished successfully"
 }
 
 restart_x_server() {
@@ -188,8 +218,8 @@ main() {
   ensure_ansible
   ensure_ssh_keys
   install_ansible_roles
-  play_ansible_playbook $1
+  play_ansible_playbook "$@"
   restart_x_server
 }
 
-main $1
+main "$@"

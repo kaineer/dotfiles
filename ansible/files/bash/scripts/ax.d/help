@@ -3,7 +3,10 @@
 print_help() {
   echo "## ansible config runner"
   echo ""
-  echo " $ ax update          # run dotfiles.sh to update config"
+  echo " $ ax update          # full sync (system + home) via dotfiles.sh"
+  echo " $ ax update forced   # full sync even if tasks.md5 matches"
+  echo " $ ax home            # home-only sync (skip apt/system play)"
+  echo " $ ax home forced     # home-only, ignore tasks.md5"
   echo " $ DEBUG=true ax update"
   echo "                      # run update with maximum verbosity"
   echo " $ ax ce              # edit ansible.cfg"

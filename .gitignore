@@ -12,8 +12,10 @@ lazy-lock.json
 ansible/files/nvim/plugin/
 ansible/files/nvim/config/log/
 
-### Local ansible build artifacts (jsonnet → tasks.json / vars.json)
+### Local ansible build artifacts (jsonnet → tasks-*.json / vars.json)
 ansible/tasks.json
+ansible/tasks-system.json
+ansible/tasks-user.json
 ansible/vars.json
 ansible/tasks.md5
 ansible/ansible-run.log

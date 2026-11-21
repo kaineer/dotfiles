@@ -28,7 +28,7 @@
 
 ## `ax`
 
-- **Назначение:** ansible dotfiles launcher
+- **Назначение:** ansible dotfiles launcher (`ax update` = system+home, `ax home` = только home)
 
 ## `b`
 
