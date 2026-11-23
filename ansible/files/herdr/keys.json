@@ -1,14 +1,5 @@
 {
   "global": {
-    "ctrl-space ctrl-1": "space.select:1",
-    "ctrl-space ctrl-2": "space.select:2",
-    "ctrl-space ctrl-3": "space.select:3",
-    "ctrl-space ctrl-4": "space.select:4",
-    "ctrl-space ctrl-5": "space.select:5",
-    "ctrl-space ctrl-6": "space.select:6",
-    "ctrl-space ctrl-7": "space.select:7",
-    "ctrl-space ctrl-8": "space.select:8",
-    "ctrl-space ctrl-9": "space.select:9",
     "alt-h": "pane.go:left",
     "alt-j": "pane.go:down",
     "alt-k": "pane.go:up",
@@ -61,6 +52,12 @@
     "ctrl-space ctrl-w": "pane.close",
     "ctrl-space z": "pane.zoom",
     "ctrl-space t r": "tab.rename",
+    "ctrl-space ctrl-x": {
+      "command": "tab.close",
+      "args": {
+        "confirmed": true
+      }
+    },
     "ctrl-space ctrl-v": {
       "command": "pane.split",
       "args": {

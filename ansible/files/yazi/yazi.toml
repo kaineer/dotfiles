@@ -17,6 +17,9 @@ neovim-edit = [
 image-view = [
   { run = "eog -f %s" },
 ]
+markdown-view = [
+  { run = "vmd -f %s" },
+]
 
 [open]
 prepend_rules = [
@@ -24,7 +27,8 @@ prepend_rules = [
   { mime = "video/*", use = "play-video-cli" },
   { mime = "audio/*", use = "play-audio-cli" },
   { mime = "application/json", use = ["jless-view", "neovim-edit"] },
-  { mime = "image/*", use = "image-view" },
+  { mime = "text/markdown", use = "markdown-view" },
+  { url = "*.md", use = "markdown-view" },
 ]
 
 [mgr]
