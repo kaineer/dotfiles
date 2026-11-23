@@ -39,11 +39,13 @@ local link_files = [
   { path: 'mods/cursor-status/mod.json', name: 'cursor-status mod.json' },
   { path: 'mods/cursor-status/package.json', name: 'cursor-status package.json' },
   { path: 'mods/cursor-status/status.mjs', name: 'cursor-status status.mjs' },
-  // Whole folders: relative imports must stay inside the mod.
+];
+
+// Whole folders: relative imports / icons must stay inside the mod.
+local link_dirs = [
   { path: 'mods/on-screen', name: 'on-screen mod' },
   { path: 'mods/markdown-reader', name: 'markdown-reader mod' },
   { path: 'mods/markdown-reader-pane', name: 'markdown-reader-pane mod' },
-  // Whole folders: icons + main.js stay together (chrome-nord svgs).
   { path: 'mods/workspace-chrome-nord', name: 'nord workspace chrome' },
   { path: 'mods/workspace-status-nord', name: 'nord workspace status' },
   { path: 'sounds', name: 'notification sounds' },
@@ -85,14 +87,20 @@ local user_path =
           name='Link herdr ' + item.name,
         )
         for item in link_files
-      ] + [
+      ] + std.flattenArrays([
+        F.DirLink(
+          herdr_files + '/' + item.path,
+          herdr_home + '/' + item.path,
+          name='herdr ' + item.name,
+        )
+        for item in link_dirs
+      ]) + [
         F.Absent(
           herdr_home + '/mods/vim-nav',
           name='Remove unused vim-nav mod',
         ),
         {
           name: 'Install cursor-status Cursor hooks',
-          become_user: ctx.user.name,
           environment: {
             HOME: ctx.home,
             PATH: user_path,
@@ -110,7 +118,6 @@ local user_path =
         {
           name: 'Install herdr-gitview when missing',
           when: 'not gitview_bin.stat.exists',
-          become_user: ctx.user.name,
           environment: {
             HOME: ctx.home,
             PATH: user_path,

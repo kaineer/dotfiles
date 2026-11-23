@@ -19,7 +19,6 @@ local plugins = ['jk-nav.plugin', 'jk-nav.py'];
 ] + [
   {
     name: 'Enable eog jk-nav plugin',
-    become_user: ctx.user.name,
     dconf: {
       key: '/org/gnome/eog/plugins/active-plugins',
       value: "['fullscreen', 'jk-nav']",

@@ -86,11 +86,7 @@
     "ctrl-shift-o": "mod.open:on-screen",
     "ctrl-alt-shift-g": "mod.open:gitview-sidebar",
     "ctrl-alt-g": "mod.open:gitview-tab",
-    "ctrl-space o v": "mod.open:markdown-reader-pane",
-    "ctrl-shift-m": "mod.open:markdown-reader",
-    "ctrl-shift-r": "mod.open:markdown-reader-pane",
-    "cmd-shift-m": "mod.open:markdown-reader",
-    "cmd-shift-r": "mod.open:markdown-reader-pane"
+    "ctrl-space o v": "mod.open:markdown-reader-pane"
   },
   "terminal": {
     "alt-h": "pane.go:left",

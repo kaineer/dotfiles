@@ -1,4 +1,6 @@
-[
+local S = import 'split.jsonnet';
+
+S.System([
   {
     name: 'Check if brave in installed',
     stat: { path: '/usr/bin/brave-browser' },
@@ -38,4 +40,4 @@
       },
     ],
   },
-]
+])

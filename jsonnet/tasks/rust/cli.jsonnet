@@ -13,7 +13,6 @@ local cliRs = ctx.home + '/git/config/cli-rs';
 [
   {
     name: 'Install rust CLI from cli-rs via cargo: ' + name,
-    become_user: ctx.user.name,
     environment: cargoEnv,
     'ansible.builtin.command': {
       cmd: 'cargo install --path ' + cliRs + '/' + name + ' --force',

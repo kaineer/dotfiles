@@ -62,7 +62,7 @@ edit_script_list() {
 
 apply_dotfiles() {
   cd $DF_DIR
-  ./bin/dotfiles.sh $1
+  ./bin/dotfiles.sh "$@"
 }
 
 edit_debian_vars() {
@@ -79,7 +79,14 @@ case "$1" in
   ;;
 "sel") edit_script_list ;;
 "update")
-  apply_dotfiles $2
+  # Full sync: system (become) + home.
+  shift
+  apply_dotfiles full "$@"
+  ;;
+"home")
+  # Home only: skip system play.
+  shift
+  apply_dotfiles home "$@"
   ;;
 "")
   source $DIR/ax.d/help

@@ -1,8 +1,9 @@
 # Herdr personal config
 
-Файлы из этой папки `ax update` линкует в `~/.config/herdr-app/`
-(`jsonnet/tasks/cli/herdr.jsonnet`). Штатные моды Herdr (`agents`, `files`,
-`pane`, …) ставит само приложение; здесь — Nord-оверлей и сторонние моды.
+Файлы из этой папки линкует в `~/.config/herdr-app/` user-play
+(`ax home` или `ax update` → `jsonnet/tasks/cli/herdr.jsonnet`).
+Штатные моды Herdr (`agents`, `files`, `pane`, …) ставит само приложение;
+здесь — Nord-оверлей и сторонние моды.
 
 Активный layout: **`main-nord`**.
 
@@ -32,17 +33,21 @@
 `vim-nav` не используется (навигация в `keys.json` + neovim); каталог
 удаляется при прогоне.
 
-### Скрипты при `ax update`
+### Скрипты при `ax home` / `ax update`
 
 - `scripts/install-cursor-status-hooks.sh` — `node …/status.mjs install`
   (хуки в `~/.cursor/hooks.json`; нужен `node`).
 - `scripts/install-gitview.sh` — **только если нет**
   `mods/gitview/bin/herdr-gitview` (`stat` + `when` в jsonnet; повторные
-  `ax update` скрипт не вызывают). Клонирует
+  прогоны скрипт не вызывают). Клонирует
   [herdr-gitview](https://github.com/ChmaraX/herdr-gitview), собирает
   бинарь (`cargo`) и ставит моды. Когда Herdr запущен — upstream
   `herdr-app/install.sh`; иначе — копирование без `app-setup` (слот
   Changes→`gitview` и клавиши уже в ansible).
+
+Целые каталоги модов (`markdown-reader`, `on-screen`, …) ставятся через
+`DirLink`: если на месте уже лежит непустой directory (не symlink), он
+удаляется и заменяется ссылкой.
 
 Слот панели Changes в layout указывает на **`gitview`**. Клавиши:
 

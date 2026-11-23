@@ -7,7 +7,6 @@ local xdgRuntime = "/run/user/{{ lookup('pipe', 'id -u " + ctx.user.name + "') }
 [
   {
     name: 'Stop and disable user mpd (rmpc experiment cleanup)',
-    become_user: ctx.user.name,
     environment: {
       XDG_RUNTIME_DIR: xdgRuntime,
     },

@@ -1,4 +1,6 @@
-[
+local S = import 'split.jsonnet';
+
+S.System([
   {
     name: 'Check if doppler is installed',
     stat: { path: '/usr/bin/doppler' },
@@ -44,4 +46,4 @@
       update_cache: true,
     },
   },
-]
+])

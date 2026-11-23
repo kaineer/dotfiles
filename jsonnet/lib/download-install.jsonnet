@@ -1,5 +1,6 @@
 // Download an upstream install.sh, run it as the user, remove the script.
 // Existence checks stay outside: pass the register name from a prior `stat`.
+// Intended for the user play (no become).
 local ctx = import 'ctx.jsonnet';
 
 {
@@ -30,7 +31,6 @@ local ctx = import 'ctx.jsonnet';
         },
         {
           name: 'Run ' + name + ' install script',
-          become_user: ctx.user.name,
           environment: env,
         } + run,
         {

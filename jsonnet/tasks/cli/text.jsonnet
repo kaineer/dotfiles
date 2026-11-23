@@ -1,3 +1,4 @@
+local S = import 'split.jsonnet';
 local bat = import 'cli/text/bat.jsonnet';
 local eza = import 'cli/text/eza.jsonnet';
 local fd = import 'cli/text/fd.jsonnet';
@@ -9,10 +10,20 @@ local xq = import 'cli/text/xq.jsonnet';
 local ctx = import 'ctx.jsonnet';
 local F = import 'file-task.jsonnet';
 
-[
-  F.Dir(
-    ctx.home + '/bin',
-    name='Mkdir for bin scripts',
-    recurse=true,
-  ),
-] + ripgrep + fd + jless + eza + bat + hurl + xq  // + lig
+S.Merge([
+  S.User([
+    F.Dir(
+      ctx.home + '/bin',
+      name='Mkdir for bin scripts',
+      recurse=true,
+    ),
+  ]),
+  ripgrep,
+  fd,
+  jless,
+  eza,
+  bat,
+  hurl,
+  xq,
+  // lig,
+])

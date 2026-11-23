@@ -55,7 +55,6 @@ local pluginSrc = ctx.files + '/yazi/plugins';
 ] + [
   {
     name: 'Install yazi via cargo',
-    become_user: ctx.user.name,
     environment: {
       PATH: ctx.home + '/.cargo/bin:{{ ansible_env.PATH }}',
       HOME: ctx.home,

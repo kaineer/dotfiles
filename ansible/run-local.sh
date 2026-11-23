@@ -2,42 +2,77 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-TASKS_FILE="${TASKS_FILE:-$ROOT/ansible/tasks.json}"
+TASKS_SYSTEM_FILE="${TASKS_SYSTEM_FILE:-$ROOT/ansible/tasks-system.json}"
+TASKS_USER_FILE="${TASKS_USER_FILE:-$ROOT/ansible/tasks-user.json}"
 VARS_FILE="${VARS_FILE:-$ROOT/ansible/vars.json}"
 TASKS_MD5="${TASKS_MD5:-$ROOT/ansible/tasks.md5}"
 
-echo "[INFO] building $TASKS_FILE and $VARS_FILE"
+MODE=full
+FORCE=""
+for arg in "$@"; do
+  case "$arg" in
+  full | home) MODE=$arg ;;
+  forced) FORCE=forced ;;
+  -*)
+    # Pass through remaining ansible-playbook flags after -- later
+    ;;
+  esac
+done
+
+# Rebuild argv without mode words for ansible-playbook passthrough.
+PASS=()
+for arg in "$@"; do
+  case "$arg" in
+  full | home | forced) ;;
+  *) PASS+=("$arg") ;;
+  esac
+done
+
+echo "[INFO] building $TASKS_SYSTEM_FILE, $TASKS_USER_FILE and $VARS_FILE"
 USER="${USER:-kaineer}" \
   PLAYBOOK_DIR="$ROOT/ansible" \
-  TASKS_OUT="$TASKS_FILE" \
+  TASKS_SYSTEM_OUT="$TASKS_SYSTEM_FILE" \
+  TASKS_USER_OUT="$TASKS_USER_FILE" \
   VARS_OUT="$VARS_FILE" \
   "$ROOT/jsonnet/build.sh"
 
-if [ ! -s "$TASKS_FILE" ] || [ ! -s "$VARS_FILE" ]; then
+if [ ! -s "$TASKS_SYSTEM_FILE" ] || [ ! -s "$TASKS_USER_FILE" ] || [ ! -s "$VARS_FILE" ]; then
   echo "[ERROR] build produced empty or missing tasks/vars json" >&2
   exit 1
 fi
 
-current="$(md5sum "$TASKS_FILE" "$VARS_FILE" | md5sum | awk '{print $1}')"
-if [ -f "$TASKS_MD5" ] && [ "$current" = "$(cat "$TASKS_MD5")" ]; then
+current="$(md5sum "$TASKS_SYSTEM_FILE" "$TASKS_USER_FILE" "$VARS_FILE" | md5sum | awk '{print $1}')"
+if [[ "$FORCE" != "forced" ]] && [ -f "$TASKS_MD5" ] && [ "$current" = "$(cat "$TASKS_MD5")" ]; then
   echo "[INFO] tasks/vars unchanged (md5 matches $TASKS_MD5), skipping ansible"
-  rm -f "$TASKS_FILE" "$VARS_FILE"
+  rm -f "$TASKS_SYSTEM_FILE" "$TASKS_USER_FILE" "$VARS_FILE"
   echo "[INFO] removed build artifacts"
   exit 0
 fi
 
-echo "[INFO] tasks/vars changed or no $TASKS_MD5 — running ansible"
-echo "[INFO] tasks_file=$TASKS_FILE vars_file=$VARS_FILE"
+RUN_SYSTEM=true
+if [[ "$MODE" == "home" ]]; then
+  RUN_SYSTEM=false
+fi
+
+echo "[INFO] mode=$MODE run_system=$RUN_SYSTEM force=${FORCE:-no}"
+echo "[INFO] tasks_system=$TASKS_SYSTEM_FILE tasks_user=$TASKS_USER_FILE vars=$VARS_FILE"
+
+if [[ "$RUN_SYSTEM" == "true" ]]; then
+  sudo -v
+fi
 
 ANSIBLE_LOG="${ANSIBLE_LOG:-$ROOT/ansible/ansible-run.log}"
 
 cd "$ROOT/ansible"
 set +e
-ansible-playbook \
-  -e "tasks_file=$TASKS_FILE" \
-  -e "vars_file=$VARS_FILE" \
-  local.yml \
-  "$@" 2>&1 | tee "$ANSIBLE_LOG"
+LC_ALL="C.UTF-8" \
+  ansible-playbook \
+    -e "tasks_system_file=$TASKS_SYSTEM_FILE" \
+    -e "tasks_user_file=$TASKS_USER_FILE" \
+    -e "vars_file=$VARS_FILE" \
+    -e "run_system=$RUN_SYSTEM" \
+    local.yml \
+    "${PASS[@]}" 2>&1 | tee "$ANSIBLE_LOG"
 ansible_rc=${PIPESTATUS[0]}
 set -e
 
@@ -53,6 +88,6 @@ fi
 
 echo "$current" >"$TASKS_MD5"
 echo "[INFO] saved $TASKS_MD5"
-rm -f "$TASKS_FILE" "$VARS_FILE"
+rm -f "$TASKS_SYSTEM_FILE" "$TASKS_USER_FILE" "$VARS_FILE"
 echo "[INFO] removed build artifacts"
 echo "[INFO] ansible finished successfully"

@@ -1,15 +1,28 @@
 ---
-- hosts: localhost
+# System play: packages, apt, /usr, /etc (needs become).
+# User play: everything under $HOME (runs as the invoking user).
+# Skip system with: -e run_system=false  (ax home / dotfiles.sh home)
+
+- name: System configuration
+  hosts: localhost
   connection: local
-  become: true
+  # No sudo when ax home / run_system=false (play still loads vars, skips tasks).
+  become: "{{ run_system | default(true) | bool }}"
   environment:
     PRESERVED_USER: "{{ lookup('ansible.builtin.env', 'USER') }}"
-
   tasks:
-    # --- variables (jsonnet → vars.json; optional host override via -e @vars/user/<host>.yml)
-    #
     - include_vars: "{{ vars_file | default(playbook_dir + '/vars.json') }}"
+    - name: Include system tasks
+      ansible.builtin.include_tasks: "{{ tasks_system_file | default(playbook_dir + '/tasks-system.json') }}"
+      when: run_system | default(true) | bool
 
-    # --- tasks (jsonnet → tasks.json)
-    #
-    - include_tasks: "{{ tasks_file | default(playbook_dir + '/tasks.json') }}"
+- name: User home configuration
+  hosts: localhost
+  connection: local
+  become: false
+  environment:
+    PRESERVED_USER: "{{ lookup('ansible.builtin.env', 'USER') }}"
+  tasks:
+    - include_vars: "{{ vars_file | default(playbook_dir + '/vars.json') }}"
+    - name: Include user tasks
+      ansible.builtin.include_tasks: "{{ tasks_user_file | default(playbook_dir + '/tasks-user.json') }}"
