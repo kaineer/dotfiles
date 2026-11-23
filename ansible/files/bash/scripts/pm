@@ -31,7 +31,7 @@ usage() {
   echo " $ pm r[egistry] ...    # registry commands"
   echo " $ pm r ls              # list available registries"
   echo " $ pm r <registry url>  # set registry"
-  echo " $ pm r select          # list registries, select and set"
+  echo " $ pm r s[elect]        # list registries, select and set"
   echo " $ pm r                 # print current registry url"
   echo " $ pm [anything]        # $PM [anything]"
 }
@@ -148,7 +148,7 @@ case "$1" in
   yn -p "Remove dist and node_modules directories?" && \
     cleanup_directory
   ;;
-"" | "h" | "help")
+"" | "h" | "help" | "--help")
   usage | bat -p -lsh
   ;;
 "use")
