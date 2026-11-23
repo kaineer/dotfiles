@@ -86,7 +86,8 @@
     "ctrl-shift-o": "mod.open:on-screen",
     "ctrl-alt-shift-g": "mod.open:gitview-sidebar",
     "ctrl-alt-g": "mod.open:gitview-tab",
-    "ctrl-space o v": "mod.open:markdown-reader-pane"
+    "ctrl-space o v": "mod.open:markdown-reader-pane",
+    "ctrl-space o w": "app.whats_new"
   },
   "terminal": {
     "alt-h": "pane.go:left",
