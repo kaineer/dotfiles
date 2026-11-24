@@ -11,8 +11,14 @@ play-audio-cli = [
 jless-view = [
   { run = "/home/kaineer/bin/jless %s" },
 ]
+install-rust = [
+  { run = 'cd %d1 && cargo install --path=. && ya emit notify:push " Installation complete " "cargo" --timeout=3 --level=info', block = true, desc = "Compile and install" },
+]
+test-rust = [
+  { run = 'cd %d1 && cargo install --path=. && ya emit notify:push " Tests successful " "cargo" --timeout=3 --level=info || ya emit notify:push " Some failures " "cargo" --timeout=5 --level=error', block = true, desc = "Run tests" },
+]
 neovim-edit = [
-  { run = "nvim %s" },
+  { run = "nvim %s", block = true },
 ]
 image-view = [
   { run = "eog -f %s" },
@@ -27,8 +33,8 @@ prepend_rules = [
   { mime = "video/*", use = "play-video-cli" },
   { mime = "audio/*", use = "play-audio-cli" },
   { mime = "application/json", use = ["jless-view", "neovim-edit"] },
-  { mime = "text/markdown", use = "markdown-view" },
-  { url = "*.md", use = "markdown-view" },
+  { url = "**/Cargo.toml", use = ["install-rust", "test-rust"] },
+  { url = "*.md", use = ["markdown-view", "neovim-edit"] },
 ]
 
 [mgr]
