@@ -1,0 +1,32 @@
+#!/bin/bash
+#  _____  ___
+# /__   \/ __\  Tangerine Cat, kaineer@gmail.com
+#   / /\/ /
+#  / / / /___   github: https://github.com/kaineer
+#  \/  \____/   twitter: https://twitter.com/kaineer
+
+__inside_herdr() {
+  [[ "$HC_TERMINAL_SOCKET" != "" ]]
+}
+
+__list_commands() {
+  # Only actions that can run via `herdr-app do` with no mandatory args
+  herdr-app commands | jq -r '
+    .[] | select(all(.args[]; .required != true)) | .name
+  '
+}
+
+__list_actions() {
+  if __inside_herdr; then
+    __list_commands
+  fi
+}
+
+__run_action() {
+  herdr-app do "$1"
+}
+
+case "$1" in
+"list") __list_actions ;;
+*) __run_action $1 ;;
+esac

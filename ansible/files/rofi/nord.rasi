@@ -72,6 +72,9 @@ inputbar {
   border: 1px;
   border-radius: 6px 6px 0px 0px;
   border-color: @nord10;
+
+  spacing: 0;
+  children: [ prompt, entry, icon-current-entry ];
 }
 
 entry, prompt, case-indicator {
@@ -80,7 +83,7 @@ entry, prompt, case-indicator {
 }
 
 prompt {
-  margin: 0px 1em 0em 0em ;
+  margin: 0px 0.5em 0em 0em ;
 }
 
 listview {
@@ -90,6 +93,8 @@ listview {
   border: 0px 1px 1px 1px;
   background-color: rgba(46,52,64,0.9);
   dynamic: false;
+
+  spacing: 0;
 }
 
 element {
@@ -99,6 +104,8 @@ element {
   background-color: transparent;
   color: @foreground;
   text-color: rgb(216, 222, 233);
+
+  children: [ element-text ];
 }
 
 element selected.normal {
@@ -109,6 +116,8 @@ element selected.normal {
 element-text, element-icon {
   background-color: inherit;
   text-color:       inherit;
+
+  padding: 2px;
 }
 
 button {

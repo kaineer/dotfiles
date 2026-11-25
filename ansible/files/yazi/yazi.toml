@@ -26,6 +26,9 @@ image-view = [
 markdown-view = [
   { run = "vmd -f %s" },
 ]
+xdg-open = [
+  { run = "open %s" },
+]
 
 [open]
 prepend_rules = [
@@ -35,6 +38,7 @@ prepend_rules = [
   { mime = "application/json", use = ["jless-view", "neovim-edit"] },
   { url = "**/Cargo.toml", use = ["install-rust", "test-rust"] },
   { url = "*.md", use = ["markdown-view", "neovim-edit"] },
+  { url = "*.html", use = ["neovim-edit", "xdg-open" ] },
 ]
 
 [mgr]
