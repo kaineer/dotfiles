@@ -3,7 +3,8 @@
  * Adapted by undiabler <undiabler@gmail.com>
  *
  * Nord Color palette imported from https://www.nordtheme.com/
- *
+ * 
+ * @link: https://github.com/davatorium/rofi/blob/next/doc/rofi-theme.5.markdown
  */
 
 * {
@@ -74,7 +75,7 @@ inputbar {
   border-color: @nord10;
 
   spacing: 0;
-  children: [ prompt, entry, icon-current-entry ];
+  children: [ prompt, entry ];
 }
 
 entry, prompt, case-indicator {

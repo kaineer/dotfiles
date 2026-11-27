@@ -763,7 +763,7 @@ def watch_remote(
         time.sleep(interval_s)
 
 
-def main():
+def parse_arguments():
     ap = argparse.ArgumentParser()
     ap.add_argument("--curl-file", required=True, type=Path)
     ap.add_argument("--prompt-file", type=Path)
@@ -776,7 +776,10 @@ def main():
     )
     ap.add_argument("--outdir", default=default_outdir(), type=Path)
     ap.add_argument("--poll-timeout", default=600, type=int)
-    args = ap.parse_args()
+    return ap.parse_args()
+
+def main():
+    args = parse_arguments()
 
     try:
         parsed = parse_curl_file(args.curl_file)
